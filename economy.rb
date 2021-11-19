@@ -39,8 +39,8 @@ module Value
       t2_gear: 500 + 1000 + 2000,
 
       invigor: 0.24,
-      blue_eggs: 2.6,
-      purple_eggs: 31.2,
+      blue_stones: 2.6,
+      purple_stones: 31.2,
 
       scroll: 240,
       faction: 240,
@@ -363,7 +363,7 @@ class Simulator
   end
 
   def oak_inn
-    @Oak_amount={blue_eggs: 30, dia: 100, dust: 500, gold: 1500}
+    @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
     @Oak_quantity=3; @Oak_proba=0.25
     @Oak_amount.map {|k,v| [k, v*@Oak_quantity*@Oak_proba]}.to_h
   end
@@ -377,13 +377,13 @@ class Simulator
   def quests
     @Daily_quest ||= {
       dust_h: 2, gold_h: 2, gold_hg: 2,
-      blue_eggs: 5, arena_tickets: 2, xp_h: 2, scroll: 1,
+      blue_stones: 5, arena_tickets: 2, xp_h: 2, scroll: 1,
       dia: 50+100
     }
     @Weekly_quest ||= {
       gold_h: 8+8,
       twisted: 50, poe: 500,
-      blue_eggs: 60, purple_eggs: 10,
+      blue_stones: 60, purple_stones: 10,
       silver_e: 20, gold_e: 10, red_e: 5,
       dia: 400, scroll: 3
     } #this maxes out at 30-60 with the red emblem rewards
@@ -395,9 +395,9 @@ class Simulator
   end
 
   def merchants
-    @Daily_merchant ||={ dia: 20, purple_eggs: 2}
-    @Weekly_merchant ||={ dia: 20, purple_eggs: 5}
-    @Monthly_merchant ||={ dia: 50, purple_eggs: 10}
+    @Daily_merchant ||={ dia: 20, purple_stones: 2}
+    @Weekly_merchant ||={ dia: 20, purple_stones: 5}
+    @Monthly_merchant ||={ dia: 50, purple_stones: 10}
     ressources=(@Daily_merchant.keys+@Weekly_merchant.keys+@Monthly_merchant.keys).flatten.sort.uniq
     ressources.map do |r|
       v=(@Daily_merchant[r]||0)+(@Weekly_merchant[r]||0)/7.0+(@Monthly_merchant[r]||0)/30.0
@@ -418,7 +418,7 @@ class Simulator
 
     arena_fight = {
       gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
-      blue_eggs: 60*0.01*0.2, purple_eggs: 10*0.01*0.3,
+      blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
       dia: (150*0.15+300*0.12+3000*0.03)*0.01
     }
 
@@ -459,7 +459,7 @@ class Simulator
   def get_misty(misty_guild_twisted: :twisted, misty_purple_blue: :blue)
     r = { 
       dust_h: 8*12,
-      purple_eggs: 2*60,
+      purple_stones: 2*60,
       red_e: 4*10, t3: 2,
       cores: 3*100,
       hero_choice_chest: 1,
@@ -478,11 +478,11 @@ class Simulator
 
     case misty_purple_blue
     when :purple
-      r[:purple_eggs] ||=0
-      r[:purple_eggs] += 60
+      r[:purple_stones] ||=0
+      r[:purple_stones] += 60
     when :blue
-      r[:blue_eggs] ||=0
-      r[:blue_eggs] += 720
+      r[:blue_stones] ||=0
+      r[:blue_stones] += 720
     else
       raise "Incorrect choice for misty_purple_blue: #{misty_purple_blue}"
     end
@@ -492,7 +492,7 @@ class Simulator
   def misty
     @misty ||= get_misty
     @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
-           blue_eggs: 10*120, purple_eggs: 10*18,
+           blue_stones: 10*120, purple_stones: 10*18,
            poe: 20*450}
 
     r=@Misty_base.dup
@@ -504,7 +504,7 @@ class Simulator
 
   def regal
     @Regal_days ||=49
-    @regal_quantity ||={blue_eggs: 3300}
+    @regal_quantity ||={blue_stones: 3300}
     @regal_quantity.map {|k,v| [k,v*1.0/@Regal_days]}.to_h
   end
   def twisted_bounties
@@ -523,7 +523,7 @@ class Simulator
     @Hero_trial_rewards ||={
       gold: 2000, dia: 300,
       dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
-      blue_eggs: 60, purple_eggs: 60
+      blue_stones: 60, purple_stones: 60
     }
 
     @Hero_trial_rewards.map do |k,v|
@@ -546,17 +546,17 @@ class Simulator
       warn "Board level #{@board_level} not implemented, skipping"
       return {}
     end
-    types=%i(dust gold dia blue_eggs)
+    types=%i(dust gold dia blue_stones)
 
     solo_bounty={dust: [150, 500, 800],
                  gold: [170, 245, 320],
                  dia: [60,100,150],
-                 blue_eggs: [15,25,40]}
+                 blue_stones: [15,25,40]}
     team_bounty={dust: [160, 500, 800],
                  gold: [249, 249, 249],
                  dia: [120,200,300],
-                 blue_eggs: [30,50,80]}
-    type_proba={dust: 3.0/8, gold: 3.0/8, blue_eggs: 1.0/8, dia: 1.0/8}
+                 blue_stones: [30,50,80]}
+    type_proba={dust: 3.0/8, gold: 3.0/8, blue_stones: 1.0/8, dia: 1.0/8}
     tier_proba=[0.9, 0.08, 0.02]
 
     solo_quest=types.map do |type|
@@ -578,8 +578,8 @@ class Simulator
     end.to_h
 
     if @_solo_bounties==8 #lets look at the optimised strat
-      single_event={ gold: 152, blue_eggs: 24, dust: 810, dia: 50}
-      double_event={ gold: 31, blue_eggs: 39, dust: 1875, dia: 260}
+      single_event={ gold: 152, blue_stones: 24, dust: 810, dia: 50}
+      double_event={ gold: 31, blue_stones: 39, dust: 1875, dia: 260}
       solo_quests=types.map do |type|
         v=single_event[type]*2.0/3+double_event[type]*1.0/3
         [type,v]
@@ -659,13 +659,13 @@ class Simulator
     return @_shop unless @_shop.nil?
 
     @shop_refreshes ||= 2
-    @shop_items ||= %i(dust purple_eggs poe shards)
+    @shop_items ||= %i(dust purple_stones poe shards)
 
     warn "Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes} (nor cores/shards max cap)" if @shop_refreshes > 2
     nb_shop=1+@shop_refreshes
     @_shop={dia: -@shop_refreshes*100, gold: 0}
     xp_h_proba=0.25 #TODO: refine these probas
-    purple_eggs_proba=0.25
+    purple_stones_proba=0.25
     gold_e_proba=0.25
     silver_e_proba=0.75
 
@@ -681,9 +681,9 @@ class Simulator
       @_shop[:dia] -= nb_shop*192*xp_h_proba
       @_shop[:xp_h] = nb_shop*24*xp_h_proba
     end
-    if @shop_items.include?(:purple_eggs)
-      @_shop[:dia] -= nb_shop*90*purple_eggs_proba
-      @_shop[:purple_eggs] = nb_shop*5*purple_eggs_proba
+    if @shop_items.include?(:purple_stones)
+      @_shop[:dia] -= nb_shop*90*purple_stones_proba
+      @_shop[:purple_stones] = nb_shop*5*purple_stones_proba
     end
     if @shop_items.include?(:poe)
       @_shop[:gold] -= nb_shop*1125
@@ -777,9 +777,9 @@ class Simulator
     #choice chests
     choice_atier += @total[:hero_choice_chest]||0
 
-    #eggs
-    purple_summons=(@total[:purple_eggs]||0)/60.0
-    blue_summons=(@total[:blue_eggs]||0)/60.0
+    #stones
+    purple_summons=(@total[:purple_stones]||0)/60.0
+    blue_summons=(@total[:blue_stones]||0)/60.0
     random_fodder += purple_summons*0.28 + blue_summons/9.0
     random_atier += purple_summons*0.68
     random_god += purple_summons*0.04
@@ -864,7 +864,7 @@ class Simulator
       upgrades: %i(silver_e gold_e red_e poe twisted shards cores),
       gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
       coins: %i(guild_coins lab_coins hero_coins challenger_coins),
-      summons: %i(purple_eggs blue_eggs scroll friend_summons hcp hero_choice_chest stargazers),
+      summons: %i(purple_stones blue_stones scroll friend_summons hcp hero_choice_chest stargazers),
       misc: %i(dura_fragment invigor arena_tickets)
     }
     ressources2=order.values.flatten.sort.uniq
