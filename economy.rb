@@ -447,19 +447,67 @@ class Simulator
     r.map {|k,v| [k, v/30.0]}.to_h
   end
 
+  def regal_choice(paid:false)
+    if paid
+      {dia: 5500, purple_stones: 1100, blue_stones: 3300}
+    else
+      {blue_stones: 3300}
+    end
+  end
   def regal
     @Regal_days ||=49
-    @regal_quantity ||={blue_stones: 3300}
+    @regal_quantity ||= regal_choice
     @regal_quantity.map {|k,v| [k,v*1.0/@Regal_days]}.to_h
+  end
+
+  def twisted_bounties_choice(type, paid: false)
+    if paid
+      case type
+      when :gold; {dia: 5500, gold_h: 11472}
+      when :xp; {dia: 5500, xp_h: 3444}
+      when :twisted; {dia: 5500, twisted: 3700}
+      when :poe; {dia: 5500, poe: 37000}
+      when :shards; {dia: 5500, shards: 1170}
+      end
+    else
+      case type
+      when :gold; {gold_h: 3824}
+      when :xp; {xp_h: 956}
+      when :twisted; {twisted: 990}
+      when :poe; {poe: 9900}
+      when :shards; {shards: 1170}
+      end
+    end
   end
   def twisted_bounties
     @Twisted_days ||=44
-    @twisted_quantity ||={xp_h: 956}
+    @twisted_quantity ||= twisted_bounties_choice(:xp)
     @twisted_quantity.map {|k,v| [k,v*1.0/@Twisted_days]}.to_h
+  end
+
+  def coe_choice(type, paid: false)
+    if paid
+      case type
+      when :dust; {dia: 5500, dust: 50000, dust_h: 1900}
+      when :red_e; {dia: 5500, red_e: 210}
+      when :gold_e; {dia: 5500, gold_e: 484}
+      when :silver_e; {dia: 5500, silver_e: 735}
+      when :cores; {dia: 5500, cores: 1960}
+      end
+    else
+      case type
+      when :dust; {dust: 7500, dust_h: 380}
+      when :red_e; {red_e: 49}
+      when :gold_e; {gold_e: 136}
+      when :silver_e; {silver_e: 192}
+      when :cores; {cores: 585}
+      end
+    end
   end
   def coe
     @Coe_days ||=36
-    @coe_quantity ||= {cores: 585}
+    @coe_quantity ||= coe_choice(:dust)
+    #Choices:
     @coe_quantity.map {|k,v| [k,v*1.0/@Coe_days]}.to_h
   end
 
@@ -899,7 +947,7 @@ class Simulator
       ascended=atier/8.0; extrafodder=fodders-ascended*10.0
       puts "Ascended 4F: #{round(ascended)} [remains #{round(extrafodder)} fodders]"
     else
-      ascended=fodder/10.0; extraatier=atier-ascended*8.0
+      ascended=fodders/10.0; extraatier=atier-ascended*8.0
       puts "Ascended 4F: #{round(ascended)} [remains #{round(extraatier)} atiers]"
     end
     ascended_god=god/14.0
