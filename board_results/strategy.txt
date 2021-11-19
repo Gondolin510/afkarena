@@ -1,0 +1,26 @@
+# Quests values, simple
+Gold: 9.883, 14.053, 18.338
+Dust: 38.52, 128.4, 205.44
+Egg: 39.0, 65.0, 104.0
+Dia: 60, 100, 150
+
+# Quests values, double
+Gold: 19.766, 28.106, 36.675
+Dust: 77.04, 256.8, 410.88
+Egg: 78.0, 130.0, 208.0
+Dia: 120.0, 200.0, 300.0
+
+
+# Magic=44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104
+Double events: 111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 87.08076, 81.40006, 75.58795, 71.4208
+
+Single: gold L:25 M:20 A:15 dia
+Double: gold L:50 M:40 A:35 dia
+
+-> Strategy:
+- Single: 
+  Refresh when >=2 goldL or >=3 gold or >=2 gold + 6 DustL/EggL or 10 Gold/DustL/EggL
+  Add DustL+EggL when total >=6
+- Double: 
+  Refresh when >=1 goldL or >=2 gold or >=1 gold + 3 DustL/EggL or 5 Gold/DustL/EggL
+  Add DustL+EggL when total >=3

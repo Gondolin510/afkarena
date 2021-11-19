@@ -1,0 +1,655 @@
+**************************** Summary ****************************
+
+                 avg quest       total       tries
+8 quests
+  No refresh
+    Single:      35.71           285.683
+    Double:      71.42           571.36
+    Aggregated:  47.614          380.911
+  Optimized
+    Single:      41.203          329.623     1.8
+    Double:      105.562         844.497     5.652
+    Aggregated:  62.656          501.248
+
+9 quests
+  No refresh
+    Single:      35.71           321.394
+    Double:      71.42           642.788
+    Aggregated:  47.614          428.525
+  Optimized
+    Single:      42.611          383.503     2.306
+    Double:      108.946         980.513     6.228
+    Aggregated:  64.723          582.506
+
+10 quests
+  No refresh
+    Single:      35.71           357.104
+    Double:      71.42           714.208
+    Aggregated:  47.614          476.139
+  Optimized
+    Single:      44              440.004     2.804
+    Double:      111.928         1119.284    6.751
+    Aggregated:  66.643          666.431
+
+Advantage of strategy optimal with 8 quests: 120.337 (simple: 43.94, double: 273.13)
+Advantage of strategy optimal with 9 quests: 153.981 (simple: 62.109, double: 337.725)
+Advantage of strategy optimal with 10 quests: 190.292 (simple: 82.9, double: 405.076)
+
+## Full values
+
+8 quests
+  No refresh
+    Single: 545K Gold + 16 Eggs + 147 Dust + 65 Dia
+    Double: 1090K Gold + 32 Eggs + 1146 Dust + 130 Dia
+    Aggregated: 727K Gold + 21 Eggs + 764 Dust + 87 Dia
+  Optimized
+    Single: 152K Gold + 24 Eggs + 810 Dust + 50 Dia
+    Double: 31K Gold + 39 Eggs + 1875 Dust + 260 Dia
+    Aggregated: 111K Gold + 29 Eggs + 1165 Dust + 120 Dia
+
+9 quests
+  No refresh
+    Single: 614K Gold + 18 Eggs + 645 Dust + 73 Dia
+    Double: 1228K Gold + 36 Eggs + 1290 Dust + 146 Dia
+    Aggregated: 818K Gold + 24 Eggs + 860 Dust + 98 Dia
+  Optimized
+    Single: 152K Gold + 26 Eggs + 929 Dust + 68 Dia
+    Double: 31K Gold + 43 Eggs + 2114 Dust + 324 Dia
+    Aggregated: 111K Gold + 32 Eggs + 1324 Dust + 153 Dia
+
+10 quests
+  No refresh
+    Single: 682K Gold + 20 Eggs + 716 Dust + 81 Dia
+    Double: 1364K Gold + 40 Eggs + 1432 Dust + 162 Dia
+    Aggregated: 909K Gold + 27 Eggs + 955 Dust + 108 Dia
+  Optimized
+    Single: 152K Gold + 28 Eggs + 1049 Dust + 89 Dia
+    Double: 31K Gold + 47 Eggs + 2354 Dust + 391 Dia
+    Aggregated: 111K Gold + 35 Eggs + 1485 Dust + 189 Dia
+
+**************************** 8 quests ****************************
+
+## Average quest
+{:average_quest=> # Probability of each quest
+  {[:gold, :legend]=>0.338,
+   [:gold, :mythic]=>0.03,
+   [:gold, :ascended]=>0.008,
+   [:dust, :legend]=>0.338,
+   [:dust, :mythic]=>0.03,
+   [:dust, :ascended]=>0.008,
+   [:stones, :legend]=>0.113,
+   [:stones, :mythic]=>0.01,
+   [:stones, :ascended]=>0.003,
+   [:dia, :legend]=>0.113,
+   [:dia, :mythic]=>0.01,
+   [:dia, :ascended]=>0.003},
+ :quest_value=> # Diamond conversion
+  {[:gold, :legend]=>9.883,
+   [:gold, :mythic]=>14.053,
+   [:gold, :ascended]=>18.338,
+   [:dust, :legend]=>38.52,
+   [:dust, :mythic]=>128.4,
+   [:dust, :ascended]=>205.44,
+   [:stones, :legend]=>39.0,
+   [:stones, :mythic]=>65.0,
+   [:stones, :ascended]=>104.0,
+   [:dia, :legend]=>60.0,
+   [:dia, :mythic]=>100.0,
+   [:dia, :ascended]=>150.0},
+ :values_by_quest=> # the average gold+dust+stones+dia we get by quest
+  {:gold=>68.175, :gold_v=>3.895,
+   :dust=>71.625, :dust_v=>18.393,
+   :stones=>2.038, :stones_v=>5.298,
+   :dia=>8.125, :total_v=>35.71},
+ :average_value=>35.71}
+
+NB: for double:
+ :quest_value=>
+  {[:gold, :legend]=>19.766,
+   [:gold, :mythic]=>28.106,
+   [:gold, :ascended]=>36.675,
+   [:dust, :legend]=>77.04,
+   [:dust, :mythic]=>256.8,
+   [:dust, :ascended]=>410.88,
+   [:stones, :legend]=>78.0,
+   [:stones, :mythic]=>130.0,
+   [:stones, :ascended]=>208.0,
+   [:dia, :legend]=>120.0,
+   [:dia, :mythic]=>200.0,
+   [:dia, :ascended]=>300.0},
+ :values_by_quest=>
+  {:gold=>136.35, :gold_v=>7.789,
+   :dust=>143.25, :dust_v=>36.787,
+   :stones=>4.075, :stones_v=>10.595,
+   :dia=>16.25, :total_v=>71.421},
+
+# Full values and their diamond conversion across 8 quests
+ :nb=>8,
+ :full_values=>
+  {:gold=>545.4,
+   :gold_v=>31.157,
+   :dust=>573.0,
+   :dust_v=>147.146,
+   :stones=>16.3,
+   :stones_v=>42.38,
+   :dia=>65.0,
+   :dia_v=>65.0,
+   :total_v=>285.683,
+   :dia_with_refresh=>65.0,
+   :total_with_refresh=>285.683},
+
+## Final value across simple and double boards (no refresh)
+{:values_by_quest=>
+  {:gold=>90.9,
+   :gold_v=>5.193,
+   :dust=>95.5,
+   :dust_v=>24.524,
+   :stones=>2.717,
+   :stones_v=>7.063,
+   :dia=>10.833,
+   :dia_v=>10.833,
+   :total_v=>47.614},
+ :full_values=>
+  {:gold=>727.2,
+   :gold_v=>41.542,
+   :dust=>764.0,
+   :dust_v=>196.195,
+   :stones=>21.733,
+   :stones_v=>56.507,
+   :dia=>86.667,
+   :dia_v=>86.667,
+   :total_v=>380.911,
+   :dia_with_refresh=>86.667,
+   :total_with_refresh=>380.911},
+ :average_value=>47.614}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 8 quests using 10000000 simulations (double=false)
+{:nb=>8,
+ :result=> #the average number of each quest with the refresh strategy; this sums to 8
+  {[:gold, :legend]=>0.638,
+   [:gold, :mythic]=>0.125,
+   [:gold, :ascended]=>0.033,
+   [:dust, :legend]=>2.98,
+   [:dust, :mythic]=>0.518,
+   [:dust, :ascended]=>0.13,
+   [:stones, :legend]=>1.2,
+   [:stones, :mythic]=>0.173,
+   [:stones, :ascended]=>0.043,
+   [:dia, :legend]=>1.944,
+   [:dia, :mythic]=>0.173,
+   [:dia, :ascended]=>0.043},
+ :average_tries=>1.8, #number of refresh
+ :average_tries_by_quest=>0.225,
+ :tries_distribution=>
+  [0.154, 0.302, 0.283, 0.159, 0.067, 0.024, 0.007, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=> #proba of each quest; this sums to 1
+  {[:gold, :legend]=>0.08,
+   [:gold, :mythic]=>0.016,
+   [:gold, :ascended]=>0.004,
+   [:dust, :legend]=>0.372,
+   [:dust, :mythic]=>0.065,
+   [:dust, :ascended]=>0.016,
+   [:stones, :legend]=>0.15,
+   [:stones, :mythic]=>0.022,
+   [:stones, :ascended]=>0.005,
+   [:dia, :legend]=>0.243,
+   [:dia, :mythic]=>0.022,
+   [:dia, :ascended]=>0.005},
+ :values_by_quest=> #the average amount of gold+dust+stones+dia we get by quest
+  {:gold=>18.963,
+   :gold_v=>1.083,
+   :dust=>101.232,
+   :dust_v=>25.996,
+   :stones=>3.006,
+   :stones_v=>7.816,
+   :dia=>17.556,
+   :dia_v=>17.556,
+   :total_v=>52.451},
+ :full_values=> #the total amount we get on the board
+  {:gold=>151.708,
+   :gold_v=>8.667,
+   :dust=>809.856,
+   :dust_v=>207.971,
+   :stones=>24.049,
+   :stones_v=>62.529,
+   :dia=>140.444,
+   :dia_v=>140.444,
+   :total_v=>419.61,
+   :dia_with_refresh=>50.457,
+   :total_with_refresh=>329.623},
+ :average_value=>41.203}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 8 quests using 10000000 simulations (double=true)
+-> same as above for double events
+{:nb=>8,
+ :result=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.048,
+   [:gold, :ascended]=>0.012,
+   [:dust, :legend]=>1.575,
+   [:dust, :mythic]=>1.001,
+   [:dust, :ascended]=>0.25,
+   [:stones, :legend]=>0.525,
+   [:stones, :mythic]=>0.334,
+   [:stones, :ascended]=>0.083,
+   [:dia, :legend]=>3.754,
+   [:dia, :mythic]=>0.333,
+   [:dia, :ascended]=>0.083},
+ :average_tries=>5.652,
+ :average_tries_by_quest=>0.706,
+ :tries_distribution=>
+  [0.004, 0.029, 0.073, 0.119, 0.149, 0.153, 0.137, 0.11, 0.081, 0.056, 0.036, 0.022, 0.013, 0.008, 0.004, 0.002, 0.001, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.006,
+   [:gold, :ascended]=>0.001,
+   [:dust, :legend]=>0.197,
+   [:dust, :mythic]=>0.125,
+   [:dust, :ascended]=>0.031,
+   [:stones, :legend]=>0.066,
+   [:stones, :mythic]=>0.042,
+   [:stones, :ascended]=>0.01,
+   [:dia, :legend]=>0.469,
+   [:dia, :mythic]=>0.042,
+   [:dia, :ascended]=>0.01},
+ :values_by_quest=>
+  {:gold=>3.9,
+   :gold_v=>0.223,
+   :dust=>234.341,
+   :dust_v=>60.179,
+   :stones=>4.888,
+   :stones_v=>12.709,
+   :dia=>67.773,
+   :dia_v=>67.773,
+   :total_v=>140.884},
+ :full_values=>
+  {:gold=>31.201,
+   :gold_v=>1.782,
+   :dust=>1874.73,
+   :dust_v=>481.431,
+   :stones=>39.106,
+   :stones_v=>101.676,
+   :dia=>542.184,
+   :dia_v=>542.184,
+   :total_v=>1127.073,
+   :dia_with_refresh=>259.608,
+   :total_with_refresh=>844.497},
+ :average_value=>105.562}
+
+## Final result across simple and double boards
+-> aggregating simple and double events
+{:values_by_quest=>
+  {:gold=>13.942,
+   :gold_v=>0.796,
+   :dust=>145.602,
+   :dust_v=>37.391,
+   :stones=>3.634,
+   :stones_v=>9.447,
+   :dia=>34.295,
+   :dia_v=>34.295,
+   :total_v=>81.929},
+ :full_values=>
+  {:gold=>111.539,
+   :gold_v=>6.372,
+   :dust=>1164.814,
+   :dust_v=>299.124,
+   :stones=>29.068,
+   :stones_v=>75.578,
+   :dia=>274.357,
+   :dia_v=>274.357,
+   :total_v=>655.431,
+   :dia_with_refresh=>120.174,
+   :total_with_refresh=>501.248},
+ :average_value=>62.656}
+
+Advantage of strategy optimal with 8 quests: 120.337 (simple: 43.94, double: 273.13)
+
+**************************** 9 quests ****************************
+
+## Average quest without refresh (nb=9)
+ :nb=>9,
+ :full_values=>
+  {:gold=>613.575,
+   :gold_v=>35.051,
+   :dust=>644.625,
+   :dust_v=>165.54,
+   :stones=>18.338,
+   :stones_v=>47.678,
+   :dia=>73.125,
+   :dia_v=>73.125,
+   :total_v=>321.394,
+   :dia_with_refresh=>73.125,
+   :total_with_refresh=>321.394},
+ :average_value=>35.71}
+
+## Final value across simple and double boards (no refresh)
+ :full_values=>
+  {:gold=>818.1,
+   :gold_v=>46.735,
+   :dust=>859.5,
+   :dust_v=>220.72,
+   :stones=>24.45,
+   :stones_v=>63.57,
+   :dia=>97.5,
+   :dia_v=>97.5,
+   :total_v=>428.525,
+   :dia_with_refresh=>97.5,
+   :total_with_refresh=>428.525},
+ :average_value=>47.614}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 9 quests using 10000000 simulations (double=false)
+{:nb=>9,
+ :result=>
+  {[:gold, :legend]=>0.64,
+   [:gold, :mythic]=>0.124,
+   [:gold, :ascended]=>0.033,
+   [:dust, :legend]=>3.033,
+   [:dust, :mythic]=>0.678,
+   [:dust, :ascended]=>0.169,
+   [:stones, :legend]=>1.22,
+   [:stones, :mythic]=>0.226,
+   [:stones, :ascended]=>0.056,
+   [:dia, :legend]=>2.539,
+   [:dia, :mythic]=>0.226,
+   [:dia, :ascended]=>0.057},
+ :average_tries=>2.306,
+ :average_tries_by_quest=>0.256,
+ :tries_distribution=>
+  [0.095, 0.217, 0.283, 0.214, 0.115, 0.049, 0.018, 0.006, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=>
+  {[:gold, :legend]=>0.071,
+   [:gold, :mythic]=>0.014,
+   [:gold, :ascended]=>0.004,
+   [:dust, :legend]=>0.337,
+   [:dust, :mythic]=>0.075,
+   [:dust, :ascended]=>0.019,
+   [:stones, :legend]=>0.136,
+   [:stones, :mythic]=>0.025,
+   [:stones, :ascended]=>0.006,
+   [:dia, :legend]=>0.282,
+   [:dia, :mythic]=>0.025,
+   [:dia, :ascended]=>0.006},
+ :values_by_quest=>
+  {:gold=>16.852,
+   :gold_v=>0.963,
+   :dust=>103.269,
+   :dust_v=>26.519,
+   :stones=>2.91,
+   :stones_v=>7.567,
+   :dia=>20.376,
+   :dia_v=>20.376,
+   :total_v=>55.425},
+ :full_values=>
+  {:gold=>151.668,
+   :gold_v=>8.664,
+   :dust=>929.421,
+   :dust_v=>238.675,
+   :stones=>26.194,
+   :stones_v=>68.103,
+   :dia=>183.383,
+   :dia_v=>183.383,
+   :total_v=>498.825,
+   :dia_with_refresh=>68.06,
+   :total_with_refresh=>383.503},
+ :average_value=>42.611}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 9 quests using 10000000 simulations (double=true)
+{:nb=>9,
+ :result=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.048,
+   [:gold, :ascended]=>0.012,
+   [:dust, :legend]=>1.575,
+   [:dust, :mythic]=>1.173,
+   [:dust, :ascended]=>0.293,
+   [:stones, :legend]=>0.525,
+   [:stones, :mythic]=>0.391,
+   [:stones, :ascended]=>0.098,
+   [:dia, :legend]=>4.397,
+   [:dia, :mythic]=>0.391,
+   [:dia, :ascended]=>0.098},
+ :average_tries=>6.228,
+ :average_tries_by_quest=>0.692,
+ :tries_distribution=>
+  [0.001, 0.015, 0.049, 0.094, 0.132, 0.15, 0.145, 0.125, 0.097, 0.07, 0.048, 0.031, 0.019, 0.011, 0.006, 0.004, 0.002, 0.001, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.005,
+   [:gold, :ascended]=>0.001,
+   [:dust, :legend]=>0.175,
+   [:dust, :mythic]=>0.13,
+   [:dust, :ascended]=>0.033,
+   [:stones, :legend]=>0.058,
+   [:stones, :mythic]=>0.043,
+   [:stones, :ascended]=>0.011,
+   [:dia, :legend]=>0.489,
+   [:dia, :mythic]=>0.043,
+   [:dia, :ascended]=>0.011},
+ :values_by_quest=>
+  {:gold=>3.473,
+   :gold_v=>0.198,
+   :dust=>234.892,
+   :dust_v=>60.32,
+   :stones=>4.791,
+   :stones_v=>12.457,
+   :dia=>70.571,
+   :dia_v=>70.571,
+   :total_v=>143.547},
+ :full_values=>
+  {:gold=>31.257,
+   :gold_v=>1.786,
+   :dust=>2114.031,
+   :dust_v=>542.883,
+   :stones=>43.122,
+   :stones_v=>112.117,
+   :dia=>635.135,
+   :dia_v=>635.135,
+   :total_v=>1291.921,
+   :dia_with_refresh=>323.727,
+   :total_with_refresh=>980.513},
+ :average_value=>108.946}
+
+## Final result across simple and double boards
+{:values_by_quest=>
+  {:gold=>12.392,
+   :gold_v=>0.708,
+   :dust=>147.143,
+   :dust_v=>37.786,
+   :stones=>3.537,
+   :stones_v=>9.197,
+   :dia=>37.107,
+   :dia_v=>37.107,
+   :total_v=>84.799},
+ :full_values=>
+  {:gold=>111.531,
+   :gold_v=>6.371,
+   :dust=>1324.291,
+   :dust_v=>340.078,
+   :stones=>31.836,
+   :stones_v=>82.775,
+   :dia=>333.967,
+   :dia_v=>333.967,
+   :total_v=>763.191,
+   :dia_with_refresh=>153.282,
+   :total_with_refresh=>582.506},
+ :average_value=>64.723}
+
+Advantage of strategy optimal with 9 quests: 153.981 (simple: 62.109, double: 337.725)
+
+**************************** 10 quests ****************************
+
+## Average quest without refresh (nb=10)
+ :nb=>10,
+ :full_values=>
+  {:gold=>681.75,
+   :gold_v=>38.946,
+   :dust=>716.25,
+   :dust_v=>183.933,
+   :stones=>20.375,
+   :stones_v=>52.975,
+   :dia=>81.25,
+   :dia_v=>81.25,
+   :total_v=>357.104,
+   :dia_with_refresh=>81.25,
+   :total_with_refresh=>357.104},
+ :average_value=>35.71}
+
+## Final value across simple and double boards (no refresh)
+ :full_values=>
+  {:gold=>909.0,
+   :gold_v=>51.928,
+   :dust=>955.0,
+   :dust_v=>245.244,
+   :stones=>27.167,
+   :stones_v=>70.633,
+   :dia=>108.333,
+   :dia_v=>108.333,
+   :total_v=>476.139,
+   :dia_with_refresh=>108.333,
+   :total_with_refresh=>476.139},
+ :average_value=>47.614}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 10 quests using 10000000 simulations (double=false)
+{:nb=>10,
+ :result=>
+  {[:gold, :legend]=>0.641,
+   [:gold, :mythic]=>0.123,
+   [:gold, :ascended]=>0.033,
+   [:dust, :legend]=>3.052,
+   [:dust, :mythic]=>0.845,
+   [:dust, :ascended]=>0.211,
+   [:stones, :legend]=>1.225,
+   [:stones, :mythic]=>0.281,
+   [:stones, :ascended]=>0.07,
+   [:dia, :legend]=>3.167,
+   [:dia, :mythic]=>0.282,
+   [:dia, :ascended]=>0.07},
+ :average_tries=>2.804,
+ :average_tries_by_quest=>0.28,
+ :tries_distribution=>
+  [0.052, 0.152, 0.253, 0.244, 0.161, 0.082, 0.035, 0.013, 0.005, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=>
+  {[:gold, :legend]=>0.064,
+   [:gold, :mythic]=>0.012,
+   [:gold, :ascended]=>0.003,
+   [:dust, :legend]=>0.305,
+   [:dust, :mythic]=>0.084,
+   [:dust, :ascended]=>0.021,
+   [:stones, :legend]=>0.123,
+   [:stones, :mythic]=>0.028,
+   [:stones, :ascended]=>0.007,
+   [:dia, :legend]=>0.317,
+   [:dia, :mythic]=>0.028,
+   [:dia, :ascended]=>0.007},
+ :values_by_quest=>
+  {:gold=>15.158,
+   :gold_v=>0.866,
+   :dust=>104.899,
+   :dust_v=>26.938,
+   :stones=>2.823,
+   :stones_v=>7.34,
+   :dia=>22.876,
+   :dia_v=>22.876,
+   :total_v=>58.02},
+ :full_values=>
+  {:gold=>151.58,
+   :gold_v=>8.659,
+   :dust=>1048.994,
+   :dust_v=>269.382,
+   :stones=>28.23,
+   :stones_v=>73.397,
+   :dia=>228.763,
+   :dia_v=>228.763,
+   :total_v=>580.201,
+   :dia_with_refresh=>88.566,
+   :total_with_refresh=>440.004},
+ :average_value=>44.0}
+
+## Simulation with optimal refresh strategy ##
+# Average quest value for 10 quests using 10000000 simulations (double=true)
+{:nb=>10,
+ :result=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.048,
+   [:gold, :ascended]=>0.012,
+   [:dust, :legend]=>1.575,
+   [:dust, :mythic]=>1.344,
+   [:dust, :ascended]=>0.336,
+   [:stones, :legend]=>0.525,
+   [:stones, :mythic]=>0.448,
+   [:stones, :ascended]=>0.112,
+   [:dia, :legend]=>5.04,
+   [:dia, :mythic]=>0.448,
+   [:dia, :ascended]=>0.112},
+ :average_tries=>6.751,
+ :average_tries_by_quest=>0.675,
+ :tries_distribution=>
+  [0.0, 0.007, 0.031, 0.071, 0.112, 0.141, 0.147, 0.135, 0.111, 0.084, 0.059, 0.039, 0.025, 0.015, 0.009, 0.005, 0.003, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+ :average_quest=>
+  {[:gold, :legend]=>0.0,
+   [:gold, :mythic]=>0.005,
+   [:gold, :ascended]=>0.001,
+   [:dust, :legend]=>0.158,
+   [:dust, :mythic]=>0.134,
+   [:dust, :ascended]=>0.034,
+   [:stones, :legend]=>0.053,
+   [:stones, :mythic]=>0.045,
+   [:stones, :ascended]=>0.011,
+   [:dia, :legend]=>0.504,
+   [:dia, :mythic]=>0.045,
+   [:dia, :ascended]=>0.011},
+ :values_by_quest=>
+  {:gold=>3.119,
+   :gold_v=>0.178,
+   :dust=>235.39,
+   :dust_v=>60.448,
+   :stones=>4.71,
+   :stones_v=>12.245,
+   :dia=>72.811,
+   :dia_v=>72.811,
+   :total_v=>145.682},
+ :full_values=>
+  {:gold=>31.193,
+   :gold_v=>1.782,
+   :dust=>2353.896,
+   :dust_v=>604.48,
+   :stones=>47.095,
+   :stones_v=>122.448,
+   :dia=>728.11,
+   :dia_v=>728.11,
+   :total_v=>1456.82,
+   :dia_with_refresh=>390.574,
+   :total_with_refresh=>1119.284},
+ :average_value=>111.928}
+
+## Final result across simple and double boards
+{:values_by_quest=>
+  {:gold=>11.145,
+   :gold_v=>0.637,
+   :dust=>148.396,
+   :dust_v=>38.108,
+   :stones=>3.452,
+   :stones_v=>8.975,
+   :dia=>39.521,
+   :dia_v=>39.521,
+   :total_v=>87.241},
+ :full_values=>
+  {:gold=>111.451,
+   :gold_v=>6.367,
+   :dust=>1483.961,
+   :dust_v=>381.081,
+   :stones=>34.518,
+   :stones_v=>89.747,
+   :dia=>395.212,
+   :dia_v=>395.212,
+   :total_v=>872.408,
+   :dia_with_refresh=>189.235,
+   :total_with_refresh=>666.431},
+ :average_value=>66.643}
+
+Advantage of strategy optimal with 10 quests: 190.292 (simple: 82.9, double: 405.076)
