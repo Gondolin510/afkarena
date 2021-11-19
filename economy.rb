@@ -44,11 +44,18 @@ class Simulator
     get_idle_hourly
   end
 
-  def process
+  def process!
     get_income
     make_exchange
     tally
     get_ressource_order
+  end
+
+  def process
+    unless @_processed
+      process!
+      @_processed=true
+    end
   end
 
   def get_income
@@ -1016,7 +1023,8 @@ class Simulator
   end
 
   def show_variables(verbose: false)
-    blacklist=%i(@income @exchange @total @summons @summons_summary @Vows @_order)
+    process
+    blacklist=%i(@income @exchange @total @summons @summons_summary @Vows @_order @_processed)
     vars=instance_variables-blacklist
     internal_vars=vars.select do |i|
       i.to_s.start_with?("@_")
