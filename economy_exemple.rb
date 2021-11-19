@@ -26,6 +26,8 @@ s.instance_eval do
    @_dismal_stage_chest_rewards = { gold_h: 59, xp_h: 29.5, dust_h: 29.5 }
    # assume that vows only give 10 stargaze cards
    @_average_vow_rewards=({stargazers: 10})
+   #the program assumes by default that we are at chap 33+ so the fos mythic bonus is at 90%, change it:
+   @_fos_mythic_mult=0.3*2 #not yet at stage 32-60!
 end
 
 #There are hooks `custom_income` and `custom_exchange` to customize income and spendings:

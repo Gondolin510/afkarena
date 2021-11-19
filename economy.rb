@@ -12,25 +12,28 @@ class Simulator
     setup #we assume that we are at least at Chap 33
   end
 
-  def setup
-    @afk_xp ||=13235 #the displayed value by minute, this include the vip bonus but not the fos bonus
-    @afk_gold ||=844 #the displayed value by minute (include vip)
-    @afk_dust ||=1167.6 #the value by day
+  def setup #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
 
-    #at rc 557: the amount required to level up (xp and gold are in K)
-    @level_gold ||= 18440
-    @level_xp ||= 130410
-    @level_dust ||= 25599
+    #Enter the afk timer value for xp and gold:
+    @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
+    @afk_gold ||=900 #the displayed value by minute (include vip)
+    @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
+    #This is used to set up @_real_afk_xp, @_real_afk_gold, @_real_afk_dust which are the hourly base values not affected by vip, with gold and xp in K. Set these variables directly if you have them instead
+
+    #at rc 350: the amount required to level up (xp and gold are in K)
+    @level_gold ||= 18132.62
+    @level_xp ||= 130100
+    @level_dust ||= 24703
 
     @nb_ff ||=6 #ff by day
-    @vip ||=9 #vip level
+    @vip ||=10 #vip level
     @subscription ||=true if @subscription.nil?
-    @player_level ||=165 #for fos
+    @player_level ||=180 #for fos, 180 is max fos
     @board_level ||=8
 
     @fos_t1_gear_bonus ||=3 #kings tower: 1 at 250/2 at 300/3 at 350
     @fos_t2_gear_bonus ||=3 #4f towers: 1 at 200/2 at 240/3 at 280
-    @fos_invigor_bonus ||=2 #god towers: 1 at 100/2 at 200/3 at 300
+    @fos_invigor_bonus ||=3 #god towers: 1 at 100/2 at 200/3 at 300
 
     @monthly_stargazing ||= 0 #number of stargazing done in a month
     @monthly_tavern ||= 0 #number of tavern pulls
@@ -89,7 +92,7 @@ class Simulator
     @exchange={}
     @exchange[:ff]=exchange_ff
     @exchange[:shop]=exchange_shop
-    @exchange[:dura_fragment_sell]=sell_dura
+    @exchange[:dura_fragments_sell]=sell_dura
     summonings
     @exchange.merge!(custom_exchange)
   end
@@ -231,13 +234,13 @@ class Simulator
       t3: 1.0/(24*15), #1 every 15 days
       t1_gear: t_gear_hourly,
       t2_gear: t_gear_hourly,
-      invigor: 6, dura_fragment: 0.267,
+      invigor: 6, dura_fragments: 0.267,
     } #the last of these items to max out is poe at Chap 33
 
     # we use gold and xp in K
     @_real_afk_xp||=@afk_xp*(60.0/1000)/(1.0+@_vip_xp_mult)
     @_real_afk_gold||=@afk_gold*(60.0/1000)/(1.0+@_vip_gold_mult)
-    @_real_afk_dust=@afk_dust/24.0
+    @_real_afk_dust||=@afk_dust/24.0
 
     @_idle_hourly=@Idle_hourly.dup
     @_idle_hourly[:mythic_gear] *= @_mythic_mult
@@ -317,7 +320,7 @@ class Simulator
   def quests
     @Daily_quest ||= {
       dust_h: 2, gold_h: 2, gold_hg: 2,
-      blue_stones: 5, arena_tickets: 2, xp_h: 2, scroll: 1,
+      blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
       dia: 50+100
     }
     @Weekly_quest ||= {
@@ -325,7 +328,7 @@ class Simulator
       twisted: 50, poe: 500,
       blue_stones: 60, purple_stones: 10,
       silver_e: 20, gold_e: 10, red_e: 5,
-      dia: 400, scroll: 3,
+      dia: 400, scrolls: 3,
       dura_tears: 3
     } #this maxes out at 30-60 with the red emblem rewards
     ressources=(@Daily_quest.keys+@Weekly_quest.keys).flatten.sort.uniq
@@ -545,7 +548,7 @@ class Simulator
         shards: 100, cores: 50,
         silver_e: 20, gold_e: 20, red_e: 10,
         poe: 1000,
-        scroll: 20
+        scrolls: 20
       },
       gold_rush: {
         shards: 120, cores: 50,
@@ -656,7 +659,7 @@ class Simulator
     @Nb_dura ||=7
     @nb_dura_selling ||=1
 
-    total_dura=tally_income[:dura_fragment]*1.0
+    total_dura=tally_income[:dura_fragments]*1.0
     {gold: @nb_dura_selling*total_dura/@Nb_dura}
   end
 
@@ -667,7 +670,7 @@ class Simulator
     }
     @exchange[:tavern]={
       dia: -270.0*@monthly_tavern/30,
-      scroll: @monthly_tavern/30.0
+      scrolls: @monthly_tavern/30.0
     }
     @exchange[:hcp]={
       dia: -300.0*@monthly_hcp/30,
@@ -743,7 +746,7 @@ class Simulator
     common_summons += friends * 0.528
 
     #wishlist summons
-    wl=(@total[:scroll]||0)+(@total[:wishlist]||0)
+    wl=(@total[:scrolls]||0)+(@total[:wishlist]||0)
     random_fodder   += wl * 0.4370/9.0
     wishlist_atier += wl * 0.0461
     random_god += wl * 0.002
@@ -779,7 +782,7 @@ class Simulator
     stargaze_ressources={}
     stargaze_ressources[:dia]=stargaze * 30000*0.0001
     stargaze_ressources[:mythic_gear]= stargaze * 12*0.0007
-    stargaze_ressources[:dura_fragment]=stargaze * 7* (15*0.0018+5*0.0056+1*0.0276)
+    stargaze_ressources[:dura_fragments]=stargaze * 7* (15*0.0018+5*0.0056+1*0.0276)
     stargaze_ressources[:arena_tickets] = stargaze *0.0501
     stargaze_ressources[:gold_h]=stargaze * (2*24*0.045+5*6*0.0936)
     stargaze_ressources[:xp_h]=stargaze * (1*24*0.045+2*6*0.0936)
@@ -815,8 +818,8 @@ class Simulator
       upgrades: %i(silver_e gold_e red_e poe twisted shards cores),
       gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
       coins: %i(guild_coins lab_coins hero_coins challenger_coins),
-      summons: %i(purple_stones blue_stones scroll friend_summons hcp hero_choice_chest stargazers),
-      misc: %i(dura_fragment invigor arena_tickets)
+      summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
+      misc: %i(dura_fragments dura_tears invigor arena_tickets)
     }
     ressources2=order.values.flatten.sort.uniq
     missing=ressources-ressources2
@@ -1055,7 +1058,7 @@ end
 
 
 if __FILE__ == $0
-  s=Simulator.new do
+  s=Simulator.new do #example run
     # @monthly_stargazing=50
     @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
   end
