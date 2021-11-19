@@ -20,9 +20,10 @@ s=Simulator.new do
   @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
   @regal_quantity = regal_choice(paid: true) #we pay the regal pass
   @coe_quantity = coe_choice(:cores) #we select cores rather than dust in champiion of esperia regals
+  #see the variable list below for the full settings
 end
 
-# If we are feeling adventurous we can then even change internal variables:
+# If we are feeling adventurous we can even change internal variables:
 s.instance_eval do
    # skipping large camps in dismal:
    @_dismal_stage_chest_rewards = { gold_h: 59, xp_h: 29.5, dust_h: 29.5 }

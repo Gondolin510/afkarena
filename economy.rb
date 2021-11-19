@@ -706,7 +706,7 @@ class Simulator
 
   def sell_dura
     @Nb_dura ||=7
-    @nb_dura_selling ||=1
+    @nb_dura_selling ||=0
 
     total_dura=tally_income[:dura_fragments]*1.0
     {gold: @nb_dura_selling*total_dura/@Nb_dura}
