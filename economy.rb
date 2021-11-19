@@ -1,76 +1,7 @@
 #!/usr/bin/env ruby
 #TODO: towers, more events?
-#      income dia value
 
-module Value
-  def gold_conversion #convert 1K gold into dia
-    #2250K gold = 500 dust. 24h dust=300 dia=1167.6 dust
-    (500.0/2250) / (1167.6/300)
-  end
-
-  def idle_hourly
-    {gold: 1, xp: 1, dust: 1}
-  end
-
-  def items_value
-    value = {
-      dia: 1,
-      gold: gold_conversion,
-      xp: 8 / idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
-      dust: 12.5 / idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
-      gold_h: 2, #24h gold=48 dia, 1h gold=2 dia
-        #Alternative: idle[:gold]*gold_conversion,
-      xp_h: 8,
-      dust_h: 12.5,
-      poe: 0.675,
-      twisted: 6.75,
-      silver_e: 10080.0/30 * gold_conversion,
-      gold_e: 10920.0 /20 * gold_conversion,
-      red_e: 135,
-
-      dura_fragment: 100 * gold_conversion,
-      class_fragment: 9000 * 0.675 / 400,
-
-      mythic_gear: 500,
-      t1: 1000,
-      t2: 2000,
-      t3: 3000,
-      t1_gear: 500 + 1000,
-      t2_gear: 500 + 1000 + 2000,
-
-      invigor: 0.24,
-      blue_stones: 2.6,
-      purple_stones: 31.2,
-
-      scroll: 240,
-      faction: 240,
-      stargazers: 500,
-      shards: 2000/20 *gold_conversion, #or 6.75=135/20
-      cores: (7500 / 48.65 + 380) * 12.5 / 585 #or 13.5=135/10
-    }
-
-    value
-  end
-  #missing: :arena_tickets :challenger_coins :friend_summons :gold_hg :guild_coins :hero_choice_chest :lab_coins
-
-  def dia_value(items)
-    o=[]; sum=0
-    values=items_value
-    items.each do |k,v|
-      # p k unless values.key?(k)
-      value=v*(values[k]||0)
-      sum+=value
-      o.push("#{round(v)} #{k}=#{round(value)} dia")
-    end
-    return [sum, o.join(' + ')]
-  end
-
-  @@rounding=2
-  def round(p)
-    p.round(@@rounding)
-  end
-
-end
+require './value'
 
 class Simulator
   attr_accessor :income, :outcome
@@ -86,24 +17,24 @@ class Simulator
     @afk_gold ||=844 #the displayed value by minute (include vip)
     @afk_dust ||=1167.6 #the value by day
 
-    #at rc 557
+    #at rc 557: the amount required to level up (xp and gold are in K)
     @level_gold ||= 18440
     @level_xp ||= 130410
     @level_dust ||= 25599
 
-    @nb_ff ||=6
-    @vip ||=9
+    @nb_ff ||=6 #ff by day
+    @vip ||=9 #vip level
     @subscription ||=true if @subscription.nil?
     @player_level ||=165 #for fos
     @board_level ||=8
 
-    @fos_t1_gear_bonus ||=3 #kings tower: 250/300/350
-    @fos_t2_gear_bonus ||=3 #4f towers: 200/240/280
-    @fos_invigor_bonus ||=2 #god towers: 100/200/300
+    @fos_t1_gear_bonus ||=3 #kings tower: 1 at 250/2 at 300/3 at 350
+    @fos_t2_gear_bonus ||=3 #4f towers: 1 at 200/2 at 240/3 at 280
+    @fos_invigor_bonus ||=2 #god towers: 1 at 100/2 at 200/3 at 300
 
-    @monthly_stargazing ||= 0
-    @monthly_tavern ||= 0
-    @monthly_hcp ||= 0
+    @monthly_stargazing ||= 0 #number of stargazing done in a month
+    @monthly_tavern ||= 0 #number of tavern pulls
+    @monthly_hcp ||= 0 #number of hcp pulls
 
     get_vip
     get_fos
@@ -141,7 +72,7 @@ class Simulator
     @income[:hero_trial]=hero_trial
     @income[:guild_hero_trial]=guild_hero_trial
     @income[:vow]=vow
-    @income[:custom]=custom_income
+    @income.merge!(custom_income)
   end
   def custom_income
     {}
@@ -153,7 +84,7 @@ class Simulator
     @exchange[:shop]=exchange_shop
     @exchange[:dura_fragment_sell]=sell_dura
     summonings
-    @exchange[:custom]=custom_exchange
+    @exchange.merge!(custom_exchange)
   end
   def custom_exchange
     {}
@@ -293,7 +224,7 @@ class Simulator
       t3: 1.0/(24*15), #1 every 15 days
       t1_gear: t_gear_hourly,
       t2_gear: t_gear_hourly,
-      invigor: 6, dura_fragment: 0.267
+      invigor: 6, dura_fragment: 0.267,
     } #the last of these items to max out is poe at Chap 33
 
     # we use gold and xp in K
@@ -327,6 +258,8 @@ class Simulator
     @_real_afk_dust
   end
 
+  # Income functions
+  # ################
   def idle
     @_idle_hourly.map {|k,v| [k, v*24.0]}.to_h
   end
@@ -385,7 +318,8 @@ class Simulator
       twisted: 50, poe: 500,
       blue_stones: 60, purple_stones: 10,
       silver_e: 20, gold_e: 10, red_e: 5,
-      dia: 400, scroll: 3
+      dia: 400, scroll: 3,
+      dura_tears: 3
     } #this maxes out at 30-60 with the red emblem rewards
     ressources=(@Daily_quest.keys+@Weekly_quest.keys).flatten.sort.uniq
     ressources.map do |r|
@@ -629,15 +563,18 @@ class Simulator
 
     @Nb_vows=2 #2 by month
     keys=@Vows.values.map {|i| i.keys}.flatten.uniq
-    @_average_vow_rewards={}
-    keys.each do |k|
-      @_average_vow_rewards[k]= (@Vows.values.map {|i| i[k]||0}).sum / (@Vows.keys.length*1.0)
-    end
-    # p @_average_vow_rewards
+    if @_average_vow_rewards.nil?
+      @_average_vow_rewards={}
+      keys.each do |k|
+        @_average_vow_rewards[k]= (@Vows.values.map {|i| i[k]||0}).sum / (@Vows.keys.length*1.0)
+      end
 
-    #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
-    purple_chests=@_average_vow_rewards.delete(:purple_chests)
-    @_average_vow_rewards[:dust_h]=purple_chests*16.0
+      #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
+      purple_chests=@_average_vow_rewards.delete(:purple_chests)
+      @_average_vow_rewards[:dust_h]=purple_chests*16.0
+
+      # p @_average_vow_rewards
+    end
 
     @_average_vow_rewards.map do |k,v|
       [k, v*@Nb_vows/30.0]
@@ -712,7 +649,7 @@ class Simulator
     @Nb_dura ||=7
     @nb_dura_selling ||=1
 
-    total_dura=get_tally(@income)[:dura_fragment]*1.0
+    total_dura=tally_income[:dura_fragment]*1.0
     {gold: @nb_dura_selling*total_dura/@Nb_dura}
   end
 
@@ -746,11 +683,18 @@ class Simulator
     r
   end
 
+  def tally_income
+    get_tally(@income)
+  end
+  def tally_exchange
+    get_tally(@exchange)
+  end
+
   def tally
-    tally_income=get_tally(@income)
-    tally_exchange=get_tally(@exchange)
-    @total= (tally_income.keys+tally_exchange.keys).uniq.map do |key|
-      [key, (tally_income[key]||0)+(tally_exchange[key]||0)]
+    _tally_income=tally_income #memoize to not call the function each time here
+    _tally_exchange=tally_exchange
+    @total= (_tally_income.keys+_tally_exchange.keys).uniq.map do |key|
+      [key, (_tally_income[key]||0)+(_tally_exchange[key]||0)]
     end.to_h
 
     handle_summons #get extra ressources from summons, this updates @total
@@ -901,15 +845,13 @@ class Simulator
     make_summary(@summons)
     puts
 
-    value,details=dia_value(get_tally(@income))
-    puts "Total value: #{round(value)} dia [#{details}]"
+    puts "Total value: #{show_dia_value(tally_income)}"
     puts
   end
 
   def ff_summary
     puts "=============== Fast Forward Value ==============="
-    value,details=dia_value(one_ff)
-    puts "#{round(value)} dia [#{details}]"
+    puts show_dia_value(one_ff)
     puts
   end
 
@@ -1102,6 +1044,7 @@ class Simulator
     end
   end
 end
+
 
 if __FILE__ == $0
   s=Simulator.new do
