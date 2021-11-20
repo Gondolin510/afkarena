@@ -41,7 +41,7 @@ Advantage of strategy optimal with 10 quests: 190.292 (simple: 82.9, double: 405
   No refresh
     Single: 545K Gold + 16 Eggs + 147 Dust + 65 Dia
     Double: 1090K Gold + 32 Eggs + 1146 Dust + 130 Dia
-    Aggregated: 727K Gold + 21 Eggs + 764 Dust + 87 Dia
+    Aggregated: 727K Gold + 22 Eggs + 764 Dust + 87 Dia
   Optimized
     Single: 152K Gold + 24 Eggs + 810 Dust + 50 Dia
     Double: 31K Gold + 39 Eggs + 1875 Dust + 260 Dia
@@ -65,7 +65,7 @@ Advantage of strategy optimal with 10 quests: 190.292 (simple: 82.9, double: 405
   Optimized
     Single: 152K Gold + 28 Eggs + 1049 Dust + 89 Dia
     Double: 31K Gold + 47 Eggs + 2354 Dust + 391 Dia
-    Aggregated: 111K Gold + 35 Eggs + 1485 Dust + 189 Dia
+    Aggregated: 111K Gold + 35 Eggs + 1484 Dust + 189 Dia
 
 **************************** 8 quests ****************************
 
