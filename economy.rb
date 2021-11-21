@@ -40,6 +40,8 @@ class Simulator
     @monthly_tavern ||= 0 #number of tavern pulls
     @monthly_hcp ||= 0 #number of hcp pulls
 
+    @ressources={}
+
     get_vip
     get_fos
     get_subscription
@@ -51,7 +53,7 @@ class Simulator
   def process!
     get_income
     make_exchange
-    tally
+    handle_summons #get extra ressources from summons
     get_ressource_order
   end
 
@@ -63,39 +65,37 @@ class Simulator
   end
 
   def get_income
-    @income={}
-    @income[:idle]=idle
-    @income[:ff]=ff
-    @income[:board]=bounties
-    @income[:guild]=guild
-    @income[:oak_inn]=oak_inn
-    @income[:tr]=tr
-    @income[:quests]=quests
-    @income[:merchants]=merchants
-    @income[:friends]=friends
-    @income[:arena]=arena
-    @income[:lct]=lct
-    @income[:dismal]=labyrinth
-    @income[:misty]=misty
-    @income[:regal]=regal
-    @income[:tr_bounties]=twisted_bounties
-    @income[:coe]=coe
-    @income[:hero_trial]=hero_trial
-    @income[:guild_hero_trial]=guild_hero_trial
-    @income[:vow]=vow
-    @income.merge!(custom_income)
+    @ressources[:idle]=idle
+    @ressources[:ff]=ff
+    @ressources[:board]=bounties
+    @ressources[:guild]=guild
+    @ressources[:oak_inn]=oak_inn
+    @ressources[:tr]=tr
+    @ressources[:quests]=quests
+    @ressources[:merchants]=merchants
+    @ressources[:friends]=friends
+    @ressources[:arena]=arena
+    @ressources[:lct]=lct
+    @ressources[:dismal]=labyrinth
+    @ressources[:misty]=misty
+    @ressources[:regal]=regal
+    @ressources[:tr_bounties]=twisted_bounties
+    @ressources[:coe]=coe
+    @ressources[:hero_trial]=hero_trial
+    @ressources[:guild_hero_trial]=guild_hero_trial
+    @ressources[:vow]=vow
+    @ressources.merge!(custom_income)
   end
   def custom_income
     {}
   end
 
   def make_exchange
-    @exchange={}
-    @exchange[:ff]=exchange_ff
-    @exchange[:shop]=exchange_shop
-    @exchange[:dura_fragments_sell]=sell_dura
+    @ressources[:ff]=exchange_ff
+    @ressources[:shop]=exchange_shop
+    @ressources[:dura_fragments_sell]=sell_dura
     summonings
-    @exchange.merge!(custom_exchange)
+    @ressources.merge!(custom_exchange)
   end
   def custom_exchange
     {}
@@ -262,11 +262,20 @@ class Simulator
   def real_afk_gold
     @_real_afk_gold
   end
+  def real_afk_gold=(v)
+    @_real_afk_gold=v
+  end
   def real_afk_xp
     @_real_afk_xp
   end
+  def real_afk_xp=(v)
+    @_real_afk_xp=v
+  end
   def real_afk_dust
     @_real_afk_dust
+  end
+  def real_afk_dust=(v)
+    @_real_afk_dust=(v)
   end
 
   # Income functions
@@ -709,20 +718,20 @@ class Simulator
     @Nb_dura ||=7
     @nb_dura_selling ||=0
 
-    total_dura=tally_income[:dura_fragments]*1.0
+    total_dura=tally[:dura_fragments]*1.0
     {gold: @nb_dura_selling*total_dura/@Nb_dura}
   end
 
   def summonings
-    @exchange[:stargazing]={
+    @ressources[:stargazing]={
       dia: -500.0*@monthly_stargazing/30,
       stargazers: @monthly_stargazing/30.0
     }
-    @exchange[:tavern]={
+    @ressources[:tavern]={
       dia: -270.0*@monthly_tavern/30,
       scrolls: @monthly_tavern/30.0
     }
-    @exchange[:hcp]={
+    @ressources[:hcp]={
       dia: -300.0*@monthly_hcp/30,
       hcp: @monthly_hcp/30.0
     }
@@ -742,68 +751,61 @@ class Simulator
     end
     r
   end
-
-  def tally_income
-    get_tally(@income)
-  end
-  def tally_exchange
-    get_tally(@exchange)
-  end
-
   def tally
-    _tally_income=tally_income #memoize to not call the function each time here
-    _tally_exchange=tally_exchange
-    @total= (_tally_income.keys+_tally_exchange.keys).uniq.map do |key|
-      [key, (_tally_income[key]||0)+(_tally_exchange[key]||0)]
-    end.to_h
-
-    handle_summons #get extra ressources from summons, this updates @total
-    convert_ressources_h
-    @total
+    get_tally(@ressources)
   end
 
-  def convert_ressources_h
-    dust_h=@total.delete(:dust_h)||0
-    @total[:dust]=(@total[:dust]||0)+dust_h*real_afk_dust
-    xp_h=@total.delete(:xp_h)||0
-    @total[:xp]=(@total[:xp]||0)+xp_h*real_afk_xp
-    gold_h=@total.delete(:gold_h)||0
-    gold_hg=@total.delete(:gold_hg)||0 #this is affected only by vip
-    @total[:gold]=(@total[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
-    @total
+  def get_total(r)
+    s=get_tally(r)
+    convert_ressources_h(s)
+  end
+  def full_total
+    get_total(@ressources)
+  end
+
+  def convert_ressources_h(r)
+    dust_h=r.delete(:dust_h)||0
+    r[:dust]=(r[:dust]||0)+dust_h*real_afk_dust
+    xp_h=r.delete(:xp_h)||0
+    r[:xp]=(r[:xp]||0)+xp_h*real_afk_xp
+    gold_h=r.delete(:gold_h)||0
+    gold_hg=r.delete(:gold_hg)||0 #this is affected only by vip
+    r[:gold]=(r[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
+    r
   end
 
   def handle_summons
+    total=tally
     random_fodder=0; random_atier=0; random_god=0
     wishlist_atier=0; choice_atier=0; choice_god=0
     common_summons=0;
 
     #choice chests
-    choice_atier += @total[:hero_choice_chest]||0
+    choice_atier += total[:hero_choice_chest]||0
 
     #stones
-    purple_summons=(@total[:purple_stones]||0)/60.0
-    blue_summons=(@total[:blue_stones]||0)/60.0
+    purple_summons=(total[:purple_stones]||0)/60.0
+    blue_summons=(total[:blue_stones]||0)/60.0
     random_fodder += purple_summons*0.28 + blue_summons/9.0
     random_atier += purple_summons*0.68
     random_god += purple_summons*0.04
 
     #friend summons
-    friends=@total[:fridend_summons]||0
+    friends=total[:fridend_summons]||0
     random_fodder   += friends * 0.4479/9.0
     wishlist_atier += friends * 0.0221
     random_god += friends * 0.002
     common_summons += friends * 0.528
 
     #wishlist summons
-    wl=(@total[:scrolls]||0)+(@total[:wishlist]||0)
+    wl=(total[:scrolls]||0)+(total[:wishlist]||0)
     random_fodder   += wl * 0.4370/9.0
     wishlist_atier += wl * 0.0461
     random_god += wl * 0.002
     common_summons += wl * 0.5169
 
     #hcp summons
-    hcp=(@total[:hcp]||0)
+    hcp=(total[:hcp]||0)
     random_fodder   += hcp * 0.4370/9.0
     choice_atier += hcp * 0.0461
     random_god += hcp * 0.002
@@ -823,9 +825,10 @@ class Simulator
     #1 common = 160 hero coins + 5 dust
     ressources[:hero_coins]=common_summons*160
     ressources[:dust]=common_summons*5
+    @ressources[:summons]=ressources
 
     #stargazing
-    stargaze=@total[:stargazers]
+    stargaze=total[:stargazers]
     choice_god += stargaze/40.0
     random_atier += stargaze * 4*0.008 #purple card
     random_fodder += stargaze * 4*0.0225/9.0 #blue card
@@ -837,19 +840,9 @@ class Simulator
     stargaze_ressources[:gold_h]=stargaze * (2*24*0.045+5*6*0.0936)
     stargaze_ressources[:xp_h]=stargaze * (1*24*0.045+2*6*0.0936)
     stargaze_ressources[:dust_h]=stargaze * (2*8*0.045+5*2*0.0936)
+    @ressources[:stargaze]=stargaze_ressources
 
-    @summons={
-      summons: ressources,
-      stargaze: stargaze_ressources
-    }
-
-    tally_summons=get_tally(@summons)
-    tally_summons.each do |k,v| # update total
-      @total[k]||=0
-      @total[k]+=v
-    end
-
-    @summons_summary={ #30 days summons summary
+    @summons={ #30 days summons summary
       fodder: random_fodder*30,
       choice_atier: choice_atier*30,
       wishlist_atier: wishlist_atier*30,
@@ -857,12 +850,10 @@ class Simulator
       choice_god: choice_god*30,
       random_god: random_god*30
     } 
-
-    @summons
   end
 
   def get_ressource_order
-    ressources=@total.keys #(@tally_income.keys+@tally_exchange.keys).uniq
+    ressources=tally.keys
     order={
       base: %i(dia gold gold_h gold_hg xp xp_h dust dust_h),
       upgrades: %i(silver_e gold_e red_e poe twisted shards cores),
@@ -895,18 +886,30 @@ class Simulator
     end
   end
 
-  def income_summary
-    puts "=============== Income ==============="
-    make_summary(@income) do |summary|
-      puts "***** #{summary.capitalize} *****"
+  def do_summary(title, r, headings: true, total_value: true, total_summary: true)
+    puts "=============== #{title.capitalize} ==============="
+    make_summary(r) do |summary|
+      puts "***** #{summary.capitalize} *****" if headings
     end
 
-    puts "*-*-* Extra summoning ressources *-*-*"
-    make_summary(@summons)
+    puts "Total daily value: #{show_dia_value(get_tally(r))}" if total_value
     puts
+    total_summary(r) if total_summary
+    r
+  end
 
-    puts "Total daily value: #{show_dia_value(tally_income)}"
-    puts
+  def total_summary(r)
+    total=get_tally(r)
+    puts "--------------- Total ---------------"
+    @_order.each do |summary, keys|
+      puts "**** #{summary.capitalize} ****"
+      keys.each do |type|
+        sum=total[type]||0
+        puts "#{type}: #{round(sum)}" unless sum==0
+      end
+      puts
+    end
+    r
   end
 
   def ff_summary
@@ -915,32 +918,16 @@ class Simulator
     puts
   end
 
-  def exchange_summary
-    puts "=============== Spending and exchange ==============="
-    make_summary(@exchange)
-    puts
-  end
-  def total_summary
-    puts "=============== Total ==============="
-    @_order.each do |summary, keys|
-      puts "**** #{summary.capitalize} ****"
-      keys.each do |type|
-        sum=@total[type]||0
-        puts "#{type}: #{round(sum)}" unless sum==0
-      end
-      puts
-    end
-  end
   def summons_summary
     #{:fodder=>16.29998390022676, :choice_atier=>1.0, :wishlist_atier=>1.975714285714286, :random_atier=>6.69687619047619, :choice_god=>0, :random_god=>0.4544380952380952}
-    fodders=@summons_summary[:fodder]
-    atier=@summons_summary[:choice_atier]+@summons_summary[:wishlist_atier]+@summons_summary[:random_atier]
-    god=@summons_summary[:choice_god]+@summons_summary[:random_god]
+    fodders=@summons[:fodder]
+    atier=@summons[:choice_atier]+@summons[:wishlist_atier]+@summons[:random_atier]
+    god=@summons[:choice_god]+@summons[:random_god]
 
     puts "=============== 30 days summons summary (tavern: #{@monthly_tavern}, hcp: #{@monthly_hcp}, stargaze: #{@monthly_stargazing}) ==============="
     puts "Fodders: #{round(fodders)}"
-    puts "Atiers: #{round(atier)} [choice: #{round(@summons_summary[:choice_atier])}, wl: #{round(@summons_summary[:wishlist_atier])}, random: #{round(@summons_summary[:random_atier])}]"
-    puts "Gods: #{round(god)} [choice: #{round(@summons_summary[:choice_god])}, random: #{round(@summons_summary[:random_god])}]"
+    puts "Atiers: #{round(atier)} [choice: #{round(@summons[:choice_atier])}, wl: #{round(@summons[:wishlist_atier])}, random: #{round(@summons[:random_atier])}]"
+    puts "Gods: #{round(god)} [choice: #{round(@summons[:choice_god])}, random: #{round(@summons[:random_god])}]"
 
     #we need 8 atier + 10 fodders for ascended atier
     #we need 14 god for ascended god
@@ -959,6 +946,7 @@ class Simulator
   end
 
   def coins_summary
+    total=tally
     buy_summary = lambda do |total, buying|
       buy=buying.values.sum
       remain=total-buy
@@ -967,13 +955,13 @@ class Simulator
     end
     puts "=============== 30 days coins summary ==============="
 
-    hero=(@total[:hero_coins]||0)*30
+    hero=(total[:hero_coins]||0)*30
     @_hero_buys = {
       garrison: 66*800
     }
     puts "- Hero coins: #{buy_summary[hero,@_hero_buys][0]}"
 
-    guild=(@total[:guild_coins]||0)*30
+    guild=(total[:guild_coins]||0)*30
     @_guild_buys = {
       garrison: 66*800,
       t3: 2*47000, #T1: 33879, T2: 40875, T3: 47000
@@ -985,7 +973,7 @@ class Simulator
 
     puts "- Guild coins: #{o} {= #{round(nb_dim_gear)} dim gears}"
 
-    lab=(@total[:lab_coins]||0)*30
+    lab=(total[:lab_coins]||0)*30
     @_lab_buys = {
       garrison: 100*800,
       dim_exchange: 200000/2, #across 2 months
@@ -993,17 +981,18 @@ class Simulator
     }
     puts "- Lab coins: #{buy_summary[lab,@_lab_buys][0]}"
 
-    challenger=(@total[:challenger_coins]||0)*30
+    challenger=(total[:challenger_coins]||0)*30
     puts "- Challenger coins: #{round(challenger)}"
     puts
   end
 
   def previsions_summary
+    total=full_total
     puts "=============== Previsions ==============="
 
-    gold=@total[:gold]||0
-    xp=@total[:xp]||0
-    dust=@total[:dust]||0
+    gold=total[:gold]||0
+    xp=total[:xp]||0
+    dust=total[:dust]||0
     level_gold_day=@level_gold *1.0/gold
     level_xp_day=@level_xp *1.0/xp
     level_dust_day=@level_dust *1.0/dust
@@ -1011,24 +1000,24 @@ class Simulator
     puts "Level: #{round(max_time)} days [gold: #{round(level_gold_day)} days, xp: #{round(level_xp_day)} days, dust: #{round(level_dust_day)} days]"
     puts
 
-    silver_e=@total[:silver_e]||0
+    silver_e=total[:silver_e]||0
     days=240.0/silver_e
     puts "SI+10: #{round(days)} days"
 
-    gold_e=@total[:gold_e]||0
+    gold_e=total[:gold_e]||0
     days=240.0/gold_e
     puts "SI+20: #{round(days)} days"
 
-    red_e=@total[:red_e]||0
+    red_e=total[:red_e]||0
     days=300.0/gold_e
     puts "SI+30: #{round(days)} days"
     puts
 
-    shards=@total[:shards]||0
+    shards=total[:shards]||0
     days=3750.0/shards
     puts "e30: #{round(days)} days"
 
-    cores=@total[:shards]||0
+    cores=total[:shards]||0
     days=1650.0/cores
     puts "e30 to e41: #{round(days)} days"
     days=4500.0/cores
@@ -1037,11 +1026,11 @@ class Simulator
     puts "e30 to e65: #{round(days)} days"
     puts
 
-    twisted=@total[:twisted]||0
+    twisted=total[:twisted]||0
     days=800.0/twisted
     puts "Tree level: #{round(days)} days"
 
-    poe=@total[:poe]||0
+    poe=total[:poe]||0
     mythic_cost=(1/0.0407*300)
     days=mythic_cost/poe
     puts "Mythic furn: #{round(days)} days"
@@ -1054,7 +1043,7 @@ class Simulator
     puts "9F (with cards): #{round(days)} days"
     puts
 
-    challenger=@total[:challenger_coins]||0
+    challenger=total[:challenger_coins]||0
     days=250000.0/challenger
     puts "Challenger celo: #{round(days)} days, ascended: #{round(14*days)}"
     puts
@@ -1062,9 +1051,11 @@ class Simulator
 
   def show_summary
     ff_summary
-    income_summary
-    exchange_summary
-    total_summary
+    economy.each do |k,v|
+      r=@ressources.slice(*v)
+      do_summary(k,r)
+    end
+    do_summary("ALL", @ressources)
     summons_summary
     coins_summary
     previsions_summary
@@ -1075,9 +1066,16 @@ class Simulator
     show_summary
   end
 
+  def economy
+    {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
+     exchange: %i(ff shop dura_fragments_sell),
+     summons: %i(summons stargaze)
+    }
+  end
+
   def show_variables(verbose: false)
     process
-    blacklist=%i(@income @exchange @total @summons @summons_summary @Vows @_order @_processed)
+    blacklist=%i(@ressources @summons @summons_summary @Vows @_order @_processed)
     vars=instance_variables-blacklist
     internal_vars=vars.select do |i|
       i.to_s.start_with?("@_")
