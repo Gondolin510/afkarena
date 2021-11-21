@@ -313,6 +313,7 @@ class Simulator
   end
 
   def tr
+    #TODO add guild tr
     @tr_twisted ||=250
     @tr_poe ||=1000
     {twisted: @tr_twisted*2.0/3, poe: @tr_poe*2.0/3}

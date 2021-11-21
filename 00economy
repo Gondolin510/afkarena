@@ -1,0 +1,2 @@
+./economy.rb > economy_result/economy.txt
+./economy_exemple.rb > economy_result/economy_example.txt
