@@ -949,10 +949,14 @@ class Simulator
       dim_exchange: {cost: 200000/2, dim_points: 200/2},
       dim_emblems: {cost: 64000, dim_emblems: 50},
     }
+    @ChallengerStore ||={}
 
     @_hero_buys ||=[:garrison]
     @_guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
     @_lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+    @_challenger_buys ||= []
+    
+    @__coin_summary=""
 
     get_item_value = lambda do |item, shop|
       shop_item=shop[item]
@@ -976,12 +980,16 @@ class Simulator
     end
 
     handle_buys = lambda do |buys, shop, total, coin_name|
+      @__coin_summary << "#{coin_name}: #{round(total)}"
+      o=[]; o_total=total
+
       r={ coin_name => 0}
       primary, secondary, extra=split_array(buys)
       primary.each do |item|
         cost, value=get_item_value[item, shop]
         do_buy[r, cost, value, coin_name]
         total -= cost
+        o<<=" #{round(cost)} (#{item})"
       end
 
       if secondary
@@ -990,6 +998,7 @@ class Simulator
           if total > cost
             do_buy[r, cost, value, coin_name]
             total -= cost
+            o<<=" #{round(cost)} (#{item})"
           end
         end
       end
@@ -999,12 +1008,18 @@ class Simulator
         cost, value=get_item_value[extra, shop]
         qty=total*1.0/cost
         do_buy[r, cost, value, coin_name, qty: qty]
+        o<<=" #{round(cost)} (#{round(qty)} x #{extra})"
       end
+
+      total_cost=o_total-total
+      @__coin_summary << " => buy #{round(total_cost)} [#{o.join(' + ')}]" unless o.empty?
+      @__coin_summary << "\n"
+
       r
     end
 
     total=tally
-    %i(hero lab guild).each do |i|
+    %i(hero lab guild challenger).each do |i|
       @ressources[:"#{i}_store"]=handle_buys[instance_variable_get(:"@_#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), total[:"#{i}_coins"]*30, :"#{i}_coins"].map {|k,v| [k, v/30.0]}.to_h
     end
   end
@@ -1017,47 +1032,6 @@ class Simulator
       arr.shift
     end
     result << arr
-  end
-
-  def coins_summary
-    total=tally
-    buy_summary = lambda do |total, buying|
-      buy=buying.values.sum
-      remain=total-buy
-      o="#{round(total)} => buy #{buy} [#{buying.map { |k,v| "#{v} (#{k})" }.join(' + ')}], remains: #{round(remain)}"
-      [o,remain]
-    end
-    puts "=============== 30 days coins summary ==============="
-
-    hero=(total[:hero_coins]||0)*30
-    @_hero_buys = {
-      garrison: 66*800
-    }
-    puts "- Hero coins: #{buy_summary[hero,@_hero_buys][0]}"
-
-    guild=(total[:guild_coins]||0)*30
-    @_guild_buys = {
-      garrison: 66*800,
-      t3: 2*47000, #T1: 33879, T2: 40875, T3: 47000
-      dim_exchange: 40000/2, #across 2 months
-    }
-    o,remain=buy_summary[guild, @_guild_buys]
-    @_dim_gear_cost=67000 #@20% reduction
-    nb_dim_gear=(remain*1.0/@_dim_gear_cost)
-
-    puts "- Guild coins: #{o} {= #{round(nb_dim_gear)} dim gears}"
-
-    lab=(total[:lab_coins]||0)*30
-    @_lab_buys = {
-      garrison: 100*800,
-      dim_exchange: 200000/2, #across 2 months
-      dim_emblems: 64000, #50 dim emblems
-    }
-    puts "- Lab coins: #{buy_summary[lab,@_lab_buys][0]}"
-
-    challenger=(total[:challenger_coins]||0)*30
-    puts "- Challenger coins: #{round(challenger)}"
-    puts
   end
 
   def previsions_summary
@@ -1121,10 +1095,14 @@ class Simulator
         do_summary(k,r, total_summary: false)
       else
         do_summary(k,r, headings: false, total_value: false, total_summary: false)
+        if k==:stores
+          make_h2("30 days coin summary")
+          puts @__coin_summary 
+          puts
+        end
       end
     end
     do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30)
-    coins_summary
     previsions_summary
   end
 
