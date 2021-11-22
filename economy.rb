@@ -10,16 +10,17 @@ class Simulator
 
   def initialize(&b)
     instance_eval(&b) if b
-    setup #we assume that we are at least at Chap 33
+    setup
   end
 
-  def setup #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
-
+  def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
     #Enter the afk timer value for xp and gold:
     @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
     @afk_gold ||=900 #the displayed value by minute (include vip)
     @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
     #This is used to set up @_real_afk_xp, @_real_afk_gold, @_real_afk_dust which are the hourly base values not affected by vip, with gold and xp in K. Set these variables directly if you have them instead
+
+    @stage ||= "37-01"
 
     #at rc 350: the amount required to level up (xp and gold are in K)
     @level_gold ||= 18132.62
@@ -29,19 +30,22 @@ class Simulator
     @nb_ff ||=6 #ff by day
     @vip ||=10 #vip level
     @subscription ||=true if @subscription.nil?
-    @player_level ||=180 #for fos, 180 is max fos
+    @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
     @board_level ||=8
 
-    @fos_t1_gear_bonus ||=3 #kings tower: 1 at 250/2 at 300/3 at 350
-    @fos_t2_gear_bonus ||=3 #4f towers: 1 at 200/2 at 240/3 at 280
-    @fos_invigor_bonus ||=3 #god towers: 1 at 100/2 at 200/3 at 300
+    @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
+    @tower_4f ||= 280 #max fos at 280 for t2_gear
+    @tower_god ||= 300 #max fos at 300 for invigor
 
     @monthly_stargazing ||= 0 #number of stargazing done in a month
     @monthly_tavern ||= 0 #number of tavern pulls
     @monthly_hcp ||= 0 #number of hcp pulls
+  end
 
+  def setup 
     @ressources={}
 
+    setup_vars
     get_vip
     get_fos
     get_subscription
@@ -176,12 +180,32 @@ class Simulator
   end
 
   def get_fos
-    @_fos_base_gold=70+75+80 #stage 24-60
-    @_fos_base_xp=182+372+812 #stage 25-60
-    @_fos_base_dust=80+135+170 #stage 26-60
+    #stage fos maxes out at chap 33
+    @_fos_base_gold=0
+    @_fos_base_gold += 70 if @stage > "12-40"
+    @_fos_base_gold += 75 if @stage > "18-40"
+    @_fos_base_gold += 80 if @stage > "24-60"
+    @_fos_base_xp=0
+    @_fos_base_xp+=182 if @stage > "14-40"
+    @_fos_base_xp+=372 if @stage > "20-60"
+    @_fos_base_xp+=812 if @stage > "25-60"
+    @_fos_base_dust=0
+    @_fos_base_dust+=80 if @stage > "16-40"
+    @_fos_base_dust+=135 if @stage > "22-60"
+    @_fos_base_dust+=170 if @stage > "26-60"
 
-    @_fos_lab_mult=0.15*3 #stage 25-60
-    @_fos_guild_mult=0.15*3 #stage 20-60
+    @_fos_lab_mult=0
+    @_fos_lab_mult += 0.15 if @stage > "15-40"
+    @_fos_lab_mult += 0.15 if @stage > "21-60"
+    @_fos_lab_mult += 0.15 if @stage > "25-60"
+    @_fos_guild_mult=0 
+    @_fos_guild_mult += 0.15 if @stage > "14-40"
+    @_fos_guild_mult += 0.15 if @stage > "17-40"
+    @_fos_guild_mult += 0.15 if @stage > "20-60"
+    @_fos_mythic_mult=0
+    @_fos_mythic_mult += 0.3 if @stage > "16-40"
+    @_fos_mythic_mult += 0.3 if @stage > "24-60"
+    @_fos_mythic_mult += 0.3 if @stage > "32-60"
     @_fos_mythic_mult=0.3*3 #stage 32-60
 
     @_fos_gold_mult=0.0
@@ -199,6 +223,35 @@ class Simulator
     @_fos_dust_mult += 0.4 if @player_level >= 120
     @_fos_dust_mult += 0.4 if @player_level >= 150
     @_fos_dust_mult += 0.4 if @player_level >= 180
+
+    @_fos_t1_gear_bonus=0
+    @_fos_t1_gear_bonus +=1 if @tower_kt >= 250
+    @_fos_t1_gear_bonus +=1 if @tower_kt >= 300
+    @_fos_t1_gear_bonus +=1 if @tower_kt >= 350
+    @_fos_t2_gear_bonus=0
+    @_fos_t2_gear_bonus +=1 if @tower_4f >= 200
+    @_fos_t2_gear_bonus +=1 if @tower_4f >= 240
+    @_fos_t2_gear_bonus +=1 if @tower_4f >= 280
+    @_fos_invigor_bonus=0
+    @_fos_invigor_bonus +=1 if @tower_god >= 100
+    @_fos_invigor_bonus +=1 if @tower_god >= 200
+    @_fos_invigor_bonus +=1 if @tower_god >= 300
+
+    @_fos_daily_quest = {}
+    @_fos_daily_quest[:dia]=50 if @stage > "16-40"
+    @_fos_daily_quest[:dust_h]=2 if @stage > "20-60"
+    @_fos_daily_quest[:gold_h]=2 if @stage > "23-60"
+    @_fos_weekly_quest = {}
+    @_fos_weekly_quest[:twisted]=50 if @stage > "22-60"
+    @_fos_weekly_quest[:poe]=500 if @stage > "23-60"
+    @_fos_weekly_quest[:silver_e]=20 if @stage > "28-60"
+    @_fos_weekly_quest[:gold_e]=20 if @stage > "29-60"
+    @_fos_weekly_quest[:red_e]=10 if @stage > "30-60"
+
+    #non used fos:
+    #gear has a chance to be factioned: +25% at 4F Towers 40/80/120/160
+    #T2 stone chest: +25% at KT 400/450/500/550
+    #daily common tokens +40 at 13-40/19-40/25-60
   end
 
   def get_subscription
@@ -247,9 +300,9 @@ class Simulator
     @_idle_hourly=@Idle_hourly.dup
     @_idle_hourly[:mythic_gear] *= @_mythic_mult
     @_idle_hourly[:t2] *= @_mythic_mult
-    @_idle_hourly[:t1_gear] *= @fos_t1_gear_bonus
-    @_idle_hourly[:t2_gear] *= @fos_t2_gear_bonus
-    @_idle_hourly[:invigor] *= (1+@fos_invigor_bonus)
+    @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
+    @_idle_hourly[:t2_gear] *= @_fos_t2_gear_bonus
+    @_idle_hourly[:invigor] *= (1+@_fos_invigor_bonus)
     @_idle_hourly.merge!({
       gold: real_afk_gold*@_gold_mult + @_fos_base_gold/24.0, 
       xp: real_afk_xp*@_xp_mult + @_fos_base_xp/24.0,
@@ -304,7 +357,7 @@ class Simulator
     @wrizz_gold ||= 1900
     @soren_gold ||= @wrizz_gold
     @soren_chests ||= @wrizz_chests
-    @soren_freq ||= 5.0/7.0
+    @soren_freq ||= round(5.0/7.0)
 
     @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
 
@@ -330,22 +383,45 @@ class Simulator
   end
 
   def quests
+    # @Daily_quest ||= {
+    #   dust_h: 2, gold_h: 2, gold_hg: 2,
+    #   blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
+    #   dia: 50+100
+    # }
+    # @Weekly_quest ||= {
+    #   gold_h: 8+8,
+    #   twisted: 50, poe: 500,
+    #   blue_stones: 60, purple_stones: 10,
+    #   silver_e: 20, gold_e: 10, red_e: 5,
+    #   dia: 400, scrolls: 3,
+    #   dura_tears: 3
+    # } #this maxes out at 30-60 with the red emblem rewards
+    
     @Daily_quest ||= {
-      dust_h: 2, gold_h: 2, gold_hg: 2,
+      gold_hg: 2,
       blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
-      dia: 50+100
+      dia: 100
     }
     @Weekly_quest ||= {
       gold_h: 8+8,
-      twisted: 50, poe: 500,
       blue_stones: 60, purple_stones: 10,
-      silver_e: 20, gold_e: 10, red_e: 5,
       dia: 400, scrolls: 3,
       dura_tears: 3
-    } #this maxes out at 30-60 with the red emblem rewards
-    ressources=(@Daily_quest.keys+@Weekly_quest.keys).flatten.sort.uniq
+    }
+
+    daily_quest=@Daily_quest
+    @_fos_daily_quest.each do |k,v|
+      daily_quest[k]||=0
+      daily_quest[k]+=v
+    end
+    weekly_quest=@Weekly_quest
+    @_fos_weekly_quest.each do |k,v|
+      weekly_quest[k]||=0
+      weekly_quest[k]+=v
+    end
+    ressources=(daily_quest.keys+weekly_quest.keys).flatten.sort.uniq
     ressources.map do |r|
-      v=(@Daily_quest[r]||0)+(@Weekly_quest[r]||0)/7.0
+      v=(daily_quest[r]||0)+(weekly_quest[r]||0)/7.0
       [r,v]
     end.to_h
   end
