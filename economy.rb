@@ -663,6 +663,7 @@ class Simulator
 
   def exchange_shop
     return @_shop unless @_shop.nil?
+    @Shop_emblem_discout ||=0.7
     @Shop ||={
       xp_h: { xp_h: 24, dia: -192, proba: 0.25},
       dust_h: {dust_h: 24, dia: -300},
@@ -671,11 +672,11 @@ class Simulator
       poe: { poe: 250, gold: -1125 },
       shards: { shards: 20, gold: -2000, max: 3 },
       cores: { cores: 10, dia: -200, max: 3 },
-      gold_e: { gold_e: 20, gold: 15600*0.7, proba: 0.25 },
-      silver_e: { silver_e: 30, gold: 14400*0.7, proba: 0.75 },
+      gold_e: { gold_e: 20, gold: 15600*@Shop_emblem_discout, proba: 0.25 },
+      silver_e: { silver_e: 30, gold: 14400*@Shop_emblem_discout, proba: 0.75 },
     }
 
-    @shop_items ||= %i(dust purple_stones poe shards)
+    @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
     @shop_refreshes ||= 2
     shop_refreshes=@shop_refreshes
 
