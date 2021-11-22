@@ -3,10 +3,12 @@
 #Get leveling up ressources from csv file
 
 require './value'
+require 'json'
 
 class Simulator
-  attr_accessor :income, :outcome
+  attr_accessor :ressources
   include Value
+  extend Data
 
   def initialize(&b)
     instance_eval(&b) if b
@@ -369,6 +371,7 @@ class Simulator
     when 21; 1860
     when 22; 2010
     when 23; 2160
+    end
   end
 
   def guild
@@ -381,9 +384,9 @@ class Simulator
     @team_soren_coin ||=@team_wrizz_coin
 
     @wrizz_chests ||= 23
-    @wrizz_gold ||= @get_guild_gold(@wrizz_chests)
+    @wrizz_gold ||= get_guild_gold(@wrizz_chests)
     @soren_chests ||= @wrizz_chests
-    @soren_gold ||= @get_guild_gold(@soren_chests)
+    @soren_gold ||= get_guild_gold(@soren_chests)
     @soren_freq ||= round(5.0/7.0)
 
     @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
@@ -1269,7 +1272,6 @@ class Simulator
     end
   end
 end
-
 
 if __FILE__ == $0
   s=Simulator.new do #example run

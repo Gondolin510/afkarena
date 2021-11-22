@@ -30,8 +30,8 @@ module Value
       gold_e: 10920.0 /20 * gold_conversion,
       red_e: 135,
 
-      dura_fragment: 100 * gold_conversion,
-      class_fragment: 9000 * 0.675 / 400,
+      dura_fragments: 100 * gold_conversion,
+      class_fragments: 9000 * 0.675 / 400,
 
       mythic_gear: 500,
       t1: 1000,
@@ -131,6 +131,40 @@ module Value
       xp_h: n * (1*24*0.045+2*6*0.0936),
       dust_h: n * (2*8*0.045+5*2*0.0936),
     }
+  end
+end
+
+module Data
+  extend self
+  def get_idle_data
+    @__idle_data if  @__idle_data
+    idle=JSON.load_file("data/idle.json5")
+    @__idle_data=idle.map do |chap,idle|
+      [chap.to_i,
+      idle.map do |k,v|
+        k=:dura_fragments if k=="dura"
+        k=:class_fragments if k=="class"
+        k=:t1_gear if k=="t1_g"
+        k=:t2_gear if k=="t2_g"
+        k=:shards if k=="shard"
+        k=:cores if k=="core"
+        [k.to_sym, v]
+      end.to_h]
+    end.to_h
+  end
+
+  def get_idle(stage) #the values are of the last stage, interpolate
+    chap,level=stage.split('-')
+    prev_chap=chap-1
+    prev_chap = 1 if chap==1
+    prev_idle=get_idle_data[prev_chap]
+    cur_idle=get_idle_data[chap]
+    ratio=level/60.0 #TODO check when there are 40 levels
+    idle={}
+    cur_idle.each do |k,v|
+      idle[k]=prev_idle[k]*(1-ratio)+cur_idle[k]*ratio
+    end
+    idle
   end
 end
 
