@@ -155,6 +155,7 @@ module Data
 
   def get_idle(stage) #the values are of the last stage, interpolate
     chap,level=stage.split('-')
+    chap=chap.to_i; level=level.to_i
     prev_chap=chap-1
     prev_chap = 1 if chap==1
     prev_idle=get_idle_data[prev_chap]

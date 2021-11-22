@@ -302,6 +302,7 @@ class Simulator
       t2_gear: t_gear_hourly,
       invigor: 6, dura_fragments: 0.267,
     } #the last of these items to max out is poe at Chap 33
+    @_real_idle_hourly ||= self.class.get_idle(@stage)
 
     # we use gold and xp in K
     @_real_afk_xp||=@afk_xp*(60.0/1000)/(1.0+@_vip_xp_mult)
