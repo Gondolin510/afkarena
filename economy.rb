@@ -715,11 +715,12 @@ class Simulator
   end
 
   def sell_dura
-    @Nb_dura ||=7
+    @Nb_dura ||=7.0
     @nb_dura_selling ||=0
 
-    total_dura=tally[:dura_fragments]*1.0
-    {gold: @nb_dura_selling*total_dura/@Nb_dura}
+    total_dura=tally[:dura_fragments]
+    dura_sold=(@nb_dura_selling/@Nb_dura)*total_dura
+    {dura_fragments: -dura_sold, gold: dura_sold * 50}
   end
 
   def summonings
@@ -772,6 +773,17 @@ class Simulator
   end
   def tally
     get_tally(@ressources)
+  end
+
+  def get_timeframe(r,multiplier) #mutliply the ressources according to the time frame
+    r.map do |k,v|
+      [k, v.map do |k2, v2|
+        [k2, v2*multiplier]
+      end.to_h]
+    end.to_h
+  end
+  def timeframe(multiplier)
+    get_timeframe(@ressources,multiplier)
   end
 
   def get_total(r)
@@ -878,6 +890,10 @@ class Simulator
   end
 
   def do_summary(title, r, headings: true, total_value: true, total_summary: true, multiplier: 1)
+    if multiplier != 1
+      r=get_timeframe(r, multiplier)
+    end
+
     make_h1(title)
     make_summary(r, headings: headings)
 
@@ -981,7 +997,8 @@ class Simulator
       "Ascended challenger celo": {challenger_coins: 250000*14},
 
       "Ascended 4F": { atier: 8, fodder: 10},
-      "Ascended god": { god: 14}, #todo: rc level
+      "Ascended god": { god: 14},
+      "RC slot": { invigor: 5000},
     }
 
     #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
