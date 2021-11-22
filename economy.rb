@@ -663,54 +663,50 @@ class Simulator
 
   def exchange_shop
     return @_shop unless @_shop.nil?
+    @Shop ||={
+      xp_h: { xp_h: 24, dia: -192, proba: 0.25},
+      dust_h: {dust_h: 24, dia: -300},
+      dust: {dust: 500, gold: -2250},
+      purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
+      poe: { poe: 250, gold: -1125 },
+      shards: { shards: 20, gold: -2000, max: 3 },
+      cores: { cores: 10, dia: -200, max: 3 },
+      gold_e: { gold_e: 20, gold: 15600*0.7, proba: 0.25 },
+      silver_e: { silver_e: 30, gold: 14400*0.7, proba: 0.75 },
+    }
 
-    @shop_refreshes ||= 2
     @shop_items ||= %i(dust purple_stones poe shards)
+    @shop_refreshes ||= 2
+    shop_refreshes=@shop_refreshes
 
-    warn "Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes} (nor cores/shards max cap)" if @shop_refreshes > 2
-    nb_shop=1+@shop_refreshes
-    @_shop={dia: -@shop_refreshes*100, gold: 0}
-    xp_h_proba=0.25 #TODO: refine these probas
-    purple_stones_proba=0.25
-    gold_e_proba=0.25
-    silver_e_proba=0.75
+    shop_cost= [100, 100, 200, 200]
+    if @shop_refreshes > shop_cost.length
+      warn "Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes}"
+      shop_refreshes=shop_cost.length
+    end
+    refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+shop_cost[i]}
 
-    if @shop_items.include?(:dust)
-      @_shop[:gold] -= nb_shop*2250
-      @_shop[:dust] = nb_shop*500
+
+    nb_shop=1+shop_refreshes
+    @_shop={dia: -refresh_cost, gold: 0}
+
+    @shop_items.each do |item|
+      if item.is_a?(Hash) # {item: qty}
+        item, qty=item.to_a.first
+      else
+        qty=nb_shop
+      end
+      value=@Shop[item]
+      proba=value.delete(:proba) || 1
+      max=value.delete(:max) || 1000
+      appearances=nb_shop*proba
+      buy=[qty, max, appearances].min
+      value.each do |k,v|
+        @_shop[k]||=0
+        @_shop[k]+=v*buy
+      end
     end
-    if @shop_items.include?(:dust_h)
-      @_shop[:dia] -= nb_shop*300
-      @_shop[:dust_h] = nb_shop*24
-    end
-    if @shop_items.include?(:xp_h)
-      @_shop[:dia] -= nb_shop*192*xp_h_proba
-      @_shop[:xp_h] = nb_shop*24*xp_h_proba
-    end
-    if @shop_items.include?(:purple_stones)
-      @_shop[:dia] -= nb_shop*90*purple_stones_proba
-      @_shop[:purple_stones] = nb_shop*5*purple_stones_proba
-    end
-    if @shop_items.include?(:poe)
-      @_shop[:gold] -= nb_shop*1125
-      @_shop[:poe] = nb_shop*250
-    end
-    if @shop_items.include?(:shards)
-      @_shop[:gold] -= nb_shop*2000
-      @_shop[:shards] = nb_shop*20
-    end
-    if @shop_items.include?(:cores)
-      @_shop[:dia] -= nb_shop*200
-      @_shop[:cores] = nb_shop*10
-    end
-    if @shop_items.include?(:silver_e)
-      @_shop[:gold] -= nb_shop*14400*0.7*silver_e_proba #30% reduction
-      @_shop[:silver_e] = nb_shop*30*silver_e_proba
-    end
-    if @shop_items.include?(:gold_e)
-      @_shop[:gold] -= nb_shop*15600*0.7*gold_e_proba #30% reduction
-      @_shop[:gold_e] = nb_shop*20*gold_e_proba
-    end
+
     @_shop
   end
 
