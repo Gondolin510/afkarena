@@ -173,7 +173,16 @@ class Simulator
     if @vip >=  15
       @_vip_gold_mult=2.0
     end
-    if @vip >15
+    if @vip >=  16
+      @_vip_gold_mult=2.3
+    end
+    if @vip >=  17
+      @_vip_gold_mult=2.6
+    end
+    if @vip >=  18
+      @_vip_gold_mult=3.0
+    end
+    if @vip >18
       warn "Warning: vip=#{@vip} not fully implemented"
     end
     @_vip_xp_mult||=@_vip_gold_mult
@@ -274,7 +283,7 @@ class Simulator
   def get_numbers
     @_solo_bounties=@_vip_solo_bounty
     @_team_bounties=1+ (@_vip_extra_team_bounty||0) + (@_sub_extra_team_bounty||0)
-    @_arena_nb_fight ||=2+(@_vip_extra_arena_fight||0)
+    @_nb_arena_fight ||=2+(@_vip_extra_arena_fight||0)
   end
 
   def get_idle_hourly
@@ -344,6 +353,24 @@ class Simulator
     one_ff.map {|k,v| [k, v*@nb_ff]}.to_h
   end
 
+  def get_guild_gold(chests)
+    case chests
+    when 1,2,3,4; 15
+    when 5,6; 30
+    when 7,8; 55
+    when 9,10; 80
+    when 11; 110
+    when 12,13,14,15; 1010
+    when 16; 1110
+    when 17; 1210
+    when 18; 1410
+    when 19; 1560
+    when 20; 1710
+    when 21; 1860
+    when 22; 2010
+    when 23; 2160
+  end
+
   def guild
     @Chest_dia ||=2.7
     @Chest_guild ||=65
@@ -353,10 +380,10 @@ class Simulator
     @team_soren_gold ||=@team_wrizz_gold
     @team_soren_coin ||=@team_wrizz_coin
 
-    @wrizz_chests ||= 21
-    @wrizz_gold ||= 1900
-    @soren_gold ||= @wrizz_gold
+    @wrizz_chests ||= 23
+    @wrizz_gold ||= @get_guild_gold(@wrizz_chests)
     @soren_chests ||= @wrizz_chests
+    @soren_gold ||= @get_guild_gold(@soren_chests)
     @soren_freq ||= round(5.0/7.0)
 
     @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
@@ -443,9 +470,33 @@ class Simulator
     {friend_summons: (@nb_friends*1.0+@nb_mercs*10.0/7)/10}
   end
 
+  def get_arena(position)
+    case position
+    when 1; 80
+    when 2; 75
+    when 3; 70
+    when 4; 68
+    when 5; 66
+    when 6; 64
+    when 7; 62
+    when 8; 60
+    when 9; 58
+    when 10; 56
+    when 11; 54
+    when 12; 52
+    when 13; 50
+    when 14; 48
+    when 15; 45
+    when 16; 42
+    when 17; 40
+    when 18; 38
+    else 36
+    end
+  end
+
   def arena
-    @arena_daily_dia ||=60
-    @arena_weekly_dia ||=600
+    @arena_daily_dia ||= get_arena(5)
+    @arena_weekly_dia ||=@arena_daily_dia * 10
     #TODO: add arena tickets usage?
 
     arena_fight = {
@@ -454,7 +505,7 @@ class Simulator
       dia: (150*0.15+300*0.12+3000*0.03)*0.01
     }
 
-    r=arena_fight.map {|k,v| [k, v*@_arena_nb_fight]}.to_h
+    r=arena_fight.map {|k,v| [k, v*@_nb_arena_fight]}.to_h
     r[:dia] += @arena_daily_dia + @arena_weekly_dia/7.0
     r
   end
@@ -465,6 +516,7 @@ class Simulator
   end
 
   def labyrinth
+    #TODO easy/hard standard lab
     @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
     # skipping large camps: 59h gold+29.5h xp+dust
     @Dismal_end_rewards ||= {
