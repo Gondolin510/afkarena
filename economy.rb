@@ -1255,6 +1255,7 @@ class Simulator
   def show_variables(verbose: false)
     blacklist=%i(@ressources @Vows @_order)
     vars=instance_variables-blacklist
+    vars=vars.reject {|i| i.to_s.start_with?("@__")}
     internal_vars=vars.select do |i|
       i.to_s.start_with?("@_")
     end
@@ -1266,18 +1267,23 @@ class Simulator
     show_vars=lambda do |keys|
       keys.map do |key|
         "#{key}: #{instance_variable_get(key)}"
-      end.join(', ')
+      end
     end
 
     if verbose
-      puts "- Setup vars: #{show_vars[setup_vars]}"
+      make_h1 "Variables"
+      make_h2 "Setup vars:"
+      puts show_vars[setup_vars].join("\n")
       puts
-      puts "- Fixed vars: #{show_vars[fixed_vars]}"
+      make_h2 "Fixed vars"
+      puts show_vars[fixed_vars].join("\n")
       puts
-      puts "- Internal vars: #{show_vars[internal_vars]}"
+      make_h2 "Internal vars"
+      puts show_vars[internal_vars].join("\n")
       puts
     else
-      puts "- Vars: #{show_vars[setup_vars]}"
+      make_h1 "Variables"
+      puts show_vars[setup_vars].join("\n")
     end
   end
 end
