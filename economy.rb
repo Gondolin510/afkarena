@@ -285,7 +285,6 @@ class Simulator
   end
 
   def get_raw_idle_hourly
-    # t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
     # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
     #TODO: we may need to mult gear_hourly by 2 to account for stage rewards
     
@@ -293,12 +292,16 @@ class Simulator
     #   poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
     #   gold_e: 0.04170, red_e: 0.01564, shards: 1.25, cores: 0.625,
     #   t2: gear_hourly, mythic_gear: gear_hourly,
-    #   t3: 1.0/(24*15), #1 every 15 days
+    #   t3: 1.0/(24*14), #1 every 14 days
     #   t1_gear: t_gear_hourly,
     #   t2_gear: t_gear_hourly,
     #   invigor: 6, dura_fragments: 0.267,
     # } #the last of these items to max out is poe at Chap 33
+
     @_raw_idle_hourly ||= get_idle(@stage)
+    t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
+    @_raw_idle_hourly[:t1_gear]=t_gear_hourly
+    @_raw_idle_hourly[:t2_gear]=t_gear_hourly
 
     # we use gold and xp in K
     unless @afk_xp.nil?
@@ -986,7 +989,7 @@ class Simulator
   end
 
   def economy
-    {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
+    {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regal tr_bounties coe hero_trial guild_hero_trial vow),
      exchange: %i(ff_cost shop dura_fragments_sell),
      summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
      stores: %i(hero_store guild_store lab_store challenger_store),

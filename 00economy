@@ -1,2 +1,3 @@
-./economy.rb > economy_result/economy.txt
-./economy_exemple.rb > economy_result/economy_example.txt
+./economy.rb >! economy_result/economy.txt
+./economy_exemple.rb >! economy_result/economy_example.txt
+./my_economy.rb >! economy_result/my_economy.txt
