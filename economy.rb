@@ -756,14 +756,14 @@ class Simulator
   end
 
 
-  def get_tally(ressources)
+  def get_tally(ressources, multiplier: 1)
     r={}
     keys=ressources.values.map {|v| v.keys}.flatten.sort.uniq
     keys.each do |type|
       sum=0
       ressources.each do |k,v|
         if v.key?(type)
-          sum+=v[type]
+          sum+=v[type] * multiplier
         end
       end
       r[type]=sum
@@ -799,6 +799,19 @@ class Simulator
     r
   end
 
+  def spending(cost, ressources=tally)
+    #in one unit of time, how much ressource can we buy?
+    res_buy=cost.map do |k,v|
+      res=ressources[k]||0
+      [k, res*1.0/v]
+    end.to_h
+    min_buy=res_buy.values.min #so time=1/min_buy
+    remain=cost.map do |k,v|
+      [k, (ressources[k]||0)-v*min_buy]
+    end.to_h
+    return [res_buy, min_buy, remain]
+  end
+
   def get_ressource_order
     ressources=tally.keys
     order={
@@ -816,9 +829,26 @@ class Simulator
     @_order=order
   end
 
-  def make_summary(ressources)
+  def economy
+    {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
+     exchange: %i(ff shop dura_fragments_sell),
+     summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze)
+    }
+  end
+
+  def make_h1(t)
+    puts "=============== #{t.capitalize} ==============="
+  end
+  def make_h2(t)
+    puts "--------------- #{t.capitalize} ---------------"
+  end
+  def make_h3(t)
+    puts "***** #{t.capitalize} *****"
+  end
+
+  def make_summary(ressources, headings: true)
     @_order.each do |summary, keys|
-      yield(summary) if block_given?
+      s=""
       keys.each do |type|
         sum=0
         o=[]
@@ -828,40 +858,54 @@ class Simulator
             o.push("#{round(v[type])} (#{k})")
           end
         end
-        puts "#{type}: #{round(sum)} [#{o.join(' + ')}]" unless sum==0
+        s+="#{type}: #{round(sum)} [#{o.join(' + ')}]\n" unless sum==0 or sum==0.0
       end
-      puts if block_given?
+      unless s.empty?
+        make_h3(summary) if headings
+        yield(summary) if block_given?
+        puts s
+        puts if headings
+      end
     end
+    puts unless headings
   end
 
-  def do_summary(title, r, headings: true, total_value: true, total_summary: true)
-    puts "=============== #{title.capitalize} ==============="
-    make_summary(r) do |summary|
-      puts "***** #{summary.capitalize} *****" if headings
-    end
+  def do_summary(title, r, headings: true, total_value: true, total_summary: true, multiplier: 1)
+    make_h1(title)
+    make_summary(r, headings: headings)
 
-    puts "Total daily value: #{show_dia_value(get_tally(r))}" if total_value
-    puts
-    total_summary(r) if total_summary
-    r
-  end
-
-  def total_summary(r)
-    total=get_total(r)
-    puts "--------------- Total ---------------"
-    @_order.each do |summary, keys|
-      puts "**** #{summary.capitalize} ****"
-      keys.each do |type|
-        sum=total[type]||0
-        puts "#{type}: #{round(sum)}" unless sum==0
-      end
+    if total_value
+      puts "=> Total value: #{show_dia_value(get_tally(r))}"
       puts
     end
+    if total_summary
+      total=get_total(r)
+      do_total_summary(total, headings: headings)
+    end
     r
+  end
+
+  def do_total_summary(total, headings: true, title: "Total")
+    make_h2(title)
+    @_order.each do |summary, keys|
+      s=""
+      keys.each do |type|
+        sum=total[type]||0
+        s+="#{type}: #{round(sum)}\n" unless sum==0 or sum == 0.0
+      end
+      unless s.empty?
+        make_h3(summary) if headings
+        yield(summary) if block_given?
+        puts s
+        puts if headings
+      end
+    end
+    puts unless headings
+    total
   end
 
   def ff_summary
-    puts "=============== Fast Forward Value ==============="
+    make_h1 "Fast Forward Value"
     puts show_dia_value(one_ff)
     puts
   end
@@ -907,22 +951,9 @@ class Simulator
     puts
   end
 
-  def spending(cost, ressources=tally)
-    #in one unit of time, how much ressource can we buy?
-    res_buy=cost.map do |k,v|
-      res=ressources[k]||0
-      [k, res*1.0/v]
-    end.to_h
-    min_buy=res_buy.values.min #so time=1/min_buy
-    remain=cost.map do |k,v|
-      [k, (ressources[k]||0)-v*min_buy]
-    end.to_h
-    return [res_buy, min_buy, remain]
-  end
-
   def previsions_summary
     total=full_total
-    puts "=============== 30 days previsions summary ==============="
+    make_h1 "30 days previsions summary"
     @Cost={
       level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
       "SI+10": {silver_e: 240},
@@ -974,9 +1005,14 @@ class Simulator
     ff_summary
     economy.each do |k,v|
       r=@ressources.slice(*v)
-      do_summary(k,r)
+      case k
+      when :income
+        do_summary(k,r, total_summary: false)
+      else
+        do_summary(k,r, headings: false, total_value: false, total_summary: false)
+      end
     end
-    do_summary("ALL", @ressources)
+    do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30)
     coins_summary
     previsions_summary
   end
@@ -984,13 +1020,6 @@ class Simulator
   def summary
     process
     show_summary
-  end
-
-  def economy
-    {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
-     exchange: %i(ff shop dura_fragments_sell),
-     summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze)
-    }
   end
 
   def show_variables(verbose: false)
