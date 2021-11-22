@@ -14,6 +14,12 @@ require './economy'
 
 # Exemple:
 s=Simulator.new do
+  #Enter the afk timer value for xp and gold:
+  @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
+  @afk_gold ||=900 #the displayed value by minute (include vip)
+  @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
+  #This is used to set up real_afk_xp, real_afk_gold, real_afk_dust which are the hourly base values not affected by vip, with gold and xp in K.
+
   @nb_ff =3 #we only do ff up to 80 dia
   @misty = { red_e: 4*10, t3: 2 } #our misty rewards
   #alternative: see `get_misty` as an helper function to build them

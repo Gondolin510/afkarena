@@ -8,20 +8,15 @@ require 'json'
 class Simulator
   attr_accessor :ressources
   include Value
-  extend Data
+  include Data
 
-  def initialize(&b)
+  def initialize(&b, process: true)
     instance_eval(&b) if b
     setup
+    process if process
   end
 
   def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
-    #Enter the afk timer value for xp and gold:
-    @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
-    @afk_gold ||=900 #the displayed value by minute (include vip)
-    @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
-    #This is used to set up @_real_afk_xp, @_real_afk_gold, @_real_afk_dust which are the hourly base values not affected by vip, with gold and xp in K. Set these variables directly if you have them instead
-
     @stage ||= "37-01"
 
     #at rc 350: the amount required to level up (xp and gold are in K)
@@ -54,6 +49,10 @@ class Simulator
     get_mult
     get_numbers
     get_idle_hourly
+    post_setup_hook
+  end
+
+  def post_setup_hook
   end
 
   def process!
@@ -65,10 +64,7 @@ class Simulator
   end
 
   def process
-    unless @_processed
-      process!
-      @_processed=true
-    end
+    process!
   end
 
   def get_income
@@ -256,8 +252,8 @@ class Simulator
     @_fos_weekly_quest[:twisted]=50 if @stage > "22-60"
     @_fos_weekly_quest[:poe]=500 if @stage > "23-60"
     @_fos_weekly_quest[:silver_e]=20 if @stage > "28-60"
-    @_fos_weekly_quest[:gold_e]=20 if @stage > "29-60"
-    @_fos_weekly_quest[:red_e]=10 if @stage > "30-60"
+    @_fos_weekly_quest[:gold_e]=10 if @stage > "29-60"
+    @_fos_weekly_quest[:red_e]=5 if @stage > "30-60"
 
     #non used fos:
     #gear has a chance to be factioned: +25% at 4F Towers 40/80/120/160
@@ -288,28 +284,39 @@ class Simulator
     @_nb_arena_fight ||=2+(@_vip_extra_arena_fight||0)
   end
 
-  def get_idle_hourly
-    t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
-    gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
+  def get_raw_idle_hourly
+    # t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
+    # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
     #TODO: we may need to mult gear_hourly by 2 to account for stage rewards
-
-    @Idle_hourly ||={
-      poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
-      gold_e: 0.04170, red_e: 0.01564, shards: 1.25, cores: 0.625,
-      t2: gear_hourly, mythic_gear: gear_hourly,
-      t3: 1.0/(24*15), #1 every 15 days
-      t1_gear: t_gear_hourly,
-      t2_gear: t_gear_hourly,
-      invigor: 6, dura_fragments: 0.267,
-    } #the last of these items to max out is poe at Chap 33
-    @_real_idle_hourly ||= self.class.get_idle(@stage)
+    
+    # @_Idle_hourly ||={
+    #   poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
+    #   gold_e: 0.04170, red_e: 0.01564, shards: 1.25, cores: 0.625,
+    #   t2: gear_hourly, mythic_gear: gear_hourly,
+    #   t3: 1.0/(24*15), #1 every 15 days
+    #   t1_gear: t_gear_hourly,
+    #   t2_gear: t_gear_hourly,
+    #   invigor: 6, dura_fragments: 0.267,
+    # } #the last of these items to max out is poe at Chap 33
+    @_raw_idle_hourly ||= get_idle(@stage)
 
     # we use gold and xp in K
-    @_real_afk_xp||=@afk_xp*(60.0/1000)/(1.0+@_vip_xp_mult)
-    @_real_afk_gold||=@afk_gold*(60.0/1000)/(1.0+@_vip_gold_mult)
-    @_real_afk_dust||=@afk_dust/24.0
+    unless @afk_xp.nil?
+      @_raw_idle_hourly[:xp]=@afk_xp*(60.0/1000)/(1.0+@_vip_xp_mult)
+    end
+    unless @afk_gold.nil?
+      @_raw_idle_hourly[:gold]=@afk_gold*(60.0/1000)/(1.0+@_vip_gold_mult)
+    end
+    unless @afk_dusk.nil?
+      @_raw_idle_hourly[:dust]=@afk_dust/24.0
+    end
+    @_raw_idle_hourly
+  end
 
-    @_idle_hourly=@Idle_hourly.dup
+  def get_idle_hourly
+    get_raw_idle_hourly
+
+    @_idle_hourly=@_raw_idle_hourly.dup
     @_idle_hourly[:mythic_gear] *= @_mythic_mult
     @_idle_hourly[:t2] *= @_mythic_mult
     @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
@@ -326,22 +333,22 @@ class Simulator
     @_idle_hourly
   end
   def real_afk_gold
-    @_real_afk_gold
+    @_raw_idle_hourly[:gold]
   end
   def real_afk_gold=(v)
-    @_real_afk_gold=v
+    @_raw_idle_hourly[:gold]=v
   end
   def real_afk_xp
-    @_real_afk_xp
+    @_raw_idle_hourly[:xp]
   end
   def real_afk_xp=(v)
-    @_real_afk_xp=v
+    @_raw_idle_hourly[:xp]=v
   end
   def real_afk_dust
-    @_real_afk_dust
+    @_raw_idle_hourly[:dust]
   end
   def real_afk_dust=(v)
-    @_real_afk_dust=(v)
+    @_raw_idle_hourly[:dust]=v
   end
 
   # Income functions
@@ -784,13 +791,13 @@ class Simulator
   end
 
   def exchange_ff
-    ff_cost=[0, 50, 80, 100, 100, 200, 300, 400]
+    @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
     nb_ff=@nb_ff
-    if nb_ff > ff_cost.length
-      nb_ff=ff_cost.length
+    if nb_ff > @FF_cost.length
+      nb_ff=@FF_cost.length
       warn "FF cost not implemented for #{@nb_ff} FF"
     end
-    full_cost=(0...nb_ff).reduce(0) {|sum, i| sum+ff_cost[i]}
+    full_cost=(0...nb_ff).reduce(0) {|sum, i| sum+@FF_cost[i]}
     {dia: -full_cost}
   end
 
@@ -813,12 +820,12 @@ class Simulator
     @shop_refreshes ||= 2
     shop_refreshes=@shop_refreshes
 
-    shop_cost= [100, 100, 200, 200]
-    if @shop_refreshes > shop_cost.length
+    @Shop_refresh_cost= [100, 100, 200, 200]
+    if @shop_refreshes > @Shop_refresh_cost.length
       warn "Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes}"
-      shop_refreshes=shop_cost.length
+      shop_refreshes=@Shop_refresh_cost.length
     end
-    refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+shop_cost[i]}
+    refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+@Shop_refresh_cost[i]}
 
 
     nb_shop=1+shop_refreshes
@@ -970,7 +977,7 @@ class Simulator
       coins: %i(guild_coins lab_coins hero_coins challenger_coins),
       summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
       hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
-      misc: %i(dura_fragments dura_tears invigor arena_tickets),
+      misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets dim_gear dim_points garrison_stone),
     }
     ressources2=order.values.flatten.sort.uniq
     missing=ressources-ressources2
@@ -1239,13 +1246,11 @@ class Simulator
   end
 
   def summary
-    process
     show_summary
   end
 
   def show_variables(verbose: false)
-    process
-    blacklist=%i(@ressources @summons @summons_summary @Vows @_order @_processed)
+    blacklist=%i(@ressources @Vows @_order)
     vars=instance_variables-blacklist
     internal_vars=vars.select do |i|
       i.to_s.start_with?("@_")

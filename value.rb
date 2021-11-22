@@ -142,12 +142,15 @@ module Data
     @__idle_data=idle.map do |chap,idle|
       [chap.to_i,
       idle.map do |k,v|
+        v=v/1000.0 if k=="gold" or k=="exp"
         k=:dura_fragments if k=="dura"
         k=:class_fragments if k=="class"
+        k=:mythic_gear if k=="mythic"
         k=:t1_gear if k=="t1_g"
         k=:t2_gear if k=="t2_g"
         k=:shards if k=="shard"
         k=:cores if k=="core"
+        k=:xp if k=="exp"
         [k.to_sym, v]
       end.to_h]
     end.to_h
