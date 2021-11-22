@@ -91,7 +91,7 @@ class Simulator
   end
 
   def make_exchange
-    @ressources[:ff]=exchange_ff
+    @ressources[:ff_cost]=exchange_ff
     @ressources[:shop]=exchange_shop
     @ressources[:dura_fragments_sell]=sell_dura
     summonings
@@ -727,7 +727,7 @@ class Simulator
       dia: -500.0*@monthly_stargazing/30,
       stargazers: @monthly_stargazing/30.0
     }
-    @ressources[:tavern]={
+    @ressources[:wishlist]={
       dia: -270.0*@monthly_tavern/30,
       scrolls: @monthly_tavern/30.0
     }
@@ -735,7 +735,26 @@ class Simulator
       dia: -300.0*@monthly_hcp/30,
       hcp: @monthly_hcp/30.0
     }
+    handle_summons
   end
+
+  def handle_summons
+    total=tally
+
+    hero_chest = total[:hero_choice_chest]||0
+    purple_summons=purple_stone(total[:purple_stones]||0)
+    blue_summons=blue_stone(total[:purple_stones]||0)
+    friend_summons=friend_summon(total[:friend_summons]||0)
+    wl_summons=tavern_summon((total[:scrolls]||0)+(total[:wishlist]||0))
+    hcp_summons=choice_summon(total[:hcp]||0)
+    stargaze_summons=stargaze(total[:stargazers]||0)
+
+    @ressources[:hero_chest]={choice_atier: hero_chest}
+    @ressources[:stones]=get_tally({purple: purple_summons, blue: blue_summons})
+    @ressources[:tavern]=get_tally({friends: friend_summons, wl: wl_summons, hcp: hcp_summons})
+    @ressources[:stargaze]=stargaze_summons
+  end
+
 
   def get_tally(ressources)
     r={}
@@ -757,7 +776,13 @@ class Simulator
 
   def get_total(r)
     s=get_tally(r)
-    convert_ressources_h(s)
+    s=convert_ressources_h(s)
+    unless (s.keys & %i(choice_god random_god random_fodder random_atier wishlist_atier choice_atier)).empty?
+      s[:god]=(s[:choice_god]||0)+(s[:random_god]||0)
+      s[:fodder]=(s[:random_fodder]||0)
+      s[:atier]=(s[:random_atier]||0)+(s[:wishlist_atier]||0)+(s[:choice_atier]||0)
+    end
+    s
   end
   def full_total
     get_total(@ressources)
@@ -774,84 +799,6 @@ class Simulator
     r
   end
 
-  def handle_summons
-    total=tally
-    random_fodder=0; random_atier=0; random_god=0
-    wishlist_atier=0; choice_atier=0; choice_god=0
-    common_summons=0;
-
-    #choice chests
-    choice_atier += total[:hero_choice_chest]||0
-
-    #stones
-    purple_summons=(total[:purple_stones]||0)/60.0
-    blue_summons=(total[:blue_stones]||0)/60.0
-    random_fodder += purple_summons*0.28 + blue_summons/9.0
-    random_atier += purple_summons*0.68
-    random_god += purple_summons*0.04
-
-    #friend summons
-    friends=total[:fridend_summons]||0
-    random_fodder   += friends * 0.4479/9.0
-    wishlist_atier += friends * 0.0221
-    random_god += friends * 0.002
-    common_summons += friends * 0.528
-
-    #wishlist summons
-    wl=(total[:scrolls]||0)+(total[:wishlist]||0)
-    random_fodder   += wl * 0.4370/9.0
-    wishlist_atier += wl * 0.0461
-    random_god += wl * 0.002
-    common_summons += wl * 0.5169
-
-    #hcp summons
-    hcp=(total[:hcp]||0)
-    random_fodder   += hcp * 0.4370/9.0
-    choice_atier += hcp * 0.0461
-    random_god += hcp * 0.002
-    common_summons += hcp * 0.5169
-
-    #wishlist extra ressources
-    # 400 pulls = 20 red 110 gold 280 purple 4 purple cards
-    total_wl=wl+hcp
-    random_atier += total_wl * 1.0/100
-    ressources={
-      red_e: total_wl*20/400.0,
-      gold_e: total_wl*110/400.0,
-      silver_e: total_wl*280/400.0
-    }
-
-    #common extra ressources
-    #1 common = 160 hero coins + 5 dust
-    ressources[:hero_coins]=common_summons*160
-    ressources[:dust]=common_summons*5
-    @ressources[:summons]=ressources
-
-    #stargazing
-    stargaze=total[:stargazers]
-    choice_god += stargaze/40.0
-    random_atier += stargaze * 4*0.008 #purple card
-    random_fodder += stargaze * 4*0.0225/9.0 #blue card
-    stargaze_ressources={}
-    stargaze_ressources[:dia]=stargaze * 30000*0.0001
-    stargaze_ressources[:mythic_gear]= stargaze * 12*0.0007
-    stargaze_ressources[:dura_fragments]=stargaze * 7* (15*0.0018+5*0.0056+1*0.0276)
-    stargaze_ressources[:arena_tickets] = stargaze *0.0501
-    stargaze_ressources[:gold_h]=stargaze * (2*24*0.045+5*6*0.0936)
-    stargaze_ressources[:xp_h]=stargaze * (1*24*0.045+2*6*0.0936)
-    stargaze_ressources[:dust_h]=stargaze * (2*8*0.045+5*2*0.0936)
-    @ressources[:stargaze]=stargaze_ressources
-
-    @summons={ #30 days summons summary
-      fodder: random_fodder*30,
-      choice_atier: choice_atier*30,
-      wishlist_atier: wishlist_atier*30,
-      random_atier: random_atier*30,
-      choice_god: choice_god*30,
-      random_god: random_god*30
-    } 
-  end
-
   def get_ressource_order
     ressources=tally.keys
     order={
@@ -860,6 +807,7 @@ class Simulator
       gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
       coins: %i(guild_coins lab_coins hero_coins challenger_coins),
       summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
+      hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
       misc: %i(dura_fragments dura_tears invigor arena_tickets)
     }
     ressources2=order.values.flatten.sort.uniq
@@ -899,7 +847,7 @@ class Simulator
   end
 
   def total_summary(r)
-    total=get_tally(r)
+    total=get_total(r)
     puts "--------------- Total ---------------"
     @_order.each do |summary, keys|
       puts "**** #{summary.capitalize} ****"
@@ -915,33 +863,6 @@ class Simulator
   def ff_summary
     puts "=============== Fast Forward Value ==============="
     puts show_dia_value(one_ff)
-    puts
-  end
-
-  def summons_summary
-    #{:fodder=>16.29998390022676, :choice_atier=>1.0, :wishlist_atier=>1.975714285714286, :random_atier=>6.69687619047619, :choice_god=>0, :random_god=>0.4544380952380952}
-    fodders=@summons[:fodder]
-    atier=@summons[:choice_atier]+@summons[:wishlist_atier]+@summons[:random_atier]
-    god=@summons[:choice_god]+@summons[:random_god]
-
-    puts "=============== 30 days summons summary (tavern: #{@monthly_tavern}, hcp: #{@monthly_hcp}, stargaze: #{@monthly_stargazing}) ==============="
-    puts "Fodders: #{round(fodders)}"
-    puts "Atiers: #{round(atier)} [choice: #{round(@summons[:choice_atier])}, wl: #{round(@summons[:wishlist_atier])}, random: #{round(@summons[:random_atier])}]"
-    puts "Gods: #{round(god)} [choice: #{round(@summons[:choice_god])}, random: #{round(@summons[:random_god])}]"
-
-    #we need 8 atier + 10 fodders for ascended atier
-    #we need 14 god for ascended god
-    if atier/8.0 < fodders/10.0 then
-      ascended=atier/8.0; extrafodder=fodders-ascended*10.0
-      puts "Ascended 4F: #{round(ascended)} [remains #{round(extrafodder)} fodders]"
-    else
-      ascended=fodders/10.0; extraatier=atier-ascended*8.0
-      puts "Ascended 4F: #{round(ascended)} [remains #{round(extraatier)} atiers]"
-    end
-    ascended_god=god/14.0
-    puts "Ascended gods: #{round(ascended_god)}"
-    #one ascended = 5 levels
-    puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
     puts
   end
 
@@ -986,66 +907,66 @@ class Simulator
     puts
   end
 
+  def spending(cost, ressources=tally)
+    #in one unit of time, how much ressource can we buy?
+    res_buy=cost.map do |k,v|
+      res=ressources[k]||0
+      [k, res*1.0/v]
+    end.to_h
+    min_buy=res_buy.values.min #so time=1/min_buy
+    remain=cost.map do |k,v|
+      [k, (ressources[k]||0)-v*min_buy]
+    end.to_h
+    return [res_buy, min_buy, remain]
+  end
+
   def previsions_summary
     total=full_total
-    puts "=============== Previsions ==============="
+    puts "=============== 30 days previsions summary ==============="
+    @Cost={
+      level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
+      "SI+10": {silver_e: 240},
+      "SI+20": {gold_e: 240},
+      "SI+30": {red_e: 300},
+      "e30": {shards: 3750},
+      "e30 to e41": {cores: 1650},
+      "e30 to e60": {cores: 4500},
+      "e30 to e65": {cores: 4500+1500},
+      "tree level": {twisted: 800},
+      "mythic furn": {poe: 300/0.0407},
+      #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
+      "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
+      "9F (with cards)": {poe: 167000},
+      "Challenger celo": {challenger_coins: 250000},
+      "Ascended challenger celo": {challenger_coins: 250000*14},
 
-    gold=total[:gold]||0
-    xp=total[:xp]||0
-    dust=total[:dust]||0
-    level_gold_day=@level_gold *1.0/gold
-    level_xp_day=@level_xp *1.0/xp
-    level_dust_day=@level_dust *1.0/dust
-    max_time=[level_gold_day,level_xp_day,level_dust_day].max
-    puts "Level: #{round(max_time)} days [gold: #{round(level_gold_day)} days, xp: #{round(level_xp_day)} days, dust: #{round(level_dust_day)} days]"
-    puts
+      "Ascended 4F": { atier: 8, fodder: 10},
+      "Ascended god": { god: 14}, #todo: rc level
+    }
 
-    silver_e=total[:silver_e]||0
-    days=240.0/silver_e
-    puts "SI+10: #{round(days)} days"
+    #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
+    nb_ascended=0
 
-    gold_e=total[:gold_e]||0
-    days=240.0/gold_e
-    puts "SI+20: #{round(days)} days"
+    @Cost.each do |k,v|
+      res_buy, buy, remain=spending(v, total)
 
-    red_e=total[:red_e]||0
-    days=300.0/gold_e
-    puts "SI+30: #{round(days)} days"
-    puts
+      if ["Ascended challenger celo", "Ascended 4F", "Ascended god"].include?(k.to_s)
+        nb_ascended += buy
+      end
 
-    shards=total[:shards]||0
-    days=3750.0/shards
-    puts "e30: #{round(days)} days"
+      o_remain=""
+      if k==:level
+        o_remain+=" {#{res_buy.map { |k,v| "#{k}: #{round(1/v)} days"}.join(', ')}}"
+      end
 
-    cores=total[:shards]||0
-    days=1650.0/cores
-    puts "e30 to e41: #{round(days)} days"
-    days=4500.0/cores
-    puts "e30 to e60: #{round(days)} days"
-    days=(4500.0+1500)/cores
-    puts "e30 to e65: #{round(days)} days"
-    puts
+      monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
+      o_remain += " [remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
 
-    twisted=total[:twisted]||0
-    days=800.0/twisted
-    puts "Tree level: #{round(days)} days"
-
-    poe=total[:poe]||0
-    mythic_cost=(1/0.0407*300)
-    days=mythic_cost/poe
-    puts "Mythic furn: #{round(days)} days"
-    #90 pulls = 1 mythic card
-    #so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
-    mythic_cost=(90*300/(1+90*0.0407))
-    days=mythic_cost/poe
-    puts "Mythic furn (with cards): #{round(days)} days"
-    days=167000.0/poe #9F: via 2 furn drop + 7 mythic cards
-    puts "9F (with cards): #{round(days)} days"
-    puts
-
-    challenger=total[:challenger_coins]||0
-    days=250000.0/challenger
-    puts "Challenger celo: #{round(days)} days, ascended: #{round(14*days)}"
+      puts "#{k}: #{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
+      puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
+    end
+    increase_rc_level=5 #one ascended = 5 levels
+    puts "Max rc level: #{round(1.0/(increase_rc_level*nb_ascended))} days (#{round(increase_rc_level*nb_ascended*30)} by month)"
     puts
   end
 
@@ -1056,7 +977,6 @@ class Simulator
       do_summary(k,r)
     end
     do_summary("ALL", @ressources)
-    summons_summary
     coins_summary
     previsions_summary
   end
@@ -1069,7 +989,7 @@ class Simulator
   def economy
     {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
      exchange: %i(ff shop dura_fragments_sell),
-     summons: %i(summons stargaze)
+     summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze)
     }
   end
 

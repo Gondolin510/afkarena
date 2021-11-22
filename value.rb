@@ -77,6 +77,61 @@ module Value
     p.round(@@rounding)
   end
 
+  def blue_stone(n)
+    {random_fodder: n/60.0/9.0} #convert into epic
+  end
+  def purple_stone(n)
+    { random_fodder: n/60.0*0.28,
+      random_atier: n/60.0*0.68,
+      random_god: n/60.0*0.04}
+  end
+  def friend_summon(n)
+    common_summons=n*0.528
+    { random_fodder: n * 0.4479/9.0,
+      wishlist_atier: n * 0.0221,
+      random_god: n*0.002,
+      dust: common_summons*5,
+      hero_coins: common_summons*160}
+  end
+  def tavern_summon(n)
+    # 400 pulls = 20 red 110 gold 280 purple 4 purple cards
+    # 1 common_summon= 5 dust + 160 hero coins
+    common_summons=n*0.5169
+    {random_fodder: n * 0.4370/9.0,
+      wishlist_atier: n * 0.0461,
+      random_god: n*0.002,
+      dust: common_summons*5,
+      hero_coins: common_summons*160,
+      #
+      random_atier: n/100.0,
+      red_e: n*20/400.0,
+      gold_e: 110/400.0,
+      silver_e: 280/400.0}
+  end
+  def choice_summon(n)
+    r=tavern_summon(n)
+    wl=r.delete(:wishlist_atier)
+    r[:choice_atier]=wl
+    r
+  end
+  def stargaze(n)
+    ## TODO
+    ## real_proba=1/40.0
+    ## adjust_proba=real_proba-0.02 #the given stargazing proba is 2% but in truth it is 1 out of 40 due to pity; so we need to adjust the other probas, except the diamond one
+    ## nb_probas=4+4+12+(15+5+1)+2+2+2
+    ## epsilon=adjust_proba/nb_probas
+    { choice_god: n/40.0,
+      random_atier: n * 4*0.008, #purple card
+      random_fodder: n * 4*0.0225/9.0, #blue card
+      #
+      dia: n*30000*0.0001,
+      mythic_gear: n * 12*0.0007,
+      dura_fragments: n * 7* (15*0.0018+5*0.0056+1*0.0276),
+      gold_h: n * (2*24*0.045+5*6*0.0936),
+      xp_h: n * (1*24*0.045+2*6*0.0936),
+      dust_h: n * (2*8*0.045+5*2*0.0936),
+    }
+  end
 end
 
 if __FILE__ == $0
