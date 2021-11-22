@@ -744,7 +744,7 @@ class Simulator
 
     hero_chest = total[:hero_choice_chest]||0
     purple_summons=purple_stone(total[:purple_stones]||0)
-    blue_summons=blue_stone(total[:purple_stones]||0)
+    blue_summons=blue_stone(total[:blue_stones]||0)
     friend_summons=friend_summon(total[:friend_summons]||0)
     wl_summons=tavern_summon((total[:scrolls]||0)+(total[:wishlist]||0))
     hcp_summons=choice_summon(total[:hcp]||0)
