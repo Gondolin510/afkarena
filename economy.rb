@@ -389,9 +389,9 @@ class Simulator
   end
 
   def labyrinth
-    @_dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
+    @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
     # skipping large camps: 59h gold+29.5h xp+dust
-    @_dismal_end_rewards ||= {
+    @Dismal_end_rewards ||= {
       gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
       shards: 61, cores: 41, dia: 300,
       lab_coins: (4200+700)*@_lab_mult, guild_coins: 1000, challenger_coins: 3333
@@ -403,10 +403,10 @@ class Simulator
       @dismal_stage_flat_rewards = {gold: dismal_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: dismal_flat_xp_h* real_afk_xp}
     end
 
-    keys=(@_dismal_stage_chest_rewards.keys+@_dismal_end_rewards.keys+@dismal_stage_flat_rewards.keys).uniq
+    keys=(@Dismal_stage_chest_rewards.keys+@Dismal_end_rewards.keys+@dismal_stage_flat_rewards.keys).uniq
     keys.map do |t|
-      total=(@_dismal_stage_chest_rewards[t]||0)+
-        (@_dismal_end_rewards[t]||0)+
+      total=(@Dismal_stage_chest_rewards[t]||0)+
+        (@Dismal_end_rewards[t]||0)+
         (@dismal_stage_flat_rewards[t]||0)
       [t, total*2/3.0] # for double events
     end.to_h
