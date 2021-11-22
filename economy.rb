@@ -787,15 +787,22 @@ class Simulator
   def full_total
     get_total(@ressources)
   end
+  def full_total_clean
+    total=get_total(@ressources)
+    total[:gold]=total.delete(:total_gold)
+    total[:xp]=total.delete(:total_xp)
+    total[:dust]=total.delete(:total_dust)
+    total
+  end
 
   def convert_ressources_h(r)
-    dust_h=r.delete(:dust_h)||0
-    r[:dust]=(r[:dust]||0)+dust_h*real_afk_dust
-    xp_h=r.delete(:xp_h)||0
-    r[:xp]=(r[:xp]||0)+xp_h*real_afk_xp
-    gold_h=r.delete(:gold_h)||0
-    gold_hg=r.delete(:gold_hg)||0 #this is affected only by vip
-    r[:gold]=(r[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
+    dust_h=r.fetch(:dust_h,0)
+    r[:total_dust]=(r[:dust]||0)+dust_h*real_afk_dust
+    xp_h=r.fetch(:xp_h,0)
+    r[:total_xp]=(r[:xp]||0)+xp_h*real_afk_xp
+    gold_h=r.fetch(:gold_h,0)
+    gold_hg=r.fetch(:gold_hg,0) #this is affected only by vip
+    r[:total_gold]=(r[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
     r
   end
 
@@ -815,13 +822,13 @@ class Simulator
   def get_ressource_order
     ressources=tally.keys
     order={
-      base: %i(dia gold gold_h gold_hg xp xp_h dust dust_h),
+      base: %i(dia gold gold_h gold_hg total_gold xp xp_h total_xp dust dust_h total_dust),
       upgrades: %i(silver_e gold_e red_e poe twisted shards cores),
       gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
       coins: %i(guild_coins lab_coins hero_coins challenger_coins),
       summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
       hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
-      misc: %i(dura_fragments dura_tears invigor arena_tickets)
+      misc: %i(dura_fragments dura_tears invigor arena_tickets),
     }
     ressources2=order.values.flatten.sort.uniq
     missing=ressources-ressources2
@@ -831,7 +838,7 @@ class Simulator
 
   def economy
     {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
-     exchange: %i(ff shop dura_fragments_sell),
+     exchange: %i(ff_cost shop dura_fragments_sell),
      summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze)
     }
   end
@@ -890,6 +897,7 @@ class Simulator
     @_order.each do |summary, keys|
       s=""
       keys.each do |type|
+        next unless %i(total_gold total_xp total_dust god fodder atier).include?(type)
         sum=total[type]||0
         s+="#{type}: #{round(sum)}\n" unless sum==0 or sum == 0.0
       end
@@ -952,7 +960,8 @@ class Simulator
   end
 
   def previsions_summary
-    total=full_total
+    total=full_total_clean
+
     make_h1 "30 days previsions summary"
     @Cost={
       level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
