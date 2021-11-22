@@ -54,6 +54,7 @@ class Simulator
     get_income
     make_exchange
     handle_summons #get extra ressources from summons
+    exchange_coins #long term coin exchange
     get_ressource_order
   end
 
@@ -848,7 +849,8 @@ class Simulator
   def economy
     {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regar tr_bounties coe hero_trial guild_hero_trial vow),
      exchange: %i(ff_cost shop dura_fragments_sell),
-     summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze)
+     summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
+     stores: %i(hero_store guild_store lab_store challenger_store),
     }
   end
 
@@ -929,6 +931,92 @@ class Simulator
     make_h1 "Fast Forward Value"
     puts show_dia_value(one_ff)
     puts
+  end
+
+  def exchange_coins
+    @HeroStore ||={
+      garrison: { cost: 66*800, garrison_stone: 66},
+      dim_exchange: {cost: 40000/2, dim_points: 40/2},
+    }
+    @GuildStore ||={
+      garrison: { cost: 66*800, garrison_stone: 66},
+      t3: 47000,
+      dim_exchange: {cost: 40000/2, dim_points: 40/2},
+      dim_gear: 67000,
+    }
+    @LabStore ||={
+      garrison: { cost: 100*800, garrison_stone: 100},
+      dim_exchange: {cost: 200000/2, dim_points: 200/2},
+      dim_emblems: {cost: 64000, dim_emblems: 50},
+    }
+
+    @_hero_buys ||=[:garrison]
+    @_guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+    @_lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+
+    get_item_value = lambda do |item, shop|
+      shop_item=shop[item]
+      if shop_item.is_a?(Hash)
+        cost=shop_item.delete(:cost)
+        shop_item.delete(:max) #TODO not implemented
+        value=shop_item
+      else
+        cost=shop_item
+        value={item => 1}
+      end
+      return [cost, value]
+    end
+
+    do_buy = lambda do |r, cost, value, coin_name, qty: 1|
+      r[coin_name]-=cost*qty
+      value.each do |k,v|
+        r[k]||=0
+        r[k]+=qty*v
+      end
+    end
+
+    handle_buys = lambda do |buys, shop, total, coin_name|
+      r={ coin_name => 0}
+      primary, secondary, extra=split_array(buys)
+      primary.each do |item|
+        cost, value=get_item_value[item, shop]
+        do_buy[r, cost, value, coin_name]
+        total -= cost
+      end
+
+      if secondary
+        secondary.each do |item|
+          cost, value=get_item_value[item, shop]
+          if total > cost
+            do_buy[r, cost, value, coin_name]
+            total -= cost
+          end
+        end
+      end
+
+      if extra and total > 0.0
+        extra=extra.first
+        cost, value=get_item_value[extra, shop]
+        qty=total*1.0/cost
+        do_buy[r, cost, value, coin_name, qty: qty]
+      end
+      r
+    end
+
+    total=tally
+    %i(hero lab guild).each do |i|
+      @ressources[:"#{i}_store"]=handle_buys[instance_variable_get(:"@_#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), total[:"#{i}_coins"]*30, :"#{i}_coins"].map {|k,v| [k, v/30.0]}.to_h
+    end
+  end
+
+  def split_array(arr)
+    arr=arr.dup
+    result = []
+    while (idx = arr.index(nil))
+      result << arr.shift(idx)
+      arr.shift
+    end
+    result << arr
   end
 
   def coins_summary
