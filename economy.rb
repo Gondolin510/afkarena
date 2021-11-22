@@ -10,10 +10,10 @@ class Simulator
   include Value
   include Data
 
-  def initialize(&b, process: true)
+  def initialize(process: true, &b)
     instance_eval(&b) if b
     setup
-    process if process
+    self.process if process
   end
 
   def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
