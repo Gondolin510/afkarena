@@ -87,10 +87,10 @@ dim_points: 4.0 [0.67 (guild_store) + 3.33 (lab_store)]
 garrison_stone: 7.73 [2.2 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 11250.58 => buy 52800.0 [ 52800 (garrison)]
-lab_coins: 151900.0 => buy 180000.0 [ 80000 (garrison) +  100000 (dim_exchange)]
-guild_coins: 468030.18 => buy 166800.0 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (t3) +  47000 (t3) +  67000 (4.5 x dim_gear)]
-challenger_coins: 340260.0
+hero_coins: 11250.58 => buy 52800 [ 52800 (garrison)]
+lab_coins: 151900.0 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
+guild_coins: 468030.18 => buy 468030.18 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (2 x t3) +  67000 (4.5 x dim_gear)]
+challenger_coins: 340260.0 => 
 
 =============== Full monthly ressources ===============
 ***** Base *****

@@ -88,10 +88,10 @@ dim_points: 4.0 [0.67 (guild_store) + 3.33 (lab_store)]
 garrison_stone: 7.73 [2.2 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 11250.58 => buy 52800.0 [ 52800 (garrison)]
-lab_coins: 151900.0 => buy 180000.0 [ 80000 (garrison) +  100000 (dim_exchange)]
-guild_coins: 431889.32 => buy 166800.0 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (t3) +  47000 (t3) +  67000 (3.96 x dim_gear)]
-challenger_coins: 340260.0
+hero_coins: 11250.58 => buy 52800 [ 52800 (garrison)]
+lab_coins: 151900.0 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
+guild_coins: 431889.32 => buy 431889.32 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (2 x t3) +  67000 (3.96 x dim_gear)]
+challenger_coins: 340260.0 => 
 
 =============== Full monthly ressources ===============
 ***** Base *****
@@ -233,6 +233,10 @@ Max rc level: 3.14 days (9.55 by month)
 @shop_refreshes: 2
 
 --------------- Fixed vars ---------------
+@HeroStore: {:garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
+@GuildStore: {:garrison=>{:garrison_stone=>66}, :t3=>47000, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
+@LabStore: {:garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}, :dim_emblems=>{:dim_emblems=>50}}
+@ChallengerStore: {}
 @Chest_dia: 2.7
 @Chest_guild: 65
 @Oak_amount: {:blue_stones=>30, :dia=>100, :dust=>500, :gold=>1500}
@@ -257,13 +261,13 @@ Max rc level: 3.14 days (9.55 by month)
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.25}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}}
 @Shop_refresh_cost: [100, 100, 200, 200]
 @Nb_dura: 7.0
-@HeroStore: {:garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
-@GuildStore: {:garrison=>{:garrison_stone=>66}, :t3=>47000, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
-@LabStore: {:garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}, :dim_emblems=>{:dim_emblems=>50}}
-@ChallengerStore: {}
 @Cost: {:level=>{:gold=>18796.97, :xp=>135300, :dust=>25861}, :"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
 
 --------------- Internal vars ---------------
+@_hero_buys: [:garrison]
+@_guild_buys: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+@_lab_buys: [:garrison, :dim_exchange, nil, :dim_emblems]
+@_challenger_buys: []
 @_vip_solo_bounty: 8
 @_vip_gold_mult: 0.9
 @_vip_extra_arena_fight: 5
@@ -304,8 +308,4 @@ Max rc level: 3.14 days (9.55 by month)
 @_nb_guild_fight: 3
 @_average_vow_rewards: {:shards=>105.0, :cores=>50.0, :silver_e=>27.5, :gold_e=>20.0, :red_e=>10.0, :poe=>1500.0, :scrolls=>5.0, :stargazers=>7.5, :dust_h=>44.0}
 @_shop: {:dia=>-267.5, :gold=>-16125, :dust=>1500, :purple_stones=>3.75, :poe=>750, :shards=>60}
-@_hero_buys: [:garrison]
-@_guild_buys: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-@_lab_buys: [:garrison, :dim_exchange, nil, :dim_emblems]
-@_challenger_buys: []
 

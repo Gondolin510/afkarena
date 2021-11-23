@@ -40,10 +40,35 @@ class Simulator
     @monthly_hcp ||= 0 #number of hcp pulls
   end
 
+  def setup_constants
+    @HeroStore ||={
+      garrison: { cost: 66*800, garrison_stone: 66},
+      dim_exchange: {cost: 40000/2, dim_points: 40/2},
+    }
+    @GuildStore ||={
+      garrison: { cost: 66*800, garrison_stone: 66},
+      t3: 47000,
+      dim_exchange: {cost: 40000/2, dim_points: 40/2},
+      dim_gear: 67000,
+    }
+    @LabStore ||={
+      garrison: { cost: 100*800, garrison_stone: 100},
+      dim_exchange: {cost: 200000/2, dim_points: 200/2},
+      dim_emblems: {cost: 64000, dim_emblems: 50},
+    }
+    @ChallengerStore ||={}
+
+    @_hero_buys ||=[:garrison]
+    @_guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+    @_lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+    @_challenger_buys ||= []
+  end
+
   def setup 
     @ressources={}
 
     setup_vars
+    setup_constants
     get_vip
     get_fos
     get_subscription
@@ -1065,91 +1090,88 @@ class Simulator
     puts
   end
 
-  def exchange_coins
-    @HeroStore ||={
-      garrison: { cost: 66*800, garrison_stone: 66},
-      dim_exchange: {cost: 40000/2, dim_points: 40/2},
-    }
-    @GuildStore ||={
-      garrison: { cost: 66*800, garrison_stone: 66},
-      t3: 47000,
-      dim_exchange: {cost: 40000/2, dim_points: 40/2},
-      dim_gear: 67000,
-    }
-    @LabStore ||={
-      garrison: { cost: 100*800, garrison_stone: 100},
-      dim_exchange: {cost: 200000/2, dim_points: 200/2},
-      dim_emblems: {cost: 64000, dim_emblems: 50},
-    }
-    @ChallengerStore ||={}
+  def get_item_value(item, shop)
+    shop_item=shop[item]
+    if shop_item.is_a?(Hash)
+      cost=shop_item.delete(:cost)
+      shop_item.delete(:max) #TODO not implemented
+      value=shop_item
+    else
+      cost=shop_item
+      value={item => 1}
+    end
+    return [cost, value]
+  end
 
-    @_hero_buys ||=[:garrison]
-    @_guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-    @_lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
-    @_challenger_buys ||= []
-    
-    @__coin_summary=""
+  def handle_buys(buys, shop, total)
+    r={ cost: 0 }
+    o={}
 
-    get_item_value = lambda do |item, shop|
-      shop_item=shop[item]
-      if shop_item.is_a?(Hash)
-        cost=shop_item.delete(:cost)
-        shop_item.delete(:max) #TODO not implemented
-        value=shop_item
-      else
-        cost=shop_item
-        value={item => 1}
-      end
-      return [cost, value]
+    do_buy = lambda do |item, cost, value, qty: 1|
+      s={cost: -cost}
+      add_to_hash(r, s.merge(value), multiplier: qty)
+      o[item]||={}
+      o[item][:cost]=cost
+      o[item][:qty]||=0
+      o[item][:qty]+=qty
     end
 
-    do_buy = lambda do |r, cost, value, coin_name, qty: 1|
-      r[coin_name]-=cost*qty
-      add_to_hash(r, value, multiplier: qty)
+    primary, secondary, extra=split_array(buys)
+    primary.each do |item|
+      cost, value=get_item_value(item, shop)
+      do_buy[item, cost, value]
+      total -= cost
     end
 
-    handle_buys = lambda do |buys, shop, total, coin_name|
-      @__coin_summary << "#{coin_name}: #{round(total)}"
-      o=[]; o_total=total
-
-      r={ coin_name => 0}
-      primary, secondary, extra=split_array(buys)
-      primary.each do |item|
-        cost, value=get_item_value[item, shop]
-        do_buy[r, cost, value, coin_name]
-        total -= cost
-        o<<=" #{round(cost)} (#{item})"
-      end
-
-      if secondary
-        secondary.each do |item|
-          cost, value=get_item_value[item, shop]
-          if total > cost
-            do_buy[r, cost, value, coin_name]
-            total -= cost
-            o<<=" #{round(cost)} (#{item})"
-          end
+    if secondary
+      secondary.each do |item|
+        cost, value=get_item_value(item, shop)
+        if total > cost
+          do_buy[item, cost, value]
+          total -= cost
         end
       end
-
-      if extra and total > 0.0
-        extra=extra.first
-        cost, value=get_item_value[extra, shop]
-        qty=total*1.0/cost
-        do_buy[r, cost, value, coin_name, qty: qty]
-        o<<=" #{round(cost)} (#{round(qty)} x #{extra})"
-      end
-
-      total_cost=o_total-total
-      @__coin_summary << " => buy #{round(total_cost)} [#{o.join(' + ')}]" unless o.empty?
-      @__coin_summary << "\n"
-
-      r
     end
 
+    if extra and total > 0.0
+      extra=extra.first
+      cost, value=get_item_value(extra, shop)
+      qty=total*1.0/cost
+      do_buy[extra, cost, value, qty: qty]
+    end
+
+    return [r, o]
+    r
+  end
+
+  def buy_summary(buy)
+    s=""
+    o=[]
+    total_cost=0
+    buy.each do |item, values|
+      qty=values[:qty]
+      cost=values[:cost]
+      total_cost+=cost*qty
+      o<<=" #{round(cost)} (#{(qty==1 || qty==1.0) ? '': "#{round(qty)} x "}#{item})"
+    end
+    s << "buy #{round(total_cost)} [#{o.join(' + ')}]" unless o.empty?
+    s << "\n"
+    s
+  end
+
+  def exchange_coins
+    @__coin_summary=""
     total=tally
+
     %i(hero lab guild challenger).each do |i|
-      @ressources[:"#{i}_store"]=handle_buys[instance_variable_get(:"@_#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), total[:"#{i}_coins"]*30, :"#{i}_coins"].map {|k,v| [k, v/30.0]}.to_h
+      @ressources[:"#{i}_store"] ||={}
+      coin_name=:"#{i}_coins"
+      _total=total[coin_name]*30
+      r,bought=handle_buys(instance_variable_get(:"@_#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), _total)
+      cost=r.delete(:cost)
+      r[coin_name]=cost
+      @__coin_summary << "#{coin_name}: #{round(_total)} => #{buy_summary(bought)}"
+      add_to_hash(@ressources[:"#{i}_store"], r.map {|k,v| [k, v/30.0]}.to_h)
     end
   end
 
