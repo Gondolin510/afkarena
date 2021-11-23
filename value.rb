@@ -1,6 +1,45 @@
 #!/usr/bin/env ruby
 
+module Helpers
+  extend self
+  @@rounding=2
+  def round(p)
+    p.round(@@rounding)
+  end
+
+
+  def add_to_hash(r,*hashes, multiplier: 1)
+    hashes.each do |h|
+      h.each do |k,v|
+        r[k]||=0
+        r[k]+=v*multiplier
+      end
+    end
+    r
+  end
+  def mult_hash(h, multiplier)
+    h.map do |k,v|
+      [k,v*multiplier]
+    end.to_h
+  end
+
+  def sum_hash(*args, **kw)
+    add_to_hash({}, *args, **kw)
+  end
+
+  def split_array(arr)
+    arr=arr.dup
+    result = []
+    while (idx = arr.index(nil))
+      result << arr.shift(idx)
+      arr.shift
+    end
+    result << arr
+  end
+end
+
 module Value
+  include Helpers
   extend self
 
   def gold_conversion #convert 1K gold into dia
@@ -14,21 +53,26 @@ module Value
     #i am using values from chap 37, gold and xp are in K
   end
 
-  def items_value
+  def items_value(summons: true)
+    scroll=240
     value = {
       dia: 1,
       gold: gold_conversion,
       xp: 8 / idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
       dust: 12.5 / idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
       gold_h: 2, #24h gold=48 dia, 1h gold=2 dia
+      gold_hg: 2,
         #Alternative: idle[:gold]*gold_conversion,
       xp_h: 8,
       dust_h: 12.5,
+
       poe: 0.675,
       twisted: 6.75,
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
       red_e: 135,
+      shards: 2000/20 *gold_conversion, #=5.709. Or 6.75=135/20
+      cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Or 13.5=135/10
 
       dura_fragments: 100 * gold_conversion,
       class_fragments: 9000 * 0.675 / 400,
@@ -44,48 +88,61 @@ module Value
       blue_stones: 2.6,
       purple_stones: 31.2,
 
-      scroll: 240,
-      faction: 240,
+      scrolls: scroll,
+      faction_scrolls: scroll,
+      friend_summons: scroll,
       stargazers: 500,
-      shards: 2000/20 *gold_conversion, #or 6.75=135/20
-      cores: (7500 / 48.65 + 380) * 12.5 / 585 #or 13.5=135/10
+      hero_choice_chest: 6400,
+
+      arena_tickets: 50*gold_conversion,
+
+      challenger_coins: 1.0/15,
+      guild_coins: 1.0/15,
+      hero_coins: 1.0/7.5,
+      lab_coins: 1.0/9.5,
     }
 
+    if summons
+      value.merge!({
+        choice_god: 14000,
+        random_god: 9600,
+        random_atier: 31.2*60, #=1872
+        wishlist_atier: 6400,
+        choice_atier: 6400,
+        random_fodder: 2.6*60*9 #=1404=1872*6/9, 2.6*60*156
+      })
+    end
+    
+    # "Missing: dura_tears
     value
   end
-  #missing: :arena_tickets :challenger_coins :friend_summons :gold_hg :guild_coins :hero_choice_chest :lab_coins
 
-  def dia_value(items)
+  def dia_value(items, **kw)
     o=[]; sum=0
-    values=items_value
+    values=items_value(**kw)
     items.each do |k,v|
-      # p k unless values.key?(k)
+      #p "Missing: #{k}" unless values.key?(k)
       value=v*(values[k]||0)
       sum+=value
       o.push("#{round(v)} #{k}=#{round(value)} dia")
     end
     return [sum, o]
   end
-  def show_dia_value(items, details: true)
-    total, o=dia_value(items)
+  def show_dia_value(items, details: true, **kw)
+    total, o=dia_value(items, **kw)
     s="#{round(total)} dia"
     s+=" [#{o.join(' + ')}]" if details
   end
 
-  @@rounding=2
-  def round(p)
-    p.round(@@rounding)
-  end
-
-  def blue_stone(n)
+  def blue_stone(n=60)
     {random_fodder: n/60.0/9.0} #convert into epic
   end
-  def purple_stone(n)
+  def purple_stone(n=60)
     { random_fodder: n/60.0*0.28,
       random_atier: n/60.0*0.68,
       random_god: n/60.0*0.04}
   end
-  def friend_summon(n)
+  def friend_summon(n=1)
     common_summons=n*0.528
     { random_fodder: n * 0.4479/9.0,
       wishlist_atier: n * 0.0221,
@@ -93,7 +150,7 @@ module Value
       dust: common_summons*5,
       hero_coins: common_summons*160}
   end
-  def tavern_summon(n)
+  def tavern_summon(n=1)
     # 400 pulls = 20 red 110 gold 280 purple 4 purple cards
     # 1 common_summon= 5 dust + 160 hero coins
     common_summons=n*0.5169
@@ -108,13 +165,13 @@ module Value
       gold_e: 110/400.0,
       silver_e: 280/400.0}
   end
-  def choice_summon(n)
+  def choice_summon(n=1)
     r=tavern_summon(n)
     wl=r.delete(:wishlist_atier)
     r[:choice_atier]=wl
     r
   end
-  def stargaze(n)
+  def stargaze(n=1)
     ## TODO
     ## real_proba=1/40.0
     ## adjust_proba=real_proba-0.02 #the given stargazing proba is 2% but in truth it is 1 out of 40 due to pity; so we need to adjust the other probas, except the diamond one
@@ -130,6 +187,14 @@ module Value
       gold_h: n * (2*24*0.045+5*6*0.0936),
       xp_h: n * (1*24*0.045+2*6*0.0936),
       dust_h: n * (2*8*0.045+5*2*0.0936),
+    }
+  end
+
+  def arena_fight(n=1)
+    {
+      gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
+      blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
+      dia: (150*0.15+300*0.12+3000*0.03)*0.01
     }
   end
 end
@@ -172,44 +237,24 @@ module Data
   end
 end
 
-module Helpers
-  extend self
-
-  def add_to_hash(r,*hashes, multiplier: 1)
-    hashes.each do |h|
-      h.each do |k,v|
-        r[k]||=0
-        r[k]+=v*multiplier
-      end
-    end
-    r
-  end
-  def mult_hash(h, multiplier)
-    h.map do |k,v|
-      [k,v*multiplier]
-    end.to_h
-  end
-
-  def sum_hash(*args, **kw)
-    add_to_hash({}, *args, **kw)
-  end
-
-  def split_array(arr)
-    arr=arr.dup
-    result = []
-    while (idx = arr.index(nil))
-      result << arr.shift(idx)
-      arr.shift
-    end
-    result << arr
-  end
-end
-
 if __FILE__ == $0
-  arena_fight = {
-    gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
-    blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
-    dia: (150*0.15+300*0.12+3000*0.03)*0.01
-  }
-  puts "Arena ticket value: #{Value.show_dia_value(arena_fight)}"
+  puts "- Arena ticket value: #{Value.show_dia_value(Value.arena_fight(1))}"
+  # Arena ticket value: 6.81 dia [44.55 gold=2.54 dia + 5.95 dust=1.53 dia + 0.12 blue_stones=0.31 dia + 0.03 purple_stones=0.94 dia + 1.49 dia=1.49 dia]
+
+  puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10), summons: false)}"
+  # 10 stargaze value: 587.63 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
+  
+  #puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10))}"
+  # 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
+
+  puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10), summons: false)}"
+  # 10 summons value: 96.14 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=0.0 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+  # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+  
+  #puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10))}"
+  # 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+
+  puts
+  puts "*** Values: ***"
+  puts Value.items_value
 end
