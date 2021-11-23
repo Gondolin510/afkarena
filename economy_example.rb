@@ -125,3 +125,51 @@ puts "==================== Default settings ===================="
 #Here are the default variables that can be changed in `Simulator.new do ... end` and their values
 Simulator.new.show_variables
 #Simulator.new.show_variables(verbose: true) for internal variables
+
+=begin
+=============== Variables ===============
+@stage: 37-01
+@hero_level: 350
+@player_level: 180
+@nb_ff: 6
+@vip: 10
+@subscription: false
+@tower_kt: 550
+@tower_4f: 280
+@tower_god: 300
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@shop_refreshes: 2
+@buy_hero: [:garrison]
+@buy_guild: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
+@buy_challenger: []
+@monthly_stargazing: 0
+@monthly_tavern: 0
+@monthly_hcp: 0
+@friends_mercs: 5
+@friends_nb: 20
+@gh_team_wrizz_gold: 1080
+@gh_team_soren_gold: 1080
+@gh_team_wrizz_coin: 1158
+@gh_team_soren_coin: 1158
+@gh_wrizz_chests: 23
+@gh_soren_chests: 23
+@gh_wrizz_gold: 2160
+@gh_soren_gold: 2160
+@gh_soren_freq: 0.66
+@tr_twisted: 250
+@tr_poe: 1000
+@tr_guild: {:dia=>100, :twisted=>6}
+@arena_daily_dia: 66
+@arena_weekly_dia: 660
+@lct_coins: 380
+@misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :twisted=>400, :blue_stones=>720}
+@noble_regal: {:blue_stones=>3300}
+@noble_twisted: {:xp_h=>956}
+@noble_coe: {:dust=>7500, :dust_h=>380}
+@hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@board_level: 8
+@dura_nb_selling: 0
+@labyrinth_mode: dismal
+@lab_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
+=end

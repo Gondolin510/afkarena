@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
-#TODO: towers, more events?
-#Get leveling up ressources from csv file
+#TODO: cursed realm, tower progression, more events?
 
 require './value'
 require 'json'
@@ -178,7 +177,7 @@ class Simulator
       lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333
     } # i think guild coins are not affected by the multiplier here
     @Lab_hard_end_rewards ||= {
-      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
+      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo: we have less end rewards in standard lab
       dia: 300,
       lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333
     }
@@ -683,7 +682,7 @@ class Simulator
     end
 
     def arena
-      #todo: add arena tickets usage? via tally[:arena_tickets]
+      #todo: add arena tickets usage to the number of arena fights? via tally[:arena_tickets]
       arena_fight = {
         gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
         blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
@@ -700,8 +699,6 @@ class Simulator
     end
 
     def labyrinth(mode: @labyrinth_mode)
-      #TODO easy/hard standard lab
-
       if @lab_flat_rewards.nil?
         @lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
       end
@@ -709,7 +706,7 @@ class Simulator
       lab_flat_rewards[:gold] *= @_lab_gold_mult
       rewards=case mode
         when :dismal
-          [@Dismal_stage_chest_rewards,@Dismal_end_rewards,@lab_flat_rewards]
+          [@Dismal_stage_chest_rewards, @Dismal_end_rewards, @lab_flat_rewards]
         when :hard
           [@Lab_hard_end_rewards, @lab_flat_rewards]
         when :easy
