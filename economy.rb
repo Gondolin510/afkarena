@@ -827,6 +827,7 @@ class Simulator
 
     def bounties
       if @board_level < 8
+        #todo: find the probas in the game files
         warn "[Warning] Board level #{@board_level} not implemented, skipping"
         return {}
       end
@@ -938,6 +939,21 @@ class Simulator
       @_average_vow_rewards.map do |k,v|
         [k, v*@Monthly_vows/30.0]
       end.to_h
+    end
+
+    def tower_progression
+      # for 4f towers, between 240 and 360:
+      # every 10 level we have 4000 dust, 5 stargaze or 10 red_e, 90 purple stones or 15 gold_e
+      # above 360: every 10 levels we have 4000 dust + 5 stargaze + 10 red_
+      # More precisely: (10 sg + 8k dust, 10 Red chests 10 faction emblems)
+      # from quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
+      #
+      # celhypo quests: 400 cores every x20
+      #
+      # king tower (>560): 5650 gold + 160 dia +150 dust + 30 purple every *10
+      #             5650 gold + 80 dia +150 dust + 30 blue every else
+      #             (except 160 dia ever *5)
+      # Quests: Cores are 500 every x50 and 400 dia every x20
     end
   end
   include Income
