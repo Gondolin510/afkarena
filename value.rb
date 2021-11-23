@@ -188,6 +188,15 @@ module Helpers
     add_to_hash({}, *args, **kw)
   end
 
+  def split_array(arr)
+    arr=arr.dup
+    result = []
+    while (idx = arr.index(nil))
+      result << arr.shift(idx)
+      arr.shift
+    end
+    result << arr
+  end
 end
 
 if __FILE__ == $0
