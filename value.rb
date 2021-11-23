@@ -174,6 +174,7 @@ end
 
 module Helpers
   extend self
+
   def add_to_hash(r,*hashes, multiplier: 1)
     hashes.each do |h|
       h.each do |k,v|
@@ -182,6 +183,11 @@ module Helpers
       end
     end
     r
+  end
+  def mult_hash(h, multiplier)
+    h.map do |k,v|
+      [k,v*multiplier]
+    end.to_h
   end
 
   def sum_hash(*args, **kw)

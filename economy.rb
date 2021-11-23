@@ -70,6 +70,7 @@ class Simulator
     #twisted realm
     @tr_twisted ||=250
     @tr_poe ||=1000
+    @tr_guild ||= {dia: 100, twisted: 420/70}
 
     # arena
     @arena_daily_dia ||= get_arena(5) #rank 5 in arena
@@ -437,7 +438,7 @@ class Simulator
 
     def get_raw_idle_hourly
       # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
-      #TODO: we may need to mult gear_hourly by 2 to account for stage rewards
+      #todo: we may need to mult gear_hourly by 2 to account for stage rewards
       
       # @_Idle_hourly ||={
       #   poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
@@ -552,8 +553,9 @@ class Simulator
     end
 
     def tr
-      #TODO add guild tr
-      {twisted: @tr_twisted*2.0/3, poe: @tr_poe*2.0/3}
+      tr={twisted: @tr_twisted, poe: @tr_poe}
+      add_to_hash(tr, @tr_guild)
+      mult_hash(tr, 2.0/3) #to account for double events
     end
 
     def quests
@@ -877,7 +879,7 @@ class Simulator
       shop_item=shop[item]
       if shop_item.is_a?(Hash)
         cost=shop_item.delete(:cost)
-        shop_item.delete(:max) #TODO not implemented
+        shop_item.delete(:max) #todo not implemented
         value=shop_item
       else
         cost=shop_item
