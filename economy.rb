@@ -208,7 +208,6 @@ class Simulator
   def process!
     get_income
     make_exchange
-    handle_summons #get extra ressources from summons
     exchange_coins #long term coin exchange
     get_ressource_order
   end
@@ -1039,12 +1038,10 @@ class Simulator
         dia: -300.0*@monthly_hcp/30,
         hcp: @monthly_hcp/30.0
       }
-      handle_summons
+      @ressources.merge!(handle_summons(tally)) #get extra ressources from summons
     end
 
-    def handle_summons
-      total=tally
-
+    def handle_summons(total)
       hero_chest = total[:hero_choice_chest]||0
       purple_summons=purple_stone(total[:purple_stones]||0)
       blue_summons=blue_stone(total[:blue_stones]||0)
@@ -1053,10 +1050,12 @@ class Simulator
       hcp_summons=choice_summon(total[:hcp]||0)
       stargaze_summons=stargaze(total[:stargazers]||0)
 
-      @ressources[:hero_chest]={choice_atier: hero_chest}
-      @ressources[:stones]=tally({purple: purple_summons, blue: blue_summons})
-      @ressources[:tavern]=tally({friends: friend_summons, wl: wl_summons, hcp: hcp_summons})
-      @ressources[:stargaze]=stargaze_summons
+      r={}
+      r[:hero_chest]={choice_atier: hero_chest}
+      r[:stones]=tally({purple: purple_summons, blue: blue_summons})
+      r[:tavern]=tally({friends: friend_summons, wl: wl_summons, hcp: hcp_summons})
+      r[:stargaze]=stargaze_summons
+      r
     end
   end
   include Exchange
