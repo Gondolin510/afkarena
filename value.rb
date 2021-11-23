@@ -172,21 +172,20 @@ module Value
     r
   end
   def stargaze(n=1)
-    ## TODO
-    ## real_proba=1/40.0
-    ## adjust_proba=real_proba-0.02 #the given stargazing proba is 2% but in truth it is 1 out of 40 due to pity; so we need to adjust the other probas, except the diamond one
-    ## nb_probas=4+4+12+(15+5+1)+2+2+2
-    ## epsilon=adjust_proba/nb_probas
+    real_proba=1/40.0 #the given stargazing proba is 2% but in truth it is 1 out of 40 due to pity; so we need to adjust the other probas, except the diamond one
+    diamond_proba=0.0001
+    ratio=(1.0-real_proba-diamond_proba)/(1.0-0.02-diamond_proba)
+    #p ratio
     { choice_god: n/40.0,
-      random_atier: n * 4*0.008, #purple card
-      random_fodder: n * 4*0.0225/9.0, #blue card
+      random_atier: n * 4*ratio*0.008, #purple card
+      random_fodder: n * 4*ratio*0.0225/9.0, #blue card
       #
-      dia: n*30000*0.0001,
-      mythic_gear: n * 12*0.0007,
-      dura_fragments: n * 7* (15*0.0018+5*0.0056+1*0.0276),
-      gold_h: n * (2*24*0.045+5*6*0.0936),
-      xp_h: n * (1*24*0.045+2*6*0.0936),
-      dust_h: n * (2*8*0.045+5*2*0.0936),
+      dia: n*30000*diamond_proba,
+      mythic_gear: n * 12*ratio*0.0007,
+      dura_fragments: n * 7* ratio*(15*0.0018+5*0.0056+1*0.0276),
+      gold_h: n * ratio*(2*24*0.045+5*6*0.0936),
+      xp_h: n * ratio*(1*24*0.045+2*6*0.0936),
+      dust_h: n * ratio*(2*8*0.045+5*2*0.0936),
     }
   end
 
@@ -242,17 +241,18 @@ if __FILE__ == $0
   # Arena ticket value: 6.81 dia [44.55 gold=2.54 dia + 5.95 dust=1.53 dia + 0.12 blue_stones=0.31 dia + 0.03 purple_stones=0.94 dia + 1.49 dia=1.49 dia]
 
   puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10), summons: false)}"
-  # 10 stargaze value: 587.63 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
-  
+  # 10 stargaze value: 587.63 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia] 
+  #  With adjusted ratio of 0.99489: 10 stargaze value: 584.78 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=41.79 dia + 5.75 dura_fragments=32.85 dia + 49.43 gold_h=98.85 dia + 21.92 xp_h=175.36 dia + 16.48 dust_h=205.94 dia]
+
   #puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10))}"
-  # 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
+  ## 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
 
   puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10), summons: false)}"
   # 10 summons value: 96.14 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=0.0 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
   # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
   
   #puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10))}"
-  # 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+  ## 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
 
   puts
   puts "*** Values: ***"
