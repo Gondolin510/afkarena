@@ -63,9 +63,9 @@ class Simulator
     @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
     @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
-    #twisted realm (todo: use fabled rewards)
-    @tr_twisted ||=250
-    @tr_poe ||=1000
+    #twisted realm (use fabled rewards)
+    @tr_twisted ||=380
+    @tr_poe ||=1290
     @tr_guild ||= {dia: 100, twisted: 420/70}
 
     # arena
