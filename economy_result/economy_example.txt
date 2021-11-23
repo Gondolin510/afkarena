@@ -268,36 +268,36 @@ reset_scrolls: 1 [1 (shop)]
 
 =============== Summons ===============
 ***** Base *****
-dia: -628.33 [-0.0 (wishlist) + -300.0 (hcp) + -333.33 (stargazing) + 5.0 (stargaze)]
+dia: -545.23 [-0.0 (wishlist) + -216.9 (hcp) + -333.33 (stargazing) + 5.0 (stargaze)]
 gold_h: 8.24 [8.24 (stargaze)]
 -> Total gold: 222.42K
 xp_h: 3.65 [3.65 (stargaze)]
 -> Total xp: 1590.05K
-dust: 18.42 [18.42 (tavern)]
+dust: 17.7 [17.7 (tavern)]
 dust_h: 2.75 [2.75 (stargaze)]
--> Total dust: 152.01
+-> Total dust: 151.29
 
 ***** Upgrades *****
 silver_e: 1.4 [1.4 (tavern)]
 gold_e: 0.55 [0.55 (tavern)]
-red_e: 0.13 [0.13 (tavern)]
+red_e: 0.12 [0.12 (tavern)]
 
 ***** Gear *****
 mythic_gear: 0.01 [0.01 (stargaze)]
 
 ***** Coins *****
-hero_coins: 589.33 [589.33 (tavern)]
+hero_coins: 566.43 [566.43 (tavern)]
 
 ***** Summons *****
-hcp: 1.0 [1.0 (hcp)]
+hcp: 0.72 [0.72 (hcp)]
 stargazers: 0.67 [0.67 (stargazing)]
 
 ***** Hero_summons *****
-random_fodder: 0.96 [0.6 (stones) + 0.35 (tavern) + 0.02 (stargaze)]
--> Atier: 0.84
-choice_atier: 0.08 [0.03 (hero_chest) + 0.05 (tavern)]
+random_fodder: 0.95 [0.6 (stones) + 0.33 (tavern) + 0.02 (stargaze)]
+-> Atier: 0.83
+choice_atier: 0.07 [0.03 (hero_chest) + 0.03 (tavern)]
 wishlist_atier: 0.17 [0.17 (tavern)]
-random_atier: 0.59 [0.51 (stones) + 0.03 (tavern) + 0.05 (stargaze)]
+random_atier: 0.59 [0.51 (stones) + 0.02 (tavern) + 0.05 (stargaze)]
 -> God: 0.09
 choice_god: 0.04 [0.04 (stargaze)]
 random_god: 0.04 [0.03 (stones) + 0.01 (tavern)]
@@ -315,14 +315,14 @@ dim_points: 4.0 [0.67 (guild_store) + 3.33 (lab_store)]
 garrison_stone: 7.73 [2.2 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 17680.02 => buy 52800 [ 52800 (garrison)]
+hero_coins: 16992.75 => buy 52800 [ 52800 (garrison)]
 lab_coins: 142100.0 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
 guild_coins: 433530.25 => buy 433530.25 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (2 x t3) +  67000 (3.98 x dim_gear)]
 challenger_coins: 340260.0 => 
 
 =============== Full monthly ressources ===============
 ***** Base *****
-dia: 3198.84 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 3367.35 (regal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + 1500.0 (abex) + 333.33 (hf) + -3900 (ff_cost) + -8025.0 (shop) + -10000.0 (stargazing) + -0.0 (wishlist) + -9000.0 (hcp) + 150.0 (stargaze) + -9000 (lct_buy_tickets)]
+dia: 5691.84 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 3367.35 (regal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + 1500.0 (abex) + 333.33 (hf) + -3900 (ff_cost) + -8025.0 (shop) + -10000.0 (stargazing) + -0.0 (wishlist) + -6507.0 (hcp) + 150.0 (stargaze) + -9000 (lct_buy_tickets)]
 gold: -50637.93 [107838.0 (idle) + 26959.5 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 35640.0 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -663750 (shop) + 0.0 (dura_fragments_sell) + 3128.57 (selling_items)]
 gold_h: 4011.7 [128.57 (quests) + 3540.0 (dismal) + 96.0 (hero_trial) + 247.13 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
@@ -330,14 +330,14 @@ gold_hg: 60.0 [60.0 (quests)]
 xp: 1670317.8 [1294471.2 (idle) + 323617.8 (ff) + 52228.8 (dismal)]
 xp_h: 1919.42 [60.0 (quests) + 930.0 (dismal) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 109.6 (stargaze)]
 -> Total xp: 2505724.46K
-dust: 225780.5 [102622.8 (idle) + 25655.7 (ff) + 39450.0 (board) + 11250.0 (oak_inn) + 1249.5 (arena) + 45000 (shop) + 552.5 (tavern)]
+dust: 225759.02 [102622.8 (idle) + 25655.7 (ff) + 39450.0 (board) + 11250.0 (oak_inn) + 1249.5 (arena) + 45000 (shop) + 531.02 (tavern)]
 dust_h: 1416.38 [60.0 (quests) + 930.0 (dismal) + 320.0 (misty) + 24.0 (hero_trial) + 82.38 (stargaze)]
--> Total dust: 294687.27
+-> Total dust: 294665.79
 
 ***** Upgrades *****
 silver_e: 202.68 [59.98 (idle) + 14.99 (ff) + 85.71 (quests) + 42.0 (tavern)]
 gold_e: 96.89 [30.02 (idle) + 7.51 (ff) + 42.86 (quests) + 16.5 (tavern)]
-red_e: 79.48 [11.26 (idle) + 2.82 (ff) + 21.43 (quests) + 40.0 (misty) + 3.98 (tavern)]
+red_e: 79.07 [11.26 (idle) + 2.82 (ff) + 21.43 (quests) + 40.0 (misty) + 3.56 (tavern)]
 poe: 74279.86 [16509.6 (idle) + 4127.4 (ff) + 20000.0 (tr) + 2142.86 (quests) + 9000.0 (misty) + 22500 (shop)]
 twisted: 6338.96 [803.74 (idle) + 200.93 (ff) + 5120.0 (tr) + 214.29 (quests)]
 shards: 4145.0 [900.0 (idle) + 225.0 (ff) + 1220.0 (dismal) + 1800 (shop)]
@@ -353,7 +353,7 @@ t2_gear: 2.5 [2.0 (idle) + 0.5 (ff)]
 ***** Coins *****
 guild_coins: 0.0 [381530.25 (guild) + 20000.0 (dismal) + 30000.0 (misty) + 2000.0 (guild_hero_trial) + -433530.25 (guild_store)]
 lab_coins: -37900.0 [142100.0 (dismal) + -180000.0 (lab_store)]
-hero_coins: -35119.98 [17680.02 (tavern) + -52800.0 (hero_store)]
+hero_coins: -35807.25 [16992.75 (tavern) + -52800.0 (hero_store)]
 challenger_coins: 340260.0 [273600 (lct) + 66660.0 (dismal) + 0.0 (challenger_store)]
 
 ***** Summons *****
@@ -361,19 +361,19 @@ purple_stones: 1346.56 [42.86 (quests) + 91.43 (merchants) + 6.3 (arena) + 300.0
 blue_stones: 6282.25 [1114.5 (board) + 675.0 (oak_inn) + 407.14 (quests) + 25.2 (arena) + 1920.0 (misty) + 2020.41 (regal) + 120.0 (hero_trial)]
 scrolls: 49.52 [42.86 (quests) + 6.67 (hf) + 0.0 (wishlist)]
 friend_summons: 131.43 [131.43 (friends)]
-hcp: 30.0 [30.0 (hcp)]
+hcp: 21.69 [21.69 (hcp)]
 hero_choice_chest: 1.0 [1.0 (misty)]
 stargazers: 50.0 [20.0 (vow) + 10.0 (abex) + 20.0 (stargazing)]
 
 ***** Hero_summons *****
-random_fodder: 28.82 [17.92 (stones) + 10.4 (tavern) + 0.5 (stargaze)]
--> Atier: 25.22
-choice_atier: 2.38 [1.0 (hero_chest) + 1.38 (tavern)]
+random_fodder: 28.41 [17.92 (stones) + 10.0 (tavern) + 0.5 (stargaze)]
+-> Atier: 24.75
+choice_atier: 2.0 [1.0 (hero_chest) + 1.0 (tavern)]
 wishlist_atier: 5.19 [5.19 (tavern)]
-random_atier: 17.65 [15.26 (stones) + 0.8 (tavern) + 1.59 (stargaze)]
--> God: 2.57
+random_atier: 17.56 [15.26 (stones) + 0.71 (tavern) + 1.59 (stargaze)]
+-> God: 2.55
 choice_god: 1.25 [1.25 (stargaze)]
-random_god: 1.32 [0.9 (stones) + 0.42 (tavern)]
+random_god: 1.3 [0.9 (stones) + 0.41 (tavern)]
 
 ***** Misc *****
 dura_fragments: 269.06 [192.24 (idle) + 48.06 (ff) + -0.0 (dura_fragments_sell) + 28.76 (stargaze)]
@@ -390,7 +390,7 @@ reset_scrolls: 30 [30 (shop)]
 =============== 30 days previsions summary ===============
 SI+10: 35.52 days (0.84 by month)
 SI+20: 74.31 days (0.4 by month)
-SI+30: 113.23 days (0.26 by month) [monthly remains: 0.0 red_e]
+SI+30: 113.83 days (0.26 by month)
 
 e30: 27.14 days (1.11 by month)
 e30 to e41: 22.81 days (1.32 by month)
@@ -405,12 +405,12 @@ mythic furn (with cards): 2.34 days (12.83 by month)
 Challenger celo: 22.04 days (1.36 by month)
 Ascended challenger celo: 308.59 days (0.1 by month)
 
-Ascended 4F: 10.41 days (2.88 by month) [monthly remains: 2.16 atier]
-Ascended god: 163.45 days (0.18 by month)
+Ascended 4F: 10.56 days (2.84 by month) [monthly remains: 2.02 atier]
+Ascended god: 164.51 days (0.18 by month)
 RC slot: 6.94 days (4.32 by month) [monthly remains: 0.0 invigor]
-level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.51 days} [monthly remains: 2068642.45 xp + 211695.44 dust]
+level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
 
-Max rc level: 1.9 days (15.81 by month)
+Max rc level: 1.92 days (15.6 by month)
 
 ==================== Default settings ====================
 =============== Variables ===============
@@ -431,7 +431,8 @@ Max rc level: 1.9 days (15.81 by month)
 @buy_challenger: []
 @monthly_stargazing: 0
 @monthly_tavern: 0
-@monthly_hcp: 0
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
 @friends_mercs: 5
 @friends_nb: 20
 @gh_team_wrizz_gold: 1080

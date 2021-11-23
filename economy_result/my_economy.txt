@@ -233,7 +233,8 @@ Max rc level: 3.14 days (9.55 by month)
 @buy_challenger: []
 @monthly_stargazing: 0
 @monthly_tavern: 0
-@monthly_hcp: 0
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
 @friends_mercs: 5
 @friends_nb: 20
 @gh_team_soren_coin: 1058

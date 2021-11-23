@@ -53,7 +53,7 @@ s=Simulator.new do
   #
   @monthly_stargazing=20 #lets stargaze!
   @monthly_tavern= 0
-  @monthly_hcp= 30 #and hcp
+  @monthly_hcp_heroes= 1 #we want to do enough hcp summons to get one hero
 
   
   # If we are feeling adventurous we can even change internal variables in post_setup_hook

@@ -44,7 +44,8 @@ class Simulator
     # Summonings
     @monthly_stargazing ||= 0 #number of stargazing done in a month
     @monthly_tavern ||= 0 #number of tavern pulls
-    @monthly_hcp ||= 0 #number of hcp pulls
+    @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
+    @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
     # Friends and weekly mercs
     @friends_mercs ||= 5
     @friends_nb ||= 20
@@ -62,7 +63,7 @@ class Simulator
     @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
     @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
-    #twisted realm
+    #twisted realm (todo: use fabled rewards)
     @tr_twisted ||=250
     @tr_poe ||=1000
     @tr_guild ||= {dia: 100, twisted: 420/70}
