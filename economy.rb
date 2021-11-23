@@ -20,16 +20,17 @@ class Simulator
   def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
     @stage ||= "37-01"
 
-    #at rc 350: the amount required to level up (xp and gold are in K)
-    @level_gold ||= 18132.62
-    @level_xp ||= 130100
-    @level_dust ||= 24703
-
+    @hero_level ||= 350
+    @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
     @nb_ff ||=6 #ff by day
     @vip ||=10 #vip level
     @subscription ||=true if @subscription.nil?
-    @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
     @board_level ||=8
+
+    #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
+    #@afk_gold: the displayed value by minute (include vip)
+    #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
+    #determined from stage progression, but can be set up directly for more precise results
 
     # Towers
     @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -97,9 +98,29 @@ class Simulator
     #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
   end
 
+  def level_up_ressources(levels)
+    r=get_hero_level_stats
+    gold=xp=dust=0
+    if levels.is_a?(Integer)
+      return level_up_ressources([levels])
+    else #an array of current hero levels
+      levels.each do |level|
+        gold +=r[level][:gold]
+        xp +=r[level][:xp]
+        dust +=r[level][:dust]
+      end
+    end
+    return [gold, xp, dust]
+  end
+
   def setup_constants
+    gold, xp, dust = level_up_ressources(@hero_level)
+    @_level_gold ||= gold
+    @_level_xp ||= xp
+    @_level_dust ||= dust
+
     @Cost={
-      level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
+      level: {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust},
       "SI+10": {silver_e: 240},
       "SI+20": {gold_e: 240},
       "SI+30": {red_e: 300},

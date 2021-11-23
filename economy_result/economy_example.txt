@@ -206,12 +206,10 @@ Max rc level: 2.22 days (13.49 by month)
 @noble_regal: {:blue_stones=>3300}
 @noble_coe: {:dust=>7500, :dust_h=>380}
 @stage: 37-01
-@level_gold: 18132.62
-@level_xp: 130100
-@level_dust: 24703
+@hero_level: 350
+@player_level: 180
 @vip: 10
 @subscription: true
-@player_level: 180
 @board_level: 8
 @tower_kt: 550
 @tower_4f: 280

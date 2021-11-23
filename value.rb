@@ -234,6 +234,29 @@ module Data
     end
     idle
   end
+
+  def get_hero_level_stats
+    @__level_stats if @__level_stats
+    @__level_stats={}
+    r=File.readlines("data/level_stats.csv")
+    levels=r[0].split(',').length-1
+    gold=r[2].split(',').map {|v| v.to_i} #the first element is the label
+    xp=r[3].split(',').map {|v| v.to_i}
+    dust=r[4].split(',').map {|v| v.to_i}
+    (1..levels).each do |i|
+      #below 240 this is the cost for one hero
+      _gold=gold[i]/1000.0 #we work in k
+      _xp=xp[i]/1000.0
+      _dust=dust[i]
+      #above 240 this is the cost for one crystal upgrade (for gold and xp), so we need to mult by 10 to get the full cost
+      if i>=240
+        _gold*=10
+        _xp*=10
+      end
+      @__level_stats[i]={gold: _gold, xp: _xp, dust: _dust}
+    end
+    @__level_stats
+  end
 end
 
 if __FILE__ == $0
@@ -257,4 +280,6 @@ if __FILE__ == $0
   puts
   puts "*** Values: ***"
   puts Value.items_value
+  puts "*** Level stats: ***"
+  puts Data.get_hero_level_stats
 end
