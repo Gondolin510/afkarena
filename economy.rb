@@ -16,270 +16,379 @@ class Simulator
     self.process if process
   end
 
-  def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
-    @stage ||= "37-01"
+  module Setup
+    def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
+      @stage ||= "37-01"
 
-    @hero_level ||= 350
-    @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
-    @nb_ff ||=6 #ff by day
-    @vip ||=10 #vip level
-    @subscription ||=false if @subscription.nil?
+      @hero_level ||= 350
+      @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
+      @nb_ff ||=6 #ff by day
+      @vip ||=10 #vip level
+      @subscription ||=false if @subscription.nil?
 
-    # Towers
-    @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
-    @tower_4f ||= 280 #max fos at 280 for t2_gear
-    @tower_god ||= 300 #max fos at 300 for invigor
+      # Towers
+      @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
+      @tower_4f ||= 280 #max fos at 280 for t2_gear
+      @tower_god ||= 300 #max fos at 300 for invigor
 
-    # Daily shopping
-    @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
-    @shop_refreshes ||= 2
+      # Daily shopping
+      @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
+      @shop_refreshes ||= 2
 
-    # Monthly store buys
-    # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
-    @buy_hero ||=[:garrison]
-    @buy_guild ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-    @buy_lab ||=[:garrison, :dim_exchange, nil, :dim_emblems]
-    @buy_challenger ||= []
+      # Monthly store buys
+      # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
+      @buy_hero ||=[:garrison]
+      @buy_guild ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+      @buy_lab ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+      @buy_challenger ||= []
 
-    # Summonings
-    @monthly_stargazing ||= 0 #number of stargazing done in a month
-    @monthly_tavern ||= 0 #number of tavern pulls
-    @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
-    @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
-    # Friends and weekly mercs
-    @friends_mercs ||= 5
-    @friends_nb ||= 20
+      # Summonings
+      @monthly_stargazing ||= 0 #number of stargazing done in a month
+      @monthly_tavern ||= 0 #number of tavern pulls
+      @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
+      @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
+      # Friends and weekly mercs
+      @friends_mercs ||= 5
+      @friends_nb ||= 20
 
-    #GH
-    @gh_team_wrizz_gold ||=1080
-    @gh_team_soren_gold ||=@gh_team_wrizz_gold
-    @gh_team_wrizz_coin ||=1158
-    @gh_team_soren_coin ||=@gh_team_wrizz_coin
+      #GH
+      @gh_team_wrizz_gold ||=1080
+      @gh_team_soren_gold ||=@gh_team_wrizz_gold
+      @gh_team_wrizz_coin ||=1158
+      @gh_team_soren_coin ||=@gh_team_wrizz_coin
 
-    @gh_wrizz_chests ||= 23
-    @gh_soren_chests ||= @gh_wrizz_chests
-    #if not specified, determine the gold amount from the chest amount
-    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
-    @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
-    @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
+      @gh_wrizz_chests ||= 23
+      @gh_soren_chests ||= @gh_wrizz_chests
+      #if not specified, determine the gold amount from the chest amount
+      @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
+      @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
+      @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
-    #twisted realm (use fabled rewards)
-    @tr_twisted ||=380
-    @tr_poe ||=1290
-    @tr_guild ||= {dia: 100, twisted: 420/70}
+      #twisted realm (use fabled rewards)
+      @tr_twisted ||=380
+      @tr_poe ||=1290
+      @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
-    # arena
-    @arena_daily_dia ||= get_arena(5) #rank 5 in arena
-    @arena_weekly_dia ||=@arena_daily_dia * 10
-    @lct_coins ||=380 #top 20. Hourly coins: 400-rank
+      # arena
+      @arena_daily_dia ||= get_arena(5) #rank 5 in arena
+      @arena_weekly_dia ||=@arena_daily_dia * 10
+      @lct_coins ||=380 #top 20. Hourly coins: 400-rank
 
-    #misty valley
-    @misty ||= get_misty
+      #misty valley
+      @misty ||= get_misty
 
-    #noble society, by default paid is false
-    #for the paid version: @noble_twisted = twisted_bounties_choice(:xp, paid: true)
-    @noble_regal ||= regal_choice
-    @noble_twisted ||= twisted_bounties_choice(:xp)
-    @noble_coe ||= coe_choice(:dust)
+      #noble society, by default paid is false
+      #for the paid version: @noble_twisted = twisted_bounties_choice(:xp, paid: true)
+      @noble_regal ||= get_regal
+      @noble_twisted ||= get_twisted_bounties(:xp)
+      @noble_coe ||= get_coe(:dust)
 
-    #average guild hera trial rewards
-    @hero_trial_guild_rewards ||={
-      dia: 200+100+200,
-      guild_coins: 1000 #assume top 500
-    }
+      #average guild hera trial rewards
+      @hero_trial_guild_rewards ||={
+        dia: 200+100+200,
+        guild_coins: 1000 #assume top 500
+      }
 
-    #misc
-    @board_level ||=8
-    @dura_nb_selling ||=0
-    @labyrinth_mode = :dismal
-    #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
+      #misc
+      @board_level ||=8
+      @dura_nb_selling ||=0
+      @labyrinth_mode = :dismal
+      #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
-    # Other variables:
-    #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
-    #@afk_gold: the displayed value by minute (include vip)
-    #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
-    #determined from stage progression, but can be set up directly for more precise results
+      # Other variables:
+      #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
+      #@afk_gold: the displayed value by minute (include vip)
+      #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
+      #determined from stage progression, but can be set up directly for more precise results
+    end
+
+    def setup_constants
+      @Cost={
+        "SI+10": {silver_e: 240},
+        "SI+20": {gold_e: 240},
+        "SI+30": {red_e: 300},
+        "e30": {shards: 3750},
+        "e30 to e41": {cores: 1650},
+        "e30 to e60": {cores: 4500},
+        "e30 to e65": {cores: 4500+1500},
+        "tree level": {twisted: 800},
+        "mythic furn": {poe: 300/0.0407},
+        #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
+        "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
+        "9F (with cards)": {poe: 167000},
+        "Challenger celo": {challenger_coins: 250000},
+        "Ascended challenger celo": {challenger_coins: 250000*14},
+
+        "Ascended 4F": { atier: 8, fodder: 10},
+        "Ascended god": { god: 14},
+        "RC slot": { invigor: 5000},
+      }
+
+      @Shop = {
+        xp_h: { xp_h: 24, dia: -192, proba: 0.25},
+        dust_h: {dust_h: 24, dia: -300},
+        dust: {dust: 500, gold: -2250},
+        purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
+        poe: { poe: 250, gold: -1125 },
+        shards: { shards: 20, gold: -2000, max: 3 },
+        cores: { cores: 10, dia: -200, max: 3 },
+        gold_e: { gold_e: 20, gold: 15600*@_shop_emblem_discout, proba: 0.25 },
+        silver_e: { silver_e: 30, gold: 14400*@_shop_emblem_discout, proba: 0.75 },
+      }.merge(@Shop||{})
+
+      @StoreHero ={
+        garrison: { cost: 66*800, garrison_stone: 66},
+        dim_exchange: {cost: 40000/2, dim_points: 40/2},
+      }.merge(@StoreHero||{})
+      @StoreGuild ||={
+        garrison: { cost: 66*800, garrison_stone: 66},
+        t3: 47000, #shortcut for t3: {cost: 47000, t3: 1}
+        dim_exchange: {cost: 40000/2, dim_points: 40/2},
+        dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
+      }
+      @StoreLab={
+        garrison: { cost: 100*800, garrison_stone: 100},
+        dim_exchange: {cost: 200000/2, dim_points: 200/2},
+        dim_emblems: {cost: 64000, dim_emblems: 50},
+      }.merge(@StoreLab||{})
+      @StoreChallenger={
+        god: 250000,
+      }.merge(@StoreChallenger||{})
+
+      @Merchant_daily ||={ dia: 20, purple_stones: 2}
+      @Merchant_weekly ||={ dia: 20, purple_stones: 5}
+      @Merchant_monthly ||={ dia: 50, purple_stones: 10}
+
+      @Quest_daily ||= {
+        gold_hg: 2,
+        blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
+        dia: 100
+      }
+      @Quest_weekly ||= {
+        gold_h: 8+8,
+        blue_stones: 60, purple_stones: 10,
+        dia: 400, scrolls: 3,
+        dura_tears: 3
+      }
+
+      @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
+      # skipping large camps: 59h gold+29.5h xp+dust
+      @Dismal_end_rewards ||= {
+        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
+        shards: 61, cores: 41, dia: 300,
+        lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333
+      } # i think guild coins are not affected by the multiplier here
+      @Lab_hard_end_rewards ||= {
+        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo: we have less end rewards in standard lab
+        dia: 300,
+        lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333
+      }
+      @Lab_easy_end_rewards ||= {
+        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
+        dia: 300,
+        lab_coins: 3867, guild_coins: 1000, challenger_coins: 3333
+      }
+      @_lab_flat_gold_h=55 #approximations to recover the flat rewards
+      @_lab_flat_xp_h=6
+
+      @GH_chest_dia ||=2.7
+      @GH_chest_guild ||=65
+
+      @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
+      @Oak_quantity=3; @Oak_proba=0.25
+
+      @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
+             blue_stones: 10*120, purple_stones: 10*18,
+             poe: 20*450}
+
+      @Noble_regal_days ||=49
+      @Noble_twisted_days ||=44
+      @Noble_coe_days ||=36
+
+      @Monthly_vows ||=2 #2 by month
+      @Monthly_hero_trial ||=2
+      @Hero_trial_rewards ||={
+        gold: 2000, dia: 300,
+        dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
+        blue_stones: 60, purple_stones: 60
+      }
+
+      @Dura_nb ||=7.0
+    end
+
+    def setup 
+      @ressources={}
+
+      setup_vars
+      get_progression
+      setup_constants
+      get_vip
+      get_fos
+      get_subscription
+      get_mult
+      get_numbers
+      get_idle_hourly
+      post_setup_hook
+    end
+
+    def post_setup_hook
+    end
   end
+  include Setup
 
-  def setup_constants
-    @Cost={
-      "SI+10": {silver_e: 240},
-      "SI+20": {gold_e: 240},
-      "SI+30": {red_e: 300},
-      "e30": {shards: 3750},
-      "e30 to e41": {cores: 1650},
-      "e30 to e60": {cores: 4500},
-      "e30 to e65": {cores: 4500+1500},
-      "tree level": {twisted: 800},
-      "mythic furn": {poe: 300/0.0407},
-      #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
-      "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
-      "9F (with cards)": {poe: 167000},
-      "Challenger celo": {challenger_coins: 250000},
-      "Ascended challenger celo": {challenger_coins: 250000*14},
+  module UserSetupHelpers
+    def get_guild_gold(chests)
+      case chests
+      when 1,2,3,4; 15
+      when 5,6; 30
+      when 7,8; 55
+      when 9,10; 80
+      when 11; 110
+      when 12,13,14,15; 1010
+      when 16; 1110
+      when 17; 1210
+      when 18; 1410
+      when 19; 1560
+      when 20; 1710
+      when 21; 1860
+      when 22; 2010
+      when 23; 2160
+      end
+    end
 
-      "Ascended 4F": { atier: 8, fodder: 10},
-      "Ascended god": { god: 14},
-      "RC slot": { invigor: 5000},
-    }
+    def get_regal(paid:false)
+      if paid
+        {dia: 5500, purple_stones: 1100, blue_stones: 3300}
+      else
+        {blue_stones: 3300}
+      end
+    end
 
-    @Shop = {
-      xp_h: { xp_h: 24, dia: -192, proba: 0.25},
-      dust_h: {dust_h: 24, dia: -300},
-      dust: {dust: 500, gold: -2250},
-      purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
-      poe: { poe: 250, gold: -1125 },
-      shards: { shards: 20, gold: -2000, max: 3 },
-      cores: { cores: 10, dia: -200, max: 3 },
-      gold_e: { gold_e: 20, gold: 15600*@_shop_emblem_discout, proba: 0.25 },
-      silver_e: { silver_e: 30, gold: 14400*@_shop_emblem_discout, proba: 0.75 },
-    }.merge(@Shop||{})
+    def get_twisted_bounties(type, paid: false)
+      if paid
+        case type
+        when :gold; {dia: 5500, gold_h: 11472}
+        when :xp; {dia: 5500, xp_h: 3444}
+        when :twisted; {dia: 5500, twisted: 3700}
+        when :poe; {dia: 5500, poe: 37000}
+        when :shards; {dia: 5500, shards: 1170}
+        end
+      else
+        case type
+        when :gold; {gold_h: 3824}
+        when :xp; {xp_h: 956}
+        when :twisted; {twisted: 990}
+        when :poe; {poe: 9900}
+        when :shards; {shards: 1170}
+        end
+      end
+    end
 
-    @StoreHero ={
-      garrison: { cost: 66*800, garrison_stone: 66},
-      dim_exchange: {cost: 40000/2, dim_points: 40/2},
-    }.merge(@StoreHero||{})
-    @StoreGuild ||={
-      garrison: { cost: 66*800, garrison_stone: 66},
-      t3: 47000, #shortcut for t3: {cost: 47000, t3: 1}
-      dim_exchange: {cost: 40000/2, dim_points: 40/2},
-      dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
-    }
-    @StoreLab={
-      garrison: { cost: 100*800, garrison_stone: 100},
-      dim_exchange: {cost: 200000/2, dim_points: 200/2},
-      dim_emblems: {cost: 64000, dim_emblems: 50},
-    }.merge(@StoreLab||{})
-    @StoreChallenger={
-      god: 250000,
-    }.merge(@StoreChallenger||{})
+    def get_coe(type, paid: false)
+      if paid
+        case type
+        when :dust; {dia: 5500, dust: 50000, dust_h: 1900}
+        when :red_e; {dia: 5500, red_e: 210}
+        when :gold_e; {dia: 5500, gold_e: 484}
+        when :silver_e; {dia: 5500, silver_e: 735}
+        when :cores; {dia: 5500, cores: 1960}
+        end
+      else
+        case type
+        when :dust; {dust: 7500, dust_h: 380}
+        when :red_e; {red_e: 49}
+        when :gold_e; {gold_e: 136}
+        when :silver_e; {silver_e: 192}
+        when :cores; {cores: 585}
+        end
+      end
+    end
 
-    @Merchant_daily ||={ dia: 20, purple_stones: 2}
-    @Merchant_weekly ||={ dia: 20, purple_stones: 5}
-    @Merchant_monthly ||={ dia: 50, purple_stones: 10}
+    def get_misty(misty_guild_twisted: :twisted, misty_purple_blue: :blue)
+      r = { 
+        dust_h: 8*12,
+        purple_stones: 2*60,
+        red_e: 4*10, t3: 2,
+        cores: 3*100,
+        hero_choice_chest: 1,
+      }
 
-    @Quest_daily ||= {
-      gold_hg: 2,
-      blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
-      dia: 100
-    }
-    @Quest_weekly ||= {
-      gold_h: 8+8,
-      blue_stones: 60, purple_stones: 10,
-      dia: 400, scrolls: 3,
-      dura_tears: 3
-    }
+      case misty_guild_twisted
+      when :twisted
+        r[:twisted] ||=0
+        r[:twisted] += 400
+      when :guild
+        r[:guild_coins] ||=0
+        r[:guild_coins] += 30000
+      else
+        raise "Incorrect choice for misty_guild_twisted: #{misty_guild_twisted}"
+      end
 
-    @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
-    # skipping large camps: 59h gold+29.5h xp+dust
-    @Dismal_end_rewards ||= {
-      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
-      shards: 61, cores: 41, dia: 300,
-      lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333
-    } # i think guild coins are not affected by the multiplier here
-    @Lab_hard_end_rewards ||= {
-      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo: we have less end rewards in standard lab
-      dia: 300,
-      lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333
-    }
-    @Lab_easy_end_rewards ||= {
-      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
-      dia: 300,
-      lab_coins: 3867, guild_coins: 1000, challenger_coins: 3333
-    }
-    @_lab_flat_gold_h=55 #approximations to recover the flat rewards
-    @_lab_flat_xp_h=6
-
-    @GH_chest_dia ||=2.7
-    @GH_chest_guild ||=65
-
-    @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
-    @Oak_quantity=3; @Oak_proba=0.25
-
-    @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
-           blue_stones: 10*120, purple_stones: 10*18,
-           poe: 20*450}
-
-    @Noble_regal_days ||=49
-    @Noble_twisted_days ||=44
-    @Noble_coe_days ||=36
-
-    @Monthly_vows ||=2 #2 by month
-    @Monthly_hero_trial ||=2
-    @Hero_trial_rewards ||={
-      gold: 2000, dia: 300,
-      dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
-      blue_stones: 60, purple_stones: 60
-    }
-
-    @Dura_nb ||=7.0
+      case misty_purple_blue
+      when :purple
+        r[:purple_stones] ||=0
+        r[:purple_stones] += 60
+      when :blue
+        r[:blue_stones] ||=0
+        r[:blue_stones] += 720
+      else
+        raise "Incorrect choice for misty_purple_blue: #{misty_purple_blue}"
+      end
+      r
+    end
   end
+  include UserSetupHelpers
 
-  def setup 
-    @ressources={}
+  module Process
+    def process!
+      get_income
+      make_exchange
+      summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly
+      exchange_coins #long term coin exchange, ditto
+      get_ressource_order
+    end
 
-    setup_vars
-    get_progression
-    setup_constants
-    get_vip
-    get_fos
-    get_subscription
-    get_mult
-    get_numbers
-    get_idle_hourly
-    post_setup_hook
-  end
+    def process
+      process!
+    end
 
-  def post_setup_hook
-  end
+    def get_income
+      @ressources[:idle]=idle
+      @ressources[:ff]=ff
+      @ressources[:board]=bounties
+      @ressources[:guild]=guild
+      @ressources[:oak_inn]=oak_inn
+      @ressources[:tr]=tr
+      @ressources[:quests]=quests
+      @ressources[:merchants]=merchants
+      @ressources[:friends]=friends
+      @ressources[:arena]=arena
+      @ressources[:lct]=lct
+      @ressources[:dismal]=labyrinth
+      @ressources[:misty]=misty
+      @ressources[:regal]=regal
+      @ressources[:tr_bounties]=twisted_bounties
+      @ressources[:coe]=coe
+      @ressources[:hero_trial]=hero_trial
+      @ressources[:guild_hero_trial]=guild_hero_trial
+      @ressources[:vow]=vow
+      @ressources.merge!(custom_income)
+    end
+    def custom_income
+      {}
+    end
 
-  def process!
-    get_income
-    make_exchange
-    exchange_coins #long term coin exchange
-    get_ressource_order
+    def make_exchange
+      @ressources[:ff_cost]=exchange_ff
+      @ressources[:shop]=exchange_shop
+      @ressources[:dura_fragments_sell]=sell_dura
+      @ressources.merge!(custom_exchange)
+    end
+    def custom_exchange
+      {}
+    end
   end
-
-  def process
-    process!
-  end
-
-  def get_income
-    @ressources[:idle]=idle
-    @ressources[:ff]=ff
-    @ressources[:board]=bounties
-    @ressources[:guild]=guild
-    @ressources[:oak_inn]=oak_inn
-    @ressources[:tr]=tr
-    @ressources[:quests]=quests
-    @ressources[:merchants]=merchants
-    @ressources[:friends]=friends
-    @ressources[:arena]=arena
-    @ressources[:lct]=lct
-    @ressources[:dismal]=labyrinth
-    @ressources[:misty]=misty
-    @ressources[:regal]=regal
-    @ressources[:tr_bounties]=twisted_bounties
-    @ressources[:coe]=coe
-    @ressources[:hero_trial]=hero_trial
-    @ressources[:guild_hero_trial]=guild_hero_trial
-    @ressources[:vow]=vow
-    @ressources.merge!(custom_income)
-  end
-  def custom_income
-    {}
-  end
-
-  def make_exchange
-    @ressources[:ff_cost]=exchange_ff
-    @ressources[:shop]=exchange_shop
-    @ressources[:dura_fragments_sell]=sell_dura
-    summonings
-    @ressources.merge!(custom_exchange)
-  end
-  def custom_exchange
-    {}
-  end
+  include Process
 
   module LevelUp
     def level_up_ressources(levels)
@@ -313,8 +422,7 @@ class Simulator
   end
   include LevelUp
 
-
-  module Setup
+  module SetupHelpers
     def get_progression #variables depending on progression
       @_shop_emblem_discout ||=0.7 #todo adjust depending on stage progression
     end
@@ -571,7 +679,7 @@ class Simulator
     end
 
   end
-  include Setup
+  include SetupHelpers
 
   module Income # Income functions ################
     def idle
@@ -582,25 +690,6 @@ class Simulator
     end
     def ff
       one_ff.map {|k,v| [k, v*@nb_ff]}.to_h
-    end
-
-    def get_guild_gold(chests)
-      case chests
-      when 1,2,3,4; 15
-      when 5,6; 30
-      when 7,8; 55
-      when 9,10; 80
-      when 11; 110
-      when 12,13,14,15; 1010
-      when 16; 1110
-      when 17; 1210
-      when 18; 1410
-      when 19; 1560
-      when 20; 1710
-      when 21; 1860
-      when 22; 2010
-      when 23; 2160
-      end
     end
 
     def guild
@@ -718,97 +807,19 @@ class Simulator
       total
     end
 
-    def get_misty(misty_guild_twisted: :twisted, misty_purple_blue: :blue)
-      r = { 
-        dust_h: 8*12,
-        purple_stones: 2*60,
-        red_e: 4*10, t3: 2,
-        cores: 3*100,
-        hero_choice_chest: 1,
-      }
-
-      case misty_guild_twisted
-      when :twisted
-        r[:twisted] ||=0
-        r[:twisted] += 400
-      when :guild
-        r[:guild_coins] ||=0
-        r[:guild_coins] += 30000
-      else
-        raise "Incorrect choice for misty_guild_twisted: #{misty_guild_twisted}"
-      end
-
-      case misty_purple_blue
-      when :purple
-        r[:purple_stones] ||=0
-        r[:purple_stones] += 60
-      when :blue
-        r[:blue_stones] ||=0
-        r[:blue_stones] += 720
-      else
-        raise "Incorrect choice for misty_purple_blue: #{misty_purple_blue}"
-      end
-      r
-    end
-
     def misty
       r=sum_hash(@Misty_base, @misty)
       r.map {|k,v| [k, v/30.0]}.to_h
     end
 
-    def regal_choice(paid:false)
-      if paid
-        {dia: 5500, purple_stones: 1100, blue_stones: 3300}
-      else
-        {blue_stones: 3300}
-      end
-    end
     def regal
       @noble_regal.map {|k,v| [k,v*1.0/@Noble_regal_days]}.to_h
     end
 
-    def twisted_bounties_choice(type, paid: false)
-      if paid
-        case type
-        when :gold; {dia: 5500, gold_h: 11472}
-        when :xp; {dia: 5500, xp_h: 3444}
-        when :twisted; {dia: 5500, twisted: 3700}
-        when :poe; {dia: 5500, poe: 37000}
-        when :shards; {dia: 5500, shards: 1170}
-        end
-      else
-        case type
-        when :gold; {gold_h: 3824}
-        when :xp; {xp_h: 956}
-        when :twisted; {twisted: 990}
-        when :poe; {poe: 9900}
-        when :shards; {shards: 1170}
-        end
-      end
-    end
     def twisted_bounties
       @noble_twisted.map {|k,v| [k,v*1.0/@Noble_twisted_days]}.to_h
     end
 
-    def coe_choice(type, paid: false)
-      if paid
-        case type
-        when :dust; {dia: 5500, dust: 50000, dust_h: 1900}
-        when :red_e; {dia: 5500, red_e: 210}
-        when :gold_e; {dia: 5500, gold_e: 484}
-        when :silver_e; {dia: 5500, silver_e: 735}
-        when :cores; {dia: 5500, cores: 1960}
-        end
-      else
-        case type
-        when :dust; {dust: 7500, dust_h: 380}
-        when :red_e; {red_e: 49}
-        when :gold_e; {gold_e: 136}
-        when :silver_e; {silver_e: 192}
-        when :cores; {cores: 585}
-        end
-      end
-    end
     def coe
       #Choices:
       @noble_coe.map {|k,v| [k,v*1.0/@Noble_coe_days]}.to_h
@@ -942,6 +953,8 @@ class Simulator
     end
 
     def tower_progression
+      #Multis: 700 KT, 450 4F, 350 celestial
+
       # for 4f towers, between 240 and 360:
       # every 10 level we have 4000 dust, 5 stargaze or 10 red_e, 90 purple stones or 15 gold_e
       # above 360: every 10 levels we have 4000 dust + 5 stargaze + 10 red_
