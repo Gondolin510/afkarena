@@ -1195,7 +1195,8 @@ class Simulator
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
         summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
         hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
-        misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets dim_gear dim_points garrison_stone),
+        dimensional: %i(garrison_stone dim_points dim_gear dim_emblems),
+        misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
       }
       ressources2=order.values.flatten.sort.uniq
       missing=ressources-ressources2

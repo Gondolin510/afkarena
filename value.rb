@@ -74,8 +74,8 @@ module Value
       shards: 2000/20 *gold_conversion, #=5.709. Or 6.75=135/20
       cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Or 13.5=135/10
 
-      dura_fragments: 100 * gold_conversion,
-      class_fragments: 9000 * 0.675 / 400,
+      dura_fragments: 100 * gold_conversion, #=5.709
+      class_fragments: 9000 * 0.675 / 400, #=15.1875
 
       mythic_gear: 500,
       t1: 1000,
@@ -94,7 +94,9 @@ module Value
       stargazers: 500,
       hero_choice_chest: 6400,
 
-      arena_tickets: 50*gold_conversion,
+      arena_tickets: 50*gold_conversion, #=2.854
+      dura_tears: 10*gold_conversion, #=0.57
+      reset_scroll: 6000*gold_conversion, #=342.58
 
       challenger_coins: 1.0/15,
       guild_coins: 1.0/15,
@@ -280,6 +282,6 @@ if __FILE__ == $0
   puts
   puts "*** Values: ***"
   puts Value.items_value
-  puts "*** Level stats: ***"
-  puts Data.get_hero_level_stats
+  # puts "*** Level stats: ***"
+  # puts Data.get_hero_level_stats
 end
