@@ -42,30 +42,30 @@ class Simulator
 
     # Monthly store buys
     # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
-    @hero_buys ||=[:garrison]
-    @guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-    @lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
-    @challenger_buys ||= []
+    @buy_hero ||=[:garrison]
+    @buy_guild ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+    @buy_lab ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+    @buy_challenger ||= []
 
     # Summonings
     @monthly_stargazing ||= 0 #number of stargazing done in a month
     @monthly_tavern ||= 0 #number of tavern pulls
     @monthly_hcp ||= 0 #number of hcp pulls
     # Friends and weekly mercs
-    @nb_mercs ||= 5
-    @nb_friends ||= 20
+    @friends_mercs ||= 5
+    @friends_nb ||= 20
 
     #GH
-    @team_wrizz_gold ||=1080
-    @team_soren_gold ||=@team_wrizz_gold
-    @team_wrizz_coin ||=1158
-    @team_soren_coin ||=@team_wrizz_coin
+    @gh_team_wrizz_gold ||=1080
+    @gh_team_soren_gold ||=@gh_team_wrizz_gold
+    @gh_team_wrizz_coin ||=1158
+    @gh_team_soren_coin ||=@gh_team_wrizz_coin
 
-    @wrizz_chests ||= 23
-    @soren_chests ||= @wrizz_chests
-    @wrizz_gold ||= get_guild_gold(@wrizz_chests)
-    @soren_gold ||= get_guild_gold(@soren_chests)
-    @soren_freq ||= 0.66 #round(5.0/7.0) =0.71
+    @gh_wrizz_chests ||= 23
+    @gh_soren_chests ||= @gh_wrizz_chests
+    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
+    @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
+    @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
     #twisted realm
     @tr_twisted ||=250
@@ -80,18 +80,18 @@ class Simulator
     @misty ||= get_misty
 
     #noble society
-    @regal_quantity ||= regal_choice
-    @twisted_quantity ||= twisted_bounties_choice(:xp)
-    @coe_quantity ||= coe_choice(:dust)
+    @noble_regal ||= regal_choice(paid: false)
+    @noble_twisted ||= twisted_bounties_choice(:xp)
+    @noble_coe ||= coe_choice(:dust)
 
     #average guild hera trial rewards
-    @guild_hero_trial_rewards ||={
+    @hero_trial_guild_rewards ||={
       dia: 200+100+200,
       guild_coins: 1000 #assume top 500
     }
 
     #misc
-    @nb_dura_selling ||=0
+    @dura_nb_selling ||=0
   end
 
   def setup_constants
@@ -130,33 +130,33 @@ class Simulator
       silver_e: { silver_e: 30, gold: 14400*@Shop_emblem_discout, proba: 0.75 },
     }
 
-    @HeroStore ||={
+    @StoreHero ||={
       garrison: { cost: 66*800, garrison_stone: 66},
       dim_exchange: {cost: 40000/2, dim_points: 40/2},
     }
-    @GuildStore ||={
+    @StoreGuild ||={
       garrison: { cost: 66*800, garrison_stone: 66},
       t3: 47000,
       dim_exchange: {cost: 40000/2, dim_points: 40/2},
       dim_gear: 67000,
     }
-    @LabStore ||={
+    @StoreLab ||={
       garrison: { cost: 100*800, garrison_stone: 100},
       dim_exchange: {cost: 200000/2, dim_points: 200/2},
       dim_emblems: {cost: 64000, dim_emblems: 50},
     }
-    @ChallengerStore ||={}
+    @StoreChallenger ||={}
 
-    @Daily_merchant ||={ dia: 20, purple_stones: 2}
-    @Weekly_merchant ||={ dia: 20, purple_stones: 5}
-    @Monthly_merchant ||={ dia: 50, purple_stones: 10}
+    @Merchant_daily ||={ dia: 20, purple_stones: 2}
+    @Merchant_weekly ||={ dia: 20, purple_stones: 5}
+    @Merchant_monthly ||={ dia: 50, purple_stones: 10}
 
-    @Daily_quest ||= {
+    @Quest_daily ||= {
       gold_hg: 2,
       blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
       dia: 100
     }
-    @Weekly_quest ||= {
+    @Quest_weekly ||= {
       gold_h: 8+8,
       blue_stones: 60, purple_stones: 10,
       dia: 400, scrolls: 3,
@@ -173,19 +173,19 @@ class Simulator
            blue_stones: 10*120, purple_stones: 10*18,
            poe: 20*450}
 
-    @Regal_days ||=49
-    @Twisted_days ||=44
-    @Coe_days ||=36
+    @Noble_regal_days ||=49
+    @Noble_twisted_days ||=44
+    @Noble_coe_days ||=36
 
-    @Hero_trial_monthly ||=2
+    @Monthly_vows ||=2 #2 by month
+    @Monthly_hero_trial ||=2
     @Hero_trial_rewards ||={
       gold: 2000, dia: 300,
       dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
       blue_stones: 60, purple_stones: 60
     }
 
-    @Nb_dura ||=7.0
-
+    @Dura_nb ||=7.0
   end
 
   def setup 
@@ -540,10 +540,10 @@ class Simulator
     end
 
     def guild
-      nb_chests=@_nb_guild_fight*(@wrizz_chests+@soren_chests*@soren_freq)
-      coins=@GH_chest_guild*nb_chests*@_guild_mult+@team_wrizz_coin+@team_soren_coin*@soren_freq
+      nb_chests=@_nb_guild_fight*(@gh_wrizz_chests+@gh_soren_chests*@gh_soren_freq)
+      coins=@GH_chest_guild*nb_chests*@_guild_mult+@gh_team_wrizz_coin+@gh_team_soren_coin*@gh_soren_freq
       dia=@GH_chest_dia*nb_chests
-      gold=@_nb_guild_fight*(@wrizz_gold+@soren_gold*@soren_freq)+@team_wrizz_gold+@team_soren_gold*@soren_freq
+      gold=@_nb_guild_fight*(@gh_wrizz_gold+@gh_soren_gold*@gh_soren_freq)+@gh_team_wrizz_gold+@gh_team_soren_gold*@gh_soren_freq
 
       {guild_coins: coins, dia: dia, gold: gold}
     end
@@ -572,8 +572,8 @@ class Simulator
       #   dura_tears: 3
       # } #this maxes out at 30-60 with the red emblem rewards
       
-      daily_quest=sum_hash(@Daily_quest, @_fos_daily_quest)
-      weekly_quest=sum_hash(@Weekly_quest, @_fos_weekly_quest)
+      daily_quest=sum_hash(@Quest_daily, @_fos_daily_quest)
+      weekly_quest=sum_hash(@Quest_weekly, @_fos_weekly_quest)
       ressources=(daily_quest.keys+weekly_quest.keys).flatten.sort.uniq
       ressources.map do |r|
         v=(daily_quest[r]||0)+(weekly_quest[r]||0)/7.0
@@ -582,15 +582,15 @@ class Simulator
     end
 
     def merchants
-      ressources=(@Daily_merchant.keys+@Weekly_merchant.keys+@Monthly_merchant.keys).flatten.sort.uniq
+      ressources=(@Merchant_daily.keys+@Merchant_weekly.keys+@Merchant_monthly.keys).flatten.sort.uniq
       ressources.map do |r|
-        v=(@Daily_merchant[r]||0)+(@Weekly_merchant[r]||0)/7.0+(@Monthly_merchant[r]||0)/30.0
+        v=(@Merchant_daily[r]||0)+(@Merchant_weekly[r]||0)/7.0+(@Merchant_monthly[r]||0)/30.0
         [r,v]
       end.to_h
     end
 
     def friends
-      {friend_summons: (@nb_friends*1.0+@nb_mercs*10.0/7)/10}
+      {friend_summons: (@friends_nb*1.0+@friends_mercs*10.0/7)/10}
     end
 
     def get_arena(position)
@@ -705,7 +705,7 @@ class Simulator
       end
     end
     def regal
-      @regal_quantity.map {|k,v| [k,v*1.0/@Regal_days]}.to_h
+      @noble_regal.map {|k,v| [k,v*1.0/@Noble_regal_days]}.to_h
     end
 
     def twisted_bounties_choice(type, paid: false)
@@ -728,7 +728,7 @@ class Simulator
       end
     end
     def twisted_bounties
-      @twisted_quantity.map {|k,v| [k,v*1.0/@Twisted_days]}.to_h
+      @noble_twisted.map {|k,v| [k,v*1.0/@Noble_twisted_days]}.to_h
     end
 
     def coe_choice(type, paid: false)
@@ -752,17 +752,17 @@ class Simulator
     end
     def coe
       #Choices:
-      @coe_quantity.map {|k,v| [k,v*1.0/@Coe_days]}.to_h
+      @noble_coe.map {|k,v| [k,v*1.0/@Noble_coe_days]}.to_h
     end
 
     def hero_trial
       @Hero_trial_rewards.map do |k,v|
-        [k, v*@Hero_trial_monthly/30.0]
+        [k, v*@Monthly_hero_trial/30.0]
       end.to_h
     end
     def guild_hero_trial
-      @guild_hero_trial_rewards.map do |k,v|
-        [k, v*@Hero_trial_monthly/30.0]
+      @hero_trial_guild_rewards.map do |k,v|
+        [k, v*@Monthly_hero_trial/30.0]
       end.to_h
     end
 
@@ -852,7 +852,6 @@ class Simulator
         },
       }
 
-      @Nb_vows=2 #2 by month
       keys=@Vows.values.map {|i| i.keys}.flatten.uniq
       if @_average_vow_rewards.nil?
         @_average_vow_rewards={}
@@ -868,7 +867,7 @@ class Simulator
       end
 
       @_average_vow_rewards.map do |k,v|
-        [k, v*@Nb_vows/30.0]
+        [k, v*@Monthly_vows/30.0]
       end.to_h
     end
   end
@@ -975,7 +974,6 @@ class Simulator
     end
 
     def exchange_shop
-      return @_shop unless @_shop.nil?
       shop_refreshes=@shop_refreshes
 
       @Shop_refresh_cost= [100, 100, 200, 200]
@@ -987,7 +985,7 @@ class Simulator
 
 
       nb_shop=1+shop_refreshes
-      @_shop={dia: -refresh_cost, gold: 0}
+      shop={dia: -refresh_cost, gold: 0}
 
       @shop_items.each do |item|
         if item.is_a?(Hash) # {item: qty}
@@ -1000,10 +998,10 @@ class Simulator
         max=value.delete(:max) || 1000
         appearances=nb_shop*proba
         buy=[qty, max, appearances].min
-        add_to_hash(@_shop, value, multiplier: buy)
+        add_to_hash(shop, value, multiplier: buy)
       end
 
-      @_shop
+      shop
     end
 
     def exchange_coins
@@ -1014,7 +1012,7 @@ class Simulator
         @ressources[:"#{i}_store"] ||={}
         coin_name=:"#{i}_coins"
         _total=total[coin_name]*30
-        r,bought=handle_buys(instance_variable_get(:"@#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), _total)
+        r,bought=handle_buys(instance_variable_get(:"@buy_#{i}"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
         cost=r.delete(:cost)
         r[coin_name]=cost
         @__coin_summary << "#{coin_name}: #{round(_total)} => #{buy_summary(bought)}"
@@ -1024,7 +1022,7 @@ class Simulator
 
     def sell_dura
       total_dura=tally[:dura_fragments]
-      dura_sold=(@nb_dura_selling/@Nb_dura)*total_dura
+      dura_sold=(@dura_nb_selling/@Dura_nb)*total_dura
       {dura_fragments: -dura_sold, gold: dura_sold * 50}
     end
 

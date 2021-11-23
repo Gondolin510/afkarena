@@ -24,8 +24,8 @@ s=Simulator.new do
   @misty = { red_e: 4*10, t3: 2 } #our misty rewards
   #alternative: see `get_misty` as an helper function to build them
   @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
-  @regal_quantity = regal_choice(paid: true) #we pay the regal pass
-  @coe_quantity = coe_choice(:cores) #we select cores rather than dust in champiion of esperia regals
+  @noble_regal = regal_choice(paid: true) #we pay the regal pass
+  @noble_coe = coe_choice(:cores) #we select cores rather than dust in champiion of esperia regals
   #see the variable list below for the full settings
 end
 

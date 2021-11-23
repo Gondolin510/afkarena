@@ -190,8 +190,8 @@ Max rc level: 2.22 days (13.49 by month)
 =============== Variables ===============
 @nb_ff: 6
 @misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :twisted=>400, :blue_stones=>720}
-@regal_quantity: {:blue_stones=>3300}
-@coe_quantity: {:dust=>7500, :dust_h=>380}
+@noble_regal: {:blue_stones=>3300}
+@noble_coe: {:dust=>7500, :dust_h=>380}
 @stage: 37-01
 @level_gold: 18132.62
 @level_xp: 130100
@@ -205,30 +205,30 @@ Max rc level: 2.22 days (13.49 by month)
 @tower_god: 300
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
-@hero_buys: [:garrison]
-@guild_buys: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-@lab_buys: [:garrison, :dim_exchange, nil, :dim_emblems]
-@challenger_buys: []
+@buy_hero: [:garrison]
+@buy_guild: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
+@buy_challenger: []
 @monthly_stargazing: 0
 @monthly_tavern: 0
 @monthly_hcp: 0
-@nb_mercs: 5
-@nb_friends: 20
-@team_wrizz_gold: 1080
-@team_soren_gold: 1080
-@team_wrizz_coin: 1158
-@team_soren_coin: 1158
-@wrizz_chests: 23
-@soren_chests: 23
-@wrizz_gold: 2160
-@soren_gold: 2160
-@soren_freq: 0.66
+@friends_mercs: 5
+@friends_nb: 20
+@gh_team_wrizz_gold: 1080
+@gh_team_soren_gold: 1080
+@gh_team_wrizz_coin: 1158
+@gh_team_soren_coin: 1158
+@gh_wrizz_chests: 23
+@gh_soren_chests: 23
+@gh_wrizz_gold: 2160
+@gh_soren_gold: 2160
+@gh_soren_freq: 0.66
 @tr_twisted: 250
 @tr_poe: 1000
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
 @lct_coins: 380
-@twisted_quantity: {:xp_h=>956}
-@guild_hero_trial_rewards: {:dia=>500, :guild_coins=>1000}
-@nb_dura_selling: 0
+@noble_twisted: {:xp_h=>956}
+@hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@dura_nb_selling: 0
 @dismal_stage_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
