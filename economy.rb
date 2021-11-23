@@ -395,7 +395,7 @@ class Simulator
         @_vip_gold_mult=3.0
       end
       if @vip >18
-        warn "Warning: vip=#{@vip} not fully implemented"
+        warn "[Warning] vip=#{@vip} not fully implemented"
       end
       @_vip_xp_mult||=@_vip_gold_mult
     end
@@ -826,7 +826,7 @@ class Simulator
 
     def bounties
       if @board_level < 8
-        warn "Board level #{@board_level} not implemented, skipping"
+        warn "[Warning] Board level #{@board_level} not implemented, skipping"
         return {}
       end
       types=%i(dust gold dia blue_stones)
@@ -860,15 +860,25 @@ class Simulator
         [k, v*@_team_bounties]
       end.to_h
 
-      if @_solo_bounties==8 #lets look at the optimised strat
-        single_event={ gold: 152, blue_stones: 24, dust: 810, dia: 50}
-        double_event={ gold: 31, blue_stones: 39, dust: 1875, dia: 260}
+      case @_solo_bounties #lets look at the optimised strat
+        #cf board.rb to compute the values
+      when 8,9,10;
+        single_event= case @_solo_bounties
+        when 8; { gold: 152, blue_stones: 24, dust: 810, dia: 50}
+        when 9; { gold: 152, blue_stones: 26, dust: 929, dia: 68}
+        when 10; { gold: 152, blue_stones: 28, dust: 1049, dia: 89}
+        end
+        double_event= case @_solo_bounties
+        when 8; { gold: 31, blue_stones: 39, dust: 1875, dia: 260}
+        when 9; { gold: 31, blue_stones: 43, dust: 2114, dia: 324}
+        when 10; { gold: 152, blue_stones: 47, dust: 2354, dia: 391}
+        end
         solo_quests=types.map do |type|
           v=single_event[type]*2.0/3+double_event[type]*1.0/3
           [type,v]
         end.to_h
       else
-        warning "Optimized bounty strat not implemented for #{@_solo_bounties} bounties"
+        warn "[Warning] Optimized bounty strat not implemented for #{@_solo_bounties} bounties"
         solo_quests=solo_quest.map do |k,v|
           [k, v*@_solo_bounties*4.0/3] #for double events
         end.to_h
@@ -1025,7 +1035,7 @@ class Simulator
       nb_ff=@nb_ff
       if nb_ff > @FF_cost.length
         nb_ff=@FF_cost.length
-        warn "FF cost not implemented for #{@nb_ff} FF"
+        warn "[Warning] FF cost not implemented for #{@nb_ff} FF"
       end
       full_cost=(0...nb_ff).reduce(0) {|sum, i| sum+@FF_cost[i]}
       {dia: -full_cost}
@@ -1036,7 +1046,7 @@ class Simulator
 
       @Shop_refresh_cost= [100, 100, 200, 200]
       if @shop_refreshes > @Shop_refresh_cost.length
-        warn "Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes}"
+        warn "[Warning] Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes}"
         shop_refreshes=@Shop_refresh_cost.length
       end
       refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+@Shop_refresh_cost[i]}

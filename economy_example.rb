@@ -50,6 +50,11 @@ s=Simulator.new do
   @noble_regal = regal_choice(paid: true) #we pay the regal pass
   @noble_coe = coe_choice(:cores) #we select cores rather than dust in champiion of esperia regals, by default paid is false, ie we use the f2p version
   #see the variable list below for the full settings
+  #
+  @monthly_stargazing=20 #lets stargaze!
+  @monthly_tavern= 0
+  @monthly_hcp= 30 #and hcp
+
   
   # If we are feeling adventurous we can even change internal variables in post_setup_hook
   def post_setup_hook
