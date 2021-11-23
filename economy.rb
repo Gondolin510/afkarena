@@ -1174,7 +1174,8 @@ class Simulator
       puts "***** #{t.capitalize} *****"
     end
 
-    def make_summary(ressources, headings: true)
+    def make_summary(ressources, headings: true, total: true)
+      _total=get_total(ressources) if total
       @_order.each do |summary, keys|
         s=""
         keys.each do |type|
@@ -1186,7 +1187,27 @@ class Simulator
               o.push("#{round(v[type])} (#{k})")
             end
           end
+          if total
+            if type==:choice_god and _total[:god]
+              s+="-> God: #{round(_total[:god])}\n"
+            end
+            if type==:choice_atier and _total[:atier]
+              s+="-> Atier: #{round(_total[:atier])}\n"
+            end
+            #fodder == random_fodder
+          end
           s+="#{type}: #{round(sum)} [#{o.join(' + ')}]\n" unless sum==0 or sum==0.0
+          if total
+            if type==:gold_hg and _total[:total_gold]
+              s+="-> Total gold: #{round(_total[:total_gold])}K\n"
+            end
+            if type==:xp_h and _total[:total_xp]
+              s+="-> Total xp: #{round(_total[:total_xp])}K\n"
+            end
+            if type==:dust_h and _total[:total_dust]
+              s+="-> Total dust: #{round(_total[:total_dust])}\n"
+            end
+          end
         end
         unless s.empty?
           make_h3(summary) if headings
@@ -1198,25 +1219,26 @@ class Simulator
       puts unless headings
     end
 
-    def do_summary(title, r, headings: true, total_value: true, total_summary: true, multiplier: 1)
+    def do_summary(title, r, headings: true, total_value: true, total: true, multiplier: 1)
       if multiplier != 1
         r=timeframe(r, multiplier)
       end
 
       make_h1(title)
-      make_summary(r, headings: headings)
+      make_summary(r, headings: headings, total: total)
 
       if total_value
         puts "=> Total value: #{show_dia_value(tally(r))}"
         puts
       end
-      if total_summary
-        total=get_total(r)
-        do_total_summary(total, headings: headings)
-      end
+      # if total_summary
+      #   total=get_total(r)
+      #   do_total_summary(total, headings: headings)
+      # end
       r
     end
 
+    #not used anymore
     def do_total_summary(total, headings: true, title: "Total")
       make_h2(title)
       @_order.each do |summary, keys|
@@ -1279,9 +1301,11 @@ class Simulator
         r=@ressources.slice(*v)
         case k
         when :income
-          do_summary(k,r, total_summary: false)
+          do_summary(k,r)
+        when :summons
+          do_summary(k,r, total_value: false)
         else
-          do_summary(k,r, headings: false, total_value: false, total_summary: false)
+          do_summary(k,r, headings: false, total_value: false, total: false)
           if k==:stores
             make_h2("30 days coin summary")
             puts @__coin_summary 
