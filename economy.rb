@@ -31,16 +31,105 @@ class Simulator
     @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
     @board_level ||=8
 
+    # Towers
     @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
     @tower_4f ||= 280 #max fos at 280 for t2_gear
     @tower_god ||= 300 #max fos at 300 for invigor
 
+    # Daily shopping
+    @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
+    @shop_refreshes ||= 2
+
+    # Monthly store buys
+    # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
+    @hero_buys ||=[:garrison]
+    @guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+    @lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
+    @challenger_buys ||= []
+
+    # Summonings
     @monthly_stargazing ||= 0 #number of stargazing done in a month
     @monthly_tavern ||= 0 #number of tavern pulls
     @monthly_hcp ||= 0 #number of hcp pulls
+    # Friends and weekly mercs
+    @nb_mercs ||= 5
+    @nb_friends ||= 20
+
+    #GH
+    @team_wrizz_gold ||=1080
+    @team_soren_gold ||=@team_wrizz_gold
+    @team_wrizz_coin ||=1158
+    @team_soren_coin ||=@team_wrizz_coin
+
+    @wrizz_chests ||= 23
+    @soren_chests ||= @wrizz_chests
+    @wrizz_gold ||= get_guild_gold(@wrizz_chests)
+    @soren_gold ||= get_guild_gold(@soren_chests)
+    @soren_freq ||= 0.66 #round(5.0/7.0) =0.71
+
+    #twisted realm
+    @tr_twisted ||=250
+    @tr_poe ||=1000
+
+    # arena
+    @arena_daily_dia ||= get_arena(5) #rank 5 in arena
+    @arena_weekly_dia ||=@arena_daily_dia * 10
+    @lct_coins ||=380 #top 20. Hourly coins: 400-rank
+
+    #misty valley
+    @misty ||= get_misty
+
+    #noble society
+    @regal_quantity ||= regal_choice
+    @twisted_quantity ||= twisted_bounties_choice(:xp)
+    @coe_quantity ||= coe_choice(:dust)
+
+    #average guild hera trial rewards
+    @guild_hero_trial_rewards ||={
+      dia: 200+100+200,
+      guild_coins: 1000 #assume top 500
+    }
+
+    #misc
+    @nb_dura_selling ||=0
   end
 
   def setup_constants
+    @Cost={
+      level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
+      "SI+10": {silver_e: 240},
+      "SI+20": {gold_e: 240},
+      "SI+30": {red_e: 300},
+      "e30": {shards: 3750},
+      "e30 to e41": {cores: 1650},
+      "e30 to e60": {cores: 4500},
+      "e30 to e65": {cores: 4500+1500},
+      "tree level": {twisted: 800},
+      "mythic furn": {poe: 300/0.0407},
+      #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
+      "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
+      "9F (with cards)": {poe: 167000},
+      "Challenger celo": {challenger_coins: 250000},
+      "Ascended challenger celo": {challenger_coins: 250000*14},
+
+      "Ascended 4F": { atier: 8, fodder: 10},
+      "Ascended god": { god: 14},
+      "RC slot": { invigor: 5000},
+    }
+
+    @Shop_emblem_discout ||=0.7
+    @Shop ||={
+      xp_h: { xp_h: 24, dia: -192, proba: 0.25},
+      dust_h: {dust_h: 24, dia: -300},
+      dust: {dust: 500, gold: -2250},
+      purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
+      poe: { poe: 250, gold: -1125 },
+      shards: { shards: 20, gold: -2000, max: 3 },
+      cores: { cores: 10, dia: -200, max: 3 },
+      gold_e: { gold_e: 20, gold: 15600*@Shop_emblem_discout, proba: 0.25 },
+      silver_e: { silver_e: 30, gold: 14400*@Shop_emblem_discout, proba: 0.75 },
+    }
+
     @HeroStore ||={
       garrison: { cost: 66*800, garrison_stone: 66},
       dim_exchange: {cost: 40000/2, dim_points: 40/2},
@@ -58,10 +147,45 @@ class Simulator
     }
     @ChallengerStore ||={}
 
-    @_hero_buys ||=[:garrison]
-    @_guild_buys ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-    @_lab_buys ||=[:garrison, :dim_exchange, nil, :dim_emblems]
-    @_challenger_buys ||= []
+    @Daily_merchant ||={ dia: 20, purple_stones: 2}
+    @Weekly_merchant ||={ dia: 20, purple_stones: 5}
+    @Monthly_merchant ||={ dia: 50, purple_stones: 10}
+
+    @Daily_quest ||= {
+      gold_hg: 2,
+      blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
+      dia: 100
+    }
+    @Weekly_quest ||= {
+      gold_h: 8+8,
+      blue_stones: 60, purple_stones: 10,
+      dia: 400, scrolls: 3,
+      dura_tears: 3
+    }
+
+    @GH_chest_dia ||=2.7
+    @GH_chest_guild ||=65
+
+    @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
+    @Oak_quantity=3; @Oak_proba=0.25
+
+    @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
+           blue_stones: 10*120, purple_stones: 10*18,
+           poe: 20*450}
+
+    @Regal_days ||=49
+    @Twisted_days ||=44
+    @Coe_days ||=36
+
+    @Hero_trial_monthly ||=2
+    @Hero_trial_rewards ||={
+      gold: 2000, dia: 300,
+      dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
+      blue_stones: 60, purple_stones: 60
+    }
+
+    @Nb_dura ||=7.0
+
   end
 
   def setup 
@@ -309,6 +433,7 @@ class Simulator
       @_solo_bounties=@_vip_solo_bounty
       @_team_bounties=1+ (@_vip_extra_team_bounty||0) + (@_sub_extra_team_bounty||0)
       @_nb_arena_fight ||=2+(@_vip_extra_arena_fight||0)
+      @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
     end
 
     def get_raw_idle_hourly
@@ -415,40 +540,20 @@ class Simulator
     end
 
     def guild
-      @Chest_dia ||=2.7
-      @Chest_guild ||=65
-
-      @team_wrizz_gold ||=1080
-      @team_wrizz_coin ||=1158
-      @team_soren_gold ||=@team_wrizz_gold
-      @team_soren_coin ||=@team_wrizz_coin
-
-      @wrizz_chests ||= 23
-      @wrizz_gold ||= get_guild_gold(@wrizz_chests)
-      @soren_chests ||= @wrizz_chests
-      @soren_gold ||= get_guild_gold(@soren_chests)
-      @soren_freq ||= round(5.0/7.0)
-
-      @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
-
       nb_chests=@_nb_guild_fight*(@wrizz_chests+@soren_chests*@soren_freq)
-      coins=@Chest_guild*nb_chests*@_guild_mult+@team_wrizz_coin+@team_soren_coin*@soren_freq
-      dia=@Chest_dia*nb_chests
+      coins=@GH_chest_guild*nb_chests*@_guild_mult+@team_wrizz_coin+@team_soren_coin*@soren_freq
+      dia=@GH_chest_dia*nb_chests
       gold=@_nb_guild_fight*(@wrizz_gold+@soren_gold*@soren_freq)+@team_wrizz_gold+@team_soren_gold*@soren_freq
 
       {guild_coins: coins, dia: dia, gold: gold}
     end
 
     def oak_inn
-      @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
-      @Oak_quantity=3; @Oak_proba=0.25
       @Oak_amount.map {|k,v| [k, v*@Oak_quantity*@Oak_proba]}.to_h
     end
 
     def tr
       #TODO add guild tr
-      @tr_twisted ||=250
-      @tr_poe ||=1000
       {twisted: @tr_twisted*2.0/3, poe: @tr_poe*2.0/3}
     end
 
@@ -467,18 +572,6 @@ class Simulator
       #   dura_tears: 3
       # } #this maxes out at 30-60 with the red emblem rewards
       
-      @Daily_quest ||= {
-        gold_hg: 2,
-        blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
-        dia: 100
-      }
-      @Weekly_quest ||= {
-        gold_h: 8+8,
-        blue_stones: 60, purple_stones: 10,
-        dia: 400, scrolls: 3,
-        dura_tears: 3
-      }
-
       daily_quest=sum_hash(@Daily_quest, @_fos_daily_quest)
       weekly_quest=sum_hash(@Weekly_quest, @_fos_weekly_quest)
       ressources=(daily_quest.keys+weekly_quest.keys).flatten.sort.uniq
@@ -489,9 +582,6 @@ class Simulator
     end
 
     def merchants
-      @Daily_merchant ||={ dia: 20, purple_stones: 2}
-      @Weekly_merchant ||={ dia: 20, purple_stones: 5}
-      @Monthly_merchant ||={ dia: 50, purple_stones: 10}
       ressources=(@Daily_merchant.keys+@Weekly_merchant.keys+@Monthly_merchant.keys).flatten.sort.uniq
       ressources.map do |r|
         v=(@Daily_merchant[r]||0)+(@Weekly_merchant[r]||0)/7.0+(@Monthly_merchant[r]||0)/30.0
@@ -500,8 +590,6 @@ class Simulator
     end
 
     def friends
-      @nb_mercs ||= 5
-      @nb_friends ||= 20
       {friend_summons: (@nb_friends*1.0+@nb_mercs*10.0/7)/10}
     end
 
@@ -530,10 +618,7 @@ class Simulator
     end
 
     def arena
-      @arena_daily_dia ||= get_arena(5)
-      @arena_weekly_dia ||=@arena_daily_dia * 10
       #TODO: add arena tickets usage?
-
       arena_fight = {
         gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
         blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
@@ -546,7 +631,6 @@ class Simulator
     end
 
     def lct
-      @lct_coins ||=380 #top 20
       {challenger_coins: @lct_coins*24}
     end
 
@@ -609,11 +693,6 @@ class Simulator
     end
 
     def misty
-      @misty ||= get_misty
-      @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
-             blue_stones: 10*120, purple_stones: 10*18,
-             poe: 20*450}
-
       r=sum_hash(@Misty_base, @misty)
       r.map {|k,v| [k, v/30.0]}.to_h
     end
@@ -626,8 +705,6 @@ class Simulator
       end
     end
     def regal
-      @Regal_days ||=49
-      @regal_quantity ||= regal_choice
       @regal_quantity.map {|k,v| [k,v*1.0/@Regal_days]}.to_h
     end
 
@@ -651,8 +728,6 @@ class Simulator
       end
     end
     def twisted_bounties
-      @Twisted_days ||=44
-      @twisted_quantity ||= twisted_bounties_choice(:xp)
       @twisted_quantity.map {|k,v| [k,v*1.0/@Twisted_days]}.to_h
     end
 
@@ -676,30 +751,16 @@ class Simulator
       end
     end
     def coe
-      @Coe_days ||=36
-      @coe_quantity ||= coe_choice(:dust)
       #Choices:
       @coe_quantity.map {|k,v| [k,v*1.0/@Coe_days]}.to_h
     end
 
     def hero_trial
-      @Hero_trial_monthly ||=2
-      @Hero_trial_rewards ||={
-        gold: 2000, dia: 300,
-        dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
-        blue_stones: 60, purple_stones: 60
-      }
-
       @Hero_trial_rewards.map do |k,v|
         [k, v*@Hero_trial_monthly/30.0]
       end.to_h
     end
     def guild_hero_trial
-      @guild_hero_trial_rewards ||={
-        dia: 200+100+200,
-        guild_coins: 1000 #assume top 500
-      }
-
       @guild_hero_trial_rewards.map do |k,v|
         [k, v*@Hero_trial_monthly/30.0]
       end.to_h
@@ -882,10 +943,7 @@ class Simulator
       s << "\n"
       s
     end
-  end
-  include Store
 
-  module Exchange
     def spending(cost, ressources=tally)
       #in one unit of time, how much ressource can we buy?
       #@return the amount we can buy which each needed ressources, the
@@ -901,7 +959,10 @@ class Simulator
       end.to_h
       return [res_buy, min_buy, remain]
     end
+  end
+  include Store
 
+  module Exchange
     def exchange_ff
       @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
       nb_ff=@nb_ff
@@ -915,21 +976,6 @@ class Simulator
 
     def exchange_shop
       return @_shop unless @_shop.nil?
-      @Shop_emblem_discout ||=0.7
-      @Shop ||={
-        xp_h: { xp_h: 24, dia: -192, proba: 0.25},
-        dust_h: {dust_h: 24, dia: -300},
-        dust: {dust: 500, gold: -2250},
-        purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
-        poe: { poe: 250, gold: -1125 },
-        shards: { shards: 20, gold: -2000, max: 3 },
-        cores: { cores: 10, dia: -200, max: 3 },
-        gold_e: { gold_e: 20, gold: 15600*@Shop_emblem_discout, proba: 0.25 },
-        silver_e: { silver_e: 30, gold: 14400*@Shop_emblem_discout, proba: 0.75 },
-      }
-
-      @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
-      @shop_refreshes ||= 2
       shop_refreshes=@shop_refreshes
 
       @Shop_refresh_cost= [100, 100, 200, 200]
@@ -968,7 +1014,7 @@ class Simulator
         @ressources[:"#{i}_store"] ||={}
         coin_name=:"#{i}_coins"
         _total=total[coin_name]*30
-        r,bought=handle_buys(instance_variable_get(:"@_#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), _total)
+        r,bought=handle_buys(instance_variable_get(:"@#{i}_buys"), instance_variable_get(:"@#{i.to_s.capitalize}Store"), _total)
         cost=r.delete(:cost)
         r[coin_name]=cost
         @__coin_summary << "#{coin_name}: #{round(_total)} => #{buy_summary(bought)}"
@@ -977,9 +1023,6 @@ class Simulator
     end
 
     def sell_dura
-      @Nb_dura ||=7.0
-      @nb_dura_selling ||=0
-
       total_dura=tally[:dura_fragments]
       dura_sold=(@nb_dura_selling/@Nb_dura)*total_dura
       {dura_fragments: -dura_sold, gold: dura_sold * 50}
@@ -1187,28 +1230,6 @@ class Simulator
       total=clean_total
 
       make_h1 "30 days previsions summary"
-      @Cost={
-        level: {gold: @level_gold, xp: @level_xp, dust: @level_dust},
-        "SI+10": {silver_e: 240},
-        "SI+20": {gold_e: 240},
-        "SI+30": {red_e: 300},
-        "e30": {shards: 3750},
-        "e30 to e41": {cores: 1650},
-        "e30 to e60": {cores: 4500},
-        "e30 to e65": {cores: 4500+1500},
-        "tree level": {twisted: 800},
-        "mythic furn": {poe: 300/0.0407},
-        #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
-        "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
-        "9F (with cards)": {poe: 167000},
-        "Challenger celo": {challenger_coins: 250000},
-        "Ascended challenger celo": {challenger_coins: 250000*14},
-
-        "Ascended 4F": { atier: 8, fodder: 10},
-        "Ascended god": { god: 14},
-        "RC slot": { invigor: 5000},
-      }
-
       #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
       nb_ascended=0
 
