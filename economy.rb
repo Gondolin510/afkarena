@@ -93,6 +93,8 @@ class Simulator
 
     #misc
     @dura_nb_selling ||=0
+    @labyrinth_mode = :dismal
+    #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
   end
 
   def setup_constants
@@ -163,6 +165,26 @@ class Simulator
       dia: 400, scrolls: 3,
       dura_tears: 3
     }
+
+    @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
+    # skipping large camps: 59h gold+29.5h xp+dust
+    @Dismal_end_rewards ||= {
+      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
+      shards: 61, cores: 41, dia: 300,
+      lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333
+    } # i think guild coins are not affected by the multiplier here
+    @Lab_hard_end_rewards ||= {
+      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
+      dia: 300,
+      lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333
+    }
+    @Lab_easy_end_rewards ||= {
+      gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
+      dia: 300,
+      lab_coins: 3867, guild_coins: 1000, challenger_coins: 3333
+    }
+    @_lab_flat_gold_h=55 #approximations to recover the flat rewards
+    @_lab_flat_xp_h=6
 
     @GH_chest_dia ||=2.7
     @GH_chest_guild ||=65
@@ -619,7 +641,7 @@ class Simulator
     end
 
     def arena
-      #TODO: add arena tickets usage?
+      #todo: add arena tickets usage? via tally[:arena_tickets]
       arena_fight = {
         gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,
         blue_stones: 60*0.01*0.2, purple_stones: 10*0.01*0.3,
@@ -635,29 +657,25 @@ class Simulator
       {challenger_coins: @lct_coins*24}
     end
 
-    def labyrinth
+    def labyrinth(mode: @labyrinth_mode)
       #TODO easy/hard standard lab
-      @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
-      # skipping large camps: 59h gold+29.5h xp+dust
-      @Dismal_end_rewards ||= {
-        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
-        shards: 61, cores: 41, dia: 300,
-        lab_coins: (4200+700)*@_lab_mult, guild_coins: 1000, challenger_coins: 3333
-      } # i think guild coins are not affected by the multiplier here
 
-      if @dismal_stage_flat_rewards.nil?
-        dismal_flat_gold_h=55 #approximations
-        dismal_flat_xp_h=6
-        @dismal_stage_flat_rewards = {gold: dismal_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: dismal_flat_xp_h* real_afk_xp}
+      if @lab_flat_rewards.nil?
+        @lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
       end
-
-      keys=(@Dismal_stage_chest_rewards.keys+@Dismal_end_rewards.keys+@dismal_stage_flat_rewards.keys).uniq
-      keys.map do |t|
-        total=(@Dismal_stage_chest_rewards[t]||0)+
-          (@Dismal_end_rewards[t]||0)+
-          (@dismal_stage_flat_rewards[t]||0)
-        [t, total*2/3.0] # for double events
-      end.to_h
+      lab_flat_rewards=@lab_flat_rewards.dup
+      lab_flat_rewards[:gold] *= @_lab_gold_mult
+      rewards=case mode
+        when :dismal
+          [@Dismal_stage_chest_rewards,@Dismal_end_rewards,@lab_flat_rewards]
+        when :hard
+          [@Lab_hard_end_rewards, @lab_flat_rewards]
+        when :easy
+          [@Lab_easy_end_rewards, @lab_flat_rewards]
+        end
+      total=sum_hash(*rewards, multiplier: 2.0/3) #for double events
+      total[:lab_coins]*=@_lab_mult
+      total
     end
 
     def get_misty(misty_guild_twisted: :twisted, misty_purple_blue: :blue)

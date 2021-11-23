@@ -232,4 +232,5 @@ Max rc level: 2.22 days (13.49 by month)
 @noble_twisted: {:xp_h=>956}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
 @dura_nb_selling: 0
-@dismal_stage_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
+@labyrinth_mode: dismal
+@lab_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
