@@ -123,7 +123,7 @@ class Simulator
       "RC slot": { invigor: 5000},
     }
 
-    @Shop ||={
+    @Shop = {
       xp_h: { xp_h: 24, dia: -192, proba: 0.25},
       dust_h: {dust_h: 24, dia: -300},
       dust: {dust: 500, gold: -2250},
@@ -133,24 +133,26 @@ class Simulator
       cores: { cores: 10, dia: -200, max: 3 },
       gold_e: { gold_e: 20, gold: 15600*@_shop_emblem_discout, proba: 0.25 },
       silver_e: { silver_e: 30, gold: 14400*@_shop_emblem_discout, proba: 0.75 },
-    }
+    }.merge(@Shop||{})
 
-    @StoreHero ||={
+    @StoreHero ={
       garrison: { cost: 66*800, garrison_stone: 66},
       dim_exchange: {cost: 40000/2, dim_points: 40/2},
-    }
+    }.merge(@StoreHero||{})
     @StoreGuild ||={
       garrison: { cost: 66*800, garrison_stone: 66},
-      t3: 47000,
+      t3: 47000, #shortcut for t3: {cost: 47000, t3: 1}
       dim_exchange: {cost: 40000/2, dim_points: 40/2},
-      dim_gear: 67000,
+      dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
     }
-    @StoreLab ||={
+    @StoreLab={
       garrison: { cost: 100*800, garrison_stone: 100},
       dim_exchange: {cost: 200000/2, dim_points: 200/2},
       dim_emblems: {cost: 64000, dim_emblems: 50},
-    }
-    @StoreChallenger ||={}
+    }.merge(@StoreLab||{})
+    @StoreChallenger={
+      god: 250000,
+    }.merge(@StoreChallenger||{})
 
     @Merchant_daily ||={ dia: 20, purple_stones: 2}
     @Merchant_weekly ||={ dia: 20, purple_stones: 5}

@@ -256,7 +256,7 @@ Max rc level: 3.14 days (9.55 by month)
 @StoreHero: {:garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
 @StoreGuild: {:garrison=>{:garrison_stone=>66}, :t3=>47000, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
 @StoreLab: {:garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}, :dim_emblems=>{:dim_emblems=>50}}
-@StoreChallenger: {}
+@StoreChallenger: {:god=>250000}
 @Merchant_daily: {:dia=>20, :purple_stones=>2}
 @Merchant_weekly: {:dia=>20, :purple_stones=>5}
 @Merchant_monthly: {:dia=>50, :purple_stones=>10}

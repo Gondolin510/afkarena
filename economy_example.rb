@@ -37,6 +37,7 @@ Detailed customizations
 puts "==================== Example of detailed customisation ===================="
 s=Simulator.new do
   #Enter the afk timer value for xp and gold:
+  #(by default we use stage progression to get approximations of these values)
   @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
   @afk_gold ||=900 #the displayed value by minute (include vip)
   @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
@@ -56,8 +57,8 @@ s=Simulator.new do
      @_dismal_stage_chest_rewards = { gold_h: 59, xp_h: 29.5, dust_h: 29.5 }
      # assume that vows only give 10 stargaze cards
      @_average_vow_rewards=({stargazers: 10})
-     #the program assumes by default that we are at chap 33+ so the fos mythic bonus is at 90%, change it:
-     @_fos_mythic_mult=0.3*2 #we forgot to activate the fos even though we are at chapter 37
+     #the program determines fos values from stage progression, but we can change it:
+     @_fos_mythic_mult=0.3*2 #we forgot to activate the last mythic fos even though we are at chapter 37
   end
 
   #There are hooks `custom_income` and `custom_exchange` to customize income and spendings:
@@ -90,19 +91,35 @@ s=Simulator.new do
   end
   
   # This is an OO program, so we can customize some existing functions
-  def exchange_shop
-    #the `exchange_shop` function currently only handle dust, dust_h, xp_h, purple_stones, poe, shards, cores, silver_e, gold_e
-    #here we want to add some functionality
-    r=super #call the main function
-    #we want to buy 1 reset scroll every day, it costs 6000K
-    r[:reset_scrolls]=1
-    r[:gold] -= 6000
+
+  # 1) the `friends` income ressource do not handle garrison for now
+  #    it is easy to fix it
+  def friends
+    r=super #call the original function
+    @nb_garrison ||= 5 #5 garrison monthly
+    r[:friend_summons]+=@nb_garrison*10.0/30 #1 garrison = 10 friends point monthly
     r
   end
+
+  # 2) the `exchange_shop` function currently only handle dust, dust_h, xp_h, purple_stones, poe, shards, cores, silver_e, gold_e
+  #  we want to add some functionality:
+  #
+  #    def exchange_shop
+  #      r=super #call the main function
+  #      #we want to buy 1 reset scroll every day, it costs 6000K
+  #      r[:reset_scrolls]=1
+  #      r[:gold] -= 6000
+  #      r
+  #    end
+  #
+  # But we can actually use the built in functionality here:
+  @Shop={reset_scroll: {reset_scrolls: 1, gold: -6000}}
+  @shop_items = %i(dust purple_stones poe shards) +[{reset_scroll: 1}] #we only buy one scroll daily, by default we assume we buy the full number of store refreshes
 end
 
 #Now let's look at the summary!
 s.summary
+#s.show_variables
 
 puts "==================== Default settings ===================="
 #Here are the default variables that can be changed in `Simulator.new do ... end` and their values
