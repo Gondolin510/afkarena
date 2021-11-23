@@ -172,6 +172,24 @@ module Data
   end
 end
 
+module Helpers
+  extend self
+  def add_to_hash(r,*hashes, multiplier: 1)
+    hashes.each do |h|
+      h.each do |k,v|
+        r[k]||=0
+        r[k]+=v*multiplier
+      end
+    end
+    r
+  end
+
+  def sum_hash(*args, **kw)
+    add_to_hash({}, *args, **kw)
+  end
+
+end
+
 if __FILE__ == $0
   arena_fight = {
     gold: 90*0.495, dust: 10*0.495+500*0.01*0.2,

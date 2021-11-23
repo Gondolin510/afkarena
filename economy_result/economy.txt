@@ -163,7 +163,7 @@ atier: 13.87
 god: 1.09
 
 =============== 30 days previsions summary ===============
-level: 2.14 days (13.99 by month) {gold: 1.99 days, xp: 1.45 days, dust: 2.14 days} [remains: 19623.05 gold + 876220.57 xp]
+level: 2.14 days (13.99 by month) {gold: 1.99 days, xp: 1.45 days, dust: 2.14 days} [monthly remains: 19623.05 gold + 876220.57 xp]
 
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
@@ -172,7 +172,7 @@ SI+30: 89.14 days (0.34 by month)
 e30: 24.56 days (1.22 by month)
 e30 to e41: 26.12 days (1.15 by month)
 e30 to e60: 71.24 days (0.42 by month)
-e30 to e65: 94.99 days (0.32 by month) [remains: 0.0 cores]
+e30 to e65: 94.99 days (0.32 by month) [monthly remains: 0.0 cores]
 
 tree level: 3.74 days (8.02 by month)
 mythic furn: 2.72 days (11.04 by month)
@@ -182,7 +182,7 @@ mythic furn (with cards): 2.13 days (14.06 by month)
 Challenger celo: 22.04 days (1.36 by month)
 Ascended challenger celo: 308.59 days (0.1 by month)
 
-Ascended 4F: 17.3 days (1.73 by month) [remains: 4.43 fodder]
+Ascended 4F: 17.3 days (1.73 by month) [monthly remains: 4.43 fodder]
 Ascended god: 384.51 days (0.08 by month)
 RC slot: 5.79 days (5.18 by month)
 Max rc level: 3.14 days (9.55 by month)

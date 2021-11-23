@@ -163,7 +163,7 @@ atier: 21.51
 god: 1.54
 
 =============== 30 days previsions summary ===============
-level: 2.49 days (12.07 by month) {gold: 2.18 days, xp: 1.55 days, dust: 2.49 days} [remains: 30800.49 gold + 940991.63 xp]
+level: 2.49 days (12.07 by month) {gold: 2.18 days, xp: 1.55 days, dust: 2.49 days} [monthly remains: 30800.49 gold + 940991.63 xp]
 
 SI+10: 27.94 days (1.07 by month)
 SI+20: 52.6 days (0.57 by month)
@@ -174,7 +174,7 @@ e30 to e41: 21.81 days (1.38 by month)
 e30 to e60: 59.47 days (0.5 by month)
 e30 to e65: 79.3 days (0.38 by month)
 
-tree level: 3.86 days (7.77 by month) [remains: 0.0 twisted]
+tree level: 3.86 days (7.77 by month) [monthly remains: 0.0 twisted]
 mythic furn: 2.86 days (10.48 by month)
 mythic furn (with cards): 2.25 days (13.35 by month)
 9F (with cards): 64.83 days (0.46 by month)
@@ -182,9 +182,49 @@ mythic furn (with cards): 2.25 days (13.35 by month)
 Challenger celo: 22.04 days (1.36 by month)
 Ascended challenger celo: 308.59 days (0.1 by month)
 
-Ascended 4F: 12.04 days (2.49 by month) [remains: 1.58 atier]
+Ascended 4F: 12.04 days (2.49 by month) [monthly remains: 1.58 atier]
 Ascended god: 272.5 days (0.11 by month)
-RC slot: 6.94 days (4.32 by month) [remains: 0.0 invigor]
+RC slot: 6.94 days (4.32 by month) [monthly remains: 0.0 invigor]
 Max rc level: 2.22 days (13.49 by month)
 
-- Vars: @nb_ff: 6, @misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :twisted=>400, :blue_stones=>720}, @regal_quantity: {:blue_stones=>3300}, @coe_quantity: {:dust=>7500, :dust_h=>380}, @stage: 37-01, @level_gold: 18132.62, @level_xp: 130100, @level_dust: 24703, @vip: 10, @subscription: true, @player_level: 180, @board_level: 8, @tower_kt: 550, @tower_4f: 280, @tower_god: 300, @monthly_stargazing: 0, @monthly_tavern: 0, @monthly_hcp: 0, @team_wrizz_gold: 1080, @team_wrizz_coin: 1158, @team_soren_gold: 1080, @team_soren_coin: 1158, @wrizz_chests: 23, @wrizz_gold: 2160, @soren_chests: 23, @soren_gold: 2160, @soren_freq: 0.71, @tr_twisted: 250, @tr_poe: 1000, @nb_mercs: 5, @nb_friends: 20, @arena_daily_dia: 66, @arena_weekly_dia: 660, @lct_coins: 380, @dismal_stage_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}, @twisted_quantity: {:xp_h=>956}, @guild_hero_trial_rewards: {:dia=>500, :guild_coins=>1000}, @shop_items: [:dust, :purple_stones, :poe, :shards], @shop_refreshes: 2, @nb_dura_selling: 0
+=============== Variables ===============
+@nb_ff: 6
+@misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :twisted=>400, :blue_stones=>720}
+@regal_quantity: {:blue_stones=>3300}
+@coe_quantity: {:dust=>7500, :dust_h=>380}
+@stage: 37-01
+@level_gold: 18132.62
+@level_xp: 130100
+@level_dust: 24703
+@vip: 10
+@subscription: true
+@player_level: 180
+@board_level: 8
+@tower_kt: 550
+@tower_4f: 280
+@tower_god: 300
+@monthly_stargazing: 0
+@monthly_tavern: 0
+@monthly_hcp: 0
+@team_wrizz_gold: 1080
+@team_wrizz_coin: 1158
+@team_soren_gold: 1080
+@team_soren_coin: 1158
+@wrizz_chests: 23
+@wrizz_gold: 2160
+@soren_chests: 23
+@soren_gold: 2160
+@soren_freq: 0.71
+@tr_twisted: 250
+@tr_poe: 1000
+@nb_mercs: 5
+@nb_friends: 20
+@arena_daily_dia: 66
+@arena_weekly_dia: 660
+@lct_coins: 380
+@dismal_stage_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
+@twisted_quantity: {:xp_h=>956}
+@guild_hero_trial_rewards: {:dia=>500, :guild_coins=>1000}
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@shop_refreshes: 2
+@nb_dura_selling: 0

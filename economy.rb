@@ -9,6 +9,7 @@ class Simulator
   attr_accessor :ressources
   include Value
   include Data
+  include Helpers
 
   def initialize(process: true, &b)
     instance_eval(&b) if b
@@ -450,16 +451,8 @@ class Simulator
       dura_tears: 3
     }
 
-    daily_quest=@Daily_quest
-    @_fos_daily_quest.each do |k,v|
-      daily_quest[k]||=0
-      daily_quest[k]+=v
-    end
-    weekly_quest=@Weekly_quest
-    @_fos_weekly_quest.each do |k,v|
-      weekly_quest[k]||=0
-      weekly_quest[k]+=v
-    end
+    daily_quest=sum_hash(@Daily_quest, @_fos_daily_quest)
+    weekly_quest=sum_hash(@Weekly_quest, @_fos_weekly_quest)
     ressources=(daily_quest.keys+weekly_quest.keys).flatten.sort.uniq
     ressources.map do |r|
       v=(daily_quest[r]||0)+(weekly_quest[r]||0)/7.0
@@ -593,10 +586,7 @@ class Simulator
            blue_stones: 10*120, purple_stones: 10*18,
            poe: 20*450}
 
-    r=@Misty_base.dup
-    @misty.each do |k,v|
-      r[k]||=0; r[k]+=v
-    end
+    r=sum_hash(@Misty_base, @misty)
     r.map {|k,v| [k, v/30.0]}.to_h
   end
 
@@ -845,10 +835,7 @@ class Simulator
       max=value.delete(:max) || 1000
       appearances=nb_shop*proba
       buy=[qty, max, appearances].min
-      value.each do |k,v|
-        @_shop[k]||=0
-        @_shop[k]+=v*buy
-      end
+      add_to_hash(@_shop, value, multiplier: buy)
     end
 
     @_shop
@@ -960,6 +947,9 @@ class Simulator
 
   def spending(cost, ressources=tally)
     #in one unit of time, how much ressource can we buy?
+    #@return the amount we can buy which each needed ressources, the
+    #minimal amount (=effective amount unless we have stocks), the
+    #remaining ressources by unit of time.
     res_buy=cost.map do |k,v|
       res=ressources[k]||0
       [k, res*1.0/v]
@@ -1115,10 +1105,7 @@ class Simulator
 
     do_buy = lambda do |r, cost, value, coin_name, qty: 1|
       r[coin_name]-=cost*qty
-      value.each do |k,v|
-        r[k]||=0
-        r[k]+=qty*v
-      end
+      add_to_hash(r, value, multiplier: qty)
     end
 
     handle_buys = lambda do |buys, shop, total, coin_name|
@@ -1218,7 +1205,7 @@ class Simulator
       end
 
       monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
-      o_remain += " [remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
+      o_remain += " [monthly remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
 
       puts "#{k}: #{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
       puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
