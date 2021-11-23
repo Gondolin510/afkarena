@@ -415,9 +415,9 @@ class Simulator
     end
 
     def ressources_cost
-      r=@Cost.dup
-      r[:level]=level_cost
-      r
+      @Cost
+      #r[:level]=level_cost
+      #r
     end
   end
   include LevelUp
@@ -656,6 +656,9 @@ class Simulator
       })
     end
 
+    def raw_idle_hourly
+      @_raw_idle_hourly
+    end
     def idle_hourly
       @_idle_hourly
     end
@@ -1345,6 +1348,41 @@ class Simulator
       puts
     end
 
+    def level_summary
+      total=clean_total
+      cost=level_cost
+      make_h1 "Level summary"
+      puts "Level: #{cost_summary(cost, total)}"
+      gold=cost[:gold]
+      xp=cost[:xp]
+      dust=cost[:dust]
+      gold_h=gold/real_afk_gold
+      xp_h=xp/real_afk_xp
+      dust_h=dust/real_afk_dust
+      gold_v=dia_value({gold: gold})
+      goldh_v=dia_value({gold_h: gold_h})
+      xp_v=dia_value({xp: xp})
+      dust_v=dia_value({dust: dust})
+      total=gold_v+xp_v+dust_v
+      totalbis=goldh_v+xp_v+dust_v
+      puts "Level cost: #{round(total)} dia / #{round(totalbis)} dia [#{round(gold)} gold=#{round(gold_v)} dia / #{round(gold_h)} gold_h=#{round(goldh_v)} dia + #{round(xp)} xp=#{round(xp_h)} xp_h=#{round(xp_v)} dia + #{round(dust)} dust=#{round(dust_h)} dust_h=#{round(dust_v)} dia"
+      puts
+    end
+
+    def cost_summary(cost, total)
+      res_buy, buy, remain=spending(cost, total)
+      o_remain=""
+
+      if res_buy.keys.length>1
+        o_remain+=" {#{res_buy.map { |k,v| "#{k}: #{round(1/v)} days"}.join(', ')}}"
+      end
+
+      monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
+      o_remain += " [monthly remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
+
+      return "#{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
+    end
+
     def previsions_summary
       total=clean_total
 
@@ -1353,21 +1391,15 @@ class Simulator
       nb_ascended=0
 
       ressources_cost.each do |k,v|
-        res_buy, buy, remain=spending(v, total)
+
+        o=cost_summary(v, total)
+        puts "#{k}: #{o}"
 
         if ["Ascended challenger celo", "Ascended 4F", "Ascended god"].include?(k.to_s)
+          _res_buy, buy, _remain=spending(v, total)
           nb_ascended += buy
         end
 
-        o_remain=""
-        if k==:level
-          o_remain+=" {#{res_buy.map { |k,v| "#{k}: #{round(1/v)} days"}.join(', ')}}"
-        end
-
-        monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
-        o_remain += " [monthly remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
-
-        puts "#{k}: #{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
         puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
       end
       increase_rc_level=5 #one ascended = 5 levels
@@ -1394,6 +1426,7 @@ class Simulator
         end
       end
       do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30)
+      level_summary
       previsions_summary
     end
 

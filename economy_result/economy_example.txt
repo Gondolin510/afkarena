@@ -1,6 +1,6 @@
 ==================== Example of minimal customisation ====================
 =============== Fast forward value ===============
-259.8 dia [295.87 gold=16.89 dia + 3411.67 xp=16.0 dia + 285.06 dust=25.0 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 48.0 invigor=11.52 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
+358.25 dia [295.87 gold=16.89 dia + 3411.67 xp=66.21 dia + 285.06 dust=73.24 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 48.0 invigor=11.52 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
 
 =============== Income ===============
 ***** Base *****
@@ -52,7 +52,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 864.0 [576.0 (idle) + 288.0 (ff)]
 arena_tickets: 2.0 [2.0 (quests)]
 
-=> Total value: 17554.22 dia [2.0 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342.0 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 63.17 cores=720.97 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 7071.12 dust=620.14 dia + 57.96 dust_h=724.44 dia + 2.71 friend_summons=651.43 dia + 21149.59 gold=1207.58 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2.0 gold_hg=4.0 dia + 13451.01 guild_coins=896.73 dia + 0.03 hero_choice_chest=213.33 dia + 864.0 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2156.91 poe=1455.91 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=422.86 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250.0 dia + 0.1 t1_gear=150.0 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350.0 dia + 0.17 t3=521.43 dia + 318.0 twisted=2146.48 dia + 63059.04 xp=295.73 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 19678.95 dia [2.0 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342.0 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 63.17 cores=720.97 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 7071.12 dust=1816.84 dia + 57.96 dust_h=724.44 dia + 2.71 friend_summons=651.43 dia + 21149.59 gold=1207.58 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2.0 gold_hg=4.0 dia + 13451.01 guild_coins=896.73 dia + 0.03 hero_choice_chest=213.33 dia + 864.0 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2156.91 poe=1455.91 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=422.86 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250.0 dia + 0.1 t1_gear=150.0 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350.0 dia + 0.17 t3=521.43 dia + 318.0 twisted=2146.48 dia + 63059.04 xp=1223.76 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -797.5 [-530 (ff_cost) + -267.5 (shop)]
@@ -178,6 +178,10 @@ dura_tears: 12.86 [12.86 (quests)]
 invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]
 arena_tickets: 60.0 [60.0 (quests)]
 
+=============== Level summary ===============
+Level: 2.16 days (13.9 by month) {gold: 2.12 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 4249.98 gold + 843512.46 xp]
+Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361.0 dia + 130100.0 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
+
 =============== 30 days previsions summary ===============
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
@@ -196,16 +200,14 @@ mythic furn (with cards): 1.99 days (15.06 by month)
 Challenger celo: 22.04 days (1.36 by month)
 Ascended challenger celo: 308.59 days (0.1 by month)
 
-Ascended 4F: 17.3 days (1.73 by month) [monthly remains: 4.2 fodder]
+Ascended 4F: 17.3 days (1.73 by month) {atier: 17.3 days, fodder: 13.93 days} [monthly remains: 4.2 fodder]
 Ascended god: 384.51 days (0.08 by month)
 RC slot: 5.79 days (5.18 by month)
-level: 2.16 days (13.9 by month) {gold: 2.12 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 4249.98 gold + 843512.46 xp]
-
 Max rc level: 3.14 days (9.55 by month)
 
 ==================== Example of detailed customisation ====================
 =============== Fast forward value ===============
-260.01 dia [299.55 gold=17.1 dia + 3595.75 xp=16.0 dia + 285.06 dust=25.0 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 48.0 invigor=11.52 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
+358.35 dia [299.55 gold=17.1 dia + 3595.75 xp=66.09 dia + 285.06 dust=73.24 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 48.0 invigor=11.52 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
 
 =============== Income ===============
 ***** Base *****
@@ -257,7 +259,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 720.0 [576.0 (idle) + 144.0 (ff)]
 arena_tickets: 2.0 [2.0 (quests)]
 
-=> Total value: 17657.86 dia [2.0 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342.0 challenger_coins=756.13 dia + 10.63 class_fragments=161.38 dia + 72.33 cores=825.59 dia + 1371.35 dia=1371.35 dia + 8.01 dura_fragments=45.73 dia + 0.43 dura_tears=0.24 dia + 6007.6 dust=526.87 dia + 44.47 dust_h=555.83 dia + 4.38 friend_summons=1051.43 dia + 20332.78 gold=1160.94 dia + 2.68 gold_e=83.54 dia + 125.49 gold_h=250.97 dia + 2.0 gold_hg=4.0 dia + 14451.01 guild_coins=963.4 dia + 0.03 hero_choice_chest=213.33 dia + 720.0 invigor=172.8 dia + 4736.67 lab_coins=498.6 dia + 0.28 mythic_gear=139.08 dia + 1919.33 poe=1295.55 dia + 41.14 purple_stones=1283.42 dia + 2.52 red_e=339.77 dia + 1.43 scrolls=342.86 dia + 78.17 shards=446.31 dia + 5.36 silver_e=102.76 dia + 0.67 stargazers=333.33 dia + 0.08 t1_gear=125.0 dia + 0.28 t2=556.32 dia + 0.08 t2_gear=291.67 dia + 0.16 t3=467.86 dia + 297.97 twisted=2011.27 dia + 55677.26 xp=247.75 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 19450.21 dia [2.0 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342.0 challenger_coins=756.13 dia + 10.63 class_fragments=161.38 dia + 72.33 cores=825.59 dia + 1371.35 dia=1371.35 dia + 8.01 dura_fragments=45.73 dia + 0.43 dura_tears=0.24 dia + 6007.6 dust=1543.58 dia + 44.47 dust_h=555.83 dia + 4.38 friend_summons=1051.43 dia + 20332.78 gold=1160.94 dia + 2.68 gold_e=83.54 dia + 125.49 gold_h=250.97 dia + 2.0 gold_hg=4.0 dia + 14451.01 guild_coins=963.4 dia + 0.03 hero_choice_chest=213.33 dia + 720.0 invigor=172.8 dia + 4736.67 lab_coins=498.6 dia + 0.28 mythic_gear=139.08 dia + 1919.33 poe=1295.55 dia + 41.14 purple_stones=1283.42 dia + 2.52 red_e=339.77 dia + 1.43 scrolls=342.86 dia + 78.17 shards=446.31 dia + 5.36 silver_e=102.76 dia + 0.67 stargazers=333.33 dia + 0.08 t1_gear=125.0 dia + 0.28 t2=556.32 dia + 0.08 t2_gear=291.67 dia + 0.16 t3=467.86 dia + 297.97 twisted=2011.27 dia + 55677.26 xp=1023.38 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -397.5 [-130 (ff_cost) + -267.5 (shop)]
@@ -391,6 +393,10 @@ invigor: 21600.0 [17280.0 (idle) + 4320.0 (ff)]
 lct_tickets: 150 [150 (lct_buy_tickets)]
 reset_scrolls: 30 [30 (shop)]
 
+=============== Level summary ===============
+Level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
+Level cost: 9773.77 dia / 10081.6 dia [18132.62 gold=1035.32 dia / 671.58 gold_h=1343.16 dia + 130100.0 xp=298.92 xp_h=2391.32 dia + 24703 dust=507.77 dust_h=6347.12 dia
+
 =============== 30 days previsions summary ===============
 SI+10: 35.52 days (0.84 by month)
 SI+20: 74.31 days (0.4 by month)
@@ -409,11 +415,9 @@ mythic furn (with cards): 2.17 days (13.83 by month)
 Challenger celo: 22.04 days (1.36 by month)
 Ascended challenger celo: 308.59 days (0.1 by month)
 
-Ascended 4F: 10.56 days (2.84 by month) [monthly remains: 2.02 atier]
+Ascended 4F: 10.56 days (2.84 by month) {atier: 9.7 days, fodder: 10.56 days} [monthly remains: 2.02 atier]
 Ascended god: 164.51 days (0.18 by month)
 RC slot: 6.94 days (4.32 by month) [monthly remains: 0.0 invigor]
-level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
-
 Max rc level: 1.92 days (15.6 by month)
 
 ==================== Default settings ====================

@@ -47,22 +47,21 @@ module Value
     (500.0/2250) / (1167.6/300)
   end
 
-  def idle_hourly
+  def raw_idle_hourly
     {gold: 27, xp: 43.5, dust: 48.65} 
     #to get correct result we need the specific player income here, this is for converting gold:xp/dust into gold_h/xp_h/dust_h
     #i am using values from chap 37, gold and xp are in K
   end
 
-  def items_value(summons: true)
+  def items_value(summons: true, extra: {})
     scroll=240
     value = {
       dia: 1,
       gold: gold_conversion,
-      xp: 8 / idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
-      dust: 12.5 / idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
+      xp: 8 / raw_idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
+      dust: 12.5 / raw_idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
       gold_h: 2, #24h gold=48 dia, 1h gold=2 dia
-      gold_hg: 2,
-        #Alternative: idle[:gold]*gold_conversion,
+      gold_hg: 2, #Alternative: raw_idle_hourly[:gold]*gold_conversion,
       xp_h: 8,
       dust_h: 12.5,
 
@@ -114,12 +113,21 @@ module Value
         random_fodder: 2.6*60*9 #=1404=1872*6/9, 2.6*60*156
       })
     end
-    
-    # "Missing: dura_tears
-    value
+
+    value.merge(extra)
   end
 
   def dia_value(items, **kw)
+    sum=0
+    values=items_value(**kw)
+    items.each do |k,v|
+      #p "Missing: #{k}" unless values.key?(k)
+      value=v*(values[k]||0)
+      sum+=value
+    end
+    return sum
+  end
+  def detailed_dia_value(items, **kw)
     o=[]; sum=0
     values=items_value(**kw)
     items.each do |k,v|
@@ -131,7 +139,7 @@ module Value
     return [sum, o]
   end
   def show_dia_value(items, details: true, **kw)
-    total, o=dia_value(items, **kw)
+    total, o=detailed_dia_value(items, **kw)
     s="#{round(total)} dia"
     s+=" [#{o.join(' + ')}]" if details
   end
