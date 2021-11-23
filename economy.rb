@@ -24,13 +24,7 @@ class Simulator
     @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
     @nb_ff ||=6 #ff by day
     @vip ||=10 #vip level
-    @subscription ||=true if @subscription.nil?
-    @board_level ||=8
-
-    #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
-    #@afk_gold: the displayed value by minute (include vip)
-    #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
-    #determined from stage progression, but can be set up directly for more precise results
+    @subscription ||=false if @subscription.nil?
 
     # Towers
     @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -64,6 +58,7 @@ class Simulator
 
     @gh_wrizz_chests ||= 23
     @gh_soren_chests ||= @gh_wrizz_chests
+    #if not specified, determine the gold amount from the chest amount
     @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
     @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
     @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
@@ -81,8 +76,9 @@ class Simulator
     #misty valley
     @misty ||= get_misty
 
-    #noble society
-    @noble_regal ||= regal_choice(paid: false)
+    #noble society, by default paid is false
+    #for the paid version: @noble_twisted = twisted_bounties_choice(:xp, paid: true)
+    @noble_regal ||= regal_choice
     @noble_twisted ||= twisted_bounties_choice(:xp)
     @noble_coe ||= coe_choice(:dust)
 
@@ -93,34 +89,20 @@ class Simulator
     }
 
     #misc
+    @board_level ||=8
     @dura_nb_selling ||=0
     @labyrinth_mode = :dismal
     #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
-  end
 
-  def level_up_ressources(levels)
-    r=get_hero_level_stats
-    gold=xp=dust=0
-    if levels.is_a?(Integer)
-      return level_up_ressources([levels])
-    else #an array of current hero levels
-      levels.each do |level|
-        gold +=r[level][:gold]
-        xp +=r[level][:xp]
-        dust +=r[level][:dust]
-      end
-    end
-    return [gold, xp, dust]
+    # Other variables:
+    #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
+    #@afk_gold: the displayed value by minute (include vip)
+    #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
+    #determined from stage progression, but can be set up directly for more precise results
   end
 
   def setup_constants
-    gold, xp, dust = level_up_ressources(@hero_level)
-    @_level_gold ||= gold
-    @_level_xp ||= xp
-    @_level_dust ||= dust
-
     @Cost={
-      level: {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust},
       "SI+10": {silver_e: 240},
       "SI+20": {gold_e: 240},
       "SI+30": {red_e: 300},
@@ -141,7 +123,6 @@ class Simulator
       "RC slot": { invigor: 5000},
     }
 
-    @Shop_emblem_discout ||=0.7
     @Shop ||={
       xp_h: { xp_h: 24, dia: -192, proba: 0.25},
       dust_h: {dust_h: 24, dia: -300},
@@ -150,8 +131,8 @@ class Simulator
       poe: { poe: 250, gold: -1125 },
       shards: { shards: 20, gold: -2000, max: 3 },
       cores: { cores: 10, dia: -200, max: 3 },
-      gold_e: { gold_e: 20, gold: 15600*@Shop_emblem_discout, proba: 0.25 },
-      silver_e: { silver_e: 30, gold: 14400*@Shop_emblem_discout, proba: 0.75 },
+      gold_e: { gold_e: 20, gold: 15600*@_shop_emblem_discout, proba: 0.25 },
+      silver_e: { silver_e: 30, gold: 14400*@_shop_emblem_discout, proba: 0.75 },
     }
 
     @StoreHero ||={
@@ -236,6 +217,7 @@ class Simulator
     @ressources={}
 
     setup_vars
+    get_progression
     setup_constants
     get_vip
     get_fos
@@ -297,7 +279,44 @@ class Simulator
     {}
   end
 
+  module LevelUp
+    def level_up_ressources(levels)
+      r=get_hero_level_stats
+      gold=xp=dust=0
+      if levels.is_a?(Integer)
+        return level_up_ressources([levels])
+      else #an array of current hero levels
+        levels.each do |level|
+          gold +=r[level][:gold]
+          xp +=r[level][:xp]
+          dust +=r[level][:dust]
+        end
+      end
+      return [gold, xp, dust]
+    end
+
+    def level_cost
+      gold, xp, dust = level_up_ressources(@hero_level)
+      @_level_gold ||= gold
+      @_level_xp ||= xp
+      @_level_dust ||= dust
+      {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust}
+    end
+
+    def ressources_cost
+      r=@Cost.dup
+      r[:level]=level_cost
+      r
+    end
+  end
+  include LevelUp
+
+
   module Setup
+    def get_progression #variables depending on progression
+      @_shop_emblem_discout ||=0.7 #todo adjust depending on stage progression
+    end
+
     def get_vip
       @_vip_solo_bounty=5
       @_vip_gold_mult=0.0
@@ -1293,7 +1312,7 @@ class Simulator
       #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
       nb_ascended=0
 
-      @Cost.each do |k,v|
+      ressources_cost.each do |k,v|
         res_buy, buy, remain=spending(v, total)
 
         if ["Ascended challenger celo", "Ascended 4F", "Ascended god"].include?(k.to_s)

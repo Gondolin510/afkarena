@@ -177,8 +177,6 @@ dim_points: 120.0 [100.0 (lab_store) + 20.0 (guild_store)]
 garrison_stone: 232.0 [66.0 (hero_store) + 100.0 (lab_store) + 66.0 (guild_store)]
 
 =============== 30 days previsions summary ===============
-level: 2.65 days (11.33 by month) {gold: 2.65 days, xp: 1.65 days, dust: 2.56 days} [monthly remains: 928393.36 xp + 9793.78 dust]
-
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
 SI+30: 89.14 days (0.34 by month)
@@ -199,6 +197,8 @@ Ascended challenger celo: 308.59 days (0.1 by month)
 Ascended 4F: 17.3 days (1.73 by month) [monthly remains: 4.43 fodder]
 Ascended god: 384.51 days (0.08 by month)
 RC slot: 7.72 days (3.89 by month)
+level: 2.65 days (11.33 by month) {gold: 2.65 days, xp: 1.65 days, dust: 2.56 days} [monthly remains: 928393.36 xp + 9793.78 dust]
+
 Max rc level: 3.14 days (9.55 by month)
 
 =============== Variables ===============
@@ -224,7 +224,6 @@ Max rc level: 3.14 days (9.55 by month)
 @tower_god: 200
 @misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :guild_coins=>30000, :blue_stones=>720}
 @nb_ff: 6
-@board_level: 8
 @tower_kt: 550
 @tower_4f: 280
 @shop_items: [:dust, :purple_stones, :poe, :shards]
@@ -247,12 +246,12 @@ Max rc level: 3.14 days (9.55 by month)
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@board_level: 8
 @labyrinth_mode: dismal
 @lab_flat_rewards: {:gold=>1465.8947368421054, :xp=>2507.684210526316}
 
 --------------- Fixed vars ---------------
-@Cost: {:level=>{:gold=>18796.969999999998, :xp=>135300.0, :dust=>25861}, :"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
-@Shop_emblem_discout: 0.7
+@Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.25}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}}
 @StoreHero: {:garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
 @StoreGuild: {:garrison=>{:garrison_stone=>66}, :t3=>47000, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
@@ -284,9 +283,7 @@ Max rc level: 3.14 days (9.55 by month)
 @Shop_refresh_cost: [100, 100, 200, 200]
 
 --------------- Internal vars ---------------
-@_level_gold: 18796.969999999998
-@_level_xp: 135300.0
-@_level_dust: 25861
+@_shop_emblem_discout: 0.7
 @_lab_flat_gold_h: 55
 @_lab_flat_xp_h: 6
 @_vip_solo_bounty: 8
@@ -328,4 +325,7 @@ Max rc level: 3.14 days (9.55 by month)
 @_raw_idle_hourly: {:gold=>26.65263157894737, :xp=>417.94736842105266, :dust=>48.650000000000006, :poe=>22.93, :twisted=>1.1163, :silver_e=>0.0833, :gold_e=>0.0417, :red_e=>0.01564, :dura_fragments=>0.267, :class_fragments=>0.3542, :mythic_gear=>0.00488, :t2=>0.00488, :invigor=>6.0, :t3=>0.0029761905, :t1_gear=>0.000925925925925926, :t2_gear=>0.000925925925925926, :shards=>1.25, :cores=>0.625}
 @_idle_hourly: {:gold=>147.9686842105263, :xp=>1519.7324561403511, :dust=>123.07166666666669, :poe=>22.93, :twisted=>1.1163, :silver_e=>0.0833, :gold_e=>0.0417, :red_e=>0.01564, :dura_fragments=>0.267, :class_fragments=>0.3542, :mythic_gear=>0.009271999999999999, :t2=>0.009271999999999999, :invigor=>18.0, :t3=>0.0029761905, :t1_gear=>0.002777777777777778, :t2_gear=>0.002777777777777778, :shards=>1.25, :cores=>0.625}
 @_average_vow_rewards: {:shards=>105.0, :cores=>50.0, :silver_e=>27.5, :gold_e=>20.0, :red_e=>10.0, :poe=>1500.0, :scrolls=>5.0, :stargazers=>7.5, :dust_h=>44.0}
+@_level_gold: 18796.969999999998
+@_level_xp: 135300.0
+@_level_dust: 25861
 
