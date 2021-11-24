@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: cursed realm, tower progression, more events?
-#things unlock
+#things unlock, lc
 
 require './value'
 require 'json'
@@ -17,9 +17,11 @@ class Simulator
     self.process if process
   end
 
+  #unlock: KT 2-12, guild, arena 2-28, board 3-12, fr 3-36, lc 5-40, bountiful trials 6-40, champions of esperia 8-20, lct+challenger 9-20, tr 12-40, 4F tower 14-40, stargazer+abex 16-01, oak inn 18-01
+
   module Setup
     def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
-      @stage ||= "38-01"
+      @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
 
       @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
@@ -33,23 +35,46 @@ class Simulator
       @tower_god ||= 300 #max fos at 300 for invigor
 
       # Daily shopping
-      @shop_items ||= %i(dust purple_stones poe shards) #+[{dust_h: 1}]
+      if @shop_items.nil?
+        @shop_items = [] #shop not open
+        @shop_items += %i(dust purple_stones) if @stage > "02-08"
+        @shop_items << :poe if @stage > "08-40" #is that correct?
+        @shop_items << :shards if @stage >= "22-01" #ditto
+        # or @shop_items = %i(dust purple_stones poe shards) +[{dust_h: 1}]
+        # todo: automatically update shopping list depending on stage progression
+      end
       @shop_refreshes ||= 2
 
       # Monthly store buys
       # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
-      @buy_hero ||=[:garrison]
-      @buy_guild ||= [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-      @buy_lab ||=[:garrison, :dim_exchange, nil, :dim_emblems]
-      @buy_challenger ||= []
+      if @buy_hero.nil?
+        @buy_hero =[] #not open
+        @buy_hero += [:garrison] if @stage > "01-12"
+      end
+      if @buy_guild.nil?
+        @buy_guild = [] #not open
+        @buy_guild += [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear] if @stage > "02-04"
+      end
+      if @buy_lab.nil?
+        @buy_lab = [] #not open
+        @buy_lab += [:garrison, :dim_exchange, nil, :dim_emblems] if @stage > "02-20"
+      end
+      #todo: automatically update stores shopping list depending on progression
+      if @buy_challenger.nil?
+        @buy_challenger = [] #not open
+        @buy_challenger += [] if @stage > "09-20" #open at 09-20
+      end
 
       # Summonings
-      @monthly_stargazing ||= 0 #number of stargazing done in a month
-      @monthly_tavern ||= 0 #number of tavern pulls
+      @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
+      @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
       @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
       @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
       # Friends and weekly mercs
-      @friends_mercs ||= 5
+      if @friends_mercs.nil?
+        @friends_mercs = 0
+        @friends_mercs = 5 if @stage > "06-40" #mercenaries open
+      end
       @friends_nb ||= 20
 
       #GH
@@ -90,11 +115,18 @@ class Simulator
         guild_coins: 1000 #assume top 500
       }
 
+      if @labyrinth_mode.nil?
+        @labyrinth_mode = :skip #not open
+        @labyrinth_mode = :easy if @stage >= "02-04"
+        @labyrinth_mode = :hard if @stage >= "09-24"
+        @labyrinth_mode = :dismal if @stage >= "27-01" #or dismal_skip_large
+      end
+      #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
+      
       #misc
       @board_level ||=8
       @dura_nb_selling ||=0
-      @labyrinth_mode = :dismal #:dismal_skip, :hard, :easy
-      #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
+
 
       # Other variables:
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
@@ -864,6 +896,7 @@ class Simulator
       lab_flat_rewards=@lab_flat_rewards.dup
       lab_flat_rewards[:gold] *= @_lab_gold_mult
       rewards=case mode
+        when :skip; return {} #skip the lab
         when :dismal
           [@Dismal_rewards, @Dismal_stage_chest_rewards, @Dismal_end_rewards, @lab_flat_rewards]
         when :dismal_skip_large
