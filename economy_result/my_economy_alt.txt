@@ -1,0 +1,369 @@
+=============== Fast forward value ===============
+186.39 dia [98.39 gold=5.62 dia + 540.75 xp=33.24 dia + 103.8 dust=37.4 dia + 35.17 poe=23.74 dia + 1.27 twisted=8.56 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.0 class_fragments=0.0 dia + 0.02 mythic_gear=9.03 dia + 0.02 t2=43.74 dia + 48.0 invigor=11.52 dia + 0.0 t3=0.0 dia + 0.0 t1_gear=0.0 dia + 0.0 t2_gear=0.0 dia + 0.08 shards=0.48 dia + 0.0 cores=0.0 dia]
+
+=============== Income ===============
+***** Base *****
+dia: 784.94 [143.42 (guild) + 75.0 (oak_inn) + 207.14 (quests) + 24.52 (merchants) + 94.85 (arena) + 200.0 (lab) + 20.0 (hero_trial) + 20.0 (guild_hero_trial)]
+gold: 9111.91 [1180.69 (idle) + 590.35 (ff) + 4396.02 (guild) + 1125.0 (oak_inn) + 222.75 (arena) + 511.2 (lc) + 719.23 (lab) + 233.33 (misty) + 133.33 (hero_trial)]
+gold_h: 67.71 [2.29 (quests) + 62.22 (lab) + 3.2 (hero_trial)]
+gold_hg: 2.0 [2.0 (quests)]
+-> Total gold: 10491.02K
+xp: 10254.14 [6489.02 (idle) + 3244.51 (ff) + 520.62 (lab)]
+xp_h: 32.44 [2.0 (quests) + 3.11 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)]
+-> Total xp: 14476.12K
+dust: 2481.48 [1245.6 (idle) + 622.8 (ff) + 375.0 (oak_inn) + 29.75 (arena) + 208.33 (coe)]
+dust_h: 30.07 [2.0 (quests) + 3.11 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_trial) + 2.93 (vow)]
+-> Total dust: 3524.5
+
+***** Upgrades *****
+silver_e: 4.83 [2.0 (idle) + 1.0 (ff) + 1.83 (vow)]
+gold_e: 2.83 [1.0 (idle) + 0.5 (ff) + 1.33 (vow)]
+red_e: 1.56 [0.38 (idle) + 0.19 (ff) + 0.33 (misty) + 0.67 (vow)]
+poe: 1033.13 [422.09 (idle) + 211.04 (ff) + 300.0 (misty) + 100.0 (vow)]
+twisted: 142.81 [15.21 (idle) + 7.6 (ff) + 106.67 (tr) + 13.33 (misty)]
+shards: 8.5 [1.0 (idle) + 0.5 (ff) + 7.0 (vow)]
+cores: 3.33 [3.33 (vow)]
+
+***** Gear *****
+t2: 0.39 [0.26 (idle) + 0.13 (ff)]
+mythic_gear: 0.33 [0.22 (idle) + 0.11 (ff)]
+
+***** Coins *****
+guild_coins: 7356.47 [6689.8 (guild) + 666.67 (lab)]
+lab_coins: 4542.53 [4542.53 (lab)]
+challenger_coins: 8990.0 [6768 (lct) + 2222.0 (lab)]
+
+***** Summons *****
+purple_stones: 16.63 [1.43 (quests) + 3.05 (merchants) + 0.15 (arena) + 8.0 (misty) + 4.0 (hero_trial)]
+blue_stones: 160.02 [22.5 (oak_inn) + 13.57 (quests) + 0.6 (arena) + 52.0 (misty) + 67.35 (regal) + 4.0 (hero_trial)]
+scrolls: 1.76 [1.43 (quests) + 0.33 (vow)]
+friend_summons: 2.71 [2.71 (friends)]
+stargazers: 0.5 [0.5 (vow)]
+
+***** Misc *****
+dura_fragments: 9.61 [6.41 (idle) + 3.2 (ff)]
+dura_tears: 0.43 [0.43 (quests)]
+invigor: 864.0 [576.0 (idle) + 288.0 (ff)]
+arena_tickets: 2.0 [2.0 (quests)]
+
+=> Total value: 10789.49 dia [2.0 arena_tickets=5.71 dia + 160.02 blue_stones=416.05 dia + 8990.0 challenger_coins=599.33 dia + 0.0 class_fragments=0.0 dia + 3.33 cores=38.05 dia + 784.94 dia=784.94 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 2481.48 dust=894.15 dia + 30.07 dust_h=375.83 dia + 2.71 friend_summons=651.43 dia + 9111.91 gold=520.26 dia + 2.83 gold_e=88.37 dia + 67.71 gold_h=135.42 dia + 2.0 gold_hg=4.0 dia + 7356.47 guild_coins=490.43 dia + 864.0 invigor=207.36 dia + 4542.53 lab_coins=478.16 dia + 0.33 mythic_gear=162.6 dia + 1033.13 poe=697.36 dia + 16.63 purple_stones=518.74 dia + 1.56 red_e=211.01 dia + 1.76 scrolls=422.86 dia + 8.5 shards=48.53 dia + 4.83 silver_e=92.7 dia + 0.5 stargazers=250.0 dia + 0.0 t1_gear=0.0 dia + 0.39 t2=787.28 dia + 0.0 t2_gear=0.0 dia + 0.0 t3=0.0 dia + 142.81 twisted=964.0 dia + 10254.14 xp=630.28 dia + 32.44 xp_h=259.51 dia]
+
+=============== Exchange ===============
+dia: -790.0 [-530 (ff_cost) + -260.0 (shop)]
+gold: -27825.0 [-27825.0 (shop)]
+dust: 1500 [1500 (shop)]
+gold_e: 15.0 [15.0 (shop)]
+poe: 750 [750 (shop)]
+shards: 60 [60 (shop)]
+purple_stones: 3.33 [3.33 (shop)]
+
+=============== Summons ===============
+***** Base *****
+dia: 1.5 [1.5 (stargaze)]
+gold_h: 2.47 [2.47 (stargaze)]
+-> Total gold: 48.48K
+xp_h: 1.1 [1.1 (stargaze)]
+-> Total xp: 142.65K
+dust: 11.72 [11.72 (tavern)]
+dust_h: 0.82 [0.82 (stargaze)]
+-> Total dust: 40.3
+
+***** Upgrades *****
+silver_e: 1.4 [1.4 (tavern)]
+gold_e: 0.55 [0.55 (tavern)]
+red_e: 0.09 [0.09 (tavern)]
+
+***** Gear *****
+mythic_gear: 0.0 [0.0 (stargaze)]
+
+***** Coins *****
+hero_coins: 375.02 [375.02 (tavern)]
+
+***** Hero_summons *****
+random_fodder: 0.62 [0.39 (stones) + 0.22 (tavern) + 0.0 (stargaze)]
+-> Atier: 0.4
+wishlist_atier: 0.14 [0.14 (tavern)]
+random_atier: 0.26 [0.23 (stones) + 0.02 (tavern) + 0.02 (stargaze)]
+-> God: 0.03
+choice_god: 0.01 [0.01 (stargaze)]
+random_god: 0.02 [0.01 (stones) + 0.01 (tavern)]
+
+***** Misc *****
+dura_fragments: 0.29 [0.29 (stargaze)]
+
+=============== Stores ===============
+guild_coins: -7356.47 [-7356.47 (guild_store)]
+lab_coins: -6000.0 [-6000.0 (lab_store)]
+hero_coins: -1760.0 [-1760.0 (hero_store)]
+garrison_stone: 7.73 [2.2 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
+dim_points: 4.0 [0.67 (guild_store) + 3.33 (lab_store)]
+dim_gear: 0.07 [0.07 (guild_store)]
+
+--------------- 30 days coin summary ---------------
+hero_coins: 11250.58 => buy 52800 [ 52800 (garrison)]
+lab_coins: 136276.0 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
+guild_coins: 220694.0 => buy 220694.0 [ 52800 (garrison) +  20000 (dim_exchange) +  67000 (2.21 x dim_gear)]
+challenger_coins: 269700.0 => 
+
+=============== Towers ===============
+
+=============== Full monthly ressources ===============
+***** Base *****
+dia: -106.67=23593.33-23700.0 [4302.72 (guild) + 2250.0 (oak_inn) + 6214.29 (quests) + 735.71 (merchants) + 2845.61 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 600.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + 45.0 (stargaze)]
+gold: -561392.82=273357.18-834750.0 [35420.77 (idle) + 17710.38 (ff) + 131880.6 (guild) + 33750.0 (oak_inn) + 6682.5 (arena) + 15336.0 (lc) + 21576.92 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -834750.0 (shop)]
+gold_h: 2105.38 [68.57 (quests) + 1866.67 (lab) + 96.0 (hero_trial) + 74.14 (stargaze)]
+gold_hg: 60.0 [60.0 (quests)]
+-> Total gold: -518565.03K
+xp: 307624.15 [194670.46 (idle) + 97335.23 (ff) + 15618.46 (lab)]
+xp_h: 1006.03 [60.0 (quests) + 93.33 (lab) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 32.88 (stargaze)]
+-> Total xp: 438562.94K
+dust: 119795.86 [37367.86 (idle) + 18683.93 (ff) + 11250.0 (oak_inn) + 892.5 (arena) + 6250.0 (coe) + 45000 (shop) + 351.58 (tavern)]
+dust_h: 926.71 [60.0 (quests) + 93.33 (lab) + 320.0 (misty) + 316.67 (coe) + 24.0 (hero_trial) + 88.0 (vow) + 24.71 (stargaze)]
+-> Total dust: 151943.86
+
+***** Upgrades *****
+silver_e: 186.96 [59.98 (idle) + 29.99 (ff) + 55.0 (vow) + 42.0 (tavern)]
+gold_e: 551.54 [30.02 (idle) + 15.01 (ff) + 40.0 (vow) + 450.0 (shop) + 16.5 (tavern)]
+red_e: 49.53 [11.26 (idle) + 5.63 (ff) + 10.0 (misty) + 20.0 (vow) + 2.64 (tavern)]
+poe: 53493.96 [12662.64 (idle) + 6331.32 (ff) + 9000.0 (misty) + 3000.0 (vow) + 22500 (shop)]
+twisted: 4284.44 [456.29 (idle) + 228.15 (ff) + 3200.0 (tr) + 400.0 (misty)]
+shards: 2055.0 [30.0 (idle) + 15.0 (ff) + 210.0 (vow) + 1800 (shop)]
+cores: 100.0 [100.0 (vow)]
+
+***** Gear *****
+t2: 11.81 [7.87 (idle) + 3.94 (ff)]
+mythic_gear: 9.88 [6.5 (idle) + 3.25 (ff) + 0.13 (stargaze)]
+
+***** Coins *****
+guild_coins: 0.0=220694.0-220694.0 [200694.0 (guild) + 20000.0 (lab) + -220694.0 (guild_store)]
+lab_coins: -43724.0=136276.0-180000.0 [136276.0 (lab) + -180000.0 (lab_store)]
+hero_coins: -41549.42=11250.58-52800.0 [11250.58 (tavern) + -52800.0 (hero_store)]
+challenger_coins: 269700.0 [203040 (lct) + 66660.0 (lab)]
+
+***** Summons *****
+purple_stones: 598.79 [42.86 (quests) + 91.43 (merchants) + 4.5 (arena) + 240.0 (misty) + 120.0 (hero_trial) + 100.0 (shop)]
+blue_stones: 4800.55 [675.0 (oak_inn) + 407.14 (quests) + 18.0 (arena) + 1560.0 (misty) + 2020.41 (regal) + 120.0 (hero_trial)]
+scrolls: 52.86 [42.86 (quests) + 10.0 (vow)]
+friend_summons: 81.43 [81.43 (friends)]
+stargazers: 15.0 [15.0 (vow)]
+
+***** Hero_summons *****
+random_fodder: 18.45 [11.68 (stones) + 6.62 (tavern) + 0.15 (stargaze)]
+-> Atier: 12.03
+wishlist_atier: 4.24 [4.24 (tavern)]
+random_atier: 7.79 [6.79 (stones) + 0.53 (tavern) + 0.48 (stargaze)]
+-> God: 1.04
+choice_god: 0.38 [0.38 (stargaze)]
+random_god: 0.67 [0.4 (stones) + 0.27 (tavern)]
+
+***** Dimensional *****
+garrison_stone: 232.0 [66.0 (hero_store) + 100.0 (lab_store) + 66.0 (guild_store)]
+dim_points: 120.0 [100.0 (lab_store) + 20.0 (guild_store)]
+dim_gear: 2.21 [2.21 (guild_store)]
+
+***** Misc *****
+dura_fragments: 296.99 [192.24 (idle) + 96.12 (ff) + 8.63 (stargaze)]
+dura_tears: 12.86 [12.86 (quests)]
+invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]
+arena_tickets: 60.0 [60.0 (quests)]
+
+=============== 30 days previsions summary ===============
+level: Infinity days (0.0 by month) {gold: -0.15 days, xp: 0.51 days, dust: 31.59 days} [monthly remains: -518565.03 gold + 438562.94 xp + 151943.86 dust]
+-> Level cost: 58254.85 dia / 58367.51 dia [2510.99 gold=143.37 dia / 128.01 gold_h=256.02 dia + 7460.0 xp=57.32 xp_h=458.53 dia + 160000 dust=4612.24 dust_h=57652.95 dia
+
+SI+10: 38.51 days (0.78 by month)
+SI+20: 13.05 days (2.3 by month)
+SI+30: 181.69 days (0.17 by month)
+
+e30: 54.74 days (0.55 by month)
+e30 to e41: 495.0 days (0.06 by month)
+e30 to e60: 1350.0 days (0.02 by month)
+e30 to e65: 1800.0 days (0.02 by month)
+
+tree level: 5.6 days (5.36 by month)
+mythic furn: 4.13 days (7.26 by month)
+mythic furn (with cards): 3.25 days (9.24 by month)
+9F (with cards): 93.66 days (0.32 by month)
+
+Challenger celo: 27.81 days (1.08 by month)
+Ascended challenger celo: 389.32 days (0.08 by month)
+
+Ascended 4F: 19.95 days (1.5 by month) {atier: 19.95 days, fodder: 16.26 days} [monthly remains: 3.42 fodder]
+Ascended god: 402.78 days (0.07 by month)
+RC slot: 5.79 days (5.18 by month)
+Max rc level: 3.63 days (8.28 by month)
+
+=============== Variables ===============
+--------------- Setup vars: ---------------
+@hero_level: [220, 200, 200, 200, 200]
+@stage: 22-02
+@afk_xp: 2820
+@afk_gold: 425
+@player_level: 102
+@vip: 5
+@subscription: true
+@tr_twisted: 160
+@tr_poe: 0
+@tr_guild: {}
+@gh_team_wrizz_gold: 561
+@gh_team_soren_gold: 559
+@gh_team_wrizz_coin: 806
+@gh_wrizz_chests: 16
+@tower_kt: 245
+@tower_4f: 40
+@arena_daily_dia: 36
+@lct_coins: 282
+@lc_rewards: {:gold=>7668}
+@board_level: 6
+@hero_trial_guild_rewards: {:dia=>300}
+@shop_items: [:dust, :purple_stones, :poe, :shards, :gold_e]
+@buy_hero: []
+@buy_lab: [:dim_exchange, nil, :arthur]
+@buy_guild: [:dim_exchange]
+@nb_ff: 6
+@tower_god: 300
+@monthly_stargazing: 0
+@monthly_tavern: 0
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
+@friends_nb: 20
+@friends_mercs: 5
+@gh_team_soren_coin: 806
+@gh_soren_chests: 16
+@gh_wrizz_gold: 1044
+@gh_soren_gold: 1044
+@gh_soren_freq: 0.66
+@cursed_realm: {}
+@arena_weekly_dia: 360
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>360, :purple_stones=>60, :red_e=>10}
+@dura_nb_selling: 0
+@noble_regal: {:blue_stones=>3300}
+@noble_twisted: {:xp_h=>956}
+@noble_coe: {:dust=>7500, :dust_h=>380}
+@merchant_daily: {}
+@merchant_weekly: {}
+@merchant_monthly: {}
+@monthly_card: {}
+@deluxe_monthly_card: {}
+@shop_refreshes: 2
+@garrison: true
+@dim_exchange: true
+@store_hero_items: [:garrison, nil]
+@store_guild_items: [:garrison, :dim_exchange, nil, nil, :dim_gear]
+@store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]
+@store_challenger_items: [nil]
+@labyrinth_mode: hard
+@tower_kt_progression: 0
+@tower_4f_progression: 0
+@tower_god_progression: 0
+@lab_flat_rewards: {:gold=>1078.8461538461538, :xp=>780.9230769230768}
+
+--------------- Fixed vars ---------------
+@Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
+@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
+@StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
+@StoreGuild: {:t1=>33879, :t2=>40875, :t3=>{:cost=>47000, :t3=>1, :max=>2}, :random_mythic_gear=>31350, :mythic_gear=>84260, :dim_gear=>67000, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:dim_points=>20}}
+@StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>3}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}}
+@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :shard=>{:cost=>10000, :shards=>30}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :ldv=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}, :garrison=>{:cost=>133300, :garrison_stone=>50}, :dim_exchange=>{:cost=>99997.5, :dim_points=>7.5}}
+@Merchant_daily: {:dia=>20, :purple_stones=>2}
+@Merchant_weekly: {:dia=>20, :purple_stones=>5}
+@Merchant_monthly: {:dia=>50, :purple_stones=>10}
+@Quest_daily: {:gold_hg=>2, :blue_stones=>5, :arena_tickets=>2, :xp_h=>2, :scrolls=>1, :dia=>100}
+@Quest_weekly: {:gold_h=>16, :blue_stones=>60, :purple_stones=>10, :dia=>400, :scrolls=>3, :dura_tears=>3}
+@Dismal_rewards: {:dia=>300, :lab_coins=>4900, :guild_coins=>1000, :challenger_coins=>3333}
+@Lab_hard_rewards: {:dia=>300, :lab_coins=>4867, :guild_coins=>1000, :challenger_coins=>3333}
+@Lab_easy_rewards: {:dia=>300, :lab_coins=>3867}
+@Dismal_stage_chest_rewards: {:gold_h=>79, :xp_h=>39.5, :dust_h=>39.5}
+@Dismal_stage_chest_skip_rewards: {:gold_h=>59, :xp_h=>29.5, :dust_h=>29.5}
+@Dismal_end_rewards: {:gold_h=>98, :xp_h=>7.0, :dust_h=>7.0, :shards=>61, :cores=>41}
+@Lab_end_rewards: {:gold_h=>93.33333333333333, :xp_h=>4.666666666666667, :dust_h=>4.666666666666667}
+@GH_chest_dia: 2.7
+@GH_chest_guild: 65
+@Oak_amount: {:blue_stones=>30, :dia=>100, :dust=>500, :gold=>1500}
+@Oak_quantity: 3
+@Oak_proba: 0.25
+@Misty_base: {:gold=>7000, :dust_h=>224, :xp_h=>144, :blue_stones=>1200, :purple_stones=>180, :poe=>9000}
+@Noble_regal_days: 49
+@Noble_twisted_days: 44
+@Noble_coe_days: 36
+@Monthly_vows: 2
+@Monthly_hero_trial: 2
+@Hero_trial_rewards: {:gold=>2000, :dia=>300, :dust_h=>12, :xp_h=>12, :gold_h=>48, :blue_stones=>60, :purple_stones=>60}
+@Dura_nb: 7.0
+@FF_cost: [0, 50, 80, 100, 100, 200, 300, 400]
+@Shop_refresh_cost: [100, 100, 200, 200]
+
+--------------- Internal vars ---------------
+@_shop_discount: 1
+@_unlock_ff: true
+@_unlock_guild: true
+@_unlock_arena: true
+@_unlock_board: true
+@_unlock_lc: true
+@_unlock_trials: true
+@_unlock_lct: true
+@_unlock_tr: true
+@_unlock_oak_inn: true
+@_unlock_misty: true
+@_unlock_mercs: true
+@_unlock_shop: true
+@_unlock_shop_legendary: true
+@_unlock_shop_mythic: true
+@_unlock_shop_t1: true
+@_unlock_store_hero: true
+@_unlock_store_guild: true
+@_unlock_store_lab: true
+@_unlock_store_challenger: true
+@_unlock_tower_kt: true
+@_unlock_tower_4f: true
+@_lab_flat_gold_h: 55
+@_lab_flat_xp_h: 6
+@_vip_solo_bounty: 7
+@_vip_gold_mult: 0.3
+@_vip_max_ff: 3
+@_vip_extra_arena_fight: 3
+@_vip_xp_mult: 0.3
+@_fos_base_gold: 145
+@_fos_base_xp: 554
+@_fos_base_dust: 80
+@_fos_lab_mult: 0.3
+@_fos_guild_mult: 0.44999999999999996
+@_fos_mythic_mult: 0.8999999999999999
+@_fos_gold_mult: 0.8
+@_fos_xp_mult: 0.5
+@_fos_dust_mult: 0.4
+@_fos_t1_gear_bonus: 0
+@_fos_t2_gear_bonus: 0
+@_fos_invigor_bonus: 3
+@_fos_daily_quest: {:dia=>50, :dust_h=>2}
+@_fos_weekly_quest: {}
+@_sub_lab_mult: 0.1
+@_sub_guild_mult: 0.1
+@_sub_xp_mult: 0.1
+@_sub_gold_mult: 0.1
+@_sub_extra_team_bounty: 1
+@_gold_mult: 2.2
+@_xp_mult: 1.9000000000000001
+@_dust_mult: 1.4
+@_lab_mult: 1.4000000000000001
+@_lab_gold_mult: 1.0
+@_guild_mult: 1.55
+@_mythic_mult: 1.9
+@_solo_bounties: 7
+@_team_bounties: 2
+@_nb_arena_fight: 5
+@_nb_guild_fight: 2
+@_raw_idle_hourly: {:gold=>19.615384615384613, :xp=>130.15384615384613, :dust=>34.690333333333335, :poe=>17.586999999999996, :twisted=>0.6337366666666666, :silver_e=>0.0833, :gold_e=>0.0417, :red_e=>0.01564, :dura_fragments=>0.267, :class_fragments=>0.0, :mythic_gear=>0.0047543333333333335, :t2=>0.005755000000000001, :invigor=>6.0, :t3=>0.0, :t1_gear=>0.000925925925925926, :t2_gear=>0.000925925925925926, :shards=>0.041666666666666664, :cores=>0.0}
+@_idle_hourly: {:gold=>49.19551282051282, :xp=>270.375641025641, :dust=>51.8998, :poe=>17.586999999999996, :twisted=>0.6337366666666666, :silver_e=>0.0833, :gold_e=>0.0417, :red_e=>0.01564, :dura_fragments=>0.267, :class_fragments=>0.0, :mythic_gear=>0.009033233333333333, :t2=>0.0109345, :invigor=>24.0, :t3=>0.0, :t1_gear=>0.0, :t2_gear=>0.0, :shards=>0.041666666666666664, :cores=>0.0}
+@_average_vow_rewards: {:shards=>105.0, :cores=>50.0, :silver_e=>27.5, :gold_e=>20.0, :red_e=>10.0, :poe=>1500.0, :scrolls=>5.0, :stargazers=>7.5, :dust_h=>44.0}
+@_kt_floor: {:gold=>0, :dia=>0.0, :dust=>0, :purple=>0.0, :blue=>0.0}
+@_kt_quest: {:dia=>8, :shards=>20}
+@_tower_kt_ressources: {:gold=>0, :dia=>8.0, :dust=>0, :purple=>0.0, :blue=>0.0, :shards=>20}
+@_4f_floor: {}
+@_4f_quest: {}
+@_tower_4f_ressources: {}
+@_tower_god_ressources: {}
+@_level_gold: 2510.994
+@_level_xp: 7460.0
+@_level_dust: 160000
+
