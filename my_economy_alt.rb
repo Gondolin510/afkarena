@@ -30,7 +30,7 @@ s=Simulator.new do
   @board_level =6
   @hero_trial_guild_rewards ={ dia: 200+100 }
 
-  @shop_items = %i(dust purple_stones poe)
+  @shop_items = %i(dust purple_stones poe shards gold_e)
   @buy_hero =[]
   @buy_lab = [:dim_exchange, nil, :arthur]
   @buy_guild = [:dim_exchange]

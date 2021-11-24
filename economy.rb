@@ -173,8 +173,8 @@ class Simulator
         poe: { poe: 250, gold: -1125 },
         shards: { shards: 20, gold: -2000, max: 3 },
         cores: { cores: 10, dia: -200, max: 3 },
-        gold_e: { gold_e: 20, gold: 15600*@_shop_discount, proba: 0.25 },
-        silver_e: { silver_e: 30, gold: 14400*@_shop_discount, proba: 0.75 },
+        gold_e: { gold_e: 20, gold: -15600*@_shop_discount, proba: 0.25 },
+        silver_e: { silver_e: 30, gold: -14400*@_shop_discount, proba: 0.75 },
         mythic_gear: {mythic_gear: 1, dia: -3168},  #3564 dia at earlier chapters
         reset_scroll: {reset_scrolls: 1, gold: -6000},
         fodder: {random_fodder: 1, dia: -2268},#9 blue cards
@@ -1402,6 +1402,7 @@ class Simulator
         [k, res*1.0/v]
       end.to_h
       min_buy=res_buy.values.min #so time=1/min_buy
+      min_buy=[min_buy, 0].max
       remain=cost.map do |k,v|
         [k, (ressources[k]||0)-v*min_buy]
       end.to_h
@@ -1431,7 +1432,6 @@ class Simulator
         shop_refreshes=@Shop_refresh_cost.length
       end
       refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+@Shop_refresh_cost[i]}
-
 
       nb_shop=1+shop_refreshes
       shop={dia: -refresh_cost, gold: 0}
