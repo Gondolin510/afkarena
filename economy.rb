@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
 #ff max, lab flat rewards, beginner/whale samples
-#paid cards
 
 require './value'
 require 'json'
@@ -654,6 +653,7 @@ class Simulator
       #todo adjust depending on stage progression
 
       # stargazer+abex 16-01
+      @_unlock_ff=true if @stage > "03-36" #not used
       @_unlock_guild=true if @stage >"02-20"
       @_unlock_arena=true if @stage >"02-28"
       @_unlock_board=true if @stage >"03-12"
@@ -663,16 +663,14 @@ class Simulator
       @_unlock_tr=true if @stage >"12-40"
       @_unlock_oak_inn=true if @stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
       @_unlock_misty=true if @stage >"16-40"
-
-      @_max_nb_ff=0 #no ff at first (this is not used, just for information)
-      @_max_nb_ff=6 if @stage > "03-36"
-      #todo: update ff number depending on stage progression
     end
 
     def get_vip
       @_vip_solo_bounty=5
       @_vip_gold_mult=0.0
+      @_vip_max_ff=1 #not used, just for info
       if @vip >= 1
+        @_vip_max_ff=2
         @_vip_gold_mult=0.05
         @_vip_extra_arena_fight=1
       end
@@ -683,6 +681,7 @@ class Simulator
       if @vip >= 3
         @_vip_gold_mult=0.2
         @_vip_extra_arena_fight=2
+        @_vip_max_ff=3
       end
       if @vip >= 4
         @_vip_gold_mult=0.25
@@ -696,6 +695,7 @@ class Simulator
         @_vip_gold_mult=0.5
         @_vip_extra_guild_fight=1
         @_vip_extra_team_bounty=1
+        @_vip_max_ff=5
       end
       if @vip >= 7
         @_vip_gold_mult=0.55
@@ -708,6 +708,7 @@ class Simulator
       if @vip >= 9
         @_vip_gold_mult=0.9
         @_vip_extra_arena_fight=5
+        @_vip_max_ff=7
       end
       if @vip >=  10
         @_vip_gold_mult=1.0
@@ -722,6 +723,7 @@ class Simulator
       if @vip >=  12
         @_vip_gold_mult=1.5
         @_vip_lab_gold_mult=1.0
+        @_vip_max_ff=8
       end
       if @vip >=  13
         @_vip_gold_mult=1.6
@@ -735,6 +737,7 @@ class Simulator
       end
       if @vip >=  15
         @_vip_gold_mult=2.0
+        @_vip_max_ff=12
       end
       if @vip >=  16
         @_vip_gold_mult=2.3
