@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
-#lab flat rewards, beginner/whale samples
+#beginner/whale samples
 #guild gold rewards
 
 require './value'
@@ -272,8 +272,9 @@ class Simulator
       #We have less end rewards in standard lab, apart from the 6h gold
       #chest we only have 2 items rather than 3, so multiply the rewards by 2/3
       @Lab_end_rewards ||= { gold_h: 14*6 + 7*2*2.0/3, xp_h: 3.5*2*2.0/3, dust_h: 3.5*2*2.0/3 }
-      @_lab_flat_gold_h=55 #approximations to recover the flat rewards
-      @_lab_flat_xp_h=6
+      #approximations to recover the flat rewards
+      @_lab_flat_gold_h ||=55 #new approx: 56.8
+      @_lab_flat_xp_h ||=6 #new approx: 5.785
 
       @GH_chest_dia ||=2.7
       @GH_chest_guild ||=65

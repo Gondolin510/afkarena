@@ -30,7 +30,13 @@ s=Simulator.new do
 
   @misty = get_misty(guild_twisted: :guild)
 end
-s.summary
-# p s.real_afk_gold, s.real_afk_xp
-# require 'pry'; binding.pry
-s.show_variables(verbose: true)
+
+if __FILE__ == $0
+  if ARGV.first == "--debug"
+    require "pry"
+    binding.pry
+  else
+    s.summary
+    s.show_variables(verbose: true)
+  end
+end
