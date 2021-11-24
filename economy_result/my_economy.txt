@@ -115,10 +115,10 @@ challenger_coins: 340260.0 =>
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 13573.9 [5062.5 (board) + 8470.98 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -8025.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 108073.24 [106537.45 (idle) + 53268.73 (ff) + 11753.75 (board) + 334780.2 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 29317.89 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 2059.71 (dura_fragments_sell)]
+gold: 120073.24 [106537.45 (idle) + 53268.73 (ff) + 11753.75 (board) + 334780.2 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 12000.0 (lc) + 29317.89 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 2059.71 (dura_fragments_sell)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (dismal) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
--> Total gold: 213423.39K
+-> Total gold: 225423.39K
 xp: 1691464.74 [1094207.37 (idle) + 547103.68 (ff) + 50153.68 (dismal)]
 xp_h: 1842.7 [60.0 (quests) + 930.0 (dismal) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 32.88 (stargaze)]
 -> Total xp: 2461615.33K
@@ -179,7 +179,7 @@ invigor: 19440.0 [12960.0 (idle) + 6480.0 (ff)]
 arena_tickets: 60.0 [60.0 (quests)]
 
 =============== 30 days previsions summary ===============
-level: 2.64 days (11.35 by month) {gold: 2.64 days, xp: 1.65 days, dust: 2.56 days} [monthly remains: 925400.45 xp + 9221.72 dust]
+level: 2.56 days (11.71 by month) {gold: 2.5 days, xp: 1.65 days, dust: 2.56 days} [monthly remains: 5297.23 gold + 877154.13 xp]
 -> Level cost: 10307.71 dia / 10644.97 dia [18796.97 gold=1073.25 dia / 705.26 gold_h=1410.52 dia + 135300.0 xp=323.72 xp_h=2589.8 dia + 25861 dust=531.57 dust_h=6644.66 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -247,11 +247,12 @@ Max rc level: 3.14 days (9.55 by month)
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
 @lct_coins: 380
+@lc_rewards: {:gold=>6000}
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
-@board_level: 8
 @labyrinth_mode: dismal
+@board_level: 8
 @lab_flat_rewards: {:gold=>1465.8947368421054, :xp=>2507.684210526316}
 
 --------------- Fixed vars ---------------
@@ -293,6 +294,14 @@ Max rc level: 3.14 days (9.55 by month)
 @_shop_emblem_discout: 0.7
 @_lab_flat_gold_h: 55
 @_lab_flat_xp_h: 6
+@_unlock_guild: true
+@_unlock_arena: true
+@_unlock_board: true
+@_unlock_lc: true
+@_unlock_trials: true
+@_unlock_lct: true
+@_unlock_tr: true
+@_unlock_oak_inn: true
 @_vip_solo_bounty: 8
 @_vip_gold_mult: 0.9
 @_vip_extra_arena_fight: 5

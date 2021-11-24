@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 #TODO: cursed realm, tower progression, more events?
-#things unlock, lc
 
 require './value'
 require 'json'
@@ -17,17 +16,20 @@ class Simulator
     self.process if process
   end
 
-  #unlock: KT 2-12, guild, arena 2-28, board 3-12, fr 3-36, lc 5-40, bountiful trials 6-40, champions of esperia 8-20, lct+challenger 9-20, tr 12-40, 4F tower 14-40, stargazer+abex 16-01, oak inn 18-01
-
   module Setup
     def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
       @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
 
       @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
-      @nb_ff ||=6 #ff by day
       @vip ||=10 #vip level
       @subscription ||=false if @subscription.nil?
+
+      if @nb_ff.nil?
+        @nb_ff=0 #no ff at first
+        @nb_ff=6 if @stage > "03-36"
+        #todo: update ff number depending on stage progression
+      end
 
       # Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -99,6 +101,7 @@ class Simulator
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
       @arena_weekly_dia ||=@arena_daily_dia * 10
       @lct_coins ||=380 #top 20. Hourly coins: 400-rank
+      @lc_rewards = {gold: 6*1000} #we win all wagers
 
       #misty valley
       @misty ||= get_misty
@@ -106,8 +109,14 @@ class Simulator
       #noble society, by default paid is false
       #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
       @noble_regal ||= get_regal
-      @noble_twisted ||= get_twisted_bounties(:xp)
-      @noble_coe ||= get_coe(:dust)
+      if @noble_twisted.nil?
+        @noble_twisted={} #twisted bounties not open
+        @noble_twisted = get_twisted_bounties(:xp) if @stage > "12-40"
+      end
+      if @noble_coe.nil?
+        @noble_coe={} #coe not open
+        @noble_coe = get_coe(:dust) if @stage > "08-20"
+      end
 
       #average guild hera trial rewards
       @hero_trial_guild_rewards ||={
@@ -250,6 +259,7 @@ class Simulator
       setup_vars
       get_progression
       setup_constants
+      get_unlock
       get_vip
       get_fos
       get_subscription
@@ -454,22 +464,23 @@ class Simulator
     def get_income
       @ressources[:idle]=idle
       @ressources[:ff]=ff
-      @ressources[:board]=bounties
-      @ressources[:guild]=guild
-      @ressources[:oak_inn]=oak_inn
-      @ressources[:tr]=tr
+      @ressources[:board]=bounties if @_unlock_board
+      @ressources[:guild]=guild if @_unlock_guild
+      @ressources[:oak_inn]=oak_inn if @_unlock_oak_inn
+      @ressources[:tr]=tr if @_unlock_tr
       @ressources[:quests]=quests
       @ressources[:merchants]=merchants
       @ressources[:friends]=friends
-      @ressources[:arena]=arena
-      @ressources[:lct]=lct
+      @ressources[:arena]=arena if @_unlock_arena
+      @ressources[:lct]=lct if @_unlock_lct
+      @ressources[:lc]=lc if @_unlock_lc
       @ressources[:dismal]=labyrinth
       @ressources[:misty]=misty
       @ressources[:regal]=regal
       @ressources[:tr_bounties]=twisted_bounties
       @ressources[:coe]=coe
-      @ressources[:hero_trial]=hero_trial
-      @ressources[:guild_hero_trial]=guild_hero_trial
+      @ressources[:hero_trial]=hero_trial if @_unlock_trials
+      @ressources[:guild_hero_trial]=guild_hero_trial if @_unlock_trials
       @ressources[:vow]=vow
       @ressources.merge!(custom_income)
     end
@@ -523,6 +534,18 @@ class Simulator
   module SetupHelpers
     def get_progression #variables depending on progression
       @_shop_emblem_discout ||=0.7 #todo adjust depending on stage progression
+    end
+
+    def get_unlock
+      # stargazer+abex 16-01
+      @_unlock_guild=true if @stage >"02-20"
+      @_unlock_arena=true if @stage >"02-28"
+      @_unlock_board=true if @stage >"03-12"
+      @_unlock_lc=true if @stage >"05-40"
+      @_unlock_trials=true if @stage >"06-40"
+      @_unlock_lct=true if @stage >"09-20"
+      @_unlock_tr=true if @stage >"12-40"
+      @_unlock_oak_inn=true if @stage >"17-40"
     end
 
     def get_vip
@@ -889,6 +912,10 @@ class Simulator
       {challenger_coins: @lct_coins*24}
     end
 
+    def lc #open every two weeks
+      mult_hash(@lc_rewards, 1.0/15)
+    end
+
     def labyrinth(mode: @labyrinth_mode)
       if @lab_flat_rewards.nil?
         @lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
@@ -1057,6 +1084,7 @@ class Simulator
     end
 
     def tower_progression
+      #unlock: KT 2-12, 4F tower 14-40, 
       #Multis: 700 KT, 450 4F, 350 celestial
 
       # for 4f towers, between 240 and 360:
