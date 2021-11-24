@@ -4,7 +4,8 @@ module Helpers
   extend self
   @@rounding=2
   def round(p)
-    p.round(@@rounding)
+    r=p.round(@@rounding)
+    r == r.to_i ? r.to_i : r rescue r #coerce to int if possible
   end
   def percent(r)
     "#{(r*100).round}%"

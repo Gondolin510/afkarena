@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
-#percentage
+#Total xp/gold/dust: percentage
 
 require './value'
 require 'json'
@@ -1321,7 +1321,7 @@ class Simulator
         # quest: 400 dia every x20, 1000 shards every 50 then 500 cores every x50
         @_kt_quest={dia: 400/20, shards: 1000/50}
         if level>=500 #todo: find the breakpoint
-          @_kt_quest={dia: 400/20, cores: 500/50}
+          @_kt_quest={dia: 400/20, cores: 500/50} #todo or 400 dia every 10?
         end
       end
       sum_hash(@_kt_floor, @_kt_quest)
@@ -1730,14 +1730,24 @@ class Simulator
               sum+=value
               pos_sum+=value if value>0
               neg_sum+=value if value<0
+            end
+          end #we need to tally the sums first
+          ressources.each do |k,v|
+            if v.key?(type)
+              value=v[type]
+              per=0
+              if value>0
+                per=value/pos_sum
+                oo = o.empty? ? "" : " + "
+                oo<<"#{round(value)}"
+              elsif value<0
+                per=value/neg_sum
+                oo = o.empty? ? "" : " - "
+                oo<<"#{round(value.abs)}"
+              end
               unless value == 0 or value == 0.0
-                oo="#{round(v[type])}"
-                if percent
-                  oo<<" (#{k} #{percent(v[type])})" 
-                else
-                  oo<<" (#{k})" 
-                end
-                o.push(oo) 
+                oo << (percent ? " (#{k} #{percent(per)})" : " (#{k})" )
+                o.push(oo)
               end
             end
           end
@@ -1757,7 +1767,7 @@ class Simulator
             if plusminuscondition
               s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
             end
-            s << " [#{o.join(' + ')}]\n"
+            s << " [#{o.join}]\n"
           end
 
           if total
@@ -1908,7 +1918,7 @@ class Simulator
           end
         end
       end
-      do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30, plusminus: true)
+      do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30, plusminus: true, percent: true)
       previsions_summary
     end
 
