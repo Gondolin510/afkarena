@@ -226,6 +226,7 @@ class Simulator
       @StoreChallenger={
         god: { cost: 250000, choice_god: 1},
         #they are replaced by shards after 5*
+        shard: { cost: 10000, shards: 30},
         atier: {cost: 150000, choice_atier: 1},
         flora: 150000,
         merlin: 250000, ldv: 250000,
