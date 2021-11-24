@@ -109,8 +109,11 @@ class Simulator
 
       ### Cards
       @monthly_card={} #f2p
-      #eg: @monthly_card=get_monthly_card(:dust)
-      @deluxe_monthly_card={}
+      #@monthly_card=get_monthly_card #default to dust
+      #@monthly_card=get_monthly_card(:shard)
+      @deluxe_monthly_card={} #f2p
+      # @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
+      # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted)
 
       ### Daily shopping
       if @shop_items.nil?
@@ -532,27 +535,18 @@ class Simulator
       when :xp; {xp_h: 2*6}
       when :dust; {dust_h: 2*6}
       end
-      nb=2
-      nb=3 if @vip >= 6 #level 2
-      nb=4 if @vip >= 12 #level 3
+      nb=3 #level 1
+      nb=4 if @vip >= 12 #level 2
       sum_hash({dia: 300/30+100}, mult_hash(purple, nb))
     end
     def get_deluxe_monthly_card(red: :red_e, purple: :core)
-      level=1
-      level=2 if @vip >= 6
-      level=3 if @vip >= 8
-      level=4 if @vip >= 9
-      level=5 if @vip >= 12
-      level=6 if @vip >= 14
-
       red=case red
       when :silver_e; {silver_e: 8}
       when :gold_e; {gold_e: 5}
       when :red_e; {red_e: 2}
       end
-      nb_red=0
-      nb_red=1 if level >=4
-      nb_red=2 if level >=6
+      nb_red=1 #level 1
+      nb_red=2 if level @vip >= 14 #level 3
 
       purple=case purple
       when :poe; {poe: 240}
@@ -560,8 +554,8 @@ class Simulator
       when :core; {cores: 12}
       when :blue_stone; level <=2 ? {blue_stones: 30} : {blue_stones: 60}
       end
-      nb_purple=1
-      nb_purple=5 if level >=5
+      nb_purple=1 #level 1
+      nb_purple=2 if @vip >= 12 #level 2
 
       sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
     end
