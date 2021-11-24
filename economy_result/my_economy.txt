@@ -254,10 +254,12 @@ Max rc level: 3.17 days (9.45 by month)
 @deluxe_monthly_card: {}
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
-@buy_hero: [:garrison]
-@buy_guild: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
-@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
-@buy_challenger: []
+@garrison: true
+@dim_exchange: true
+@store_hero_items: [:garrison, nil]
+@store_guild_items: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]
+@store_challenger_items: [nil]
 @labyrinth_mode: dismal
 @lab_flat_rewards: {:gold=>1465.8947368421054, :xp=>2507.684210526316}
 
@@ -265,9 +267,9 @@ Max rc level: 3.17 days (9.45 by month)
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
 @StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
-@StoreGuild: {:garrison=>{:garrison_stone=>66}, :t1=>33879, :t2=>40875, :t3=>{:t3=>1}, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
+@StoreGuild: {:t1=>33879, :t2=>40875, :t3=>{:t3=>1}, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_gear=>67000, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:dim_points=>20}}
 @StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>3}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}}
-@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :ldv=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}}
+@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :ldv=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}, :garrison=>{:cost=>133300, :garrison_stone=>50}, :dim_exchange=>{:cost=>99997.5, :dim_points=>7.5}}
 @Merchant_daily: {:dia=>20, :purple_stones=>2}
 @Merchant_weekly: {:dia=>20, :purple_stones=>5}
 @Merchant_monthly: {:dia=>50, :purple_stones=>10}
@@ -308,6 +310,17 @@ Max rc level: 3.17 days (9.45 by month)
 @_unlock_tr: true
 @_unlock_oak_inn: true
 @_unlock_misty: true
+@_unlock_mercs: true
+@_unlock_shop: true
+@_unlock_shop_legendary: true
+@_unlock_shop_mythic: true
+@_unlock_shop_t1: true
+@_unlock_shop_t2: true
+@_unlock_shop_t3: true
+@_unlock_store_hero: true
+@_unlock_store_guild: true
+@_unlock_store_lab: true
+@_unlock_store_challenger: true
 @_lab_flat_gold_h: 55
 @_lab_flat_xp_h: 6
 @_vip_solo_bounty: 8

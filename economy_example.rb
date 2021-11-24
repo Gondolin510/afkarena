@@ -50,10 +50,10 @@ Simulator.new do
   @board_level =5
   @hero_trial_guild_rewards = { dia: 200+100 }
 
-  @shop_items = %i(dust purple_stones)
+  @shop_items = %i(dust purple_stones) #don't buy poe
   @shop_refreshes = 0
 
-  #we don't buy anything in the guild store
+  #we don't want to buy anything in the guild store
   @store_guild_items = []
 end.summary
 
@@ -88,12 +88,12 @@ Simulator.new do
   @monthly_card=get_monthly_card #default to dust
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
-  @shop_items = %i(dust purple_stones poe shards dust_h gold_e)
+  @shop_items = get_shop_items(:dust_h, :gold_e)
   @garrison=false #we have all dims
-  @dim_exchange=true #there is a dim exchange
-  @store_hero_items = get_store_hero_items + [nil, {twisted: :max}]
-  @store_lab = get_store_lab_items + [{twisted: :max}, :red_e]
-  @store_challenger = [:red_e]
+  @dim_exchange=false #there is no dim exchange
+  @store_hero_items = get_store_hero_items({twisted: :max})
+  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: :max})
+  @store_challenger_items = [{red_e: :max}]
 end.summary
 
 puts "==================== Example of detailed customisation ===================="

@@ -21,6 +21,7 @@ class Simulator
 
       ### core settings
       @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
+
       @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
@@ -115,8 +116,8 @@ class Simulator
       @shop_refreshes ||= 2
 
       ### Monthly store buys
-      @garrison ||= true #used by get_store_*_items, by default we only use hero+guild+lab for exchange
-      @dim_exchange ||= true #used by get_store_*_items, by default we only use guild+lab for exchange
+      @garrison = true if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
+      @dim_exchange = true if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
       @store_hero_items ||= get_store_hero_items
       @store_guild_items ||= get_store_guild_items
       @store_lab_items ||= get_store_lab_items
@@ -560,42 +561,57 @@ class Simulator
       sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
     end
 
-    def get_shop_items #todo: improve this function
+    def get_shop_items(*extra) #todo: improve this function
+      get_progression
       return [] unless @_unlock_shop
-      r = %i(dust purple_stones) if @stage > "02-08"
+      r = %i(dust purple_stones)
       r << :poe if @stage > "08-40" #is that correct?
-      r << :shards if @stage >= "22-01" #ditto
+      r << :shards if @stage >= "22-01" #ditto?
+      r += extra
       r
     end
-    def get_store_hero_items
+
+    def get_store_hero_items(*extra, garrison: @garrison, dim_exchange: false)
+      get_progression
       return [] unless @_unlock_store_hero
       r=[]
-      r << :garrison if @garrison
-      # r << :dim_exchange if @dim_exchange
+      r << :garrison if garrison
+      r << :dim_exchange if dim_exchange
+      r << nil #for secondary items
+      r += extra
       r
     end
-    def get_store_guild_items
+    def get_store_guild_items(*extra, garrison: @garrison, dim_exchange: @dim_exchange)
+      get_progression
       return [] unless @_unlock_store_guild
       r=[]
-      r << :garrison if @garrison
-      r << :dim_exchange if @dim_exchange
+      r << :garrison if garrison
+      r << :dim_exchange if dim_exchange
       r << {t3: :max} if @_unlock_shop_t3
-      r += [nil, nil, :dim_gear] if @_unlock_shop_mythic
+      r << nil #secondary items
+      r += extra
+      r += [nil, :dim_gear] if @_unlock_shop_mythic
       r
     end
-    def get_store_lab_items
+    def get_store_lab_items(*extra, garrison: @garrison, dim_exchange: @dim_exchange)
+      get_progression
       return [] unless @_unlock_store_lab
       r=[]
-      r << :garrison if @garrison
-      r << :dim_exchange if @dim_exchange
+      r << :garrison if garrison
+      r << :dim_exchange if dim_exchange
       r += [nil, :dim_emblems]
+      r += extra
       r
     end
-    def get_store_challenger_items
+    def get_store_challenger_items(*extra, garrison: false, dim_exchange: false)
+      get_progression
       return [] unless @_unlock_store_challenger
+      return [] unless @stage > "09-20"
       r=[]
-      # r << :garrison if @garrison
-      # r << :dim_exchange if @dim_exchange
+      r << :garrison if garrison
+      r << :dim_exchange if dim_exchange
+      r << nil #secondary items
+      r += extra
       r
     end
   end
