@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
-#ff max, lab flat rewards, beginner/whale samples
+#lab flat rewards, beginner/whale samples
+#guild gold rewards
 
 require './value'
 require 'json'
@@ -184,10 +185,14 @@ class Simulator
       }
 
       @Shop = {
-        xp_h: { xp_h: 24, dia: -192, proba: 0.25},
+        # there are 2 extra slots, for 24h gold, 24h xp, tokens, 500 dust,
+        # purple stones. The first 4 are equiprobable and the last roughly
+        # half as frequent, so we get a proba of 2/9 resp 1/9 by slot, so
+        # 4/9 resp 2/9 by shop refresh
+        xp_h: { xp_h: 24, dia: -192, proba: 4.0/9},
         dust_h: {dust_h: 24, dia: -300},
         dust: {dust: 500, gold: -2250},
-        purple_stones: { purple_stones: 5, dia: -90, proba: 0.25 },
+        purple_stones: { purple_stones: 5, dia: -90, proba: 2.0/9 },
         poe: { poe: 250, gold: -1125 },
         shards: { shards: 20, gold: -2000, max: 3 },
         cores: { cores: 10, dia: -200, max: 3 },
@@ -318,20 +323,29 @@ class Simulator
   module UserSetupHelpers
     def get_guild_gold(chests)
       case chests
-      when 1,2,3,4; 15
-      when 5,6; 30
-      when 7,8; 55
-      when 9,10; 80
-      when 11; 110
-      when 12,13,14,15; 1010
-      when 16; 1110
-      when 17; 1210
-      when 18; 1410
-      when 19; 1560
-      when 20; 1710
-      when 21; 1860
-      when 22; 2010
-      when 23; 2160
+      when 1; 2     # 5k
+      when 2; 4     # 10k
+      when 3; 7.5   # 20k
+      when 4; 15    # 40k
+      when 5; 24    # 70k
+      when 6; 30    # 120k
+      when 7; 38    # 220k
+      when 8; 55    # 450k
+      when 9; 65    # 820k
+      when 10; 80   # 1.55M
+      when 11; 110  # 3M
+      when 12; 160  # 5.5M
+      when 13; 246  # 10M
+      when 14; 435  # 20M
+      when 15; 953  # 45M
+      when 16; 1044 # 100M
+      when 17; 1210 # 300M todo check 17+ values
+      when 18; 1410 # 1B
+      when 19; 1560 # 2B
+      when 20; 1710 # 5B
+      when 21; 1860 # 10B
+      when 22; 2010 # 20B
+      when 23; 2160 # 100B
       end
     end
 
