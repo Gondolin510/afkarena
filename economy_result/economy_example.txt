@@ -115,10 +115,10 @@ challenger_coins: 340260.0 =>
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 13893.16 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -8025.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 162737.66 [106512.62 (idle) + 53256.31 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 12000.0 (lc) + 35172.72 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
+gold: 181409.66 [106512.62 (idle) + 53256.31 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 30672.0 (lc) + 35172.72 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (dismal) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
--> Total gold: 268221.47K
+-> Total gold: 286893.47K
 xp: 1891771.2 [1228202.4 (idle) + 614101.2 (ff) + 49467.6 (dismal)]
 xp_h: 1842.7 [60.0 (quests) + 930.0 (dismal) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 32.88 (stargaze)]
 -> Total xp: 2651386.41K
@@ -179,7 +179,7 @@ invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]
 arena_tickets: 60.0 [60.0 (quests)]
 
 =============== 30 days previsions summary ===============
-level: 2.16 days (13.9 by month) {gold: 2.03 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 16249.98 gold + 843512.46 xp]
+level: 2.16 days (13.9 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 34921.98 gold + 843512.46 xp]
 -> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361.0 dia + 130100.0 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -326,10 +326,10 @@ challenger_coins: 340260.0 =>
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 5691.84 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 3367.35 (regal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + 1500.0 (abex) + 333.33 (hf) + -3900 (ff_cost) + -8025.0 (shop) + -9000 (lct_buy_tickets) + -10000.0 (stargazing) + -0.0 (wishlist) + -6507.0 (hcp) + 150.0 (stargaze)]
-gold: -38637.93 [107838.0 (idle) + 26959.5 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 12000.0 (lc) + 35640.0 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -663750 (shop) + 0.0 (dura_fragments_sell) + 3128.57 (selling_items)]
+gold: -19965.93 [107838.0 (idle) + 26959.5 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 30672.0 (lc) + 35640.0 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -663750 (shop) + 0.0 (dura_fragments_sell) + 3128.57 (selling_items)]
 gold_h: 4011.7 [128.57 (quests) + 3540.0 (dismal) + 96.0 (hero_trial) + 247.13 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
--> Total gold: 72918.08K
+-> Total gold: 91590.08K
 xp: 1670317.8 [1294471.2 (idle) + 323617.8 (ff) + 52228.8 (dismal)]
 xp_h: 1919.42 [60.0 (quests) + 930.0 (dismal) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 109.6 (stargaze)]
 -> Total xp: 2505724.46K
@@ -393,7 +393,7 @@ lct_tickets: 150 [150 (lct_buy_tickets)]
 reset_scrolls: 30 [30 (shop)]
 
 =============== 30 days previsions summary ===============
-level: 14.56 days (2.06 by month) {gold: 14.56 days, xp: 3.61 days, dust: 4.54 days} [monthly remains: 1883675.4 xp + 202885.22 dust]
+level: 11.59 days (2.59 by month) {gold: 11.59 days, xp: 3.61 days, dust: 4.54 days} [monthly remains: 1724388.43 xp + 179383.14 dust]
 -> Level cost: 19014.77 dia / 19615.58 dia [35389.44 gold=2020.64 dia / 1310.72 gold_h=2621.44 dia + 301900.0 xp=693.64 xp_h=5549.12 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 35.52 days (0.84 by month)
@@ -429,18 +429,12 @@ Max rc level: 1.96 days (15.27 by month)
 @tower_kt: 550
 @tower_4f: 280
 @tower_god: 300
-@shop_items: [:dust, :purple_stones, :poe, :shards]
-@shop_refreshes: 2
-@buy_hero: [:garrison]
-@buy_guild: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
-@buy_challenger: []
 @monthly_stargazing: 0
 @monthly_tavern: 0
 @monthly_hcp_heroes: 0
 @monthly_hcp: 0.0
-@friends_mercs: 5
 @friends_nb: 20
+@friends_mercs: 5
 @gh_team_wrizz_gold: 1080
 @gh_team_soren_gold: 1080
 @gh_team_wrizz_coin: 1158
@@ -453,16 +447,26 @@ Max rc level: 1.96 days (15.27 by month)
 @tr_twisted: 380
 @tr_poe: 1290
 @tr_guild: {:dia=>100, :twisted=>6}
+@cursed_realm: {}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
 @lct_coins: 380
-@lc_rewards: {:gold=>6000}
+@lc_rewards: {:gold=>15336}
 @misty: {:dust_h=>96, :twisted=>400, :blue_stones=>360, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@board_level: 8
+@dura_nb_selling: 0
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @noble_coe: {:dust=>7500, :dust_h=>380}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@merchant_daily: {}
+@merchant_weekly: {}
+@merchant_monthly: {}
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@shop_refreshes: 2
+@buy_hero: [:garrison]
+@buy_guild: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
+@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
+@buy_challenger: []
 @labyrinth_mode: dismal
-@board_level: 8
-@dura_nb_selling: 0
 @lab_flat_rewards: {:gold=>1782.1979999999996, :xp=>2613.942}

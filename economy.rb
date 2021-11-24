@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
 #ff max, lab flat rewards, beginner/whale samples
-#paid merchant, paid cards
+#paid cards
 
 require './value'
 require 'json'
@@ -21,32 +21,33 @@ class Simulator
   module Setup
     def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
 
-      # core settings
+      ### core settings
       @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
       @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
-      @nb_ff=6
+      @nb_ff ||=6
       @subscription ||=false if @subscription.nil?
 
-      # Towers
+      ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
       @tower_4f ||= 280 #max fos at 280 for t2_gear
       @tower_god ||= 300 #max fos at 300 for invigor
 
-      # Summonings
+      ### Summonings
       @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
       @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
       @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
       @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
-      # Friends and weekly mercs
+
+      ### Friends and weekly mercs
+      @friends_nb ||= 20
       if @friends_mercs.nil?
         @friends_mercs = 0
         @friends_mercs = 5 if @stage > "06-40" #mercenaries open
       end
-      @friends_nb ||= 20
 
-      #GH
+      ### GH [used when guild unlocks]
       @gh_team_wrizz_gold ||=1080
       @gh_team_soren_gold ||=@gh_team_wrizz_gold
       @gh_team_wrizz_coin ||=1158
@@ -59,31 +60,31 @@ class Simulator
       @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
       @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
-      #twisted realm (use fabled rewards)
+      ### twisted realm (use fabled rewards) [used when tr unlocks]
       @tr_twisted ||=380
       @tr_poe ||=1290
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
-      # cursed realm
+      ### cursed realm
       @cursed_realm = {} #not in cursed
       # @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
 
-      # arena
+      ### arena [used when arena/lc/lct unlocks]
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
       @arena_weekly_dia ||=@arena_daily_dia * 10
       @lct_coins ||=380 #top 20. Hourly coins: 400-rank
-      @lc_rewards = {gold: 6*1000} #we win all wagers
+      @lc_rewards = {gold: 6*2556} #we win all wagers (6*1000 for earlier accounts)
 
-      #misty valley
+      ### misty valley [used when misty unlocks]
       @misty ||= get_misty
 
-      #misc
-      @board_level ||=8
+      ### misc
+      @board_level ||=8 #[used when board unlocks]
       @dura_nb_selling ||=0
 
-      #noble society, by default paid is false
+      ### Noble societies, by default paid is false [used when they unlock]
       #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
-      @noble_regal ||= get_regal
+      @noble_regal ||= get_regal #opens after 10 days of account creation
       if @noble_twisted.nil?
         @noble_twisted={} #twisted bounties not open
         @noble_twisted = get_twisted_bounties(:xp) if @stage > "12-40"
@@ -93,13 +94,20 @@ class Simulator
         @noble_coe = get_coe(:dust) if @stage > "08-20"
       end
 
+      ### Hero trials [used when hero trials unlock]
       #average guild hero trial rewards
       @hero_trial_guild_rewards ||={
         dia: 200+100+200,
         guild_coins: 1000 #assume top 500
       }
 
-      # Daily shopping
+      ### Merchants
+      #Paid version, f2p versions are in Merchant_daily, Merchant_weekly, Merchant_monthly
+      @merchant_daily={} #we are f2p by default
+      @merchant_weekly={}
+      @merchant_monthly={}
+
+      ### Daily shopping
       if @shop_items.nil?
         @shop_items = [] #shop not open
         @shop_items += %i(dust purple_stones) if @stage > "02-08"
@@ -110,7 +118,7 @@ class Simulator
       end
       @shop_refreshes ||= 2
 
-      # Monthly store buys
+      ### Monthly store buys
       # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
       if @buy_hero.nil?
         @buy_hero =[] #not open
@@ -130,6 +138,7 @@ class Simulator
       end
       #todo: automatically update store shopping lists depending on progression
 
+      ### Labyrinth
       if @labyrinth_mode.nil?
         @labyrinth_mode = :skip #not open
         @labyrinth_mode = :easy if @stage >= "02-04"
@@ -138,11 +147,11 @@ class Simulator
       end
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
-      # Other variables:
+      ### Other variables:
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
       #@afk_gold=844     # the displayed value by minute (include vip)
       #@afk_dust=1167.6  # the value by day, ie 48.65 by hour
-      #determined from stage progression, but can be set up directly for more precise results
+      #-> determined from stage progression, but can be set up directly for more precise results
     end
 
     def setup_constants
@@ -921,7 +930,7 @@ class Simulator
       #   dia: 400, scrolls: 3,
       #   dura_tears: 3
       # } #this maxes out at 30-60 with the red emblem rewards
-      
+
       daily_quest=sum_hash(@Quest_daily, @_fos_daily_quest)
       weekly_quest=sum_hash(@Quest_weekly, @_fos_weekly_quest)
       ressources=(daily_quest.keys+weekly_quest.keys).flatten.sort.uniq
@@ -932,9 +941,12 @@ class Simulator
     end
 
     def merchants
-      ressources=(@Merchant_daily.keys+@Merchant_weekly.keys+@Merchant_monthly.keys).flatten.sort.uniq
+      daily=sum_hash(@Merchant_daily, @merchant_daily)
+      weekly=sum_hash(@Merchant_weekly, @merchant_weekly)
+      monthly=sum_hash(@Merchant_monthly, @merchant_monthly)
+      ressources=(daily.keys+weekly.keys+monthly.keys).sort.uniq
       ressources.map do |r|
-        v=(@Merchant_daily[r]||0)+(@Merchant_weekly[r]||0)/7.0+(@Merchant_monthly[r]||0)/30.0
+        v=(daily[r]||0)+(weekly[r]||0)/7.0+(monthly[r]||0)/30.0
         [r,v]
       end.to_h
     end

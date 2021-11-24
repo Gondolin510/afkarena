@@ -114,10 +114,10 @@ challenger_coins: 340260.0 =>
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 13893.16 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (dismal) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -8025.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 165213.81 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 12000.0 (lc) + 35643.96 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
+gold: 183885.81 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 30672.0 (lc) + 35643.96 (dismal) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (dismal) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
--> Total gold: 272110.89K
+-> Total gold: 290782.89K
 xp: 1995787.08 [1295672.16 (idle) + 647836.08 (ff) + 52278.84 (dismal)]
 xp_h: 1842.7 [60.0 (quests) + 930.0 (dismal) + 144.0 (misty) + 651.82 (tr_bounties) + 24.0 (hero_trial) + 32.88 (stargaze)]
 -> Total xp: 2798571.17K
@@ -178,7 +178,7 @@ invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]
 arena_tickets: 60.0 [60.0 (quests)]
 
 =============== 30 days previsions summary ===============
-level: 3.9 days (7.69 by month) {gold: 3.9 days, xp: 3.24 days, dust: 3.89 days} [monthly remains: 477249.43 xp + 773.03 dust]
+level: 3.89 days (7.71 by month) {gold: 3.65 days, xp: 3.24 days, dust: 3.89 days} [monthly remains: 18057.84 gold + 472010.15 xp]
 -> Level cost: 19009.46 dia / 19609.98 dia [35389.44 gold=2020.64 dia / 1310.57 gold_h=2621.15 dia + 301900.0 xp=692.98 xp_h=5543.81 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 26.4 days (1.14 by month)

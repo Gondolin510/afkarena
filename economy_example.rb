@@ -2,7 +2,7 @@
 require './economy'
 
 puts "==================== Example of minimal customisation ===================="
-# Minimal settings (with their default values)
+# Minimal settings
 Simulator.new do
   @stage = "37-01"
 
@@ -90,13 +90,13 @@ s=Simulator.new do
     sell_stuff={arena_tickets: -arena_tickets_to_sell, 
                 dura_tears: -dura_tears_to_sell, 
                 gold: +gold}
-  
+
     #we also buy lct tickets every day, 300 dia for 5 tickets
     lct={dia: -300, lct_tickets: 5}
-  
+
     {selling_items: sell_stuff, lct_buy_tickets: lct}
   end
-  
+
   # This is an OO program, so we can customize some existing functions
 
   # 1) the `friends` income ressource do not handle garrison for now
