@@ -353,8 +353,8 @@ Max rc level: 3.63 days (8.28 by month)
 @_idle_hourly: {:gold=>49.19551282051282, :xp=>270.375641025641, :dust=>51.8998, :poe=>17.586999999999996, :twisted=>0.6337366666666666, :silver_e=>0.0833, :gold_e=>0.0417, :red_e=>0.01564, :dura_fragments=>0.267, :class_fragments=>0.0, :mythic_gear=>0.009033233333333333, :t2=>0.0109345, :invigor=>24.0, :t3=>0.0, :t1_gear=>0.0, :t2_gear=>0.0, :shards=>0.041666666666666664, :cores=>0.0}
 @_average_vow_rewards: {:shards=>105.0, :cores=>50.0, :silver_e=>27.5, :gold_e=>20.0, :red_e=>10.0, :poe=>1500.0, :scrolls=>5.0, :stargazers=>7.5, :dust_h=>44.0}
 @_kt_floor: {:gold=>0, :dia=>0.0, :dust=>0, :purple=>0.0, :blue=>0.0}
-@_kt_quest: {:dia=>8, :shards=>20}
-@_tower_kt_ressources: {:gold=>0, :dia=>8.0, :dust=>0, :purple=>0.0, :blue=>0.0, :shards=>20}
+@_kt_quest: {:dia=>20, :shards=>20}
+@_tower_kt_ressources: {:gold=>0, :dia=>20.0, :dust=>0, :purple=>0.0, :blue=>0.0, :shards=>20}
 @_4f_floor: {}
 @_4f_quest: {}
 @_tower_4f_ressources: {}

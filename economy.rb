@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
+#percentage
 
 require './value'
 require 'json'
@@ -133,7 +134,7 @@ class Simulator
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
       ### Tower progression
-      get_tower_progression(0)
+      set_tower_progression(0)
       #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
 
       ### Other variables:
@@ -917,18 +918,18 @@ class Simulator
     end
 
     def get_mult
-      @_gold_mult=1.0+@_vip_gold_mult+@_fos_gold_mult+(@_sub_gold_mult||0)
-      @_xp_mult=1.0+@_vip_xp_mult+@_fos_xp_mult+(@_sub_xp_mult||0)
-      @_dust_mult=1.0+@_fos_dust_mult
-      @_lab_mult=1.0+@_fos_lab_mult+(@_vip_lab_mult||0)+(@_sub_lab_mult||0)
-      @_lab_gold_mult=1.0+(@_vip_lab_gold_mult||0)
-      @_guild_mult=1.0+@_fos_guild_mult+(@_sub_guild_mult||0)
-      @_mythic_mult=1.0+@_fos_mythic_mult
+      @_gold_mult||=1.0+@_vip_gold_mult+@_fos_gold_mult+(@_sub_gold_mult||0)
+      @_xp_mult||=1.0+@_vip_xp_mult+@_fos_xp_mult+(@_sub_xp_mult||0)
+      @_dust_mult||=1.0+@_fos_dust_mult
+      @_lab_mult||=1.0+@_fos_lab_mult+(@_vip_lab_mult||0)+(@_sub_lab_mult||0)
+      @_lab_gold_mult||=1.0+(@_vip_lab_gold_mult||0)
+      @_guild_mult||=1.0+@_fos_guild_mult+(@_sub_guild_mult||0)
+      @_mythic_mult||=1.0+@_fos_mythic_mult
     end
 
     def get_numbers
-      @_solo_bounties=@_vip_solo_bounty
-      @_team_bounties=1+ (@_vip_extra_team_bounty||0) + (@_sub_extra_team_bounty||0)
+      @_solo_bounties||=@_vip_solo_bounty
+      @_team_bounties||=1+ (@_vip_extra_team_bounty||0) + (@_sub_extra_team_bounty||0)
       @_nb_arena_fight ||=2+(@_vip_extra_arena_fight||0)
       @_nb_guild_fight ||= 2+(@_vip_extra_guild_fight||0)
     end
@@ -1275,7 +1276,7 @@ class Simulator
           silver_e: 40, gold_e: 20, red_e: 10,
           stargazers: 10
         },
-      }
+      }.merge(@Vows||{})
 
       keys=@Vows.values.map {|i| i.keys}.flatten.uniq
       if @_average_vow_rewards.nil?
@@ -1304,7 +1305,6 @@ class Simulator
       # king tower (>560): 5650 gold + 160 dia +150 dust + 30 purple every *10
       #             5650 gold + 80 dia +150 dust + 30 blue every else
       #             (except 160 dia every *5)
-      # quest: 400 dia every 50, 1000 shards every?
       return {} unless @_unlock_tower_kt
       if @_kt_floor.nil? #compute the value
         @_kt_floor={}
@@ -1318,7 +1318,11 @@ class Simulator
         @_kt_floor={gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
       end
       if @_kt_quest.nil? #compute the value
-        @_kt_quest={dia: 400/50, shards: 1000/50}
+        # quest: 400 dia every x20, 1000 shards every 50 then 500 cores every x50
+        @_kt_quest={dia: 400/20, shards: 1000/50}
+        if level>=500 #todo: find the breakpoint
+          @_kt_quest={dia: 400/20, cores: 500/50}
+        end
       end
       sum_hash(@_kt_floor, @_kt_quest)
     end
@@ -1332,11 +1336,13 @@ class Simulator
       # from quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
       if @_4f_floor.nil? #compute the value
         @_4f_floor={}
-        if level>=240
-          @_4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20}
+        # see https://afk-arena.fandom.com/wiki/Towers_of_Esperia_Rewards
+        # before 150 the rewards change too much
+        if level>=150
+          @_4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10}
         end
         if level>=360
-          @_4f_floor={dust: 4000/10, stargazers: 10.0/20, red_e: 10.0/20, faction_emblems: 10.0/20}
+          @_4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10}
         end
       end
       if @_4f_quest.nil? #compute the value
@@ -1352,27 +1358,28 @@ class Simulator
     end
 
     def tower_god_ressources(level=@tower_god)
-      return {} unless @_unlock_tower_god
+      #every *5: 4000 dust + 5 stargazer
+      #every *10: 10 faction_emblem or 15 gold_e
+      #
       # celhypo quests: 400 cores every x20
-      # Quests: Cores are 500 every x50 and 400 dia every x20
+      return {} unless @_unlock_tower_god
       if @_god_floor.nil? #compute the value
-        @_god_floor={}
-        if level>=240
-          @_god_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20}
-        end
+        @_god_floor={ #start at level 1
+          dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10
+        }
       end
       if @_god_quest.nil? #compute the value
-        @_god_quest={cores: 500/50, dia: 400/20}
+        @_god_quest={cores: 400/20}
       end
       sum_hash(@_god_floor, @_god_quest)
     end
 
     def tower_kt_progression(nb_levels=@tower_kt_progression)
-      @_tower_kt ||= tower_4f_ressources
+      @_tower_kt ||= tower_kt_ressources
       mult_hash(@_tower_kt, nb_levels)
     end
     def tower_4f_progression(nb_levels=@tower_4f_progression)
-      @_tower_kt ||= tower_4f_ressources
+      @_tower_4f ||= tower_4f_ressources
       mult_hash(@_tower_4f, nb_levels)
     end
     def tower_god_progression(nb_levels=@tower_god_progression)
@@ -1382,7 +1389,7 @@ class Simulator
 
     #return tower progression from the rate of level up
     #heuristic: one level=one floor at single, two floors at multis
-    def get_tower_progression(level_up)
+    def set_tower_progression(level_up)
       #Multis: 700 KT, 450 4F, 350 celestial
       factor_4f=factor_kt=factor_god=1
       factor_kt=2 if @tower_kt >= 600
@@ -1673,7 +1680,7 @@ class Simulator
       ressources=tally.keys
       order={
         base: %i(dia gold gold_h gold_hg total_gold xp xp_h total_xp dust dust_h total_dust),
-        upgrades: %i(silver_e gold_e red_e poe twisted shards cores),
+        upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
         gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
         summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
@@ -1709,7 +1716,7 @@ class Simulator
       puts "***** #{t.capitalize} *****"
     end
 
-    def make_summary(ressources, headings: true, total: true, plusminus: false)
+    def make_summary(ressources, headings: true, total: true, plusminus: false, percent: false)
       _total=get_total(ressources) if total
       @_order.each do |summary, keys|
         s=""
@@ -1723,7 +1730,15 @@ class Simulator
               sum+=value
               pos_sum+=value if value>0
               neg_sum+=value if value<0
-              o.push("#{round(v[type])} (#{k})") unless value == 0 or value == 0.0
+              unless value == 0 or value == 0.0
+                oo="#{round(v[type])}"
+                if percent
+                  oo<<" (#{k} #{percent(v[type])})" 
+                else
+                  oo<<" (#{k})" 
+                end
+                o.push(oo) 
+              end
             end
           end
           if total
@@ -1767,13 +1782,13 @@ class Simulator
       puts unless headings
     end
 
-    def do_summary(title, r, headings: true, total_value: true, total: true, multiplier: 1, plusminus: false)
+    def do_summary(title, r, total_value: true, multiplier: 1, **kw)
       if multiplier != 1
         r=timeframe(r, multiplier)
       end
 
       make_h1(title)
-      make_summary(r, headings: headings, total: total, plusminus: plusminus)
+      make_summary(r, **kw)
 
       if total_value
         puts "=> Total value: #{show_dia_value(tally(r))}"

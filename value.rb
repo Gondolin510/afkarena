@@ -6,6 +6,9 @@ module Helpers
   def round(p)
     p.round(@@rounding)
   end
+  def percent(r)
+    "#{(r*100).round}%"
+  end
 
 
   def add_to_hash(r,*hashes, multiplier: 1)

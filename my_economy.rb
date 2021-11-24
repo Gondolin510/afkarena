@@ -29,7 +29,7 @@ s=Simulator.new do
   @tower_kt = 561
   @tower_4f = 280
   @tower_god = 200
-  get_tower_progression(10)
+  set_tower_progression(10)
 
   @misty = get_misty(guild_twisted: :guild)
 
