@@ -24,7 +24,7 @@ end.summary
 puts "==================== Example of new player ===================="
 Simulator.new do
   @stage = "08-01"
-  @hero_level= 160
+  @hero_level= [160, 140, 120, 120, 120] #our 5 heroes
   @player_level=90
   @nb_ff=1
   @vip=5
@@ -34,8 +34,14 @@ Simulator.new do
   @friends_mercs = 1
 
   @gh_wrizz_chests = 13
-  @tr_twisted = 200
+  @gh_soren_freq = 0.5 #moderatly active guild
+  @gh_team_wrizz_gold = 561
+  @gh_team_soren_gold = 559
+  @gh_team_wrizz_coin = 806
+
+  @tr_twisted = 150
   @tr_poe = 0
+  @tr_guild = {} #no guildie in fabled or legend
 
   @arena_daily_dia = get_arena(200) #rank 200 in arena
   @lct_coins =250
@@ -47,8 +53,8 @@ Simulator.new do
   @shop_items = %i(dust purple_stones)
   @shop_refreshes = 0
 
-  #we don't buy anything in the stores
-  @buy_hero = @buy_guild = @buy_lab = @buy_challenger =[]
+  #we don't buy anything in the guild store
+  @store_guild_items = []
 end.summary
 
 puts "==================== Example of a whale ===================="
@@ -83,10 +89,11 @@ Simulator.new do
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
   @shop_items = %i(dust purple_stones poe shards dust_h gold_e)
-  @buy_hero = [nil, {twisted: :max}]
-  @buy_guild = [:dim_exchange, {t3: :max}, nil, nil, :dim_gear]
-  @buy_lab = [:dim_exchange, nil, {twisted: :max}, :dim_emblems, :red_e]
-  @buy_challenger = []
+  @garrison=false #we have all dims
+  @dim_exchange=true #there is a dim exchange
+  @store_hero_items = get_store_hero_items + [nil, {twisted: :max}]
+  @store_lab = get_store_lab_items + [{twisted: :max}, :red_e]
+  @store_challenger = [:red_e]
 end.summary
 
 puts "==================== Example of detailed customisation ===================="

@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
-#beginner/whale samples
-#guild gold rewards
 
 require './value'
 require 'json'
@@ -42,12 +40,9 @@ class Simulator
 
       ### Friends and weekly mercs
       @friends_nb ||= 20
-      if @friends_mercs.nil?
-        @friends_mercs = 0
-        @friends_mercs = 5 if @stage > "06-40" #mercenaries open
-      end
+      @friends_mercs ||= 5 #[only used when mercs unlock]
 
-      ### GH [used when guild unlocks]
+      ### GH [only used when guild unlocks]
       @gh_team_wrizz_gold ||=1080
       @gh_team_soren_gold ||=@gh_team_wrizz_gold
       @gh_team_wrizz_coin ||=1158
@@ -60,7 +55,7 @@ class Simulator
       @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
       @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
 
-      ### twisted realm (use fabled rewards) [used when tr unlocks]
+      ### twisted realm (use fabled rewards) [only used when tr unlocks]
       @tr_twisted ||=380
       @tr_poe ||=1290
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
@@ -69,20 +64,20 @@ class Simulator
       @cursed_realm = {} #not in cursed
       # @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
 
-      ### arena [used when arena/lc/lct unlocks]
+      ### arena [only used when arena/lc/lct unlocks]
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
       @arena_weekly_dia ||=@arena_daily_dia * 10
       @lct_coins ||=380 #top 20. Hourly coins: 400-rank
       @lc_rewards = {gold: 6*1278} #we win all wagers (6*941 for earlier accounts)
 
-      ### misty valley [used when misty unlocks]
+      ### misty valley [only used when misty unlocks]
       @misty ||= get_misty
 
       ### misc
-      @board_level ||=8 #[used when board unlocks]
+      @board_level ||=8 #[only used when board unlocks]
       @dura_nb_selling ||=0
 
-      ### Noble societies, by default paid is false [used when they unlock]
+      ### Noble societies, by default paid is false [only used when they unlock]
       #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
       @noble_regal ||= get_regal #opens after 10 days of account creation
       if @noble_twisted.nil?
@@ -94,7 +89,7 @@ class Simulator
         @noble_coe = get_coe if @stage > "08-20" #default to dust
       end
 
-      ### Hero trials [used when hero trials unlock]
+      ### Hero trials [only used when hero trials unlock]
       #average guild hero trial rewards
       @hero_trial_guild_rewards ||={
         dia: 200+100+200,
@@ -116,35 +111,16 @@ class Simulator
       # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted)
 
       ### Daily shopping
-      if @shop_items.nil?
-        @shop_items = [] #shop not open
-        @shop_items += %i(dust purple_stones) if @stage > "02-08"
-        @shop_items << :poe if @stage > "08-40" #is that correct?
-        @shop_items << :shards if @stage >= "22-01" #ditto
-        # or @shop_items = %i(dust purple_stones poe shards) +[{dust_h: 1}]
-        # todo: automatically update shopping list depending on stage progression
-      end
+      @shop_items ||= get_shop_items #get items depending on stage progression
       @shop_refreshes ||= 2
 
       ### Monthly store buys
-      # [items we always buy, ..., nil, items we buy if we have coins remaining, nil, filler item]
-      if @buy_hero.nil?
-        @buy_hero =[] #not open
-        @buy_hero += [:garrison] if @stage > "01-12"
-      end
-      if @buy_guild.nil?
-        @buy_guild = [] #not open
-        @buy_guild += [:garrison, :dim_exchange, {t3: :max}, nil, nil, :dim_gear] if @stage > "02-04"
-      end
-      if @buy_lab.nil?
-        @buy_lab = [] #not open
-        @buy_lab += [:garrison, :dim_exchange, nil, :dim_emblems] if @stage > "02-20"
-      end
-      if @buy_challenger.nil?
-        @buy_challenger = [] #not open
-        @buy_challenger += [] if @stage > "09-20" #open at 09-20
-      end
-      #todo: automatically update store shopping lists depending on progression
+      @garrison ||= true #used by get_store_*_items, by default we only use hero+guild+lab for exchange
+      @dim_exchange ||= true #used by get_store_*_items, by default we only use guild+lab for exchange
+      @store_hero_items ||= get_store_hero_items
+      @store_guild_items ||= get_store_guild_items
+      @store_lab_items ||= get_store_lab_items
+      @store_challenger_items ||= get_store_challenger_items
 
       ### Labyrinth
       if @labyrinth_mode.nil?
@@ -209,19 +185,21 @@ class Simulator
         purple_stone: { cost: 18000, purple_stones: 60, max: 4},
         blue_stone: { cost: 2400, blue_stones: 60, max: 1+2+3+4},
         twisted: { cost: 10000, twisted: 100, max: 1+2+3+10},
+
         garrison: { cost: 66*800, garrison_stone: 66},
-        dim_exchange: {cost: 40000/2, dim_points: 40/2},
+        dim_exchange: {cost: 10*4000/2, dim_points: 40/2},
       }.merge(@StoreHero||{})
 
       @StoreGuild ||={
-        garrison: { cost: 66*800, garrison_stone: 66},
         t1: 33879, #shortcut for t1: {cost: 33879, t1: 1}
         t2: 40875,
         t3: {cost: 47000, t3: 1, max: 2},
         random_mythic_gear: 31350,
         mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
-        dim_exchange: {cost: 40000/2, dim_points: 40/2},
-        dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
+        dim_gear: 67000, #shortcut for dim_gear: {cost: 67000, dim_gear:1},
+
+        garrison: { cost: 66*800, garrison_stone: 66},
+        dim_exchange: {cost: 10*4000/2, dim_points: 40/2},
       }.merge(@StoreGuild||{})
 
       @StoreLab={
@@ -235,8 +213,9 @@ class Simulator
         wukong: 45000, arthur: 60000, #we get dim_e after Arthur, twisted after wukong
         dim_emblems: {cost: 64000, dim_emblems: 50},
         red_e: {cost: 37125, red_e: 25, max: 2},
+
         garrison: { cost: 100*800, garrison_stone: 100},
-        dim_exchange: {cost: 200000/2, dim_points: 200/2},
+        dim_exchange: {cost: 50*4000/2, dim_points: 200/2},
       }.merge(@StoreLab||{})
 
       @StoreChallenger={
@@ -245,7 +224,10 @@ class Simulator
         atier: {cost: 150000, choice_atier: 1},
         flora: 150000,
         merlin: 250000, ldv: 250000,
-        red_e: {cost: 165000, red_e: 25, max: 3}
+        red_e: {cost: 165000, red_e: 25, max: 3},
+
+        garrison: { cost: 50*2666, garrison_stone: 50},
+        dim_exchange: {cost: 15*13333/2.0, dim_points: 15/2.0},
       }.merge(@StoreChallenger||{})
 
       @Merchant_daily ||={ dia: 20, purple_stones: 2}
@@ -577,6 +559,45 @@ class Simulator
 
       sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
     end
+
+    def get_shop_items #todo: improve this function
+      return [] unless @_unlock_shop
+      r = %i(dust purple_stones) if @stage > "02-08"
+      r << :poe if @stage > "08-40" #is that correct?
+      r << :shards if @stage >= "22-01" #ditto
+      r
+    end
+    def get_store_hero_items
+      return [] unless @_unlock_store_hero
+      r=[]
+      r << :garrison if @garrison
+      # r << :dim_exchange if @dim_exchange
+      r
+    end
+    def get_store_guild_items
+      return [] unless @_unlock_store_guild
+      r=[]
+      r << :garrison if @garrison
+      r << :dim_exchange if @dim_exchange
+      r << {t3: :max} if @_unlock_shop_t3
+      r += [nil, nil, :dim_gear] if @_unlock_shop_mythic
+      r
+    end
+    def get_store_lab_items
+      return [] unless @_unlock_store_lab
+      r=[]
+      r << :garrison if @garrison
+      r << :dim_exchange if @dim_exchange
+      r += [nil, :dim_emblems]
+      r
+    end
+    def get_store_challenger_items
+      return [] unless @_unlock_store_challenger
+      r=[]
+      # r << :garrison if @garrison
+      # r << :dim_exchange if @dim_exchange
+      r
+    end
   end
   include UserSetupHelpers
 
@@ -682,6 +703,20 @@ class Simulator
       @_unlock_tr=true if @stage >"12-40"
       @_unlock_oak_inn=true if @stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
       @_unlock_misty=true if @stage >"16-40"
+      @_unlock_mercs=true if @stage > "06-40"
+
+      #not used except for t3
+      @_unlock_shop=true if @stage > "02-08"
+      @_unlock_shop_legendary=true if @stage > "10-22"
+      @_unlock_shop_mythic=true if @stage > "12-02"
+      @_unlock_shop_t1=true if @stage > "21-01"
+      @_unlock_shop_t2=true if @stage > "26-01"
+      @_unlock_shop_t3=true if @stage > "30-01"
+
+      @_unlock_store_hero=true if @stage > "01-12"
+      @_unlock_store_guild=true if @stage > "02-40"
+      @_unlock_store_lab=true if @stage > "02-20"
+      @_unlock_store_challenger=true if @stage > "09-20"
     end
 
     def get_vip
@@ -1018,7 +1053,9 @@ class Simulator
     end
 
     def friends
-      {friend_summons: (@friends_nb*1.0+@friends_mercs*10.0/7)/10}
+      summons=@friends_nb
+      summons+=@friends_mercs*10.0/7 if @_unlock_mercs
+      {friend_summons: summons/10.0}
     end
 
     def get_arena(position)
@@ -1408,7 +1445,7 @@ class Simulator
         @ressources[:"#{i}_store"] ||={}
         coin_name=:"#{i}_coins"
         _total=(total[coin_name]||0)*30
-        r,bought=handle_buys(instance_variable_get(:"@buy_#{i}"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
+        r,bought=handle_buys(instance_variable_get(:"@store_#{i}_items"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
         cost=r.delete(:cost)
         r[coin_name]=cost
         @__coin_summary << "#{coin_name}: #{round(_total)} => #{buy_summary(bought)}"
