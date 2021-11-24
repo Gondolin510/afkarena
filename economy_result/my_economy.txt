@@ -114,8 +114,8 @@ challenger_coins: 340260.0 =>
 
 =============== Full monthly ressources ===============
 ***** Base *****
-dia: 13798.9 [5062.5 (board) + 8470.98 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 123409.24 [106537.45 (idle) + 53268.73 (ff) + 11753.75 (board) + 334780.2 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 29317.89 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 2059.71 (dura_fragments_sell)]
+dia: 13798.9=37498.9-23700.0 [5062.5 (board) + 8470.98 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
+gold: 123409.24=607159.24-483750 [106537.45 (idle) + 53268.73 (ff) + 11753.75 (board) + 334780.2 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 29317.89 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 2059.71 (dura_fragments_sell)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (lab) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
 -> Total gold: 228759.39K
@@ -143,9 +143,9 @@ t1_gear: 3.0 [2.0 (idle) + 1.0 (ff)]
 t2_gear: 3.0 [2.0 (idle) + 1.0 (ff)]
 
 ***** Coins *****
-guild_coins: 0.0 [368781.45 (guild) + 20000.0 (lab) + 30000.0 (misty) + 2000.0 (guild_hero_trial) + -420781.45 (guild_store)]
-lab_coins: -28100.0 [151900.0 (lab) + -180000.0 (lab_store)]
-hero_coins: -41549.42 [11250.58 (tavern) + -52800.0 (hero_store)]
+guild_coins: 0.0=420781.45-420781.45 [368781.45 (guild) + 20000.0 (lab) + 30000.0 (misty) + 2000.0 (guild_hero_trial) + -420781.45 (guild_store)]
+lab_coins: -28100.0=151900.0-180000.0 [151900.0 (lab) + -180000.0 (lab_store)]
+hero_coins: -41549.42=11250.58-52800.0 [11250.58 (tavern) + -52800.0 (hero_store)]
 challenger_coins: 340260.0 [273600 (lct) + 66660.0 (lab) + 0.0 (challenger_store)]
 
 ***** Summons *****
@@ -172,7 +172,7 @@ dim_points: 120.0 [100.0 (lab_store) + 20.0 (guild_store)]
 dim_gear: 3.79 [3.79 (guild_store)]
 
 ***** Misc *****
-dura_fragments: 255.79 [192.24 (idle) + 96.12 (ff) + -41.19 (dura_fragments_sell) + 8.63 (stargaze)]
+dura_fragments: 255.79=296.99-41.19 [192.24 (idle) + 96.12 (ff) + -41.19 (dura_fragments_sell) + 8.63 (stargaze)]
 class_fragments: 382.54 [255.02 (idle) + 127.51 (ff)]
 dura_tears: 12.86 [12.86 (quests)]
 invigor: 19440.0 [12960.0 (idle) + 6480.0 (ff)]
@@ -265,7 +265,7 @@ Max rc level: 3.17 days (9.45 by month)
 
 --------------- Fixed vars ---------------
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
-@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
+@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-10080.0, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
 @StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
 @StoreGuild: {:t1=>33879, :t2=>40875, :t3=>{:t3=>1}, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_gear=>67000, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:dim_points=>20}}
 @StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>3}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}}

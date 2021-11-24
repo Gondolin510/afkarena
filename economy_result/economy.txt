@@ -113,8 +113,8 @@ challenger_coins: 340260.0 =>
 
 =============== Full monthly ressources ===============
 ***** Base *****
-dia: 14118.16 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 168549.81 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 35643.96 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
+dia: 14118.16=37818.16-23700.0 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
+gold: 168549.81=652299.81-483750 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 35643.96 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (lab) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
 -> Total gold: 275446.89K
@@ -142,9 +142,9 @@ t1_gear: 3.0 [2.0 (idle) + 1.0 (ff)]
 t2_gear: 3.0 [2.0 (idle) + 1.0 (ff)]
 
 ***** Coins *****
-guild_coins: 0.0 [381530.25 (guild) + 20000.0 (lab) + 2000.0 (guild_hero_trial) + -403530.25 (guild_store)]
-lab_coins: -37900.0 [142100.0 (lab) + -180000.0 (lab_store)]
-hero_coins: -41549.42 [11250.58 (tavern) + -52800.0 (hero_store)]
+guild_coins: 0.0=403530.25-403530.25 [381530.25 (guild) + 20000.0 (lab) + 2000.0 (guild_hero_trial) + -403530.25 (guild_store)]
+lab_coins: -37900.0=142100.0-180000.0 [142100.0 (lab) + -180000.0 (lab_store)]
+hero_coins: -41549.42=11250.58-52800.0 [11250.58 (tavern) + -52800.0 (hero_store)]
 challenger_coins: 340260.0 [273600 (lct) + 66660.0 (lab) + 0.0 (challenger_store)]
 
 ***** Summons *****

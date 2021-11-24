@@ -1609,16 +1609,19 @@ class Simulator
       puts "***** #{t.capitalize} *****"
     end
 
-    def make_summary(ressources, headings: true, total: true)
+    def make_summary(ressources, headings: true, total: true, plusminus: false)
       _total=get_total(ressources) if total
       @_order.each do |summary, keys|
         s=""
         keys.each do |type|
-          sum=0
+          #next if %i(total_gold total_xp total_dust).include?(type)
+          sum=pos_sum=neg_sum=0
           o=[]
           ressources.each do |k,v|
             if v.key?(type)
               sum+=v[type]
+              pos_sum+=v[type] if v[type]>0
+              neg_sum+=v[type] if v[type]<0
               o.push("#{round(v[type])} (#{k})")
             end
           end
@@ -1631,7 +1634,16 @@ class Simulator
             end
             #fodder == random_fodder
           end
-          s+="#{type}: #{round(sum)} [#{o.join(' + ')}]\n" unless sum==0 or sum==0.0
+
+          plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
+          unless (sum==0 or sum==0.0) and !plusminuscondition
+            s << "#{type}: #{round(sum)}"
+            if plusminuscondition
+              s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
+            end
+            s << " [#{o.join(' + ')}]\n"
+          end
+
           if total
             if type==:gold_hg and _total[:total_gold]
               s+="-> Total gold: #{round(_total[:total_gold])}K\n"
@@ -1654,13 +1666,13 @@ class Simulator
       puts unless headings
     end
 
-    def do_summary(title, r, headings: true, total_value: true, total: true, multiplier: 1)
+    def do_summary(title, r, headings: true, total_value: true, total: true, multiplier: 1, plusminus: false)
       if multiplier != 1
         r=timeframe(r, multiplier)
       end
 
       make_h1(title)
-      make_summary(r, headings: headings, total: total)
+      make_summary(r, headings: headings, total: total, plusminus: plusminus)
 
       if total_value
         puts "=> Total value: #{show_dia_value(tally(r))}"
@@ -1780,7 +1792,7 @@ class Simulator
           end
         end
       end
-      do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30)
+      do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30, plusminus: true)
       previsions_summary
     end
 
