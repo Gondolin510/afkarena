@@ -70,6 +70,8 @@ module Value
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
       red_e: 135,
+      dim_emblems: 135,
+      faction_emblems: 135,
       shards: 2000/20 *gold_conversion, #=5.709. Or 6.75=135/20
       cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Or 13.5=135/10
 
@@ -77,6 +79,7 @@ module Value
       class_fragments: 9000 * 0.675 / 400, #=15.1875
 
       mythic_gear: 500,
+      dim_gear: 500,
       t1: 1000,
       t2: 2000,
       t3: 3000,

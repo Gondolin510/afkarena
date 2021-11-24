@@ -73,7 +73,7 @@ class Simulator
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
       @arena_weekly_dia ||=@arena_daily_dia * 10
       @lct_coins ||=380 #top 20. Hourly coins: 400-rank
-      @lc_rewards = {gold: 6*2556} #we win all wagers (6*1000 for earlier accounts)
+      @lc_rewards = {gold: 6*1278} #we win all wagers (6*941 for earlier accounts)
 
       ### misty valley [used when misty unlocks]
       @misty ||= get_misty
@@ -87,11 +87,11 @@ class Simulator
       @noble_regal ||= get_regal #opens after 10 days of account creation
       if @noble_twisted.nil?
         @noble_twisted={} #twisted bounties not open
-        @noble_twisted = get_twisted_bounties(:xp) if @stage > "12-40"
+        @noble_twisted = get_twisted_bounties if @stage > "12-40" #default to xp
       end
       if @noble_coe.nil?
         @noble_coe={} #coe not open
-        @noble_coe = get_coe(:dust) if @stage > "08-20"
+        @noble_coe = get_coe if @stage > "08-20" #default to dust
       end
 
       ### Hero trials [used when hero trials unlock]
@@ -103,15 +103,15 @@ class Simulator
 
       ### Merchants
       #Paid version, f2p versions are in Merchant_daily, Merchant_weekly, Merchant_monthly
-      @merchant_daily={} #we are f2p by default
-      @merchant_weekly={}
-      @merchant_monthly={}
+      @merchant_daily ||={} #we are f2p by default
+      @merchant_weekly ||={}
+      @merchant_monthly ||={}
 
       ### Cards
-      @monthly_card={} #f2p
+      @monthly_card ||={} #f2p
       #@monthly_card=get_monthly_card #default to dust
       #@monthly_card=get_monthly_card(:shard)
-      @deluxe_monthly_card={} #f2p
+      @deluxe_monthly_card ||={} #f2p
       # @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
       # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted)
 
@@ -134,7 +134,7 @@ class Simulator
       end
       if @buy_guild.nil?
         @buy_guild = [] #not open
-        @buy_guild += [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear] if @stage > "02-04"
+        @buy_guild += [:garrison, :dim_exchange, {t3: :max}, nil, nil, :dim_gear] if @stage > "02-04"
       end
       if @buy_lab.nil?
         @buy_lab = [] #not open
@@ -212,16 +212,18 @@ class Simulator
         garrison: { cost: 66*800, garrison_stone: 66},
         dim_exchange: {cost: 40000/2, dim_points: 40/2},
       }.merge(@StoreHero||{})
+
       @StoreGuild ||={
         garrison: { cost: 66*800, garrison_stone: 66},
-        t1: 33879,
+        t1: 33879, #shortcut for t1: {cost: 33879, t1: 1}
         t2: 40875,
-        t3: 47000, #shortcut for t3: {cost: 47000, t3: 1}
+        t3: {cost: 47000, t3: 1, max: 2},
         random_mythic_gear: 31350,
         mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
         dim_exchange: {cost: 40000/2, dim_points: 40/2},
         dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
       }.merge(@StoreGuild||{})
+
       @StoreLab={
         #blue_stone: { cost: 2400, blue_stones: 60, max: 8},
         blue_stone: { cost: 4800, blue_stones: 120, max: 4},
@@ -229,18 +231,20 @@ class Simulator
         fodder: {cost: 4800, choice_fodder: 1.0/9},
         atier: {cost: 45000, choice_atier: 1},
         dust: {cost: 9000, dust: 1500, max: 2},
-        twisted: {cost: 40000, twisted: 400, max: 2},
-        wukong: 45000, arthur: 60000, #we get dim_e after Arthur
+        twisted: {cost: 40000, twisted: 400, max: 2+1},
+        wukong: 45000, arthur: 60000, #we get dim_e after Arthur, twisted after wukong
         dim_emblems: {cost: 64000, dim_emblems: 50},
         red_e: {cost: 37125, red_e: 25, max: 2},
         garrison: { cost: 100*800, garrison_stone: 100},
         dim_exchange: {cost: 200000/2, dim_points: 200/2},
       }.merge(@StoreLab||{})
+
       @StoreChallenger={
         god: { cost: 250000, choice_god: 1},
+        #they are replaced by shards after 5*
         atier: {cost: 150000, choice_atier: 1},
         flora: 150000,
-        merlin: 250000,
+        merlin: 250000, ldv: 250000,
         red_e: {cost: 165000, red_e: 25, max: 3}
       }.merge(@StoreChallenger||{})
 
@@ -358,7 +362,7 @@ class Simulator
       end
     end
 
-    def get_twisted_bounties(type, paid: false)
+    def get_twisted_bounties(type=:xp, paid: false)
       if paid
         case type
         when :gold; {dia: 5500, gold_h: 11472}
@@ -378,7 +382,7 @@ class Simulator
       end
     end
 
-    def get_coe(type, paid: false)
+    def get_coe(type=:dust, paid: false)
       if paid
         case type
         when :dust; {dia: 5500, dust: 50000, dust_h: 1900}
@@ -505,38 +509,38 @@ class Simulator
     def get_cursed_realm(rank=nil)
       return {} if rank==nil #not in twisted
       r={twisted: 100, shards: 100}
-      r={twisted: 120, shards: 120} if r <= 95
-      r={twisted: 140, shards: 140} if r <= 90
-      r={twisted: 160, shards: 160} if r <= 85
-      r={twisted: 180, shards: 180} if r <= 80
-      r={twisted: 200, shards: 200} if r <= 75
-      r={twisted: 220, shards: 220} if r <= 70
-      r={twisted: 240, shards: 240} if r <= 65
-      r={twisted: 260, shards: 260} if r <= 60
-      r={twisted: 280, shards: 280} if r <= 55
-      r={twisted: 300, shards: 300, cores: 10} if r <= 50
-      r={twisted: 320, shards: 320, cores: 20} if r <= 47
-      r={twisted: 340, shards: 340, cores: 30} if r <= 44
-      r={twisted: 360, shards: 360, cores: 40} if r <= 41
-      r={twisted: 380, shards: 380, cores: 50} if r <= 38
-      r={twisted: 400, shards: 400, cores: 60} if r <= 35
-      r={twisted: 420, shards: 400, cores: 70} if r <= 32
-      r={twisted: 440, shards: 400, cores: 80} if r <= 29
-      r={twisted: 460, shards: 400, cores: 90} if r <= 26
-      r={twisted: 480, shards: 400, cores: 100} if r <= 23
-      r={twisted: 500, shards: 400, cores: 110} if r <= 21
-      r={twisted: 530, shards: 400, cores: 120} if r <= 19
-      r={twisted: 560, shards: 400, cores: 130} if r <= 16
-      r={twisted: 590, shards: 400, cores: 140} if r <= 14
-      r={twisted: 620, shards: 400, cores: 150} if r <= 12
-      r={twisted: 650, shards: 400, cores: 160, stargazers: 3} if r <= 10
-      r={twisted: 680, shards: 400, cores: 170, stargazers: 4} if r <= 8
-      r={twisted: 710, shards: 400, cores: 180, stargazers: 5} if r <= 6
-      r={twisted: 740, shards: 400, cores: 200, stargazers: 6} if r <= 5
-      r={twisted: 770, shards: 400, cores: 220, stargazers: 7} if r <= 4
-      r={twisted: 800, shards: 400, cores: 240, stargazers: 8} if r <= 3
-      r={twisted: 850, shards: 400, cores: 260, stargazers: 9} if r <= 2
-      r={twisted: 1000, shards: 400, cores: 300, stargazers: 10} if r <= 1
+      r={twisted: 120, shards: 120} if rank <= 95
+      r={twisted: 140, shards: 140} if rank <= 90
+      r={twisted: 160, shards: 160} if rank <= 85
+      r={twisted: 180, shards: 180} if rank <= 80
+      r={twisted: 200, shards: 200} if rank <= 75
+      r={twisted: 220, shards: 220} if rank <= 70
+      r={twisted: 240, shards: 240} if rank <= 65
+      r={twisted: 260, shards: 260} if rank <= 60
+      r={twisted: 280, shards: 280} if rank <= 55
+      r={twisted: 300, shards: 300, cores: 10} if rank <= 50
+      r={twisted: 320, shards: 320, cores: 20} if rank <= 47
+      r={twisted: 340, shards: 340, cores: 30} if rank <= 44
+      r={twisted: 360, shards: 360, cores: 40} if rank <= 41
+      r={twisted: 380, shards: 380, cores: 50} if rank <= 38
+      r={twisted: 400, shards: 400, cores: 60} if rank <= 35
+      r={twisted: 420, shards: 400, cores: 70} if rank <= 32
+      r={twisted: 440, shards: 400, cores: 80} if rank <= 29
+      r={twisted: 460, shards: 400, cores: 90} if rank <= 26
+      r={twisted: 480, shards: 400, cores: 100} if rank <= 23
+      r={twisted: 500, shards: 400, cores: 110} if rank <= 21
+      r={twisted: 530, shards: 400, cores: 120} if rank <= 19
+      r={twisted: 560, shards: 400, cores: 130} if rank <= 16
+      r={twisted: 590, shards: 400, cores: 140} if rank <= 14
+      r={twisted: 620, shards: 400, cores: 150} if rank <= 12
+      r={twisted: 650, shards: 400, cores: 160, stargazers: 3} if rank <= 10
+      r={twisted: 680, shards: 400, cores: 170, stargazers: 4} if rank <= 8
+      r={twisted: 710, shards: 400, cores: 180, stargazers: 5} if rank <= 6
+      r={twisted: 740, shards: 400, cores: 200, stargazers: 6} if rank <= 5
+      r={twisted: 770, shards: 400, cores: 220, stargazers: 7} if rank <= 4
+      r={twisted: 800, shards: 400, cores: 240, stargazers: 8} if rank <= 3
+      r={twisted: 850, shards: 400, cores: 260, stargazers: 9} if rank <= 2
+      r={twisted: 1000, shards: 400, cores: 300, stargazers: 10} if rank <= 1
       return r
     end
 
@@ -560,7 +564,7 @@ class Simulator
       when :red_e; {red_e: 2}
       end
       nb_red=1 #level 1
-      nb_red=2 if level @vip >= 14 #level 3
+      nb_red=2 if @vip >= 14 #level 3
 
       purple=case purple
       when :poe; {poe: 240}
@@ -602,7 +606,7 @@ class Simulator
       @ressources[:arena]=arena if @_unlock_arena
       @ressources[:lct]=lct if @_unlock_lct
       @ressources[:lc]=lc if @_unlock_lc
-      @ressources[:dismal]=labyrinth
+      @ressources[:lab]=labyrinth
       @ressources[:misty]=misty if @_unlock_misty
       @ressources[:regal]=regal
       @ressources[:tr_bounties]=twisted_bounties
@@ -1251,16 +1255,29 @@ class Simulator
 
   module Store
     def get_item_value(item, shop)
+      qty=1
+      if item.is_a?(Hash)
+        item, qty=item.to_a.first
+      end
+
       shop_item=shop[item]
       if shop_item.is_a?(Hash)
         cost=shop_item.delete(:cost)
-        shop_item.delete(:max) #todo not implemented
+        max=shop_item.delete(:max)
+        if qty==:max
+          max ? qty=max : qty=1
+        end
         value=shop_item
       else
+        unless shop_item
+          warn "[Warning!] Shop item #{item} not found"
+          return[0, {}, 1]
+        end
         cost=shop_item
         value={item => 1}
+        qty=1 if qty==:max
       end
-      return [cost, value]
+      return [item, cost, value, qty]
     end
 
     def handle_buys(buys, shop, total)
@@ -1278,26 +1295,29 @@ class Simulator
 
       primary, secondary, extra=split_array(buys)
       primary.each do |item|
-        cost, value=get_item_value(item, shop)
-        do_buy[item, cost, value]
-        total -= cost
+        item, cost, value, qty=get_item_value(item, shop)
+        do_buy[item, cost, value, qty: qty]
+        total -= qty*cost
       end
 
       if secondary
         secondary.each do |item|
-          cost, value=get_item_value(item, shop)
-          if total > cost
-            do_buy[item, cost, value]
-            total -= cost
+          item, cost, value, qty=get_item_value(item, shop)
+          qty=[(total/cost).floor(), qty].min
+          qty=[qty, 0].max
+          if qty>0
+            do_buy[item, cost, value, qty: qty]
+            total -= qty*cost
           end
         end
       end
 
       if extra and total > 0.0
-        extra=extra.first
-        cost, value=get_item_value(extra, shop)
+        item=extra.first
+        item, cost, value, _qty =get_item_value(item, shop)
         qty=total*1.0/cost
-        do_buy[extra, cost, value, qty: qty]
+        qty=[qty, 0].max
+        do_buy[item, cost, value, qty: qty] if qty>0
       end
 
       return [r, o]
@@ -1515,10 +1535,11 @@ class Simulator
     end
 
     def economy
-      {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct dismal misty regal tr_bounties coe hero_trial guild_hero_trial vow),
+      {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
+       towers: %i(towers_king towers_4F towers_god)
       }
     end
   end
@@ -1691,6 +1712,7 @@ class Simulator
       ff_summary
       economy.each do |k,v|
         r=@ressources.slice(*v)
+        next if r.empty?
         case k
         when :income
           do_summary(k,r)

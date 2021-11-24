@@ -31,7 +31,6 @@ Simulator.new do
 
   @tower_kt = 150
 
-  @friends_nb = 20
   @friends_mercs = 1
 
   @gh_wrizz_chests = 13
@@ -50,6 +49,44 @@ Simulator.new do
 
   #we don't buy anything in the stores
   @buy_hero = @buy_guild = @buy_lab = @buy_challenger =[]
+end.summary
+
+puts "==================== Example of a whale ===================="
+Simulator.new do
+  @stage = "40-01"
+  @hero_level = 500
+  @player_level=300
+  @vip =16
+  @nb_ff =7 #up to 300 dia
+  @subscription =true
+
+  @tower_kt = 900
+  @tower_4f = 600
+  @tower_god = 350
+
+  @monthly_stargazing = 20
+  @monthly_hcp_heroes = 4
+
+  @cursed_realm = get_cursed_realm(5) #in cursed and in top 5%
+
+  @arena_daily_dia = get_arena(1) #rank 1 in arena
+  @arena_weekly_dia ||=@arena_daily_dia * 10
+  @lct_coins =400 #top 1
+
+  @dura_nb_selling=7
+
+  @noble_regal = get_regal(paid: true)
+  @noble_twisted = get_twisted_bounties(paid: true) #default to xo
+  @noble_coe = get_coe(paid: true) #default to dust
+
+  @monthly_card=get_monthly_card #default to dust
+  @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
+
+  @shop_items = %i(dust purple_stones poe shards dust_h gold_e)
+  @buy_hero = [nil, {twisted: :max}]
+  @buy_guild = [:dim_exchange, {t3: :max}, nil, nil, :dim_gear]
+  @buy_lab = [:dim_exchange, nil, {twisted: :max}, :dim_emblems, :red_e]
+  @buy_challenger = []
 end.summary
 
 puts "==================== Example of detailed customisation ===================="
