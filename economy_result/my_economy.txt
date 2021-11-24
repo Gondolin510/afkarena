@@ -257,11 +257,11 @@ Max rc level: 3.14 days (9.55 by month)
 
 --------------- Fixed vars ---------------
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
-@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.25}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}}
-@StoreHero: {:garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
-@StoreGuild: {:garrison=>{:garrison_stone=>66}, :t3=>47000, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
-@StoreLab: {:garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}, :dim_emblems=>{:dim_emblems=>50}}
-@StoreChallenger: {:god=>250000}
+@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.25}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>10080.0, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
+@StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
+@StoreGuild: {:garrison=>{:garrison_stone=>66}, :t1=>33879, :t2=>40875, :t3=>47000, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_exchange=>{:dim_points=>20}, :dim_gear=>67000}
+@StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>2}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}}
+@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}}
 @Merchant_daily: {:dia=>20, :purple_stones=>2}
 @Merchant_weekly: {:dia=>20, :purple_stones=>5}
 @Merchant_monthly: {:dia=>50, :purple_stones=>10}
@@ -291,9 +291,8 @@ Max rc level: 3.14 days (9.55 by month)
 @Shop_refresh_cost: [100, 100, 200, 200]
 
 --------------- Internal vars ---------------
-@_shop_emblem_discout: 0.7
-@_lab_flat_gold_h: 55
-@_lab_flat_xp_h: 6
+@_shop_emblem_discount: 1
+@_shop_discount: 0.7
 @_unlock_guild: true
 @_unlock_arena: true
 @_unlock_board: true
@@ -302,6 +301,8 @@ Max rc level: 3.14 days (9.55 by month)
 @_unlock_lct: true
 @_unlock_tr: true
 @_unlock_oak_inn: true
+@_lab_flat_gold_h: 55
+@_lab_flat_xp_h: 6
 @_vip_solo_bounty: 8
 @_vip_gold_mult: 0.9
 @_vip_extra_arena_fight: 5

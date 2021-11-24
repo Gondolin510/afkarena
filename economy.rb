@@ -61,11 +61,11 @@ class Simulator
         @buy_lab = [] #not open
         @buy_lab += [:garrison, :dim_exchange, nil, :dim_emblems] if @stage > "02-20"
       end
-      #todo: automatically update stores shopping list depending on progression
       if @buy_challenger.nil?
         @buy_challenger = [] #not open
         @buy_challenger += [] if @stage > "09-20" #open at 09-20
       end
+      #todo: automatically update store shopping lists depending on progression
 
       # Summonings
       @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
@@ -174,27 +174,52 @@ class Simulator
         poe: { poe: 250, gold: -1125 },
         shards: { shards: 20, gold: -2000, max: 3 },
         cores: { cores: 10, dia: -200, max: 3 },
-        gold_e: { gold_e: 20, gold: 15600*@_shop_emblem_discout, proba: 0.25 },
-        silver_e: { silver_e: 30, gold: 14400*@_shop_emblem_discout, proba: 0.75 },
+        gold_e: { gold_e: 20, gold: 15600*@_shop_discount, proba: 0.25 },
+        silver_e: { silver_e: 30, gold: 14400*@_shop_discount, proba: 0.75 },
+        mythic_gear: {mythic_gear: 1, dia: -3168},  #3564 dia at earlier chapters
+        reset_scroll: {reset_scrolls: 1, gold: -6000},
+        fodder: {random_fodder: 1, dia: -2268},#9 blue cards
       }.merge(@Shop||{})
+      # note: at chap 22, we have 500 dust, 30/20 gold/siver_e, shards and core, but only 100 poe
 
       @StoreHero ={
+        fodder: {cost: 4800, choice_fodder: 1.0/9},
+        purple_stone: { cost: 18000, purple_stones: 60, max: 4},
+        blue_stone: { cost: 2400, blue_stones: 60, max: 1+2+3+4},
+        twisted: { cost: 10000, twisted: 100, max: 1+2+3+10},
         garrison: { cost: 66*800, garrison_stone: 66},
         dim_exchange: {cost: 40000/2, dim_points: 40/2},
       }.merge(@StoreHero||{})
       @StoreGuild ||={
         garrison: { cost: 66*800, garrison_stone: 66},
+        t1: 33879,
+        t2: 40875,
         t3: 47000, #shortcut for t3: {cost: 47000, t3: 1}
+        random_mythic_gear: 31350,
+        mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
         dim_exchange: {cost: 40000/2, dim_points: 40/2},
         dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
       }
       @StoreLab={
+        #blue_stone: { cost: 2400, blue_stones: 60, max: 8},
+        blue_stone: { cost: 4800, blue_stones: 120, max: 4},
+        # ealier we have 8x60 blue stones, 4 of them are replaced by red_e+twisted afterwards
+        fodder: {cost: 4800, choice_fodder: 1.0/9},
+        atier: {cost: 45000, choice_atier: 1},
+        dust: {cost: 9000, dust: 1500, max: 2},
+        twisted: {cost: 40000, twisted: 400, max: 2},
+        wukong: 45000, arthur: 60000, #we get dim_e after Arthur
+        dim_emblems: {cost: 64000, dim_emblems: 50},
+        red_e: {cost: 37125, red_e: 25, max: 2},
         garrison: { cost: 100*800, garrison_stone: 100},
         dim_exchange: {cost: 200000/2, dim_points: 200/2},
-        dim_emblems: {cost: 64000, dim_emblems: 50},
       }.merge(@StoreLab||{})
       @StoreChallenger={
-        god: 250000,
+        god: { cost: 250000, choice_god: 1},
+        atier: {cost: 150000, choice_atier: 1},
+        flora: 150000,
+        merlin: 250000,
+        red_e: {cost: 165000, red_e: 25, max: 3}
       }.merge(@StoreChallenger||{})
 
       @Merchant_daily ||={ dia: 20, purple_stones: 2}
@@ -259,7 +284,6 @@ class Simulator
       setup_vars
       get_progression
       setup_constants
-      get_unlock
       get_vip
       get_fos
       get_subscription
@@ -533,10 +557,10 @@ class Simulator
 
   module SetupHelpers
     def get_progression #variables depending on progression
-      @_shop_emblem_discout ||=0.7 #todo adjust depending on stage progression
-    end
+      @_shop_emblem_discount =1
+      @_shop_discount =0.7 if @stage >= "33-01" #is that correct?
+      #todo adjust depending on stage progression
 
-    def get_unlock
       # stargazer+abex 16-01
       @_unlock_guild=true if @stage >"02-20"
       @_unlock_arena=true if @stage >"02-28"
@@ -1318,10 +1342,13 @@ class Simulator
     def get_total(r=@ressources)
       s=tally(r)
       s=convert_ressources_h(s)
-      unless (s.keys & %i(choice_god random_god random_fodder random_atier wishlist_atier choice_atier)).empty?
-        s[:god]=(s[:choice_god]||0)+(s[:random_god]||0)
-        s[:fodder]=(s[:random_fodder]||0)
-        s[:atier]=(s[:random_atier]||0)+(s[:wishlist_atier]||0)+(s[:choice_atier]||0)
+      unless (s.keys & %i(god choice_god random_god fodder choice_fodder random_fodder atier random_atier wishlist_atier choice_atier)).empty?
+        s[:god]||=0
+        s[:god]+=(s[:choice_god]||0)+(s[:random_god]||0)
+        s[:fodder]||=0
+        s[:fodder]+=(s[:choice_fodder]||0)+(s[:random_fodder]||0)
+        s[:atier]||=0
+        s[:atier]+=(s[:random_atier]||0)+(s[:wishlist_atier]||0)+(s[:choice_atier]||0)
       end
       s
     end
