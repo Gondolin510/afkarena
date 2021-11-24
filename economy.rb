@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#TODO: cursed realm, tower progression, more events?
+#TODO: tower progression, more events?
 
 require './value'
 require 'json'
@@ -36,6 +36,71 @@ class Simulator
       @tower_4f ||= 280 #max fos at 280 for t2_gear
       @tower_god ||= 300 #max fos at 300 for invigor
 
+      # Summonings
+      @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
+      @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
+      @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
+      @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
+      # Friends and weekly mercs
+      if @friends_mercs.nil?
+        @friends_mercs = 0
+        @friends_mercs = 5 if @stage > "06-40" #mercenaries open
+      end
+      @friends_nb ||= 20
+
+      #GH
+      @gh_team_wrizz_gold ||=1080
+      @gh_team_soren_gold ||=@gh_team_wrizz_gold
+      @gh_team_wrizz_coin ||=1158
+      @gh_team_soren_coin ||=@gh_team_wrizz_coin
+
+      @gh_wrizz_chests ||= 23
+      @gh_soren_chests ||= @gh_wrizz_chests
+      #if not specified, determine the gold amount from the chest amount
+      @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
+      @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
+      @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
+
+      #twisted realm (use fabled rewards)
+      @tr_twisted ||=380
+      @tr_poe ||=1290
+      @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
+
+      # cursed realm
+      @cursed_realm = {} #not in cursed
+      # @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
+
+      # arena
+      @arena_daily_dia ||= get_arena(5) #rank 5 in arena
+      @arena_weekly_dia ||=@arena_daily_dia * 10
+      @lct_coins ||=380 #top 20. Hourly coins: 400-rank
+      @lc_rewards = {gold: 6*1000} #we win all wagers
+
+      #misty valley
+      @misty ||= get_misty
+
+      #misc
+      @board_level ||=8
+      @dura_nb_selling ||=0
+
+      #noble society, by default paid is false
+      #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
+      @noble_regal ||= get_regal
+      if @noble_twisted.nil?
+        @noble_twisted={} #twisted bounties not open
+        @noble_twisted = get_twisted_bounties(:xp) if @stage > "12-40"
+      end
+      if @noble_coe.nil?
+        @noble_coe={} #coe not open
+        @noble_coe = get_coe(:dust) if @stage > "08-20"
+      end
+
+      #average guild hera trial rewards
+      @hero_trial_guild_rewards ||={
+        dia: 200+100+200,
+        guild_coins: 1000 #assume top 500
+      }
+
       # Daily shopping
       if @shop_items.nil?
         @shop_items = [] #shop not open
@@ -67,63 +132,6 @@ class Simulator
       end
       #todo: automatically update store shopping lists depending on progression
 
-      # Summonings
-      @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
-      @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
-      @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
-      @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
-      # Friends and weekly mercs
-      if @friends_mercs.nil?
-        @friends_mercs = 0
-        @friends_mercs = 5 if @stage > "06-40" #mercenaries open
-      end
-      @friends_nb ||= 20
-
-      #GH
-      @gh_team_wrizz_gold ||=1080
-      @gh_team_soren_gold ||=@gh_team_wrizz_gold
-      @gh_team_wrizz_coin ||=1158
-      @gh_team_soren_coin ||=@gh_team_wrizz_coin
-
-      @gh_wrizz_chests ||= 23
-      @gh_soren_chests ||= @gh_wrizz_chests
-      #if not specified, determine the gold amount from the chest amount
-      @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
-      @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
-      @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
-
-      #twisted realm (use fabled rewards)
-      @tr_twisted ||=380
-      @tr_poe ||=1290
-      @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
-
-      # arena
-      @arena_daily_dia ||= get_arena(5) #rank 5 in arena
-      @arena_weekly_dia ||=@arena_daily_dia * 10
-      @lct_coins ||=380 #top 20. Hourly coins: 400-rank
-      @lc_rewards = {gold: 6*1000} #we win all wagers
-
-      #misty valley
-      @misty ||= get_misty
-
-      #noble society, by default paid is false
-      #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
-      @noble_regal ||= get_regal
-      if @noble_twisted.nil?
-        @noble_twisted={} #twisted bounties not open
-        @noble_twisted = get_twisted_bounties(:xp) if @stage > "12-40"
-      end
-      if @noble_coe.nil?
-        @noble_coe={} #coe not open
-        @noble_coe = get_coe(:dust) if @stage > "08-20"
-      end
-
-      #average guild hera trial rewards
-      @hero_trial_guild_rewards ||={
-        dia: 200+100+200,
-        guild_coins: 1000 #assume top 500
-      }
-
       if @labyrinth_mode.nil?
         @labyrinth_mode = :skip #not open
         @labyrinth_mode = :easy if @stage >= "02-04"
@@ -131,11 +139,6 @@ class Simulator
         @labyrinth_mode = :dismal if @stage >= "27-01" #or dismal_skip_large
       end
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
-      
-      #misc
-      @board_level ||=8
-      @dura_nb_selling ||=0
-
 
       # Other variables:
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
@@ -468,6 +471,44 @@ class Simulator
         add_to_hash(r,s)
       end
       r
+    end
+
+    def get_cursed_realm(rank=nil)
+      return {} if rank==nil #not in twisted
+      r={twisted: 100, shards: 100}
+      r={twisted: 120, shards: 120} if r <= 95
+      r={twisted: 140, shards: 140} if r <= 90
+      r={twisted: 160, shards: 160} if r <= 85
+      r={twisted: 180, shards: 180} if r <= 80
+      r={twisted: 200, shards: 200} if r <= 75
+      r={twisted: 220, shards: 220} if r <= 70
+      r={twisted: 240, shards: 240} if r <= 65
+      r={twisted: 260, shards: 260} if r <= 60
+      r={twisted: 280, shards: 280} if r <= 55
+      r={twisted: 300, shards: 300, cores: 10} if r <= 50
+      r={twisted: 320, shards: 320, cores: 20} if r <= 47
+      r={twisted: 340, shards: 340, cores: 30} if r <= 44
+      r={twisted: 360, shards: 360, cores: 40} if r <= 41
+      r={twisted: 380, shards: 380, cores: 50} if r <= 38
+      r={twisted: 400, shards: 400, cores: 60} if r <= 35
+      r={twisted: 420, shards: 400, cores: 70} if r <= 32
+      r={twisted: 440, shards: 400, cores: 80} if r <= 29
+      r={twisted: 460, shards: 400, cores: 90} if r <= 26
+      r={twisted: 480, shards: 400, cores: 100} if r <= 23
+      r={twisted: 500, shards: 400, cores: 110} if r <= 21
+      r={twisted: 530, shards: 400, cores: 120} if r <= 19
+      r={twisted: 560, shards: 400, cores: 130} if r <= 16
+      r={twisted: 590, shards: 400, cores: 140} if r <= 14
+      r={twisted: 620, shards: 400, cores: 150} if r <= 12
+      r={twisted: 650, shards: 400, cores: 160, stargazers: 3} if r <= 10
+      r={twisted: 680, shards: 400, cores: 170, stargazers: 4} if r <= 8
+      r={twisted: 710, shards: 400, cores: 180, stargazers: 5} if r <= 6
+      r={twisted: 740, shards: 400, cores: 200, stargazers: 6} if r <= 5
+      r={twisted: 770, shards: 400, cores: 220, stargazers: 7} if r <= 4
+      r={twisted: 800, shards: 400, cores: 240, stargazers: 8} if r <= 3
+      r={twisted: 850, shards: 400, cores: 260, stargazers: 9} if r <= 2
+      r={twisted: 1000, shards: 400, cores: 300, stargazers: 10} if r <= 1
+      return r
     end
   end
   include UserSetupHelpers
@@ -857,6 +898,10 @@ class Simulator
       tr={twisted: @tr_twisted, poe: @tr_poe}
       add_to_hash(tr, @tr_guild)
       mult_hash(tr, 2.0/3) #to account for double events
+    end
+
+    def cursed_realm
+      mult_hash(@cursed_realm, 1.0/7) #open every week
     end
 
     def quests
