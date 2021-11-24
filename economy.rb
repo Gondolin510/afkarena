@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
+#misty unlock, ff max, lab flat rewards, beginner/whale samples, shops
+#paid merchant, paid cards
 
 require './value'
 require 'json'
@@ -18,18 +20,14 @@ class Simulator
 
   module Setup
     def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
-      @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
 
+      # core settings
+      @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
       @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
+      @nb_ff=6
       @subscription ||=false if @subscription.nil?
-
-      if @nb_ff.nil?
-        @nb_ff=0 #no ff at first
-        @nb_ff=6 if @stage > "03-36"
-        #todo: update ff number depending on stage progression
-      end
 
       # Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -95,7 +93,7 @@ class Simulator
         @noble_coe = get_coe(:dust) if @stage > "08-20"
       end
 
-      #average guild hera trial rewards
+      #average guild hero trial rewards
       @hero_trial_guild_rewards ||={
         dia: 200+100+200,
         guild_coins: 1000 #assume top 500
@@ -202,7 +200,7 @@ class Simulator
         mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
         dim_exchange: {cost: 40000/2, dim_points: 40/2},
         dim_gear: 67000 #shortcut for dim_gear: {cost: 67000, dim_gear:1},
-      }
+      }.merge(@StoreGuild||{})
       @StoreLab={
         #blue_stone: { cost: 2400, blue_stones: 60, max: 8},
         blue_stone: { cost: 4800, blue_stones: 120, max: 4},
@@ -611,6 +609,10 @@ class Simulator
       @_unlock_lct=true if @stage >"09-20"
       @_unlock_tr=true if @stage >"12-40"
       @_unlock_oak_inn=true if @stage >"17-40"
+
+      @_max_nb_ff=0 #no ff at first (this is not used, just for information)
+      @_max_nb_ff=6 if @stage > "03-36"
+      #todo: update ff number depending on stage progression
     end
 
     def get_vip
