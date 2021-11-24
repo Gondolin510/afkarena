@@ -178,11 +178,10 @@ dura_tears: 12.86 [12.86 (quests)]
 invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]
 arena_tickets: 60.0 [60.0 (quests)]
 
-=============== Level summary ===============
-Level: 2.16 days (13.9 by month) {gold: 2.12 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 4249.98 gold + 843512.46 xp]
-Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361.0 dia + 130100.0 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
-
 =============== 30 days previsions summary ===============
+level: 2.16 days (13.9 by month) {gold: 2.12 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 4249.98 gold + 843512.46 xp]
+-> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361.0 dia + 130100.0 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
+
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
 SI+30: 89.14 days (0.34 by month)
@@ -393,11 +392,10 @@ invigor: 21600.0 [17280.0 (idle) + 4320.0 (ff)]
 lct_tickets: 150 [150 (lct_buy_tickets)]
 reset_scrolls: 30 [30 (shop)]
 
-=============== Level summary ===============
-Level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
-Level cost: 9773.77 dia / 10081.6 dia [18132.62 gold=1035.32 dia / 671.58 gold_h=1343.16 dia + 130100.0 xp=298.92 xp_h=2391.32 dia + 24703 dust=507.77 dust_h=6347.12 dia
-
 =============== 30 days previsions summary ===============
+level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
+-> Level cost: 9773.77 dia / 10081.6 dia [18132.62 gold=1035.32 dia / 671.58 gold_h=1343.16 dia + 130100.0 xp=298.92 xp_h=2391.32 dia + 24703 dust=507.77 dust_h=6347.12 dia
+
 SI+10: 35.52 days (0.84 by month)
 SI+20: 74.31 days (0.4 by month)
 SI+30: 113.83 days (0.26 by month)
