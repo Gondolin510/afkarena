@@ -316,6 +316,7 @@ class Simulator
 
   module UserSetupHelpers
     def get_guild_gold(chests)
+      #Soren
       case chests
       when 1; 2     # 5k
       when 2; 4     # 10k
@@ -333,7 +334,7 @@ class Simulator
       when 14; 435  # 20M
       when 15; 953  # 45M
       when 16; 1044 # 100M
-      when 17; 1210 # 300M todo check 17+ values
+      when 17; 1150 # 300M
       when 18; 1410 # 1B
       when 19; 1560 # 2B
       when 20; 1710 # 5B
