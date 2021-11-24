@@ -28,7 +28,7 @@ s=Simulator.new do
 
   @tower_god = 200
 
-  @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
+  @misty = get_misty(guild_twisted: :guild)
 end
 s.summary
 # p s.real_afk_gold, s.real_afk_xp

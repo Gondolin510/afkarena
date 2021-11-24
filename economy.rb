@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: cursed realm, tower progression, more events?
-#misty rewards stages
+#things unlock
 
 require './value'
 require 'json'
@@ -300,35 +300,106 @@ class Simulator
       end
     end
 
-    def get_misty(misty_guild_twisted: :twisted, misty_purple_blue: :blue)
-      r = { 
-        dust_h: 8*12,
-        purple_stones: 2*60,
-        red_e: 4*10, t3: 2,
-        cores: 3*100,
-        hero_choice_chest: 1,
-      }
+    def get_misty(gold_xp_dust: :dust, guild_twisted: :twisted, purple_blue: :blue, shard_red: :red, core_red: :core, core_poe_twisted: :core)
+      r={}
+      if @stage >= "17-01"
+        s=case gold_xp_dust
+        when :gold; {gold_h: 24*12}
+        when :xp; {xp_h: 8*12}
+        when :dust; {dust_h: 8*12}
+        end
+        add_to_hash(r,s)
 
-      case misty_guild_twisted
-      when :twisted
-        r[:twisted] ||=0
-        r[:twisted] += 400
-      when :guild
-        r[:guild_coins] ||=0
-        r[:guild_coins] += 30000
-      else
-        raise "Incorrect choice for misty_guild_twisted: #{misty_guild_twisted}"
+        s=case guild_twisted
+        when :twisted; {twisted: 400}
+        when :guild; {guild_coins: 30000}
+        end
+        add_to_hash(r,s)
+
+        s=case purple_blue
+        when :purple; {purple_stones: 60}
+        when :blue; {blue_stones: 360}
+        end
+        add_to_hash(r,s)
       end
-
-      case misty_purple_blue
-      when :purple
-        r[:purple_stones] ||=0
-        r[:purple_stones] += 60
-      when :blue
-        r[:blue_stones] ||=0
-        r[:blue_stones] += 720
-      else
-        raise "Incorrect choice for misty_purple_blue: #{misty_purple_blue}"
+      if @stage >= "19-01"
+        # 60 purple = 2160-2700 dia / 5 scroll = 1350 dia / 1000 Poe = 625 dia; so we want the stone here
+        s={purple_stones: 60}
+        add_to_hash(r,s)
+      end
+      if @stage >= "21-01"
+        #40 purple emblem = 897 dia / 20 gold emblem = 1248 dia / 10 red emblem = 1584 dia / 1000 Poe = 625 dia; so we want the reds
+        s={red_e: 10}
+        add_to_hash(r,s)
+      end
+      if @stage >= "23-01"
+        #t1/t2/t3
+        s={t3: 1}
+        add_to_hash(r,s)
+      end
+      if @stage >= "25-01"
+        # 200 shard / 40 purple emblem / 20 gold emblem / 10 red emblem / 1000 Poe
+        s=case shard_red
+        when :red; {red_e: 10}
+        when :shard; {shards: 200}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "27-01"
+        # 60 purple / 5 scroll / 1000 Poe
+        s={purple_stones: 60}
+        add_to_hash(r,s)
+      end
+      if @stage >= "29-01"
+        s={hero_choice_chest: 1}
+        add_to_hash(r,s)
+      end
+      if @stage >= "31-01"
+        # 100 core / 40 purple emblem / 20 gold emblem / 10 red emblem / 1000 Poe
+        s=case core_red
+        when :red; {red_e: 10}
+        when :core; {cores: 100}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "32-01"
+        # 200 shard / 40 purple emblem / 20 gold emblem / 10 red emblem / 1000 Poe
+        s=case shard_red
+        when :red; {red_e: 10}
+        when :shard; {shards: 200}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "33-01"
+        # 100 core / 2000 poe / 200 twisted
+        s=case core_poe_twisted
+        when :core; {cores: 100}
+        when :poe; {poe: 2000}
+        when :twisted; {twisted: 200}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "34-01"
+        # 200 shard / 40 purple emblem / 20 gold emblem / 10 red emblem / 1000 Poe
+        s=case shard_red
+        when :red; {red_e: 10}
+        when :shard; {shards: 200}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "35-01"
+        # 100 core / 2000 poe / 200 twisted
+        s=case core_poe_twisted
+        when :core; {cores: 100}
+        when :poe; {poe: 2000}
+        when :twisted; {twisted: 200}
+        end
+        add_to_hash(r,s)
+      end
+      if @stage >= "36-01"
+        #t1/t2/t3
+        s={t3: 1}
+        add_to_hash(r,s)
       end
       r
     end
@@ -1487,7 +1558,7 @@ if __FILE__ == $0
   else
     s=Simulator.new do #example run
       # @monthly_stargazing=50
-      @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
+      # @misty = get_misty(guild_twisted: :guild)
     end
     s.summary
     # s.show_variables

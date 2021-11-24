@@ -36,17 +36,19 @@ Detailed customizations
 # Exemple:
 puts "==================== Example of detailed customisation ===================="
 s=Simulator.new do
+  @stage="37-01"
+
   #Enter the afk timer value for xp and gold:
   #(by default we use stage progression to get approximations of these values)
-  @afk_xp ||=14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
-  @afk_gold ||=900 #the displayed value by minute (include vip)
-  @afk_dust ||=1167.6 #the value by day, ie 48.65 by hour
+  @afk_xp =14508 #the displayed value by minute, this include the vip bonus but not the fos bonus
+  @afk_gold =900 #the displayed value by minute (include vip)
+  @afk_dust =1167.6 #the value by day, ie 48.65 by hour
   #This is used to set up real_afk_xp, real_afk_gold, real_afk_dust which are the hourly base values not affected by vip, with gold and xp in K.
 
   @nb_ff =3 #we only do ff up to 80 dia
   @misty = { red_e: 4*10, t3: 2 } #our misty rewards
   #alternative: see `get_misty` as an helper function to build them
-  @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
+  @misty = get_misty(guild_twisted: :guild)
   @noble_regal = get_regal(paid: true) #we pay the regal pass
   @noble_coe = get_coe(:cores) #we select cores rather than dust in champiion of esperia regals, by default paid is false, ie we use the f2p version
   #see the variable list below for the full settings
@@ -55,7 +57,7 @@ s=Simulator.new do
   @monthly_tavern= 0
   @monthly_hcp_heroes= 1 #we want to do enough hcp summons to get one hero
 
-  
+
   # If we are feeling adventurous we can even change internal variables in post_setup_hook
   def post_setup_hook
      # skipping large camps in dismal:
