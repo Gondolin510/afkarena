@@ -7,10 +7,10 @@ Simulator.new do
   @stage = "37-01"
 
   @hero_level= 350
-  @player_level=180 #for fos, 180 is max fos for gold/xp/dust mult
-  @nb_ff=6 #ff by day
-  @vip=10 #vip level
-  @subscription=false
+  @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
+  @nb_ff=6 #ff by day (default)
+  @vip=10 #vip level (default)
+  @subscription=false # (default)
 
   #the other default settings assume max fos tower, max gh rewards,
   #non paid regal subscriptions, ...
@@ -21,6 +21,38 @@ Simulator.new do
   #    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
 end.summary
 
+puts "==================== Example of new player ===================="
+Simulator.new do
+  @stage = "08-01"
+  @hero_level= 160
+  @player_level=90
+  @nb_ff=1
+  @vip=5
+
+  @tower_kt = 150
+
+  @friends_nb = 20
+  @friends_mercs = 1
+
+  @gh_wrizz_chests = 13
+  @tr_twisted = 200
+  @tr_poe = 0
+
+  @arena_daily_dia = get_arena(200) #rank 200 in arena
+  @lct_coins =250
+  @lc_rewards = {gold: 6*1000} #betting
+
+  @board_level =5
+  @hero_trial_guild_rewards = { dia: 200+100 }
+
+  @shop_items = %i(dust purple_stones)
+  @shop_refreshes = 0
+
+  #we don't buy anything in the stores
+  @buy_hero = @buy_guild = @buy_lab = @buy_challenger =[]
+end.summary
+
+puts "==================== Example of detailed customisation ===================="
 =begin
 Detailed customizations
   Conventions:
@@ -32,9 +64,6 @@ Detailed customizations
   - @_underscore variables are internal variables
   Call `show_variables(verbose: true)` to see all these variables.
 =end
-
-# Exemple:
-puts "==================== Example of detailed customisation ===================="
 s=Simulator.new do
   @stage="37-01"
 

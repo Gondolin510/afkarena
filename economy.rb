@@ -865,7 +865,7 @@ class Simulator
       @_solo_bounties=@_vip_solo_bounty
       @_team_bounties=1+ (@_vip_extra_team_bounty||0) + (@_sub_extra_team_bounty||0)
       @_nb_arena_fight ||=2+(@_vip_extra_arena_fight||0)
-      @_nb_guild_fight ||= 2+@_vip_extra_guild_fight
+      @_nb_guild_fight ||= 2+(@_vip_extra_guild_fight||0)
     end
 
     def get_raw_idle_hourly
@@ -1387,7 +1387,7 @@ class Simulator
       %i(hero lab guild challenger).each do |i|
         @ressources[:"#{i}_store"] ||={}
         coin_name=:"#{i}_coins"
-        _total=total[coin_name]*30
+        _total=(total[coin_name]||0)*30
         r,bought=handle_buys(instance_variable_get(:"@buy_#{i}"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
         cost=r.delete(:cost)
         r[coin_name]=cost
