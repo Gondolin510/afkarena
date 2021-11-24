@@ -1625,7 +1625,7 @@ class Simulator
       puts
     end
 
-    def level_cost_summary
+    def level_cost_summary(daily: false)
       # total=clean_total
       # make_h1 "Level summary"
       # puts "Level: #{cost_summary(cost, total)}"
@@ -1643,6 +1643,7 @@ class Simulator
       total=gold_v+xp_v+dust_v
       totalbis=goldh_v+xp_v+dust_v
       o="Level cost: #{round(total)} dia / #{round(totalbis)} dia [#{round(gold)} gold=#{round(gold_v)} dia / #{round(gold_h)} gold_h=#{round(goldh_v)} dia + #{round(xp)} xp=#{round(xp_h)} xp_h=#{round(xp_v)} dia + #{round(dust)} dust=#{round(dust_h)} dust_h=#{round(dust_v)} dia"
+      o << " {#{round(gold_h/24.0)} x 24h gold + #{round(xp_h/24.0)} x 24h xp + #{round(dust_h/24.0)} x 24h dust}" if daily
       o
     end
 
@@ -1754,7 +1755,7 @@ class Simulator
         @hero_level=level
         @stage=stage
       end
-      puts s.level_cost_summary
+      puts s.level_cost_summary(daily: true)
     end
   end
   extend Utilities
@@ -1764,6 +1765,7 @@ if __FILE__ == $0
   if ARGV.first == "--debug"
     require "pry"
     binding.pry
+    #Simulator.level_cost(500, stage: "38-01")
   else
     s=Simulator.new do #example run
       # @monthly_stargazing=50
