@@ -393,8 +393,8 @@ lct_tickets: 150 [150 (lct_buy_tickets)]
 reset_scrolls: 30 [30 (shop)]
 
 =============== 30 days previsions summary ===============
-level: 8.93 days (3.36 by month) {gold: 8.93 days, xp: 1.56 days, dust: 2.52 days} [monthly remains: 2068642.45 xp + 211673.96 dust]
--> Level cost: 9773.77 dia / 10081.6 dia [18132.62 gold=1035.32 dia / 671.58 gold_h=1343.16 dia + 130100.0 xp=298.92 xp_h=2391.32 dia + 24703 dust=507.77 dust_h=6347.12 dia
+level: 17.43 days (1.72 by month) {gold: 17.43 days, xp: 3.61 days, dust: 4.54 days} [monthly remains: 0.0 gold + 1986044.92 xp + 217989.39 dust]
+-> Level cost: 19014.77 dia / 19615.58 dia [35389.44 gold=2020.64 dia / 1310.72 gold_h=2621.44 dia + 301900.0 xp=693.64 xp_h=5549.12 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 35.52 days (0.84 by month)
 SI+20: 74.31 days (0.4 by month)
@@ -420,8 +420,8 @@ Max rc level: 1.92 days (15.6 by month)
 
 ==================== Default settings ====================
 =============== Variables ===============
-@stage: 37-01
-@hero_level: 350
+@stage: 38-01
+@hero_level: 500
 @player_level: 180
 @nb_ff: 6
 @vip: 10
@@ -464,4 +464,4 @@ Max rc level: 1.92 days (15.6 by month)
 @board_level: 8
 @dura_nb_selling: 0
 @labyrinth_mode: dismal
-@lab_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
+@lab_flat_rewards: {:gold=>1782.1979999999996, :xp=>2613.942}

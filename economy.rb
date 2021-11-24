@@ -18,10 +18,10 @@ class Simulator
   end
 
   module Setup
-    def setup_vars #assume an f2p vip 10 hero level 350 player at chap 37 with max fos by default
-      @stage ||= "37-01"
+    def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
+      @stage ||= "38-01"
 
-      @hero_level ||= 350
+      @hero_level ||= 500
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @nb_ff ||=6 #ff by day
       @vip ||=10 #vip level
@@ -79,7 +79,7 @@ class Simulator
       @misty ||= get_misty
 
       #noble society, by default paid is false
-      #for the paid version: @noble_twisted = twisted_bounties_choice(:xp, paid: true)
+      #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
       @noble_regal ||= get_regal
       @noble_twisted ||= get_twisted_bounties(:xp)
       @noble_coe ||= get_coe(:dust)
@@ -93,13 +93,13 @@ class Simulator
       #misc
       @board_level ||=8
       @dura_nb_selling ||=0
-      @labyrinth_mode = :dismal
+      @labyrinth_mode = :dismal #:dismal_skip, :hard, :easy
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
       # Other variables:
-      #@afk_xp: the displayed value by minute, this include the vip bonus but not the fos bonus
-      #@afk_gold: the displayed value by minute (include vip)
-      #@afk_dust: 1167.6 #the value by day, ie 48.65 by hour
+      #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
+      #@afk_gold=844     # the displayed value by minute (include vip)
+      #@afk_dust=1167.6  # the value by day, ie 48.65 by hour
       #determined from stage progression, but can be set up directly for more precise results
     end
 
@@ -172,23 +172,18 @@ class Simulator
         dura_tears: 3
       }
 
+      @Dismal_rewards ||= { dia: 300, lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333 }
+      @Lab_hard_rewards ||= { dia: 300, lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333 }
+      @Lab_easy_rewards ||= { dia: 300, lab_coins: 3867 }
       @Dismal_stage_chest_rewards ||= { gold_h: 79, xp_h: 39.5, dust_h: 39.5 }
-      # skipping large camps: 59h gold+29.5h xp+dust
+      @Dismal_stage_chest_skip_rewards ||= { gold_h: 59, xp_h: 29.5, dust_h: 29.5 } # skipping large camps: 59h gold+29.5h xp+dust
       @Dismal_end_rewards ||= {
         gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
-        shards: 61, cores: 41, dia: 300,
-        lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333
-      } # i think guild coins are not affected by the multiplier here
-      @Lab_hard_end_rewards ||= {
-        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo: we have less end rewards in standard lab
-        dia: 300,
-        lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333
-      }
-      @Lab_easy_end_rewards ||= {
-        gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2, #todo
-        dia: 300,
-        lab_coins: 3867, guild_coins: 1000, challenger_coins: 3333
-      }
+        shards: 61, cores: 41
+      } 
+      #We have less end rewards in standard lab, apart from the 6h gold
+      #chest we only have 2 items rather than 3, so multiply the rewards by 2/3
+      @Lab_end_rewards ||= { gold_h: 14*6 + 7*2*2.0/3, xp_h: 3.5*2*2.0/3, dust_h: 3.5*2*2.0/3 }
       @_lab_flat_gold_h=55 #approximations to recover the flat rewards
       @_lab_flat_xp_h=6
 
@@ -799,11 +794,13 @@ class Simulator
       lab_flat_rewards[:gold] *= @_lab_gold_mult
       rewards=case mode
         when :dismal
-          [@Dismal_stage_chest_rewards, @Dismal_end_rewards, @lab_flat_rewards]
+          [@Dismal_rewards, @Dismal_stage_chest_rewards, @Dismal_end_rewards, @lab_flat_rewards]
+        when :dismal_skip_large
+          [@Dismal_rewards, @Dismal_stage_chest_skip_rewards, @Dismal_end_rewards, @lab_flat_rewards]
         when :hard
-          [@Lab_hard_end_rewards, @lab_flat_rewards]
+          [@Lab_hard_rewards, @Lab_end_rewards, @lab_flat_rewards]
         when :easy
-          [@Lab_easy_end_rewards, @lab_flat_rewards]
+          [@Lab_easy_rewards, @Lab_end_rewards, @lab_flat_rewards]
         end
       total=sum_hash(*rewards, multiplier: 2.0/3) #for double events
       total[:lab_coins]*=@_lab_mult

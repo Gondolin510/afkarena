@@ -266,10 +266,13 @@ Max rc level: 3.14 days (9.55 by month)
 @Merchant_monthly: {:dia=>50, :purple_stones=>10}
 @Quest_daily: {:gold_hg=>2, :blue_stones=>5, :arena_tickets=>2, :xp_h=>2, :scrolls=>1, :dia=>100}
 @Quest_weekly: {:gold_h=>16, :blue_stones=>60, :purple_stones=>10, :dia=>400, :scrolls=>3, :dura_tears=>3}
+@Dismal_rewards: {:dia=>300, :lab_coins=>4900, :guild_coins=>1000, :challenger_coins=>3333}
+@Lab_hard_rewards: {:dia=>300, :lab_coins=>4867, :guild_coins=>1000, :challenger_coins=>3333}
+@Lab_easy_rewards: {:dia=>300, :lab_coins=>3867}
 @Dismal_stage_chest_rewards: {:gold_h=>79, :xp_h=>39.5, :dust_h=>39.5}
-@Dismal_end_rewards: {:gold_h=>98, :xp_h=>7.0, :dust_h=>7.0, :shards=>61, :cores=>41, :dia=>300, :lab_coins=>4900, :guild_coins=>1000, :challenger_coins=>3333}
-@Lab_hard_end_rewards: {:gold_h=>98, :xp_h=>7.0, :dust_h=>7.0, :dia=>300, :lab_coins=>4867, :guild_coins=>1000, :challenger_coins=>3333}
-@Lab_easy_end_rewards: {:gold_h=>98, :xp_h=>7.0, :dust_h=>7.0, :dia=>300, :lab_coins=>3867, :guild_coins=>1000, :challenger_coins=>3333}
+@Dismal_stage_chest_skip_rewards: {:gold_h=>59, :xp_h=>29.5, :dust_h=>29.5}
+@Dismal_end_rewards: {:gold_h=>98, :xp_h=>7.0, :dust_h=>7.0, :shards=>61, :cores=>41}
+@Lab_end_rewards: {:gold_h=>93.33333333333333, :xp_h=>4.666666666666667, :dust_h=>4.666666666666667}
 @GH_chest_dia: 2.7
 @GH_chest_guild: 65
 @Oak_amount: {:blue_stones=>30, :dia=>100, :dust=>500, :gold=>1500}

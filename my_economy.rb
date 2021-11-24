@@ -2,7 +2,6 @@
 require './economy'
 
 s=Simulator.new do
-  #at rc 559: the amount required to level up (xp and gold are in K)
   @hero_level=359
   @stage="37-16"
   @afk_xp=13235
