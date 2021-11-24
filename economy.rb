@@ -107,6 +107,11 @@ class Simulator
       @merchant_weekly={}
       @merchant_monthly={}
 
+      ### Cards
+      @monthly_card={} #f2p
+      #eg: @monthly_card=get_monthly_card(:dust)
+      @deluxe_monthly_card={}
+
       ### Daily shopping
       if @shop_items.nil?
         @shop_items = [] #shop not open
@@ -517,6 +522,49 @@ class Simulator
       r={twisted: 1000, shards: 400, cores: 300, stargazers: 10} if r <= 1
       return r
     end
+
+    def get_monthly_card(type=:dust)
+      purple=case type
+      when :shard; {shards: 15}
+      when :silver_e; {silver_e: 3}
+      when :gold_e; {gold_e: 2}
+      when :gold; {gold_h: 8*6}
+      when :xp; {xp_h: 2*6}
+      when :dust; {dust_h: 2*6}
+      end
+      nb=2
+      nb=3 if @vip >= 6 #level 2
+      nb=4 if @vip >= 12 #level 3
+      sum_hash({dia: 300/30+100}, mult_hash(purple, nb))
+    end
+    def get_deluxe_monthly_card(red: :red_e, purple: :core)
+      level=1
+      level=2 if @vip >= 6
+      level=3 if @vip >= 8
+      level=4 if @vip >= 9
+      level=5 if @vip >= 12
+      level=6 if @vip >= 14
+
+      red=case red
+      when :silver_e; {silver_e: 8}
+      when :gold_e; {gold_e: 5}
+      when :red_e; {red_e: 2}
+      end
+      nb_red=0
+      nb_red=1 if level >=4
+      nb_red=2 if level >=6
+
+      purple=case purple
+      when :poe; {poe: 240}
+      when :twisted; {twisted: 24}
+      when :core; {cores: 12}
+      when :blue_stone; level <=2 ? {blue_stones: 30} : {blue_stones: 60}
+      end
+      nb_purple=1
+      nb_purple=5 if level >=5
+
+      sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
+    end
   end
   include UserSetupHelpers
 
@@ -554,6 +602,8 @@ class Simulator
       @ressources[:hero_trial]=hero_trial if @_unlock_trials
       @ressources[:guild_hero_trial]=guild_hero_trial if @_unlock_trials
       @ressources[:vow]=vow
+      @ressources[:monthly_card]=@monthly_card
+      @ressources[:deluxe_monthly_card]=@deluxe_monthly_card
       @ressources.merge!(custom_income)
     end
     def custom_income

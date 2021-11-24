@@ -462,6 +462,8 @@ Max rc level: 1.96 days (15.27 by month)
 @merchant_daily: {}
 @merchant_weekly: {}
 @merchant_monthly: {}
+@monthly_card: {}
+@deluxe_monthly_card: {}
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
 @buy_hero: [:garrison]
