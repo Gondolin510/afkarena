@@ -26,9 +26,14 @@ s=Simulator.new do
   @noble_coe = get_coe(:cores)
   @dura_nb_selling =1
 
+  @tower_kt = 561
+  @tower_4f = 280
   @tower_god = 200
+  get_tower_progression(10)
 
   @misty = get_misty(guild_twisted: :guild)
+
+  
 end
 
 if __FILE__ == $0

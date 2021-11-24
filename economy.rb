@@ -132,6 +132,10 @@ class Simulator
       end
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
+      ### Tower progression
+      get_tower_progression(0)
+      #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
+
       ### Other variables:
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
       #@afk_gold=844     # the displayed value by minute (include vip)
@@ -623,6 +627,7 @@ class Simulator
       make_exchange
       summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly
       exchange_coins #long term coin exchange, ditto
+      @ressources.merge!(towers_ressources)
       get_ressource_order
     end
 
@@ -733,6 +738,10 @@ class Simulator
       @_unlock_store_guild=true if @stage > "02-40"
       @_unlock_store_lab=true if @stage > "02-20"
       @_unlock_store_challenger=true if @stage > "09-20"
+
+      @_unlock_tower_kt=true if @stage > "02-12"
+      @_unlock_tower_4f=true if @stage > "14-40"
+      @_unlock_tower_god=true if @stage > "29-60"
     end
 
     def get_vip
@@ -1285,26 +1294,116 @@ class Simulator
         [k, v*@Monthly_vows/30.0]
       end.to_h
     end
+  end
+  include Income
 
-    def tower_progression
-      #unlock: KT 2-12, 4F tower 14-40, 
-      #Multis: 700 KT, 450 4F, 350 celestial
+  module Towers
+    #return the average floor reward
+    def tower_kt_ressources(level=@tower_kt)
+      # king tower (>560): 5650 gold + 160 dia +150 dust + 30 purple every *10
+      #             5650 gold + 80 dia +150 dust + 30 blue every else
+      #             (except 160 dia every *5)
+      # quest: 400 dia every 50, 1000 shards every?
+      return {} unless @_unlock_tower_kt
+      if @_kt_floor.nil? #compute the value
+        @_kt_floor={}
+        gold=dia=dust=blue=purple=0
+        if level>560
+          gold =5650
+          dia =80
+          dust =150
+          purple=blue=30
+        end
+        @_kt_floor={gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
+      end
+      if @_kt_quest.nil? #compute the value
+        @_kt_quest={dia: 400/50, shards: 1000/50}
+      end
+      sum_hash(@_kt_floor, @_kt_quest)
+    end
 
+    def tower_4f_ressources(level=@tower_4f)
+      return {} unless @_unlock_tower_4f
       # for 4f towers, between 240 and 360:
       # every 10 level we have 4000 dust, 5 stargaze or 10 red_e, 90 purple stones or 15 gold_e
       # above 360: every 10 levels we have 4000 dust + 5 stargaze + 10 red_
-      # More precisely: (10 sg + 8k dust, 10 Red chests 10 faction emblems)
+      # More precisely: (10 sg + 8k dust, 10 Red chests 10 faction emblems) every 20
       # from quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
-      #
+      if @_4f_floor.nil? #compute the value
+        @_4f_floor={}
+        if level>=240
+          @_4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20}
+        end
+        if level>=360
+          @_4f_floor={dust: 4000/10, stargazers: 10.0/20, red_e: 10.0/20, faction_emblems: 10.0/20}
+        end
+      end
+      if @_4f_quest.nil? #compute the value
+        @_4f_quest={}
+        if level>=220
+          @_4f_quest={red_e: 40/20}
+        end
+        if level>=460
+          @_4f_quest={poe: 600/20}
+        end
+      end
+      sum_hash(@_4f_floor, @_4f_quest)
+    end
+
+    def tower_god_ressources(level=@tower_god)
+      return {} unless @_unlock_tower_god
       # celhypo quests: 400 cores every x20
-      #
-      # king tower (>560): 5650 gold + 160 dia +150 dust + 30 purple every *10
-      #             5650 gold + 80 dia +150 dust + 30 blue every else
-      #             (except 160 dia ever *5)
       # Quests: Cores are 500 every x50 and 400 dia every x20
+      if @_god_floor.nil? #compute the value
+        @_god_floor={}
+        if level>=240
+          @_god_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20}
+        end
+      end
+      if @_god_quest.nil? #compute the value
+        @_god_quest={cores: 500/50, dia: 400/20}
+      end
+      sum_hash(@_god_floor, @_god_quest)
+    end
+
+    def tower_kt_progression(nb_levels=@tower_kt_progression)
+      @_tower_kt ||= tower_4f_ressources
+      mult_hash(@_tower_kt, nb_levels)
+    end
+    def tower_4f_progression(nb_levels=@tower_4f_progression)
+      @_tower_kt ||= tower_4f_ressources
+      mult_hash(@_tower_4f, nb_levels)
+    end
+    def tower_god_progression(nb_levels=@tower_god_progression)
+      @_tower_god ||= tower_god_ressources
+      mult_hash(@_tower_god, nb_levels)
+    end
+
+    #return tower progression from the rate of level up
+    #heuristic: one level=one floor at single, two floors at multis
+    def get_tower_progression(level_up)
+      #Multis: 700 KT, 450 4F, 350 celestial
+      factor_4f=factor_kt=factor_god=1
+      factor_kt=2 if @tower_kt >= 600
+      factor_4f=2 if @tower_4f >= 450
+      factor_god=2 if @tower_god >= 350
+      @tower_kt_progression ||= level_up*factor_kt
+      @tower_4f_progression ||= level_up*factor_4f
+      @tower_god_progression ||= level_up*factor_god
+    end
+
+    def towers_ressources
+      @_tower_kt_ressources ||= tower_kt_ressources
+      @_tower_4f_ressources ||= tower_4f_ressources
+      @_tower_god_ressources ||= tower_god_ressources
+      return {
+        towers_kt: mult_hash(@_tower_kt_ressources, @tower_kt_progression/30.0),
+        towers_4f: mult_hash(@_tower_4f_ressources, @tower_4f_progression/30.0),
+        towers_god: mult_hash(@_tower_god_ressources, @tower_god_progression/30.0),
+      }
     end
   end
-  include Income
+  include Towers
 
   module Store
     def get_item_value(item, shop)
@@ -1592,7 +1691,7 @@ class Simulator
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
-       towers: %i(towers_king towers_4F towers_god)
+       towers: %i(towers_kt towers_4f towers_god)
       }
     end
   end
@@ -1619,10 +1718,11 @@ class Simulator
           o=[]
           ressources.each do |k,v|
             if v.key?(type)
-              sum+=v[type]
-              pos_sum+=v[type] if v[type]>0
-              neg_sum+=v[type] if v[type]<0
-              o.push("#{round(v[type])} (#{k})")
+              value=v[type]
+              sum+=value
+              pos_sum+=value if value>0
+              neg_sum+=value if value<0
+              o.push("#{round(v[type])} (#{k})") unless value == 0 or value == 0.0
             end
           end
           if total

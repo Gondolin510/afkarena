@@ -55,7 +55,7 @@ arena_tickets: 2.0 [2.0 (quests)]
 
 =============== Exchange ===============
 dia: -790.0 [-530 (ff_cost) + -260.0 (shop)]
-gold: -16125.0 [-16125 (shop) + 0.0 (dura_fragments_sell)]
+gold: -16125.0 [-16125 (shop)]
 dust: 1500 [1500 (shop)]
 poe: 750 [750 (shop)]
 shards: 60 [60 (shop)]
@@ -63,7 +63,7 @@ purple_stones: 3.33 [3.33 (shop)]
 
 =============== Summons ===============
 ***** Base *****
-dia: 1.5 [-0.0 (wishlist) + -0.0 (hcp) + -0.0 (stargazing) + 1.5 (stargaze)]
+dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)]
 -> Total gold: 66.73K
 xp_h: 1.1 [1.1 (stargaze)]
@@ -86,7 +86,7 @@ hero_coins: 375.02 [375.02 (tavern)]
 ***** Hero_summons *****
 random_fodder: 0.69 [0.47 (stones) + 0.22 (tavern) + 0.0 (stargaze)]
 -> Atier: 0.46
-choice_atier: 0.03 [0.03 (hero_chest) + 0.0 (tavern)]
+choice_atier: 0.03 [0.03 (hero_chest)]
 wishlist_atier: 0.14 [0.14 (tavern)]
 random_atier: 0.28 [0.25 (stones) + 0.02 (tavern) + 0.02 (stargaze)]
 -> God: 0.04
@@ -111,10 +111,12 @@ lab_coins: 142100.0 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
 guild_coins: 403530.25 => buy 403530.25 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (2 x t3) +  67000 (3.53 x dim_gear)]
 challenger_coins: 340260.0 => 
 
+=============== Towers ===============
+
 =============== Full monthly ressources ===============
 ***** Base *****
-dia: 14118.16=37818.16-23700.0 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + -0.0 (stargazing) + -0.0 (wishlist) + -0.0 (hcp) + 45.0 (stargaze)]
-gold: 168549.81=652299.81-483750 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 35643.96 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop) + 0.0 (dura_fragments_sell)]
+dia: 14118.16=37818.16-23700.0 [4575.0 (board) + 9277.74 (guild) + 2250.0 (oak_inn) + 2000.0 (tr) + 6214.29 (quests) + 735.71 (merchants) + 5120.42 (arena) + 6000.0 (lab) + 600.0 (hero_trial) + 1000.0 (guild_hero_trial) + -15900 (ff_cost) + -7800.0 (shop) + 45.0 (stargaze)]
+gold: 168549.81=652299.81-483750 [107849.23 (idle) + 53924.62 (ff) + 8952.5 (board) + 376488.0 (guild) + 33750.0 (oak_inn) + 9355.5 (arena) + 15336.0 (lc) + 35643.96 (lab) + 7000.0 (misty) + 4000.0 (hero_trial) + -483750 (shop)]
 gold_h: 3838.71 [128.57 (quests) + 3540.0 (lab) + 96.0 (hero_trial) + 74.14 (stargaze)]
 gold_hg: 60.0 [60.0 (quests)]
 -> Total gold: 275446.89K
@@ -145,20 +147,20 @@ t2_gear: 3.0 [2.0 (idle) + 1.0 (ff)]
 guild_coins: 0.0=403530.25-403530.25 [381530.25 (guild) + 20000.0 (lab) + 2000.0 (guild_hero_trial) + -403530.25 (guild_store)]
 lab_coins: -37900.0=142100.0-180000.0 [142100.0 (lab) + -180000.0 (lab_store)]
 hero_coins: -41549.42=11250.58-52800.0 [11250.58 (tavern) + -52800.0 (hero_store)]
-challenger_coins: 340260.0 [273600 (lct) + 66660.0 (lab) + 0.0 (challenger_store)]
+challenger_coins: 340260.0 [273600 (lct) + 66660.0 (lab)]
 
 ***** Summons *****
 purple_stones: 660.59 [42.86 (quests) + 91.43 (merchants) + 6.3 (arena) + 300.0 (misty) + 120.0 (hero_trial) + 100.0 (shop)]
 blue_stones: 5922.25 [1114.5 (board) + 675.0 (oak_inn) + 407.14 (quests) + 25.2 (arena) + 1560.0 (misty) + 2020.41 (regal) + 120.0 (hero_trial)]
-scrolls: 52.86 [42.86 (quests) + 10.0 (vow) + 0.0 (wishlist)]
+scrolls: 52.86 [42.86 (quests) + 10.0 (vow)]
 friend_summons: 81.43 [81.43 (friends)]
 hero_choice_chest: 1.0 [1.0 (misty)]
-stargazers: 15.0 [15.0 (vow) + 0.0 (stargazing)]
+stargazers: 15.0 [15.0 (vow)]
 
 ***** Hero_summons *****
 random_fodder: 20.82 [14.05 (stones) + 6.62 (tavern) + 0.15 (stargaze)]
 -> Atier: 13.73
-choice_atier: 1.0 [1.0 (hero_chest) + 0.0 (tavern)]
+choice_atier: 1.0 [1.0 (hero_chest)]
 wishlist_atier: 4.24 [4.24 (tavern)]
 random_atier: 8.49 [7.49 (stones) + 0.53 (tavern) + 0.48 (stargaze)]
 -> God: 1.08
@@ -171,7 +173,7 @@ dim_points: 120.0 [100.0 (lab_store) + 20.0 (guild_store)]
 dim_gear: 3.53 [3.53 (guild_store)]
 
 ***** Misc *****
-dura_fragments: 296.99 [192.24 (idle) + 96.12 (ff) + -0.0 (dura_fragments_sell) + 8.63 (stargaze)]
+dura_fragments: 296.99 [192.24 (idle) + 96.12 (ff) + 8.63 (stargaze)]
 class_fragments: 382.54 [255.02 (idle) + 127.51 (ff)]
 dura_tears: 12.86 [12.86 (quests)]
 invigor: 25920.0 [17280.0 (idle) + 8640.0 (ff)]

@@ -69,6 +69,7 @@ Simulator.new do
   @tower_kt = 900
   @tower_4f = 600
   @tower_god = 350
+  get_tower_progression(10) #progression of 10 levels a month
 
   @monthly_stargazing = 20
   @monthly_hcp_heroes = 4
