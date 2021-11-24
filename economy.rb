@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: cursed realm, tower progression, more events?
+#misty rewards stages
 
 require './value'
 require 'json'
@@ -415,9 +416,8 @@ class Simulator
     end
 
     def ressources_cost
-      @Cost
-      #r[:level]=level_cost
-      #r
+      r={level: level_cost}
+      r.merge(@Cost)
     end
   end
   include LevelUp
@@ -1348,11 +1348,11 @@ class Simulator
       puts
     end
 
-    def level_summary
-      total=clean_total
+    def level_cost_summary
+      # total=clean_total
+      # make_h1 "Level summary"
+      # puts "Level: #{cost_summary(cost, total)}"
       cost=level_cost
-      make_h1 "Level summary"
-      puts "Level: #{cost_summary(cost, total)}"
       gold=cost[:gold]
       xp=cost[:xp]
       dust=cost[:dust]
@@ -1365,8 +1365,8 @@ class Simulator
       dust_v=dia_value({dust: dust})
       total=gold_v+xp_v+dust_v
       totalbis=goldh_v+xp_v+dust_v
-      puts "Level cost: #{round(total)} dia / #{round(totalbis)} dia [#{round(gold)} gold=#{round(gold_v)} dia / #{round(gold_h)} gold_h=#{round(goldh_v)} dia + #{round(xp)} xp=#{round(xp_h)} xp_h=#{round(xp_v)} dia + #{round(dust)} dust=#{round(dust_h)} dust_h=#{round(dust_v)} dia"
-      puts
+      o="Level cost: #{round(total)} dia / #{round(totalbis)} dia [#{round(gold)} gold=#{round(gold_v)} dia / #{round(gold_h)} gold_h=#{round(goldh_v)} dia + #{round(xp)} xp=#{round(xp_h)} xp_h=#{round(xp_v)} dia + #{round(dust)} dust=#{round(dust_h)} dust_h=#{round(dust_v)} dia"
+      o
     end
 
     def cost_summary(cost, total)
@@ -1399,6 +1399,7 @@ class Simulator
           _res_buy, buy, _remain=spending(v, total)
           nb_ascended += buy
         end
+        puts "-> #{level_cost_summary}" if k.to_s=="level"
 
         puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
       end
@@ -1426,7 +1427,6 @@ class Simulator
         end
       end
       do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30)
-      level_summary
       previsions_summary
     end
 
@@ -1470,16 +1470,31 @@ class Simulator
     end
   end
   include Summary
+
+  module Utilities
+    def level_cost(level, stage: "37-01")
+      s=self.new do
+        @hero_level=level
+        @stage=stage
+      end
+      puts s.level_cost_summary
+    end
+  end
+  extend Utilities
 end
 
 if __FILE__ == $0
-  s=Simulator.new do #example run
-    # @monthly_stargazing=50
-    @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
+  if ARGV.first == "--debug"
+    require "pry"
+    binding.pry
+  else
+    s=Simulator.new do #example run
+      # @monthly_stargazing=50
+      @misty = get_misty(misty_guild_twisted: :guild, misty_purple_blue: :blue)
+    end
+    s.summary
+    # s.show_variables
+    # s.show_variables(verbose: true)
+    #p s.items_value
   end
-  s.summary
-
-  # s.show_variables
-  # s.show_variables(verbose: true)
-  #p s.items_value
 end
