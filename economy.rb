@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: tower progression, more events?
-#misty unlock, ff max, lab flat rewards, beginner/whale samples, shops
+#ff max, lab flat rewards, beginner/whale samples
 #paid merchant, paid cards
 
 require './value'
@@ -538,7 +538,7 @@ class Simulator
       @ressources[:lct]=lct if @_unlock_lct
       @ressources[:lc]=lc if @_unlock_lc
       @ressources[:dismal]=labyrinth
-      @ressources[:misty]=misty
+      @ressources[:misty]=misty if @_unlock_misty
       @ressources[:regal]=regal
       @ressources[:tr_bounties]=twisted_bounties
       @ressources[:coe]=coe
@@ -596,7 +596,7 @@ class Simulator
 
   module SetupHelpers
     def get_progression #variables depending on progression
-      @_shop_emblem_discount =1
+      @_shop_discount =1
       @_shop_discount =0.7 if @stage >= "33-01" #is that correct?
       #todo adjust depending on stage progression
 
@@ -608,7 +608,8 @@ class Simulator
       @_unlock_trials=true if @stage >"06-40"
       @_unlock_lct=true if @stage >"09-20"
       @_unlock_tr=true if @stage >"12-40"
-      @_unlock_oak_inn=true if @stage >"17-40"
+      @_unlock_oak_inn=true if @stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
+      @_unlock_misty=true if @stage >"16-40"
 
       @_max_nb_ff=0 #no ff at first (this is not used, just for information)
       @_max_nb_ff=6 if @stage > "03-36"

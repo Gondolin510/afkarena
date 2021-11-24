@@ -231,13 +231,21 @@ module Data
   end
 
   def get_idle(stage) #the values are of the last stage, interpolate
+    idle=get_idle_data
+    max_chap=idle.keys.max
     chap,level=stage.split('-')
     chap=chap.to_i; level=level.to_i
+    if chap>max_chap
+      warn "[Warning]: no idle data for Chapter #{chap}, falling back to data from Chapter #{max_chap}"
+      chap=max_chap
+    end
     prev_chap=chap-1
     prev_chap = 1 if chap==1
     prev_idle=get_idle_data[prev_chap]
     cur_idle=get_idle_data[chap]
-    ratio=level/60.0 #TODO check when there are 40 levels
+    nb_stages=60
+    nb_stages=40 if chap<20
+    ratio=level*1.0/nb_stages
     idle={}
     cur_idle.each do |k,v|
       idle[k]=prev_idle[k]*(1-ratio)+cur_idle[k]*ratio
