@@ -2060,7 +2060,7 @@ class Simulator
         puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
       end
       increase_rc_level=5 #one ascended = 5 levels
-      puts "Max rc level: #{round(1.0/(increase_rc_level*nb_ascended))} days (#{round(increase_rc_level*nb_ascended*30)} by month)"
+      puts "Max rc level+1: #{round(1.0/(increase_rc_level*nb_ascended))} days (#{round(increase_rc_level*nb_ascended*30)} by month)"
       puts
     end
 
