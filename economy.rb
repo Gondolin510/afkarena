@@ -1340,7 +1340,7 @@ class Simulator
         dust =150
         purple=blue=30
       end
-      return {gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
+      return {gold: gold, dia: 1.2*dia, dust: dust, purple_stones: purple/10.0, blue_stones: blue*9/10.0}
     end
     def tower_kt_quest(level=@tower_kt)
       # quest: 400 dia every x20, 
@@ -1356,9 +1356,7 @@ class Simulator
       return sum_hash(tower_kt_floor(level), tower_kt_quest(level))
     end
     def tower_kt_ressources(level=@tower_kt)
-      return {} unless @_unlock_tower_kt
-      @_tower_kt_floor ||= tower_kt_avg(level)
-      @_tower_kt_floor
+      tower_kt_avg(level)
     end
 
     def tower_4f_floor(level=@tower_4f)
@@ -1369,17 +1367,17 @@ class Simulator
       # see https://afk-arena.fandom.com/wiki/Towers_of_Esperia_Rewards
 
       # before 150 the rewards change too much
-      4f_floor={}
-      4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10} if level>=150
-      4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10} if level>=360
-      4f_floor
+      t4f_floor={}
+      t4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10} if level>=150
+      t4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10} if level>=360
+      t4f_floor
     end
     def tower_4f_quest(level=@tower_4f)
       # quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
-      4f_quest={}
-      4f_quest={red_e: 40/20} if level>=220
-      4f_quest={poe: 600/20} if level >=460
-      4f_quest
+      t4f_quest={}
+      t4f_quest={red_e: 40/20} if level>=220
+      t4f_quest={poe: 600/20} if level >=460
+      t4f_quest
     end
     #return the avg ressources from climbing one level in *all* the 4f towers
     def tower_4f_avg(level=@tower_4f)
@@ -1387,13 +1385,8 @@ class Simulator
         min=level.min
         sum_hash(*level.map {|lvl| tower_4f_floor(lvl)}, tower_4f_quest(min))
       else #integer
-        return tower_4f_avg([level]*4])
+        return tower_4f_avg([level]*4)
       end
-    end
-    def tower_4f_ressources(level=@tower_4f)
-      return {} unless @_unlock_tower_4f
-      @_tower_4f_floor ||= tower_4f_avg(level)
-      @_tower_4f_floor
     end
 
     def tower_god_floor(level=@tower_god)
@@ -1410,28 +1403,10 @@ class Simulator
     def tower_god_avg(level=@tower_god)
       if level.is_a?(Enumerable)
         min=level.min
-        sum_hash(*level.map {|lvl| tower_4f_floor(lvl)}, tower_4f_quest(min))
+        sum_hash(*level.map {|lvl| tower_god_floor(lvl)}, tower_god_quest(min))
       else #integer
-        return tower_god_avg([level]*2])
+        return tower_god_avg([level]*2)
       end
-    end
-    def tower_god_ressources(level=@tower_god)
-      return {} unless @_unlock_tower_god
-      @_tower_god_floor ||= tower_god_avg(level)
-      @_tower_god_floor
-    end
-
-    def tower_kt_progression(level=@tower_kt, nb_levels=@tower_kt_progression)
-      tower_kt=tower_kt_ressources(level)
-      mult_hash(tower_kt, nb_levels)
-    end
-    def tower_4f_progression(level=@tower_4f, nb_levels=@tower_4f_progression)
-      tower_4f=tower_4f_ressources(level)
-      mult_hash(tower_4f, nb_levels)
-    end
-    def tower_god_progression(level=@tower_god, nb_levels=@tower_god_progression)
-      tower_god = tower_god_ressources(level)
-      mult_hash(tower_god, nb_levels)
     end
 
     #return tower progression from the rate of level up
@@ -1448,13 +1423,14 @@ class Simulator
     end
 
     def towers_ressources
-      @_tower_kt_ressources ||= tower_kt_ressources(@tower_kt, @tower_kt_progression)
-      @_tower_4f_ressources ||= tower_4f_ressources(@tower_4f, @tower_4f_progression)
-      @_tower_god_ressources ||= tower_god_ressources(@tower_god, @tower_god_progression)
+      return {} unless @_unlock_tower_kt
+      @_tower_kt_avg ||= @_unlock_tower_kt ? tower_kt_avg(@tower_kt) : {}
+      @_tower_4f_avg ||= @_unlock_tower_kt ? tower_4f_avg(@tower_4f) : {}
+      @_tower_god_avg ||= @_unlock_tower_kt ? tower_god_avg(@tower_god) : {}
       return {
-        towers_kt: mult_hash(@_tower_kt_ressources, @tower_kt_progression/30.0),
-        towers_4f: mult_hash(@_tower_4f_ressources, @tower_4f_progression/30.0),
-        towers_god: mult_hash(@_tower_god_ressources, @tower_god_progression/30.0),
+        towers_kt: mult_hash(@_tower_kt_avg, @tower_kt_progression/30.0),
+        towers_4f: mult_hash(@_tower_4f_avg, @tower_4f_progression/30.0),
+        towers_god: mult_hash(@_tower_god_avg, @tower_god_progression/30.0),
       }
     end
   end
