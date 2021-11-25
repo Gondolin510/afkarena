@@ -399,7 +399,7 @@ class Simulator
     end
 
     def get_twisted_bounties(type=:xp, paid: false)
-      get_unlock
+      get_progression
       return {} unless @_unlock_tr
       if paid
         case type
@@ -421,7 +421,7 @@ class Simulator
     end
 
     def get_coe(type=:dust, paid: false)
-      get_unlock
+      get_progression
       return {} unless @_unlock_coe
       if paid
         case type
@@ -434,6 +434,7 @@ class Simulator
       else
         case type
         when :dust; {dust: 7500, dust_h: 380}
+          #this is 6.42 + 15.83 = 21.82 days of dust, ie 6549 dia
         when :red_e; {red_e: 49}
         when :gold_e; {gold_e: 136}
         when :silver_e; {silver_e: 192}
@@ -746,62 +747,64 @@ class Simulator
   include Process
 
   module LevelUp
-    def level_up_ressources(levels, hack: false)
-      p levels
+    def one_level_up_cost(*levels, hack: false)
       r=get_hero_level_stats
       gold=xp=dust=0
-      if levels.is_a?(Integer)
-        if hack and levels>=240
-          #simulate a non crystal setup
-          return level_up_ressources([levels]).map {|i| i/5.0}
-        else
-          return level_up_ressources([levels])
+      levels.each do |level|
+        g=r[level][:gold]
+        x=r[level][:xp]
+        d=r[level][:dust]
+        #at 240 we level up the whole crystal
+        #so we simulate a by hero cost of /5
+        if hack and level >= 240
+          g=g/5.0;
+          x=x/5.0;
+          d=d/5.0;
         end
-      else #an array of current hero levels
-        levels.each do |level|
-          gold +=r[level][:gold]
-          xp +=r[level][:xp]
-          dust +=r[level][:dust]
-        end
+        gold+=g; xp+=x; dust+=d
       end
       return [gold, xp, dust]
     end
-
-    def level_up_cost(level)
-      gold, xp, dust = level_up_ressources(@hero_level)
+    def one_level_up_cost_h(*levels,**kw)
+      gold, xp, dust = one_level_up_cost(*levels,**kw)
       {gold: gold, xp: xp, dust: dust}
     end
 
-    def level_cost
-      gold, xp, dust = level_up_ressources(@hero_level)
-      @_level_gold ||= gold
-      @_level_xp ||= xp
-      @_level_dust ||= dust
-      {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust}
+    def level_up_rc(levels)
+      return level_up_rc([levels]*5) if levels.is_a?(Integer)
+      return one_level_up_cost(*levels, hack: true)
+    end
+    def level_up_rc_h(levels)
+      gold, xp, dust = level_up_rc(levels)
+      {gold: gold, xp: xp, dust: dust}
     end
 
-    def levels_up_cost(nb_levels, level=@hero_level)
+    def current_level_cost
+      gold, xp, dust = level_up_rc(@hero_level)
+      @_current_level_gold ||= gold
+      @_current_level_xp ||= xp
+      @_current_level_dust ||= dust
+      {gold: @_current_level_gold, xp: @_current_level_xp, dust: @_current_level_dust}
+    end
+
+    def level_up_cost(nb_levels, levels=@hero_level)
+      return level_up_cost(nb_levels, [levels]*5) if levels.is_a?(Integer)
+      return level_up_cost([nb_levels]*levels.length, levels) if nb_levels.is_a?(Integer)
       r={}
-      if level.is_a?(Enumerable)
-        nb_levels=[nb_levels]*level.length unless nb_levels.is_a?(Enumerable)
-        level.each_with_index do |l,i|
-          p nb_levels[i], l
-          add_to_hash(r, levels_up_cost(nb_levels[i], l))
-        end
-      else
-        (0...nb_levels).each do |i|
-          add_to_hash(r, level_up_cost(level+i))
+      levels.each_with_index do |level,i|
+        (0...nb_levels[i]).each do |n|
+          add_to_hash(r, one_level_up_cost_h(level+n, hack: true))
         end
       end
       r
     end
 
     def monthly_levelup(nb_levels)
-      @ressources[:levelup]=mult_hash(levels_up_cost(nb_levels), -1/30.0)
+      @ressources[:levelup]=mult_hash(level_up_cost(nb_levels), -1/30.0)
     end
 
     def ressources_cost
-      r={level: level_cost}
+      r={level: current_level_cost}
       r.merge(@Cost)
     end
   end
@@ -809,80 +812,83 @@ class Simulator
 
   module SetupHelpers
     def get_progression #variables depending on progression
+      stage= @stage || "01-01" #in case we call this from the setup function
+      vip=@vip || 1
+
       @_shop_discount =1
-      @_shop_discount =0.7 if @stage >= "33-01" #is that correct?
+      @_shop_discount =0.7 if stage >= "33-01" #is that correct?
       #todo adjust depending on stage progression
 
-      @_unlock_ff=true if @stage > "03-36" #not used
-      @_unlock_guild=true if @stage >"02-20"
-      @_unlock_arena=true if @stage >"02-28"
-      @_unlock_board=true if @stage >"03-12"
-      @_unlock_lc=true if @stage >"05-40"
-      @_unlock_trials=true if @stage >"06-40"
-      @_unlock_coe=true if @stage >"08-20"
-      @_unlock_lct=true if @stage >"09-20"
-      @_unlock_tr=true if @stage >"12-40" #and twisted bounties
-      @_unlock_oak_inn=true if @stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
-      @_unlock_misty=true if @stage >"16-40"
-      @_unlock_mercs=true if @stage > "06-40"
+      @_unlock_ff=true if stage > "03-36" #not used
+      @_unlock_guild=true if stage >"02-20"
+      @_unlock_arena=true if stage >"02-28"
+      @_unlock_board=true if stage >"03-12"
+      @_unlock_lc=true if stage >"05-40"
+      @_unlock_trials=true if stage >"06-40"
+      @_unlock_coe=true if stage >"08-20"
+      @_unlock_lct=true if stage >"09-20"
+      @_unlock_tr=true if stage >"12-40" #and twisted bounties
+      @_unlock_oak_inn=true if stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
+      @_unlock_misty=true if stage >"16-40"
+      @_unlock_mercs=true if stage > "06-40"
 
       #not used except for t3
-      @_unlock_shop=true if @stage > "02-08"
-      @_unlock_shop_mythic=true if @stage > "10-22"
-      @_unlock_guild_store_legendary=true if @stage > "10-22"
-      @_unlock_guild_store_mythic=true if @stage > "12-02"
-      @_unlock_t1=true if @stage > "21-01" #also for shop
-      @_unlock_t2=true if @stage > "26-01"
-      @_unlock_t3=true if @stage > "30-01"
+      @_unlock_shop=true if stage > "02-08"
+      @_unlock_shop_mythic=true if stage > "10-22"
+      @_unlock_guild_store_legendary=true if stage > "10-22"
+      @_unlock_guild_store_mythic=true if stage > "12-02"
+      @_unlock_t1=true if stage > "21-01" #also for shop
+      @_unlock_t2=true if stage > "26-01"
+      @_unlock_t3=true if stage > "30-01"
 
-      @_unlock_store_hero=true if @stage > "01-12"
-      @_unlock_store_guild=true if @stage > "02-40"
-      @_unlock_store_lab=true if @stage > "02-20"
-      @_unlock_store_challenger=true if @stage > "09-20"
+      @_unlock_store_hero=true if stage > "01-12"
+      @_unlock_store_guild=true if stage > "02-40"
+      @_unlock_store_lab=true if stage > "02-20"
+      @_unlock_store_challenger=true if stage > "09-20"
 
-      @_unlock_tower_kt=true if @stage > "02-12"
-      @_unlock_tower_4f=true if @stage > "14-40"
-      @_unlock_tower_god=true if @stage > "29-60"
+      @_unlock_tower_kt=true if stage > "02-12"
+      @_unlock_tower_4f=true if stage > "14-40"
+      @_unlock_tower_god=true if stage > "29-60"
 
       #for information, not used
-      @_unlock_ranhorn=true if @stage > "01-12"
-      @_unlock_tavern=true if @stage > "01-12"
-      @_unlock_temple=true if @stage > "01-12"
-      @_unlock_rickety=true if @stage > "01-12"
-      @_unlock_dark_forest=true if @stage > "02-04"
-      @_unlock_labyrinth=true if @stage > "02-04"
-      @_unlock_labyrinth_hard=true if @stage > "09-24"
-      @_unlock_labyrinth_dismal=true if @stage > "26-60"
-      @_unlock_library=true if @stage > "02-16"
-      @_unlock_prog_rewards=true if @stage > "02-28"
-      @_unlock_wishlist=true if @stage > "04-04"
-      @_unlock_wall_legends=true if @stage > "04-36"
-      @_unlock_artifacts=true if @stage > "06-04"
-      @_unlock_artifacts_enhancements=true if @stage > "13-40"
-      @_unlock_guild_grounds=true if @stage > "06-04"
-      @_unlock_elder_tree=true if @stage > "08-40"
-      @_unlock_twisted=true if @stage > "08-40"
-      @_unlock_fos=true if @stage > "11-40"
-      @_unlock_board_autofill=true if @stage > "12-40" or @vip>=6
-      @_unlock_stargazer=true if @stage > "15-40"
-      @_unlock_abex=true if @stage > "15-40"
-      @_unlock_own_oak_inn=true if @stage > "17-40"
+      @_unlock_ranhorn=true if stage > "01-12"
+      @_unlock_tavern=true if stage > "01-12"
+      @_unlock_temple=true if stage > "01-12"
+      @_unlock_rickety=true if stage > "01-12"
+      @_unlock_dark_forest=true if stage > "02-04"
+      @_unlock_labyrinth=true if stage > "02-04"
+      @_unlock_labyrinth_hard=true if stage > "09-24"
+      @_unlock_labyrinth_dismal=true if stage > "26-60"
+      @_unlock_library=true if stage > "02-16"
+      @_unlock_prog_rewards=true if stage > "02-28"
+      @_unlock_wishlist=true if stage > "04-04"
+      @_unlock_wall_legends=true if stage > "04-36"
+      @_unlock_artifacts=true if stage > "06-04"
+      @_unlock_artifacts_enhancements=true if stage > "13-40"
+      @_unlock_guild_grounds=true if stage > "06-04"
+      @_unlock_elder_tree=true if stage > "08-40"
+      @_unlock_twisted=true if stage > "08-40"
+      @_unlock_fos=true if stage > "11-40"
+      @_unlock_board_autofill=true if stage > "12-40" or @vip>=6
+      @_unlock_stargazer=true if stage > "15-40"
+      @_unlock_abex=true if stage > "15-40"
+      @_unlock_own_oak_inn=true if stage > "17-40"
 
-      @_unlock_afk_legendary=true if @stage > "11-18"
-      @_unlock_afk_mythic=true if @stage > "16-11"
-      @_unlock_afk_mythic=true if @stage > "16-11"
-      @_unlock_afk_silver_e=true if @stage > "16-40"
-      @_unlock_afk_gold_e=true if @stage > "17-40"
-      @_unlock_afk_red_e=true if @stage > "18-40"
-      @_unlock_afk_twisted=true if @stage >= "14-40" #somewhere before
-      @_unlock_afk_poe=true if @stage > "17-40" #somewhere before 18-40, lets assume this is the same as oak inn opening
-      @_unlock_afk_shard=true if @stage > "21-60" #chap 22
-      @_unlock_afk_core=true if @stage > "23-60" #chap 24
+      @_unlock_afk_legendary=true if stage > "11-18"
+      @_unlock_afk_mythic=true if stage > "16-11"
+      @_unlock_afk_mythic=true if stage > "16-11"
+      @_unlock_afk_silver_e=true if stage > "16-40"
+      @_unlock_afk_gold_e=true if stage > "17-40"
+      @_unlock_afk_red_e=true if stage > "18-40"
+      @_unlock_afk_twisted=true if stage >= "14-40" #somewhere before
+      @_unlock_afk_poe=true if stage > "17-40" #somewhere before 18-40, lets assume this is the same as oak inn opening
+      @_unlock_afk_shard=true if stage > "21-60" #chap 22
+      @_unlock_afk_core=true if stage > "23-60" #chap 24
 
-      @_unlock_gh_skip=true if @vip>=6
-      @_unlock_arena_skip=true if @vip>=6
-      @_unlock_speed2=true if @stage > "02-16" or @vip>=2
-      @_unlock_speed4=true if @stage > "21-60" or @vip>=11
+      @_unlock_gh_skip=true if vip>=6
+      @_unlock_arena_skip=true if vip>=6
+      @_unlock_speed2=true if stage > "02-16" or vip>=2
+      @_unlock_speed4=true if stage > "21-60" or vip>=11
     end
 
     def get_vip
@@ -1161,12 +1167,12 @@ class Simulator
     end
 
     def guild
-      nb_chests=@_nb_guild_fight*(@gh_wrizz_chests+@gh_soren_chests*@gh_soren_freq)
-      coins=@GH_chest_guild*nb_chests*@_guild_mult*1.5 #1.5 for team rewards
-      #+@gh_team_wrizz_coin+@gh_team_soren_coin*@gh_soren_freq
-      dia=@GH_chest_dia*nb_chests
-      gold=@_nb_guild_fight*(@gh_wrizz_gold+@gh_soren_gold*@gh_soren_freq)*1.5
-      #+@gh_team_wrizz_gold+@gh_team_soren_gold*@gh_soren_freq
+      #mail = half of our top rewards, hence the +0.5
+      nb_chests=(@gh_wrizz_chests+@gh_soren_chests*@gh_soren_freq)
+      nb_chests_total=@_nb_guild_fight*nb_chests
+      dia=@GH_chest_dia*nb_chests_total
+      coins=(@_nb_guild_fight+0.5)*nb_chests*@GH_chest_guild*@_guild_mult
+      gold=(@_nb_guild_fight+0.5)*(@gh_wrizz_gold+@gh_soren_gold*@gh_soren_freq)
 
       {guild_coins: coins, dia: dia, gold: gold}
     end
@@ -2085,7 +2091,7 @@ class Simulator
     end
 
     def level_cost_summary(daily: false)
-      cost=level_cost
+      cost=current_level_cost
       gold=cost[:gold]
       xp=cost[:xp]
       dust=cost[:dust]
