@@ -3,6 +3,8 @@ require './economy'
 
 s=Simulator.new do
   @hero_level=[220, 200, 200, 200, 200]
+  @monthly_levelup=10
+
   @stage="22-02"
   @afk_xp=2820
   @afk_gold=425
