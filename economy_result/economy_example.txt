@@ -99,10 +99,6 @@ lab_coins: 142100 => buy 480000 [ 80000 (100 x garrison) +  400000 (100 x dim_ex
 guild_coins: 403530.25 => buy 403530.25 [ 52800 (66 x garrison) +  80000 (20 x dim_exchange) +  94000 (2 x t3) +  176730.25 (2.64 x dim_gear)]
 challenger_coins: 340260
 
-=============== Towers ===============
-
-=============== Levelup ===============
-
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 14118.16=37818.16-23700 [4575 (board 12%) + 9277.74 (guild 25%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 14%) + 6000 (lab 16%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%)]
@@ -272,17 +268,11 @@ choice_god: 0.01 [0.01 (stargaze)]
 random_god: 0.01 [0.01 (stones) + 0.01 (tavern)]
 dura_fragments: 0.29 [0.29 (stargaze)]
 
-=============== Stores ===============
-
 --------------- 30 days coin summary ---------------
 hero_coins: 9802.35
 lab_coins: 77340
 guild_coins: 112320
 challenger_coins: 0
-
-=============== Towers ===============
-
-=============== Levelup ===============
 
 =============== Full monthly ressources ===============
 ***** Base *****
@@ -487,8 +477,6 @@ purple_stones: 2 [2 (towers_kt)]
 blue_stones: 18 [18 (towers_kt)]
 stargazers: 2 [1.33 (towers_4f) + 0.67 (towers_god)]
 
-=============== Levelup ===============
-
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: -17462.56=78265.44-95728 [7152.5 (board 9%) + 9277.74 (guild 12%) + 2250 (oak_inn 3%) + 2000 (tr 3%) + 6214.29 (quests 8%) + 735.71 (merchants 1%) + 6229.52 (arena 8%) + 6000 (lab 8%) + 3367.35 (regal 4%) + 3750 (tr_bounties 5%) + 4583.33 (coe 6%) + 600 (hero_trial 1%) + 1000 (guild_hero_trial 1%) + 3300 (monthly_card 4%) + 18980 (deluxe_monthly_card 24%) - 24900 (ff_cost 26%) - 34800 (shop 36%) - 10000 (stargazing 10%) - 26028 (hcp 27%) + 105 (stargaze 0%) + 2720 (towers_kt 3%)]
@@ -686,10 +674,6 @@ hero_coins: 16992.75
 lab_coins: 142100 => buy 64000 [ 64000 (dim_emblems)]
 guild_coins: 433530.25 => buy 433530.25 [ 94000 (2 x t3) +  339530.25 (5.07 x dim_gear)]
 challenger_coins: 340260
-
-=============== Towers ===============
-
-=============== Levelup ===============
 
 =============== Full monthly ressources ===============
 ***** Base *****

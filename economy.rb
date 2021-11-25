@@ -1825,13 +1825,22 @@ class Simulator
 
   module Summary
     def make_h1(t)
-      puts "=============== #{t.capitalize} ==============="
+      "=============== #{t.capitalize} ===============\n"
+    end
+    def h1(t)
+      puts make_h1(t)
     end
     def make_h2(t)
-      puts "--------------- #{t.capitalize} ---------------"
+      "--------------- #{t.capitalize} ---------------\n"
+    end
+    def h2(t)
+      puts make_h2(t)
     end
     def make_h3(t)
-      puts "***** #{t.capitalize} *****"
+      "***** #{t.capitalize} *****\n"
+    end
+    def h3(t)
+      puts make_h3(t)
     end
 
     def make_summary(ressources, headings: true, total: false, plusminus: false, percent: false)
@@ -1839,7 +1848,8 @@ class Simulator
         total=get_total(ressources)
         pos_total=get_total(ressources, mode: 1)
       end
-      @_order.each do |summary, keys|
+      summary=""
+      @_order.each do |header, keys|
         s=""
         keys.each do |type|
           #next if %i(total_gold total_xp total_dust).include?(type)
@@ -1938,15 +1948,18 @@ class Simulator
               s+="-> Total dust: #{round(total[:total_dust])}\n"
             end
           end
+
         end
+
         unless s.empty?
-          make_h3(summary) if headings
-          yield(summary) if block_given?
-          puts s
-          puts if headings
+          s=make_h3(header)+s if headings
+          yield(s,header) if block_given?
+          s+="\n" if headings
+          summary+=s
         end
       end
-      puts unless headings
+      summary += "\n" unless headings or summary.empty?
+      summary
     end
 
     def do_summary(title, r, total_value: false, multiplier: 1, **kw)
@@ -1954,17 +1967,15 @@ class Simulator
         r=timeframe(r, multiplier)
       end
 
-      make_h1(title)
-      make_summary(r, **kw)
+      summary=make_summary(r, **kw)
+      unless summary.empty?
+        summary=make_h1(title)+summary
 
-      if total_value
-        puts "=> Total value: #{show_dia_value(tally(r))}"
-        puts
+        if total_value
+          summary+="=> Total value: #{show_dia_value(tally(r))}\n\n"
+        end
+        puts summary
       end
-      # if total_summary
-      #   total=get_total(r)
-      #   do_total_summary(total, headings: headings)
-      # end
       r
     end
 
@@ -1990,7 +2001,7 @@ class Simulator
     end
 
     def ff_summary
-      make_h1 "Fast Forward Value"
+      h1 "Fast Forward Value"
       puts show_dia_value(one_ff)
       puts
     end
@@ -2031,7 +2042,7 @@ class Simulator
     def previsions_summary
       total=clean_total
 
-      make_h1 "30 days previsions summary"
+      h1 "30 days previsions summary"
       #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
       nb_ascended=0
 
@@ -2066,7 +2077,7 @@ class Simulator
         else
           do_summary(k,r, headings: false)
           if k==:stores
-            make_h2("30 days coin summary")
+            h2("30 days coin summary")
             puts @__coin_summary 
             puts
           end
@@ -2099,18 +2110,18 @@ class Simulator
       end
 
       if verbose
-        make_h1 "Variables"
-        make_h2 "Setup vars:"
+        h1 "Variables"
+        h2 "Setup vars:"
         puts show_vars[setup_vars].join("\n")
         puts
-        make_h2 "Fixed vars"
+        h2 "Fixed vars"
         puts show_vars[fixed_vars].join("\n")
         puts
-        make_h2 "Internal vars"
+        h2 "Internal vars"
         puts show_vars[internal_vars].join("\n")
         puts
       else
-        make_h1 "Variables"
+        h1 "Variables"
         puts show_vars[setup_vars].join("\n")
       end
     end
