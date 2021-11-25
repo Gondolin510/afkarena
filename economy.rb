@@ -599,8 +599,8 @@ class Simulator
       get_progression
       return [] unless @_unlock_shop
       r = %i(dust purple_stones)
-      r << :poe if @stage > "08-40" #is that correct?
-      r << :shards if @stage >= "22-01" #ditto?
+      r << :poe if @_unlock_afk_poe
+      r << :shards if @_unlock_afk_shard
       r += extra
       r
     end
@@ -633,7 +633,7 @@ class Simulator
       r=[]
       r << :garrison if garrison
       r << :dim_exchange if dim_exchange
-      r += [nil, :dim_emblems]
+      r += [nil, :dim_emblems] if @_unlock_afk_red_e
       r += extra
       r
     end
@@ -805,6 +805,8 @@ class Simulator
       @_unlock_afk_red_e=true if @stage > "18-40"
       @_unlock_afk_twisted=true if @stage >= "14-40" #somewhere before
       @_unlock_afk_poe=true if @stage > "17-40" #somewhere before 18-40, lets assume this is the same as oak inn opening
+      @_unlock_afk_shard=true if @stage > "21-60" #chap 22
+      @_unlock_afk_core=true if @stage > "23-60" #chap 24
 
       @_unlock_gh_skip=true if @vip>=6
       @_unlock_arena_skip=true if @vip>=6

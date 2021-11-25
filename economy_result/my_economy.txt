@@ -360,6 +360,8 @@ Max rc level: 3.17 days (9.45 by month)
 @_unlock_afk_red_e: true
 @_unlock_afk_twisted: true
 @_unlock_afk_poe: true
+@_unlock_afk_shard: true
+@_unlock_afk_core: true
 @_unlock_gh_skip: true
 @_unlock_arena_skip: true
 @_unlock_speed2: true
