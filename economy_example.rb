@@ -4,19 +4,71 @@ require './economy'
 puts "==================== Example of minimal customisation ===================="
 # Minimal settings
 Simulator.new do
-  @stage = "37-01"
+  @stage = "37-01" #(default to 38-01)
+  @hero_level= 350 #(default to 500)
+  @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
+  @nb_ff=6 #ff by day (default)
+  @vip=10 #vip level (default)
+  @subscription=false # (default)
+  #the other default settings assume max fos tower, max gh rewards,
+  #non paid regal subscriptions, ...
+end.summary
 
+puts "==================== Example of moderate customisation ===================="
+Simulator.new do
+  @stage = "37-01" #(default to 38-01)
   @hero_level= 350 #(default to 500)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
   @nb_ff=6 #ff by day (default)
   @vip=10 #vip level (default)
   @subscription=false # (default)
 
-  #the other default settings assume max fos tower, max gh rewards,
-  #non paid regal subscriptions, ...
+  @tower_kt = 550
+  @tower_4f = [280, 285, 320, 290]
+  @tower_god = [200, 300]
+
+  @monthly_stargazing= 0
+  @monthly_tavern = 0
+  @monthly_hcp_heroes=1 #number of hcp heroes we want to summon monthly
+
+  @friends_mercs ||= 5
+
+  @gh_wrizz_chests = 22
+  @gh_soren_chests = 21
+  @gh_soren_freq = 0.7 #active guild
+
+  @tr_twisted =300
+  @tr_poe = 900
+  @tr_guild = {dia: 10} #a guildie is in legend
+  @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
+
+  @arena_daily_dia = get_arena(3) #rank 3 in arena
+  @lct_coins =380 #top 20. Hourly coins: 400-rank
+  @lc_rewards = {gold: 6*1278} #we win all wagers
+
+  @misty = get_misty(shard_red: :shard, core_red: :red, core_poe_twisted: :poe)
+  @dura_nb_selling =2 #dura's fragments we have maxed out and are selling
+
+  @noble_regal = get_regal(paid: true)
+  @noble_twisted = get_twisted_bounties(:shards, paid: true)
+  @noble_coe = get_twisted_bounties(:cores)
+
+  @hero_trial_guild_rewards ={
+    dia: 200+100+200,
+    guild_coins: 2000 #assume top 200
+  }
+
+  @monthly_card=get_monthly_card(:shard) #select shards
+  @deluxe_monthly_card=get_deluxe_monthly_card(red: :silver_e, purple: :twisted) #select silver emblems and twisted essence
+
+  @shop_refreshes = 1 #only one shop refresh
+  @shop_items = get_shop_items({dust_h: 1}, shards: false) #buy dust chest, but only once
 
   @garrison=true #(default to false) let's garrison
   @dim_exchange=true #(default to false) and do a dim exchange
+
+  #use our remaining lab coins to buy all twisted essence
+  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false)
 
   #see `setup_vars` for the list of all settings
   #Some are determined automatically if not filled, for instance
@@ -47,13 +99,18 @@ Simulator.new do
   @lct_coins =250
   @lc_rewards = {gold: 6*1000} #betting
 
-  @board_level =5
-  @hero_trial_guild_rewards = { dia: 200+100 } #can't pass the last quest
-
   @shop_items = get_shop_items(poe: false) #don't buy poe
   @shop_refreshes = 0 #don't refresh shop
 
+  @board_level =5
+  @hero_trial_guild_rewards = { dia: 200+100 } #can't pass the last quest
+
+  # see ressources used for leveling up our roster by 5 levels
+  # this also give us an estimated tower progression
   @monthly_levelup=5
+  # we could be more flexible by specifying we only want to level up our
+  # last two heroes
+  # @monthly_levelup=[0, 0, 0, 10, 20]
 
   #we don't want to buy anything in the guild store
   #@store_guild_items = []
@@ -90,10 +147,41 @@ Simulator.new do
   @monthly_card=get_monthly_card #default to dust
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
-  #buy more stuff!
-  @shop_items = get_shop_items(:dust_h, :gold_e)
+  # Buy more stuff!
+  # @shop_items = [item1, {item2: qty2}, item3, {item4: qty4}]
+  # if qty is not set, assume buy each time the shop is refreshed
+  # the program handles probability and maximal number of buyings (eg for
+  # shards) automatically
+  # we can use an helper function
+  @shop_items = get_shop_items(:dust_h, {gold_e: 2}, poe: false)
+  #-> daily, we buy dust chests at each shop refresh, but only up to 2 time gold emblems
+  #- By default this function adds dust, purple_stones, poe and shards when they unlock, using `poe: false` we say to not buy poe
+  
+  ### Stores
+  #@store_foo_items=[primary_item1, {primary_item2: qty2}, primary_item3,
+  #nil, {secondary_item4: qty4}, secondary_item5, nil, filler_item]
+  #-> we buy the primary items, even if we don't have enough coins (mainly
+  #used for garrison/dim exchange). We buy the secondary items if we have
+  #enough coins. If there are more coins remaining, use them all with
+  #filler_item. If not specified the qty is 1. With qty=:max we buy up to
+  #the maximal number of items in the shop. EG in the hero store we can
+  #only buy up to 4 purple stones, so {purple_stones: :max} maxes out at 4.
+  @store_guild_items=[{garrison: 10}, nil, {t3: :max}, nil, :dim_gear]
+
+  # we can use the helper function `get_store_foo_items` that handles dim
+  # exchange and garrison automatically if they are active.
+  #   get_store_items(secondary_item1, {secondary_item2: qty2}, primary: [primary_item1], filler: filler_item)
+  #- By default we use 50 lab points+10 guild points for dim exchange,
+  #  100 lab points + 66 guild points + 34 hero points for garrison but
+  #  that can be changed with the options `garrison: qty`, `dim_exchange:
+  #  qty` of these functions.
+  #- By default, get_store_guild_items adds t3 as a primary (if they are
+  #unlocked), and dim_emblems as fillers (if they are unlocked). This can
+  #be tweaked via the options `t3: false`, `dim_gear: false`
+  #- By default, get_store_lab_items adds dim_emblems as a secondary (if
+  #they are unlocked), use `dim_emblems: false` to remove them.
   @store_hero_items = get_store_hero_items({twisted: :max})
-  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: :max})
+  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: 2}, dim_emblems: false)
   @store_challenger_items = get_store_challenger_items({red_e: :max})
 end.summary
 

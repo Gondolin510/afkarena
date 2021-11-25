@@ -31,7 +31,6 @@ class Simulator
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
       @tower_4f ||= 280 #max fos at 280 for t2_gear
-      #we can also specify our tower lists:
       @tower_god ||= 300 #max fos at 300 for invigor
       #we can also specify our individual tower progression:
       # @tower_4f=[320, 340, 347, 350]
@@ -71,7 +70,7 @@ class Simulator
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
       @arena_weekly_dia ||=@arena_daily_dia * 10
       @lct_coins ||=380 #top 20. Hourly coins: 400-rank
-      @lc_rewards = {gold: 6*1278} #we win all wagers (6*941 for earlier accounts)
+      @lc_rewards ||= {gold: 6*1278} #we win all wagers (6*941 for earlier accounts)
 
       ### misty valley [only used when misty unlocks]
       @misty ||= get_misty
@@ -633,7 +632,7 @@ class Simulator
       r
     end
 
-    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, primary: [])
+    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, primary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_hero
       r=[]
@@ -642,9 +641,10 @@ class Simulator
       r += primary
       r << nil #for secondary items
       r += extra
+      r+=[nil, filler] if filler
       r
     end
-    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked)
+    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_guild
       t3=@_unlock_t3 if t3 == :unlocked
@@ -656,10 +656,14 @@ class Simulator
       r << {t3: :max} if t3
       r << nil #secondary items
       r += extra
-      r += [nil, :dim_gear] if dim_gear
+      if filler
+        r+=[nil, filler]
+      else
+        r += [nil, :dim_gear] if dim_gear
+      end
       r
     end
-    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), primary: [], dim_emblems: :unlocked)
+    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), primary: [], dim_emblems: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_lab
       dim_emblems=@_unlock_afk_red_e if dim_emblems == :unlocked
@@ -670,9 +674,10 @@ class Simulator
       r << nil
       r << :dim_emblems if dim_emblems
       r += extra
+      r+=[nil, filler] if filler
       r
     end
-    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, primary: [])
+    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, primary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_challenger
       r=[]
@@ -681,6 +686,7 @@ class Simulator
       r += primary
       r << nil #secondary items
       r += extra
+      r+=[nil, filler] if filler
       r
     end
   end
