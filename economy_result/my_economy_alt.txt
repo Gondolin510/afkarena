@@ -91,6 +91,8 @@ challenger_coins: 269700 =>
 
 =============== Towers ===============
 
+=============== Levelup ===============
+
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: -106.67=23593.33-23700 [4302.72 (guild 18%) + 2250 (oak_inn 10%) + 6214.29 (quests 26%) + 735.71 (merchants 3%) + 2845.61 (arena 12%) + 6000 (lab 25%) + 600 (hero_trial 3%) + 600 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%)]
@@ -239,6 +241,7 @@ Max rc level: 3.63 days (8.28 by month)
 @store_guild_items: [{:dim_exchange=>20}, nil, nil, :dim_gear]
 @store_challenger_items: [nil]
 @labyrinth_mode: hard
+@monthly_levelup: 0
 @tower_kt_progression: 0
 @tower_4f_progression: 0
 @tower_god_progression: 0

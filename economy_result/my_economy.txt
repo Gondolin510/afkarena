@@ -111,6 +111,8 @@ purple_stones: 7 [1 (towers_kt) + 6 (towers_4f)]
 blue_stones: 9 [9 (towers_kt)]
 stargazers: 0.67 [0.33 (towers_4f) + 0.33 (towers_god)]
 
+=============== Levelup ===============
+
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 15158.9=38858.9-23700 [5062.5 (board 13%) + 8470.98 (guild 22%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 13%) + 6000 (lab 15%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%) + 1360 (towers_kt 3%)]
@@ -267,6 +269,7 @@ Max rc level: 3.17 days (9.45 by month)
 @store_lab_items: [{:garrison=>100}, {:dim_exchange=>100}, nil, :dim_emblems]
 @store_challenger_items: [nil]
 @labyrinth_mode: dismal
+@monthly_levelup: 0
 @lab_flat_rewards: {:gold=>1732.4210526315792, :xp=>2507.684210526316}
 
 --------------- Fixed vars ---------------

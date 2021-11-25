@@ -98,6 +98,8 @@ challenger_coins: 340260 =>
 
 =============== Towers ===============
 
+=============== Levelup ===============
+
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 14118.16=37818.16-23700 [4575 (board 12%) + 9277.74 (guild 25%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 14%) + 6000 (lab 16%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%)]

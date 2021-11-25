@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?
-#leveling up, dim/garrison points
+#leveling up
 
 require './value'
 require 'json'
@@ -133,8 +133,9 @@ class Simulator
       end
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
-      ### Tower progression
-      set_tower_progression(0)
+      ### Tower progression and level up
+      @monthly_levelup||=0
+      set_tower_progression(@monthly_levelup)
       #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
 
       ### Other variables:
@@ -668,7 +669,8 @@ class Simulator
       make_exchange
       summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly
       exchange_coins #long term coin exchange, ditto
-      @ressources.merge!(towers_ressources)
+      handle_towers #tower progression
+      monthly_levelup(@monthly_levelup) #levelup
       get_ressource_order
     end
 
@@ -714,6 +716,10 @@ class Simulator
     def custom_exchange
       {}
     end
+
+    def handle_towers
+      @ressources.merge!(towers_ressources)
+    end
   end
   include Process
 
@@ -739,6 +745,23 @@ class Simulator
       @_level_xp ||= xp
       @_level_dust ||= dust
       {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust}
+    end
+
+    def levelup_cost(nb_levels, level=@hero_level)
+      lev=level.dup
+      r={}
+      (1..nb_levels).each do
+        add_to_hash(r, level_up_ressources(level))
+        if lev.is_a?(Enumerable)
+          lev=lev.map {|i| i+1}
+        else
+          lev+=1
+        end
+      end
+    end
+
+    def monthly_levelup(nb_levels)
+      @ressources[:levelup]=mult_hash(levelup_cost(nb_levels), 1/30.0)
     end
 
     def ressources_cost
@@ -1786,7 +1809,8 @@ class Simulator
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
-       towers: %i(towers_kt towers_4f towers_god)
+       towers: %i(towers_kt towers_4f towers_god),
+       levelup: %i(levelup),
       }
     end
   end
