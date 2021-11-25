@@ -1578,8 +1578,11 @@ class Simulator
       avg_level_up=level_up.sum*1.0/level_up.length
       factor_4f=factor_kt=factor_god=1
       factor_kt=2 if [*@tower_kt].min >= 600
+      factor_kt=0 unless @_unlock_tower_kt
       factor_4f=2 if [*@tower_4f].min >= 450
+      factor_4f=0 unless @_unlock_tower_4f
       factor_god=2 if [*@tower_god].min >= 350
+      factor_god=0 unless @_unlock_tower_god
       @tower_kt_progression ||= avg_level_up*factor_kt
       @tower_4f_progression ||= avg_level_up*factor_4f
       @tower_god_progression ||= avg_level_up*factor_god
@@ -1588,8 +1591,8 @@ class Simulator
     def towers_ressources
       return {} unless @_unlock_tower_kt
       @_tower_kt_avg ||= @_unlock_tower_kt ? tower_kt_avg(@tower_kt) : {}
-      @_tower_4f_avg ||= @_unlock_tower_kt ? tower_4f_avg(@tower_4f) : {}
-      @_tower_god_avg ||= @_unlock_tower_kt ? tower_god_avg(@tower_god) : {}
+      @_tower_4f_avg ||= @_unlock_tower_4f ? tower_4f_avg(@tower_4f) : {}
+      @_tower_god_avg ||= @_unlock_tower_god ? tower_god_avg(@tower_god) : {}
       return {
         towers_kt: mult_hash(@_tower_kt_avg, @tower_kt_progression/30.0),
         towers_4f: mult_hash(@_tower_4f_avg, @tower_4f_progression/30.0),
