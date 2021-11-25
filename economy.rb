@@ -31,7 +31,11 @@ class Simulator
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
       @tower_4f ||= 280 #max fos at 280 for t2_gear
+      #we can also specify our tower lists:
       @tower_god ||= 300 #max fos at 300 for invigor
+      #we can also specify our individual tower progression:
+      # @tower_4f=[320, 340, 347, 350]
+      # @tower_god=[220, 350]
 
       ### Summonings
       @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
@@ -49,7 +53,10 @@ class Simulator
       #if not specified, determine the gold amount from the chest amount
       @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
       @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
-      @gh_soren_freq ||= 0.66 #round(5.0/7.0) =0.71
+      @gh_soren_freq ||= 0.66 #or round(5.0/7.0) =0.71
+      # we can get the gold from the guild mail (the guild coins and gold
+      # we get in the mail is half what we get for our best run)
+      # see also
 
       ### twisted realm (use fabled rewards) [only used when tr unlocks]
       @tr_twisted ||=380
@@ -71,19 +78,18 @@ class Simulator
 
       ### misc
       @board_level ||=8 #[only used when board unlocks]
-      @dura_nb_selling ||=0
+      @dura_nb_selling ||=0 #dura's fragments we have maxed out and are selling
 
-      ### Noble societies, by default paid is false [only used when they unlock]
-      #example for the paid version: @noble_twisted = get_twisted_bounties(:xp, paid: true)
+      ### Noble societies [only when they unlock]
+      #by default paid is false [only used when they unlock]
       @noble_regal ||= get_regal #opens after 10 days of account creation
-      if @noble_twisted.nil?
-        @noble_twisted={} #twisted bounties not open
-        @noble_twisted = get_twisted_bounties if @stage > "12-40" #default to xp
-      end
-      if @noble_coe.nil?
-        @noble_coe={} #coe not open
-        @noble_coe = get_coe if @stage > "08-20" #default to dust
-      end
+      # Paid version: @noble_regal = get_regal(paid: true)
+      @noble_twisted ||= get_twisted_bounties #default to xp
+      #example for the paid version and shard selection:
+      #  @noble_twisted = get_twisted_bounties(:shards, paid: true)
+      @noble_coe ||= get_coe #default to dust
+      #example for the paid version and cores selection:
+      #  @noble_coe = get_twisted_bounties(:cores, paid: true)
 
       ### Hero trials [only used when hero trials unlock]
       #average guild hero trial rewards
@@ -101,10 +107,10 @@ class Simulator
       ### Cards
       @monthly_card ||={} #f2p
       #@monthly_card=get_monthly_card #default to dust
-      #@monthly_card=get_monthly_card(:shard)
+      #@monthly_card=get_monthly_card(:shard) #select shards
       @deluxe_monthly_card ||={} #f2p
       # @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
-      # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted)
+      # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted) #select silver emblems and twisted essence
 
       ### Daily shopping
       @shop_items ||= get_shop_items #get items depending on stage progression
@@ -119,12 +125,8 @@ class Simulator
       @store_challenger_items ||= get_store_challenger_items
 
       ### Labyrinth
-      if @labyrinth_mode.nil?
-        @labyrinth_mode = :skip #not open
-        @labyrinth_mode = :easy if @stage >= "02-04"
-        @labyrinth_mode = :hard if @stage >= "09-24"
-        @labyrinth_mode = :dismal if @stage >= "27-01" #or dismal_skip_large
-      end
+      @labyrinth_mode = :auto #automatically select the hardest instance
+      #modes: :skip, :easy, :hard, :dismal, :dismal_skip_large
       #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
       ### Tower progression and level up
@@ -296,13 +298,17 @@ class Simulator
       setup_vars
       get_progression
       setup_constants
+      setup_internals
+      get_idle_hourly
+      post_setup_hook
+    end
+
+    def setup_internals
       get_vip
       get_fos
       get_subscription
       get_mult
       get_numbers
-      get_idle_hourly
-      post_setup_hook
     end
 
     def post_setup_hook
@@ -378,6 +384,8 @@ class Simulator
   extend GuildHelpers
 
   module UserSetupHelpers
+    #call this function when @_guild_mult is built
+    #either in post_setup_hook, or by calling setup_internals first
     def guild_chest_from_coins(coins)
       (coins/(65.0*@_guild_mult)).round
     end
@@ -391,6 +399,8 @@ class Simulator
     end
 
     def get_twisted_bounties(type=:xp, paid: false)
+      get_unlock
+      return {} unless @_unlock_tr
       if paid
         case type
         when :gold; {dia: 5500, gold_h: 11472}
@@ -411,6 +421,8 @@ class Simulator
     end
 
     def get_coe(type=:dust, paid: false)
+      get_unlock
+      return {} unless @_unlock_coe
       if paid
         case type
         when :dust; {dia: 5500, dust: 50000, dust_h: 1900}
@@ -807,8 +819,9 @@ class Simulator
       @_unlock_board=true if @stage >"03-12"
       @_unlock_lc=true if @stage >"05-40"
       @_unlock_trials=true if @stage >"06-40"
+      @_unlock_coe=true if @stage >"08-20"
       @_unlock_lct=true if @stage >"09-20"
-      @_unlock_tr=true if @stage >"12-40"
+      @_unlock_tr=true if @stage >"12-40" #and twisted bounties
       @_unlock_oak_inn=true if @stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
       @_unlock_misty=true if @stage >"16-40"
       @_unlock_mercs=true if @stage > "06-40"
@@ -1259,6 +1272,13 @@ class Simulator
     end
 
     def labyrinth(mode: @labyrinth_mode)
+      if mode==:auto or mode==nil
+        mode = :skip #not open
+        mode = :easy if @_unlock_dark_forest
+        mode = :hard if @_unlock_labyrinth_hard
+        mode = :dismal if @_unlock_labyrinth_dismal
+        #or dismal_skip_large
+      end
       if @lab_flat_rewards.nil?
         @lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
       end
