@@ -314,10 +314,6 @@ Simulator.new.show_variables
 @monthly_hcp: 0.0
 @friends_nb: 20
 @friends_mercs: 5
-@gh_team_wrizz_gold: 1080
-@gh_team_soren_gold: 1080
-@gh_team_wrizz_coin: 1158
-@gh_team_soren_coin: 1158
 @gh_wrizz_chests: 23
 @gh_soren_chests: 23
 @gh_wrizz_gold: 2160
@@ -345,15 +341,16 @@ Simulator.new.show_variables
 @deluxe_monthly_card: {}
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
-@garrison: true
-@dim_exchange: true
-@store_hero_items: [:garrison, nil]
-@store_guild_items: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
-@store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]
+@garrison: false
+@dim_exchange: false
+@store_hero_items: [nil]
+@store_guild_items: [{:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [nil, :dim_emblems]
 @store_challenger_items: [nil]
-@labyrinth_mode: dismal
-@tower_kt_progression: 0
-@tower_4f_progression: 0
-@tower_god_progression: 0
+@labyrinth_mode: auto
+@monthly_levelup: 0
+@tower_kt_progression: 0.0
+@tower_4f_progression: 0.0
+@tower_god_progression: 0.0
 @lab_flat_rewards: {:gold=>2106.2339999999995, :xp=>2613.942}
 =end
