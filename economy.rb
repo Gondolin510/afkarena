@@ -130,7 +130,7 @@ class Simulator
       ### Tower progression and level up
       @monthly_levelup||=0
       set_tower_progression_from_levelup
-      #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
+      #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number @monthly_levelup (which we can estimate using this simulator)
 
       ### Other variables:
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
@@ -310,7 +310,7 @@ class Simulator
   end
   include Setup
 
-  module UserSetupHelpers
+  module GuildHelpers
     def get_guild_chests(dmg)
       nb=0
       nb=1 if dmg >= 5000
@@ -364,6 +364,22 @@ class Simulator
       when 22; 2010 # 20B
       when 23; 2160 # 100B
       end
+    end
+
+    def guild_chest_from_gold(gold)
+      return 23 if gold>=2160
+      (1..Float::INFINITY).each do |i|
+        g=get_guild_gold(i)
+        return i-1 if g>gold
+      end
+    end
+  end
+  include GuildHelpers
+  extend GuildHelpers
+
+  module UserSetupHelpers
+    def guild_chest_from_coins(coins)
+      (coins/(65.0*@_guild_mult)).round
     end
 
     def get_regal(paid:false)
