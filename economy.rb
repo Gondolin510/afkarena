@@ -266,8 +266,9 @@ class Simulator
       #chest we only have 2 items rather than 3, so multiply the rewards by 2/3
       @Lab_end_rewards ||= { gold_h: 14*6 + 7*2*2.0/3, xp_h: 3.5*2*2.0/3, dust_h: 3.5*2*2.0/3 }
       #approximations to recover the flat rewards
-      @_lab_flat_gold_h ||=55 #new approx: 56.8
-      @_lab_flat_xp_h ||=6 #new approx: 5.785
+      #@_lab_flat_gold_h ||=55 #new approx: 65.71
+      @_lab_flat_gold_h ||=65 #new approx: 65.71
+      @_lab_flat_xp_h ||=6 #new approx: 5.785 or 5.88
 
       @GH_chest_dia ||=2.7
       @GH_chest_guild ||=65
@@ -1303,9 +1304,9 @@ class Simulator
   module Towers
     #return the average floor reward
     def tower_kt_ressources(level=@tower_kt)
-      # king tower (>560): 5650 gold + 160 dia +150 dust + 30 purple every *10
-      #             5650 gold + 80 dia +150 dust + 30 blue every else
-      #             (except 160 dia every *5)
+      # >560: 5650 gold + 160 dia +150 dust + 30 purple every *10
+      #       5650 gold + 80 dia +150 dust + 30 blue every else
+      #           (except 160 dia every *5)
       return {} unless @_unlock_tower_kt
       if @_kt_floor.nil? #compute the value
         @_kt_floor={}
@@ -1318,8 +1319,12 @@ class Simulator
         end
         @_kt_floor={gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
       end
+
       if @_kt_quest.nil? #compute the value
-        # quest: 400 dia every x20, 1000 shards every 50 then 500 cores every x50
+        # quest: 400 dia every x20, 
+        #        250-500: 1000 shards every 50
+        #        550+: 500 cores every x50
+        # Rem: stages quest: 400 shards for {22-35}-30, 200 cores afterwards
         @_kt_quest={dia: 400/20, shards: 1000/50}
         if level>=500 #todo: find the breakpoint
           @_kt_quest={dia: 400/20, cores: 500/50} #todo or 400 dia every 10?
@@ -1361,14 +1366,14 @@ class Simulator
     def tower_god_ressources(level=@tower_god)
       #every *5: 4000 dust + 5 stargazer
       #every *10: 10 faction_emblem or 15 gold_e
-      #
-      # celhypo quests: 400 cores every x20
       return {} unless @_unlock_tower_god
       if @_god_floor.nil? #compute the value
         @_god_floor={ #start at level 1
           dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10
         }
       end
+
+      # celhypo quests: 400 cores every x20
       if @_god_quest.nil? #compute the value
         @_god_quest={cores: 400/20}
       end
@@ -1672,6 +1677,12 @@ class Simulator
       gold_hg=r.fetch(:gold_hg,0) #this is affected only by vip
       r[:total_gold]=(r[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
       r
+    end
+
+    def detail_ressources(r, type: :gold, percent: true)
+      #todo
+      dust_h=r.fetch(:dust_h,0)
+      r[:total_dust]=(r[:dust]||0)+dust_h*real_afk_dust
     end
   end
   include Tally
