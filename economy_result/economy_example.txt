@@ -464,45 +464,45 @@ lab_coins: 249900 => buy 221125 [ 64000 (dim_emblems) +  120000 (3 x twisted) + 
 guild_coins: 425865.55 => buy 425865.55 [ 94000 (2 x t3) +  331865.55 (4.95 x dim_gear)]
 challenger_coins: 354660 => buy 330000 [ 330000 (2 x red_e)]
 
-=============== Towers ===============
+=============== Towers (20 kt, 20 4f, 10 god) ===============
 dia: 90.67 [90.67 (towers_kt)]
-gold: 4726.67 [3766.67 (towers_kt) + 640 (towers_4f) + 320 (towers_god)]
-dust: 1700 [100 (towers_kt) + 1066.67 (towers_4f) + 533.33 (towers_god)]
-gold_e: 1 [1 (towers_god)]
+gold: 4566.67 [3766.67 (towers_kt) + 640 (towers_4f) + 160 (towers_god)]
+dust: 1433.33 [100 (towers_kt) + 1066.67 (towers_4f) + 266.67 (towers_god)]
+gold_e: 0.5 [0.5 (towers_god)]
 red_e: 1.33 [1.33 (towers_4f)]
-faction_emblems: 2 [1.33 (towers_4f) + 0.67 (towers_god)]
+faction_emblems: 1.67 [1.33 (towers_4f) + 0.33 (towers_god)]
 poe: 20 [20 (towers_4f)]
-cores: 20 [6.67 (towers_kt) + 13.33 (towers_god)]
+cores: 13.33 [6.67 (towers_kt) + 6.67 (towers_god)]
 purple_stones: 2 [2 (towers_kt)]
 blue_stones: 18 [18 (towers_kt)]
-stargazers: 2 [1.33 (towers_4f) + 0.67 (towers_god)]
+stargazers: 1.67 [1.33 (towers_4f) + 0.33 (towers_god)]
 
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: -17462.56=78265.44-95728 [7152.5 (board 9%) + 9277.74 (guild 12%) + 2250 (oak_inn 3%) + 2000 (tr 3%) + 6214.29 (quests 8%) + 735.71 (merchants 1%) + 6229.52 (arena 8%) + 6000 (lab 8%) + 3367.35 (regal 4%) + 3750 (tr_bounties 5%) + 4583.33 (coe 6%) + 600 (hero_trial 1%) + 1000 (guild_hero_trial 1%) + 3300 (monthly_card 4%) + 18980 (deluxe_monthly_card 24%) - 24900 (ff_cost 26%) - 34800 (shop 36%) - 10000 (stargazing 10%) - 26028 (hcp 27%) + 105 (stargaze 0%) + 2720 (towers_kt 3%)]
 
-gold: 178698.45=908148.45-729450 [137648.59 (idle 15%) + 80295.01 (ff 9%) + 12963.75 (board 1%) + 376488 (guild 41%) + 33750 (oak_inn 4%) + 12028.5 (arena 1%) + 15336 (lc 2%) + 71619.6 (lab 8%) + 7000 (misty 1%) + 4000 (hero_trial 0%) - 729450 (shop 100%) + 15219 (dura_fragments_sell 2%) + 113000 (towers_kt 12%) + 19200 (towers_4f 2%) + 9600 (towers_god 1%)] {908148.45K gold=89%}
+gold: 173898.45=903348.45-729450 [137648.59 (idle 15%) + 80295.01 (ff 9%) + 12963.75 (board 1%) + 376488 (guild 42%) + 33750 (oak_inn 4%) + 12028.5 (arena 1%) + 15336 (lc 2%) + 71619.6 (lab 8%) + 7000 (misty 1%) + 4000 (hero_trial 0%) - 729450 (shop 100%) + 15219 (dura_fragments_sell 2%) + 113000 (towers_kt 13%) + 19200 (towers_4f 2%) + 4800 (towers_god 1%)] {903348.45K gold=89%}
 gold_h: 3937.56 [128.57 (quests 3%) + 3540 (lab 90%) + 96 (hero_trial 2%) + 172.99 (stargaze 4%)] {108464.14K gold=11%}
 gold_hg: 60 [60 (quests 100%)] {5454.11K gold=1%}
--> Total gold: 292616.71K
+-> Total gold: 287816.71K
 
 xp: 3121328.38 [1934455.44 (idle 62%) + 1128432.34 (ff 36%) + 58440.6 (lab 2%)] {3121328.38K xp=64%}
 xp_h: 3582.9 [60 (quests 2%) + 930 (lab 26%) + 144 (misty 4%) + 2348.18 (tr_bounties 66%) + 24 (hero_trial 1%) + 76.72 (stargaze 2%)] {1744890.38K xp=36%}
 -> Total xp: 4866218.76K
 
-dust: 364855.08 [102622.8 (idle 28%) + 59863.3 (ff 16%) + 51270 (board 14%) + 11250 (oak_inn 3%) + 1606.5 (arena 0%) + 41666.67 (coe 11%) + 45000 (shop 12%) + 575.81 (tavern 0%) + 3000 (towers_kt 1%) + 32000 (towers_4f 9%) + 16000 (towers_god 4%)] {364855.08K dust=53%}
-dust_h: 6663 [60 (quests 1%) + 930 (lab 14%) + 320 (misty 5%) + 1583.33 (coe 24%) + 24 (hero_trial 0%) + 88 (vow 1%) + 1440 (monthly_card 22%) + 2160 (shop 32%) + 57.66 (stargaze 1%)] {324154.83K dust=47%}
--> Total dust: 689009.91
+dust: 356855.08 [102622.8 (idle 29%) + 59863.3 (ff 17%) + 51270 (board 14%) + 11250 (oak_inn 3%) + 1606.5 (arena 0%) + 41666.67 (coe 12%) + 45000 (shop 13%) + 575.81 (tavern 0%) + 3000 (towers_kt 1%) + 32000 (towers_4f 9%) + 8000 (towers_god 2%)] {356855.08K dust=52%}
+dust_h: 6663 [60 (quests 1%) + 930 (lab 14%) + 320 (misty 5%) + 1583.33 (coe 24%) + 24 (hero_trial 0%) + 88 (vow 1%) + 1440 (monthly_card 22%) + 2160 (shop 32%) + 57.66 (stargaze 1%)] {324154.83K dust=48%}
+-> Total dust: 681009.91
 
 ***** Upgrades *****
 silver_e: 277.68 [59.98 (idle 22%) + 34.99 (ff 13%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
-gold_e: 626.9 [30.02 (idle 5%) + 17.51 (ff 3%) + 42.86 (quests 7%) + 40 (vow 6%) + 450 (shop 72%) + 16.5 (tavern 3%) + 30 (towers_god 5%)]
+gold_e: 611.9 [30.02 (idle 5%) + 17.51 (ff 3%) + 42.86 (quests 7%) + 40 (vow 7%) + 450 (shop 74%) + 16.5 (tavern 3%) + 15 (towers_god 2%)]
 red_e: 341.24 [11.26 (idle 3%) + 6.57 (ff 2%) + 21.43 (quests 6%) + 40 (misty 12%) + 20 (vow 6%) + 120 (deluxe_monthly_card 35%) + 6.98 (tavern 2%) + 25 (lab_store 7%) + 50 (challenger_store 15%) + 40 (towers_4f 12%)]
-faction_emblems: 60 [40 (towers_4f 67%) + 20 (towers_god 33%)]
+faction_emblems: 50 [40 (towers_4f 80%) + 10 (towers_god 20%)]
 poe: 89183.06 [16509.6 (idle 19%) + 9630.6 (ff 11%) + 25800 (tr 29%) + 2142.86 (quests 2%) + 9000 (misty 10%) + 3000 (vow 3%) + 22500 (shop 25%) + 600 (towers_4f 1%)]
 twisted: 10906.87 [803.74 (idle 7%) + 468.85 (ff 4%) + 7720 (tr 71%) + 214.29 (quests 2%) + 400 (misty 4%) + 100 (hero_store 1%) + 1200 (lab_store 11%)]
 shards: 4655 [900 (idle 19%) + 525 (ff 11%) + 1220 (lab 26%) + 210 (vow 5%) + 1800 (shop 39%)]
-cores: 3252.5 [450 (idle 14%) + 262.5 (ff 8%) + 820 (lab 25%) + 300 (misty 9%) + 100 (vow 3%) + 720 (deluxe_monthly_card 22%) + 200 (towers_kt 6%) + 400 (towers_god 12%)]
+cores: 3052.5 [450 (idle 15%) + 262.5 (ff 9%) + 820 (lab 27%) + 300 (misty 10%) + 100 (vow 3%) + 720 (deluxe_monthly_card 24%) + 200 (towers_kt 7%) + 200 (towers_god 7%)]
 
 ***** Gear *****
 t2: 10.57 [6.68 (idle 63%) + 3.89 (ff 37%)]
@@ -524,7 +524,7 @@ scrolls: 52.86 [42.86 (quests 81%) + 10 (vow 19%)]
 friend_summons: 81.43 [81.43 (friends 100%)]
 hcp: 86.76 [86.76 (hcp 100%)]
 hero_choice_chest: 1 [1 (misty 100%)]
-stargazers: 95 [15 (vow 16%) + 20 (stargazing 21%) + 40 (towers_4f 42%) + 20 (towers_god 21%)]
+stargazers: 85 [15 (vow 18%) + 20 (stargazing 24%) + 40 (towers_4f 47%) + 10 (towers_god 12%)]
 
 ***** Hero_summons *****
 random_fodder: 28.92 [17.74 (stones 61%) + 10.83 (tavern 37%) + 0.35 (stargaze 1%)]
@@ -548,17 +548,17 @@ invigor: 27360 [17280 (idle 63%) + 10080 (ff 37%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 3.63 days (8.27 by month) {gold: 3.63 days, xp: 1.86 days, dust: 1.94 days} [monthly remains: 2369966.12 xp + 320698.95 dust]
+level: 3.69 days (8.13 by month) {gold: 3.69 days, xp: 1.86 days, dust: 1.96 days} [monthly remains: 2410913.92 xp + 318740.62 dust]
 -> Level cost: 18424.94 dia / 18973.79 dia [35389.44 gold=2020.64 dia / 1284.74 gold_h=2569.48 dia + 301900 xp=619.91 xp_h=4959.29 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 25.93 days (1.16 by month)
-SI+20: 11.49 days (2.61 by month)
+SI+20: 11.77 days (2.55 by month)
 SI+30: 26.37 days (1.14 by month)
 
 e30: 24.17 days (1.24 by month)
-e30 to e41: 15.22 days (1.97 by month)
-e30 to e60: 41.51 days (0.72 by month)
-e30 to e65: 55.34 days (0.54 by month)
+e30 to e41: 16.22 days (1.85 by month)
+e30 to e60: 44.23 days (0.68 by month)
+e30 to e65: 58.97 days (0.51 by month)
 
 tree level: 2.2 days (13.63 by month)
 mythic furn: 2.48 days (12.1 by month)

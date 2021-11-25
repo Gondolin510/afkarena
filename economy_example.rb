@@ -69,10 +69,10 @@ Simulator.new do
   @nb_ff =7 #up to 300 dia
   @subscription =true
 
-  @tower_kt = 900
-  @tower_4f = 600
-  @tower_god = 350
-  set_tower_progression(10) #progression of 10 levels a month
+  @tower_kt = 900 #multi at 600
+  @tower_4f = 600 #multi at 450
+  @tower_god = 349 #multi at 350
+  set_tower_progression_from_levelup(10) #progression of 10 levels a month, so 20 levels in kt/4f since we are at multi, 10 at god since we are at singles
 
   @monthly_stargazing = 20
   @monthly_hcp_heroes = 4

@@ -99,7 +99,7 @@ lab_coins: 151900 => buy 180000 [ 80000 (100 x garrison) +  100000 (25 x dim_exc
 guild_coins: 420781.45 => buy 420781.45 [ 52800 (66 x garrison) +  20000 (5 x dim_exchange) +  94000 (2 x t3) +  253981.45 (3.79 x dim_gear)]
 challenger_coins: 340260
 
-=============== Towers ===============
+=============== Towers (10 kt, 10 4f, 10 god) ===============
 dia: 45.33 [45.33 (towers_kt)]
 gold: 2363.33 [1883.33 (towers_kt) + 320 (towers_4f) + 160 (towers_god)]
 dust: 850 [50 (towers_kt) + 533.33 (towers_4f) + 266.67 (towers_god)]

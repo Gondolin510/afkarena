@@ -89,7 +89,7 @@ lab_coins: 136276 => buy 64000 [ 4000 (dim_exchange) +  60000 (arthur)]
 guild_coins: 220694 => buy 220694 [ 20000 (5 x dim_exchange) +  200694 (3 x dim_gear)]
 challenger_coins: 269700
 
-=============== Towers ===============
+=============== Towers (10 kt, 10 4f, 10 god) ===============
 dia: 13.33 [13.33 (towers_kt)]
 gold: 160 [160 (towers_god)]
 dust: 266.67 [266.67 (towers_god)]

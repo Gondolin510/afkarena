@@ -134,7 +134,7 @@ class Simulator
 
       ### Tower progression and level up
       @monthly_levelup||=0
-      set_tower_progression(@monthly_levelup)
+      set_tower_progression_from_levelup(@monthly_levelup)
       #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
 
       ### Other variables:
@@ -1490,7 +1490,7 @@ class Simulator
 
     #return tower progression from the rate of level up
     #heuristic: one level=one floor at single, two floors at multis
-    def set_tower_progression(level_up)
+    def set_tower_progression_from_levelup(level_up)
       #Multis: 700 KT, 450 4F, 350 celestial
       factor_4f=factor_kt=factor_god=1
       factor_kt=2 if @tower_kt >= 600
@@ -2075,6 +2075,8 @@ class Simulator
           title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
         when :levelup
           title="Level up (#{round(@monthly_levelup)})"
+        when :towers
+          title="Towers (#{round(@tower_kt_progression)} kt, #{round(@tower_4f_progression)} 4f, #{round(@tower_god_progression)} god)"
         end
         case k
         when :income
