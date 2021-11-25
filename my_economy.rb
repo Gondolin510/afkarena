@@ -2,13 +2,13 @@
 require './economy'
 
 s=Simulator.new do
-  @hero_level=359
+  @hero_level=362
   @stage="37-16"
-  @afk_xp=13235
-  @afk_gold=844
+  @afk_xp=13932
+  @afk_gold=888
 
-  @player_level=165
-  @vip=9
+  @player_level=170
+  @vip=10
   @subscription=true
 
   #dia 5 at floor 360
