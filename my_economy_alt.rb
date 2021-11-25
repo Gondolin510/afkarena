@@ -2,7 +2,7 @@
 require './economy'
 
 s=Simulator.new do
-  @hero_level=[220, 200, 200, 200, 200]
+  @hero_level=[221, 200, 200, 200, 200]
   @monthly_levelup=10
 
   @stage="22-02"
@@ -36,7 +36,7 @@ s=Simulator.new do
   @store_lab_items = get_store_lab_items(primary: %i(:arthur))
   @store_lab_items = %i(dim_exchange arthur)
 
-  #tweaks
+  #tweaks (I don't know when poe goes from 100 to 250 in shop, so it is not automatic for now)
   @Shop={ poe: { poe: 100, gold: -500 } }
 end
 

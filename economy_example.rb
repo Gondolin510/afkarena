@@ -6,7 +6,7 @@ puts "==================== Example of minimal customisation ====================
 Simulator.new do
   @stage = "37-01"
 
-  @hero_level= 350
+  @hero_level= 350 #(default to 500)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
   @nb_ff=6 #ff by day (default)
   @vip=10 #vip level (default)
@@ -14,9 +14,9 @@ Simulator.new do
 
   #the other default settings assume max fos tower, max gh rewards,
   #non paid regal subscriptions, ...
-  #
-  @garrison=true #let's garrison
-  @dim_exchange=true #and do a dim exchange
+
+  @garrison=true #(default to false) let's garrison
+  @dim_exchange=true #(default to false) and do a dim exchange
 
   #see `setup_vars` for the list of all settings
   #Some are determined automatically if not filled, for instance
@@ -34,13 +34,10 @@ Simulator.new do
 
   @tower_kt = 150
 
-  @friends_mercs = 1
+  @friends_mercs = 1 #we only lend one weekly merc
 
   @gh_wrizz_chests = 13
   @gh_soren_freq = 0.5 #moderatly active guild
-  @gh_team_wrizz_gold = 561
-  @gh_team_soren_gold = 559
-  @gh_team_wrizz_coin = 806
 
   @tr_twisted = 150
   @tr_poe = 0
@@ -51,10 +48,10 @@ Simulator.new do
   @lc_rewards = {gold: 6*1000} #betting
 
   @board_level =5
-  @hero_trial_guild_rewards = { dia: 200+100 }
+  @hero_trial_guild_rewards = { dia: 200+100 } #can't pass the last quest
 
   @shop_items = get_shop_items(poe: false) #don't buy poe
-  @shop_refreshes = 0
+  @shop_refreshes = 0 #don't refresh shop
 
   #we don't want to buy anything in the guild store
   #@store_guild_items = []
@@ -70,8 +67,8 @@ Simulator.new do
   @subscription =true
 
   @tower_kt = 900 #multi at 600
-  @tower_4f = 600 #multi at 450
-  @tower_god = 349 #multi at 350
+  @tower_4f = [600, 550, 480, 750] #multi at 450
+  @tower_god = [349, 370] #multi at 350
   set_tower_progression_from_levelup(10) #progression of 10 levels a month, so 20 levels in kt/4f since we are at multi, 10 at god since we are at singles
 
   @monthly_stargazing = 20
@@ -80,13 +77,12 @@ Simulator.new do
   @cursed_realm = get_cursed_realm(5) #in cursed and in top 5%
 
   @arena_daily_dia = get_arena(1) #rank 1 in arena
-  @arena_weekly_dia ||=@arena_daily_dia * 10
   @lct_coins =400 #top 1
 
-  @dura_nb_selling=7
+  @dura_nb_selling=7 #we have maxed out all artifacts
 
   @noble_regal = get_regal(paid: true)
-  @noble_twisted = get_twisted_bounties(paid: true) #default to xo
+  @noble_twisted = get_twisted_bounties(paid: true) #default to xp
   @noble_coe = get_coe(paid: true) #default to dust
 
   @monthly_card=get_monthly_card #default to dust
@@ -110,6 +106,7 @@ Detailed customizations
   (so they may need to change after an update)
   - @_underscore variables are internal variables
   Call `show_variables(verbose: true)` to see all these variables.
+  See the variable list below for the full settings
 =end
 s=Simulator.new do
   @stage="37-01"
@@ -126,20 +123,22 @@ s=Simulator.new do
   #alternative: see `get_misty` as an helper function to build them
   @misty = get_misty(guild_twisted: :guild)
   @noble_regal = get_regal(paid: true) #we pay the regal pass
-  @noble_coe = get_coe(:cores) #we select cores rather than dust in champiion of esperia regals, by default paid is false, ie we use the f2p version
-  #see the variable list below for the full settings
-  #
+  @noble_coe = get_coe(:cores) #we select cores rather than dust in champion of esperia regals, by default paid is false, ie we use the f2p version
+  
   @monthly_stargazing=20 #lets stargaze!
   @monthly_tavern= 0
   @monthly_hcp_heroes= 1 #we want to do enough hcp summons to get one hero
 
+  # Skip large camps in dismal
+  # @_dismal_stage_chest_rewards = { gold_h: 59, xp_h: 29.5, dust_h: 29.5 }
+  # Better:
+  @labyrinth_mode = :dismal_skip_large
+
+  # assume that vows only give 10 stargaze cards
+  @_average_vow_rewards=({stargazers: 10})
 
   # If we are feeling adventurous we can even change internal variables in post_setup_hook
   def post_setup_hook
-     # skipping large camps in dismal:
-     @_dismal_stage_chest_rewards = { gold_h: 59, xp_h: 29.5, dust_h: 29.5 }
-     # assume that vows only give 10 stargaze cards
-     @_average_vow_rewards=({stargazers: 10})
      #the program determines fos values from stage progression, but we can change it:
      @_fos_mythic_mult=0.3*2 #we forgot to activate the last mythic fos even though we are at chapter 37
   end
@@ -184,8 +183,7 @@ s=Simulator.new do
     r
   end
 
-  # 2) the `exchange_shop` function currently only handle dust, dust_h, xp_h, purple_stones, poe, shards, cores, silver_e, gold_e
-  #  we want to add some functionality:
+  # 2) we can add some items we want to buy in the shop:
   #
   #    def exchange_shop
   #      r=super #call the main function
@@ -196,8 +194,8 @@ s=Simulator.new do
   #    end
   #
   # But we can actually use the built in functionality here:
-  @Shop={reset_scroll: {reset_scrolls: 1, gold: -6000}}
-  @shop_items = %i(dust purple_stones poe shards) +[{reset_scroll: 1}] #we only buy one scroll daily, by default we assume we buy the full number of store refreshes
+  @Shop={reset_scroll: {reset_scrolls: 1, gold: -6000}} #it's already in the program, but let's pretend it was not
+  @shop_items = get_shop_items({reset_scroll: 1}) #we only buy one scroll daily, by default we assume we buy the full number of store refreshes
 end
 
 #Now let's look at the summary!
