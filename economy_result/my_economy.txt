@@ -65,7 +65,7 @@ shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 dura_fragments: -1.37 [1.37 (dura_fragments_sell)]
 
-=============== Summons ===============
+=============== Summons (0 sg + 0 hcp + 0 wl) ===============
 dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)] {65.87K gold}
 xp_h: 1.1 [1.1 (stargaze)] {458.06K xp}
@@ -111,7 +111,7 @@ purple_stones: 7 [1 (towers_kt) + 6 (towers_4f)]
 blue_stones: 9 [9 (towers_kt)]
 stargazers: 0.67 [0.33 (towers_4f) + 0.33 (towers_god)]
 
-=============== Levelup ===============
+=============== Level up (10) ===============
 gold: -6265.66 [6265.66 (levelup)]
 xp: -45100 [45100 (levelup)]
 dust: -8620.33 [8620.33 (levelup)]

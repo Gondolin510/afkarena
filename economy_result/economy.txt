@@ -64,7 +64,7 @@ poe: 750 [750 (shop)]
 shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 
-=============== Summons ===============
+=============== Summons (0 sg + 0 hcp + 0 wl) ===============
 dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)] {66.73K gold}
 xp_h: 1.1 [1.1 (stargaze)] {477.47K xp}

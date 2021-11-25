@@ -58,7 +58,7 @@ dust: 1500 [1500 (shop)]
 poe: 300 [300 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 
-=============== Summons ===============
+=============== Summons (0 sg + 0 hcp + 0 wl) ===============
 dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)] {48.48K gold}
 xp_h: 1.1 [1.1 (stargaze)] {142.65K xp}
@@ -98,7 +98,7 @@ faction_emblems: 0.33 [0.33 (towers_god)]
 cores: 6.67 [6.67 (towers_god)]
 stargazers: 0.33 [0.33 (towers_god)]
 
-=============== Levelup ===============
+=============== Level up (10) ===============
 gold: -837 [837 (levelup)]
 xp: -2486.67 [2486.67 (levelup)]
 dust: -53333.33 [53333.33 (levelup)]

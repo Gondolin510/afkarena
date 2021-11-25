@@ -2069,13 +2069,18 @@ class Simulator
       economy.each do |k,v|
         r=@ressources.slice(*v)
         next if r.empty?
+        title=k
+        case k
+        when :summons
+          title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
+        when :levelup
+          title="Level up (#{round(@monthly_levelup)})"
+        end
         case k
         when :income
-          do_summary(k,r, total: true, total_value: true)
-        when :summons
-          do_summary(k,r, headings: false)
+          do_summary(title,r, total: true, total_value: true)
         else
-          do_summary(k,r, headings: false)
+          do_summary(title,r, headings: false)
           if k==:stores
             h2("30 days coin summary")
             puts @__coin_summary 

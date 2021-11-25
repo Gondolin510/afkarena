@@ -65,7 +65,7 @@ poe: 750 [750 (shop)]
 shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 
-=============== Summons ===============
+=============== Summons (0 sg + 0 hcp + 0 wl) ===============
 dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)] {65.85K gold}
 xp_h: 1.1 [1.1 (stargaze)] {451.8K xp}
@@ -250,7 +250,7 @@ gold: -2250 [2250 (shop)]
 dust: 500 [500 (shop)]
 purple_stones: 1.11 [1.11 (shop)]
 
-=============== Summons ===============
+=============== Summons (0 sg + 0 hcp + 0 wl) ===============
 dia: 1.5 [1.5 (stargaze)]
 gold_h: 2.47 [2.47 (stargaze)] {38.72K gold}
 xp_h: 1.1 [1.1 (stargaze)] {16.08K xp}
@@ -426,7 +426,7 @@ shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 dura_fragments: -10.15 [10.15 (dura_fragments_sell)]
 
-=============== Summons ===============
+=============== Summons (20 sg + 86.76 hcp + 0 wl) ===============
 dia: -1197.43 [867.6 (hcp) - 333.33 (stargazing) + 3.5 (stargaze)]
 gold_h: 5.77 [5.77 (stargaze)] {158.84K gold}
 xp_h: 2.56 [2.56 (stargaze)] {1245.41K xp}
@@ -641,7 +641,7 @@ shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 reset_scrolls: 1 [1 (shop)]
 
-=============== Summons ===============
+=============== Summons (20 sg + 21.69 hcp + 0 wl) ===============
 dia: -545.23 [216.9 (hcp) - 333.33 (stargazing) + 5 (stargaze)]
 gold_h: 8.24 [8.24 (stargaze)] {222.42K gold}
 xp_h: 3.65 [3.65 (stargaze)] {1590.05K xp}
