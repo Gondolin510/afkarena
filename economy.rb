@@ -192,8 +192,8 @@ class Simulator
         blue_stone: { cost: 2400, blue_stones: 60, max: 1+2+3+4},
         twisted: { cost: 10000, twisted: 100, max: 1+2+3+10},
 
-        garrison: { cost: 66*800, garrison_stone: 66},
-        dim_exchange: {cost: 10*4000/2, dim_points: 40/2},
+        garrison: { cost: 800, garrison_stone: 1, max: 66},
+        dim_exchange: {cost: 4000, dim_points: 1, max: 40},
       }.merge(@StoreHero||{})
 
       @StoreGuild ||={
@@ -204,8 +204,8 @@ class Simulator
         mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
         dim_gear: 67000, #shortcut for dim_gear: {cost: 67000, dim_gear:1},
 
-        garrison: { cost: 66*800, garrison_stone: 66},
-        dim_exchange: {cost: 10*4000/2, dim_points: 40/2},
+        garrison: { cost: 800, garrison_stone: 1, max: 66},
+        dim_exchange: {cost: 4000, dim_points: 1, max: 40},
       }.merge(@StoreGuild||{})
 
       @StoreLab={
@@ -220,8 +220,8 @@ class Simulator
         dim_emblems: {cost: 64000, dim_emblems: 50},
         red_e: {cost: 37125, red_e: 25, max: 2},
 
-        garrison: { cost: 100*800, garrison_stone: 100},
-        dim_exchange: {cost: 50*4000/2, dim_points: 200/2},
+        garrison: { cost: 800, garrison_stone: 1, max: 100},
+        dim_exchange: {cost: 4000, dim_points: 1, max: 200},
       }.merge(@StoreLab||{})
 
       @StoreChallenger={
@@ -233,8 +233,8 @@ class Simulator
         merlin: 250000, ldv: 250000,
         red_e: {cost: 165000, red_e: 25, max: 3},
 
-        garrison: { cost: 50*2666, garrison_stone: 50},
-        dim_exchange: {cost: 15*13333/2.0, dim_points: 15/2.0},
+        garrison: { cost: 2666, garrison_stone: 1, max: 50},
+        dim_exchange: {cost: 13333, dim_points: 1, max: 15},
       }.merge(@StoreChallenger||{})
 
       @Merchant_daily ||={ dia: 20, purple_stones: 2}
@@ -595,56 +595,65 @@ class Simulator
       sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
     end
 
-    def get_shop_items(*extra) #todo: improve this function
+    def get_shop_items(*extra, dust: true, stones: true, poe: :unlocked, shards: :unlocked)
       get_progression
       return [] unless @_unlock_shop
-      r = %i(dust purple_stones)
-      r << :poe if @_unlock_afk_poe
-      r << :shards if @_unlock_afk_shard
+      poe=@_unlock_afk_poe if poe == :unlocked
+      shards=@_unlock_afk_shard if shards == :unlocked
+      r=[]
+      r << :dust if dust
+      r << :purple_stones if stones
+      r << :poe if poe
+      r << :shards if shards
       r += extra
       r
     end
 
-    def get_store_hero_items(*extra, garrison: @garrison, dim_exchange: false)
+    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, primary: [])
       get_progression
       return [] unless @_unlock_store_hero
       r=[]
-      r << :garrison if garrison
-      r << :dim_exchange if dim_exchange
+      r << {garrison: garrison} if garrison >0
+      r << {dim_exchange: dim_exchange} if dim_exchange>0
+      r += primary
       r << nil #for secondary items
       r += extra
       r
     end
-    def get_store_guild_items(*extra, garrison: @garrison, dim_exchange: @dim_exchange)
+    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 40/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked)
       get_progression
       return [] unless @_unlock_store_guild
+      dim_gear=@_unlock_guild_store_mythic if dim_gear == :unlocked
       r=[]
-      r << :garrison if garrison
-      r << :dim_exchange if dim_exchange
-      r << {t3: :max} if @_unlock_t3
+      r << {garrison: garrison} if garrison >0
+      r << {dim_exchange: dim_exchange} if dim_exchange>0
+      r += primary
+      r << {t3: :max} if t3
       r << nil #secondary items
       r += extra
-      r += [nil, :dim_gear] if @_unlock_guild_store_mythic
+      r += [nil, :dim_gear] if dim_gear
       r
     end
-    def get_store_lab_items(*extra, garrison: @garrison, dim_exchange: @dim_exchange)
+    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 200/2 : 0), primary: [], dim_emblems: :unlocked)
       get_progression
       return [] unless @_unlock_store_lab
+      dim_emblems=@_unlock_afk_red_e if dim_emblems == :unlocked
       r=[]
-      r << :garrison if garrison
-      r << :dim_exchange if dim_exchange
+      r << {garrison: garrison} if garrison >0
+      r << {dim_exchange: dim_exchange} if dim_exchange>0
+      r += primary
       r << nil
-      r << :dim_emblems if @_unlock_afk_red_e
+      r << :dim_emblems if dim_emblems
       r += extra
       r
     end
-    def get_store_challenger_items(*extra, garrison: false, dim_exchange: false)
+    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, primary: [])
       get_progression
       return [] unless @_unlock_store_challenger
-      return [] unless @stage > "09-20"
       r=[]
-      r << :garrison if garrison
-      r << :dim_exchange if dim_exchange
+      r << {garrison: garrison} if garrison >0
+      r << {dim_exchange: dim_exchange} if dim_exchange>0
+      r += primary
       r << nil #secondary items
       r += extra
       r
@@ -1556,7 +1565,7 @@ class Simulator
         qty=values[:qty]
         cost=values[:cost]
         total_cost+=cost*qty
-        o<<=" #{round(cost)} (#{(qty==1 || qty==1.0) ? '': "#{round(qty)} x "}#{item})"
+        o<<=" #{round(qty*cost)} (#{(qty==1 || qty==1.0) ? '': "#{round(qty)} x "}#{item})"
       end
       s << "buy #{round(total_cost)} [#{o.join(' + ')}]" unless o.empty?
       s << "\n"

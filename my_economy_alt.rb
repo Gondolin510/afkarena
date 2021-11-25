@@ -31,8 +31,8 @@ s=Simulator.new do
   @hero_trial_guild_rewards ={ dia: 200+100 }
 
   @dim_exchange=true
-  @shop_items = %i(dust purple_stones poe) #( shards gold_e)
-  #@store_lab_items = get_store_lab_items(:arthur)
+  @shop_items = get_shop_items(shards: false)
+  @store_lab_items = get_store_lab_items(primary: %i(:arthur))
   @store_lab_items = %i(dim_exchange arthur)
 
   #tweaks

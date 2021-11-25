@@ -87,16 +87,16 @@ dura_fragments: 0.29 [0.29 (stargaze)]
 =============== Stores ===============
 t3: 0.07 [0.07 (guild_store)]
 guild_coins: -14026.05 [14026.05 (guild_store)]
-lab_coins: -6000 [6000 (lab_store)]
-hero_coins: -1760 [1760 (hero_store)]
-garrison_stone: 7.73 [2.2 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
+lab_coins: -16000 [16000 (lab_store)]
+hero_coins: -906.67 [906.67 (hero_store)]
+garrison_stone: 6.67 [1.13 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
 dim_points: 4 [0.67 (guild_store) + 3.33 (lab_store)]
-dim_gear: 0.13 [0.13 (guild_store)]
+dim_gear: 0.1 [0.1 (guild_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 11250.58 => buy 52800 [ 52800 (garrison)]
-lab_coins: 151900 => buy 180000 [ 80000 (garrison) +  100000 (dim_exchange)]
-guild_coins: 420781.45 => buy 420781.45 [ 52800 (garrison) +  20000 (dim_exchange) +  47000 (2 x t3) +  67000 (3.79 x dim_gear)]
+hero_coins: 11250.58 => buy 27200 [ 27200 (34 x garrison)]
+lab_coins: 151900 => buy 480000 [ 80000 (100 x garrison) +  400000 (100 x dim_exchange)]
+guild_coins: 420781.45 => buy 420781.45 [ 52800 (66 x garrison) +  80000 (20 x dim_exchange) +  94000 (2 x t3) +  193981.45 (2.9 x dim_gear)]
 challenger_coins: 340260 => 
 
 =============== Towers ===============
@@ -147,8 +147,8 @@ t2_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
 
 ***** Coins *****
 guild_coins: 0=420781.45-420781.45 [368781.45 (guild 88%) + 20000 (lab 5%) + 30000 (misty 7%) + 2000 (guild_hero_trial 0%) - 420781.45 (guild_store 100%)]
-lab_coins: -28100=151900-180000 [151900 (lab 100%) - 180000 (lab_store 100%)]
-hero_coins: -41549.42=11250.58-52800 [11250.58 (tavern 100%) - 52800 (hero_store 100%)]
+lab_coins: -328100=151900-480000 [151900 (lab 100%) - 480000 (lab_store 100%)]
+hero_coins: -15949.42=11250.58-27200 [11250.58 (tavern 100%) - 27200 (hero_store 100%)]
 challenger_coins: 340260 [273600 (lct 80%) + 66660 (lab 20%)]
 
 ***** Summons *****
@@ -170,9 +170,9 @@ choice_god: 0.38 [0.38 (stargaze 100%)]
 random_god: 0.71 [0.44 (stones 62%) + 0.27 (tavern 38%)]
 
 ***** Dimensional *****
-garrison_stone: 232 [66 (hero_store 28%) + 100 (lab_store 43%) + 66 (guild_store 28%)]
+garrison_stone: 200 [34 (hero_store 17%) + 100 (lab_store 50%) + 66 (guild_store 33%)]
 dim_points: 120 [100 (lab_store 83%) + 20 (guild_store 17%)]
-dim_gear: 3.79 [3.79 (guild_store 100%)]
+dim_gear: 2.9 [2.9 (guild_store 100%)]
 
 ***** Misc *****
 dura_fragments: 255.79=296.99-41.19 [192.24 (idle 65%) + 96.12 (ff 32%) - 41.19 (dura_fragments_sell 100%) + 8.63 (stargaze 3%)]
@@ -262,9 +262,9 @@ Max rc level: 3.17 days (9.45 by month)
 @deluxe_monthly_card: {}
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
-@store_hero_items: [:garrison, nil]
-@store_guild_items: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
-@store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]
+@store_hero_items: [{:garrison=>34}, nil]
+@store_guild_items: [{:garrison=>66}, {:dim_exchange=>20}, {:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [{:garrison=>100}, {:dim_exchange=>100}, nil, :dim_emblems]
 @store_challenger_items: [nil]
 @labyrinth_mode: dismal
 @lab_flat_rewards: {:gold=>1732.4210526315792, :xp=>2507.684210526316}
@@ -272,10 +272,10 @@ Max rc level: 3.17 days (9.45 by month)
 --------------- Fixed vars ---------------
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1125}, :shards=>{:shards=>20, :gold=>-2000}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-10920.0, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-10080.0, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
-@StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:cost=>20000, :dim_points=>20}}
-@StoreGuild: {:t1=>33879, :t2=>40875, :t3=>{:t3=>1}, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_gear=>67000, :garrison=>{:garrison_stone=>66}, :dim_exchange=>{:dim_points=>20}}
-@StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>3}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>100}, :dim_exchange=>{:dim_points=>100}}
-@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :shard=>{:cost=>10000, :shards=>30}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :ldv=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}, :garrison=>{:cost=>133300, :garrison_stone=>50}, :dim_exchange=>{:cost=>99997.5, :dim_points=>7.5}}
+@StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:garrison_stone=>1}, :dim_exchange=>{:cost=>4000, :dim_points=>1, :max=>40}}
+@StoreGuild: {:t1=>33879, :t2=>40875, :t3=>{:t3=>1}, :random_mythic_gear=>31350, :mythic_gear=>58981.99999999999, :dim_gear=>67000, :garrison=>{:garrison_stone=>1}, :dim_exchange=>{:dim_points=>1}}
+@StoreLab: {:blue_stone=>{:cost=>4800, :blue_stones=>120, :max=>4}, :fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :atier=>{:cost=>45000, :choice_atier=>1}, :dust=>{:cost=>9000, :dust=>1500, :max=>2}, :twisted=>{:cost=>40000, :twisted=>400, :max=>3}, :wukong=>45000, :arthur=>60000, :dim_emblems=>{:dim_emblems=>50}, :red_e=>{:cost=>37125, :red_e=>25, :max=>2}, :garrison=>{:garrison_stone=>1}, :dim_exchange=>{:dim_points=>1}}
+@StoreChallenger: {:god=>{:cost=>250000, :choice_god=>1}, :shard=>{:cost=>10000, :shards=>30}, :atier=>{:cost=>150000, :choice_atier=>1}, :flora=>150000, :merlin=>250000, :ldv=>250000, :red_e=>{:cost=>165000, :red_e=>25, :max=>3}, :garrison=>{:cost=>2666, :garrison_stone=>1, :max=>50}, :dim_exchange=>{:cost=>13333, :dim_points=>1, :max=>15}}
 @Merchant_daily: {:dia=>20, :purple_stones=>2}
 @Merchant_weekly: {:dia=>20, :purple_stones=>5}
 @Merchant_monthly: {:dia=>50, :purple_stones=>10}
