@@ -112,23 +112,26 @@ blue_stones: 9 [9 (towers_kt)]
 stargazers: 0.67 [0.33 (towers_4f) + 0.33 (towers_god)]
 
 =============== Levelup ===============
+gold: -6265.66 [6265.66 (levelup)]
+xp: -45100 [45100 (levelup)]
+dust: -8620.33 [8620.33 (levelup)]
 
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 15158.9=38858.9-23700 [5062.5 (board 13%) + 8470.98 (guild 22%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 13%) + 6000 (lab 15%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%) + 1360 (towers_kt 3%)]
 
-gold: 199639.76=683389.76-483750 [106537.45 (idle 16%) + 53268.73 (ff 8%) + 11753.75 (board 2%) + 334780.2 (guild 49%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 34648.42 (lab 5%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 100%) + 2059.71 (dura_fragments_sell 0%) + 56500 (towers_kt 8%) + 9600 (towers_4f 1%) + 4800 (towers_god 1%)] {683389.76K gold=87%}
+gold: 11670.06=683389.76-671719.7 [106537.45 (idle 16%) + 53268.73 (ff 8%) + 11753.75 (board 2%) + 334780.2 (guild 49%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 34648.42 (lab 5%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 72%) + 2059.71 (dura_fragments_sell 0%) + 56500 (towers_kt 8%) + 9600 (towers_4f 1%) + 4800 (towers_god 1%) - 187969.7 (levelup 28%)] {683389.76K gold=87%}
 gold_h: 3838.71 [128.57 (quests 3%) + 3540 (lab 92%) + 96 (hero_trial 3%) + 74.14 (stargaze 2%)] {102311.75K gold=13%}
 gold_hg: 60 [60 (quests 100%)] {3038.4K gold=0%}
--> Total gold: 304989.92K
+-> Total gold: 117020.22K
 
-xp: 1691464.74 [1094207.37 (idle 65%) + 547103.68 (ff 32%) + 50153.68 (lab 3%)] {1691464.74K xp=69%}
+xp: 338464.74=1691464.74-1353000 [1094207.37 (idle 65%) + 547103.68 (ff 32%) + 50153.68 (lab 3%) - 1353000 (levelup 100%)] {1691464.74K xp=69%}
 xp_h: 1842.7 [60 (quests 3%) + 930 (lab 50%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 32.88 (stargaze 2%)] {770150.59K xp=31%}
--> Total xp: 2461615.33K
+-> Total xp: 1108615.33K
 
-dust: 257968.48 [88611.6 (idle 34%) + 44305.8 (ff 17%) + 41700 (board 16%) + 11250 (oak_inn 4%) + 1249.5 (arena 0%) + 45000 (shop 17%) + 351.58 (tavern 0%) + 1500 (towers_kt 1%) + 16000 (towers_4f 6%) + 8000 (towers_god 3%)] {257968.48K dust=79%}
+dust: -641.52=257968.48-258610 [88611.6 (idle 34%) + 44305.8 (ff 17%) + 41700 (board 16%) + 11250 (oak_inn 4%) + 1249.5 (arena 0%) + 45000 (shop 17%) + 351.58 (tavern 0%) + 1500 (towers_kt 1%) + 16000 (towers_4f 6%) + 8000 (towers_god 3%) - 258610 (levelup 100%)] {257968.48K dust=79%}
 dust_h: 1446.71 [60 (quests 4%) + 930 (lab 64%) + 320 (misty 22%) + 24 (hero_trial 2%) + 88 (vow 6%) + 24.71 (stargaze 2%)] {70382.6K dust=21%}
--> Total dust: 328351.08
+-> Total dust: 69741.08
 
 ***** Upgrades *****
 silver_e: 272.68 [59.98 (idle 22%) + 29.99 (ff 11%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
@@ -184,7 +187,7 @@ invigor: 19440 [12960 (idle 67%) + 6480 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 2.36 days (12.7 by month) {gold: 1.85 days, xp: 1.65 days, dust: 2.36 days} [monthly remains: 66329.18 gold + 743742.81 xp]
+level: 11.12 days (2.7 by month) {gold: 4.82 days, xp: 3.66 days, dust: 11.12 days} [monthly remains: 66329.18 gold + 743742.81 xp]
 -> Level cost: 10307.71 dia / 10644.97 dia [18796.97 gold=1073.25 dia / 705.26 gold_h=1410.52 dia + 135300 xp=323.72 xp_h=2589.8 dia + 25861 dust=531.57 dust_h=6644.66 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -231,9 +234,7 @@ Max rc level: 3.17 days (9.45 by month)
 @tower_kt: 561
 @tower_4f: 280
 @tower_god: 200
-@tower_kt_progression: 10
-@tower_4f_progression: 10
-@tower_god_progression: 10
+@monthly_levelup: 10
 @garrison: true
 @dim_exchange: true
 @misty: {:dust_h=>96, :guild_coins=>30000, :blue_stones=>360, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
@@ -269,7 +270,9 @@ Max rc level: 3.17 days (9.45 by month)
 @store_lab_items: [{:garrison=>100}, {:dim_exchange=>100}, nil, :dim_emblems]
 @store_challenger_items: [nil]
 @labyrinth_mode: dismal
-@monthly_levelup: 0
+@tower_kt_progression: 10
+@tower_4f_progression: 10
+@tower_god_progression: 10
 @lab_flat_rewards: {:gold=>1732.4210526315792, :xp=>2507.684210526316}
 
 --------------- Fixed vars ---------------

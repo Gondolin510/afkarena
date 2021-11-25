@@ -29,7 +29,8 @@ s=Simulator.new do
   @tower_kt = 561
   @tower_4f = 280
   @tower_god = 200
-  set_tower_progression(10)
+  @monthly_levelup=10
+  #set_tower_progression(10)
 
   @garrison=true
   @dim_exchange=true

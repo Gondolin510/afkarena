@@ -739,6 +739,11 @@ class Simulator
       return [gold, xp, dust]
     end
 
+    def level_up_cost(level)
+      gold, xp, dust = level_up_ressources(@hero_level)
+      {gold: gold, xp: xp, dust: dust}
+    end
+
     def level_cost
       gold, xp, dust = level_up_ressources(@hero_level)
       @_level_gold ||= gold
@@ -747,21 +752,22 @@ class Simulator
       {gold: @_level_gold, xp: @_level_xp, dust: @_level_dust}
     end
 
-    def levelup_cost(nb_levels, level=@hero_level)
+    def levels_up_cost(nb_levels, level=@hero_level)
       lev=level.dup
       r={}
       (1..nb_levels).each do
-        add_to_hash(r, level_up_ressources(level))
+        add_to_hash(r, level_up_cost(level))
         if lev.is_a?(Enumerable)
           lev=lev.map {|i| i+1}
         else
           lev+=1
         end
       end
+      r
     end
 
     def monthly_levelup(nb_levels)
-      @ressources[:levelup]=mult_hash(levelup_cost(nb_levels), 1/30.0)
+      @ressources[:levelup]=mult_hash(levels_up_cost(nb_levels), -1/30.0)
     end
 
     def ressources_cost
