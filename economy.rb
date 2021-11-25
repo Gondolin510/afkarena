@@ -1641,14 +1641,16 @@ class Simulator
   include Exchange
 
   module Tally
-    def tally(ressources=@ressources, multiplier: 1)
+    def tally(ressources=@ressources, multiplier: 1, mode: 0)
       r={}
       keys=ressources.values.map {|v| v.keys}.flatten.sort.uniq
       keys.each do |type|
         sum=0
         ressources.each do |k,v|
           if v.key?(type)
-            sum+=v[type] * multiplier
+            value=v[type]
+            value=0 if mode*value<0 #keep only pos entries when mode=1, only neg entries when mode=-1
+            sum+=value * multiplier
           end
         end
         r[type]=sum
@@ -1664,8 +1666,8 @@ class Simulator
       end.to_h
     end
 
-    def get_total(r=@ressources)
-      s=tally(r)
+    def get_total(r=@ressources, **kw)
+      s=tally(r, **kw)
       s=convert_ressources_h(s)
       unless (s.keys & %i(god choice_god random_god fodder choice_fodder random_fodder atier random_atier wishlist_atier choice_atier)).empty?
         s[:god]||=0
@@ -1713,7 +1715,7 @@ class Simulator
     def get_ressource_order
       ressources=tally.keys
       order={
-        base: %i(dia gold gold_h gold_hg total_gold xp xp_h total_xp dust dust_h total_dust),
+        base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
         upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
         gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
@@ -1750,8 +1752,11 @@ class Simulator
       puts "***** #{t.capitalize} *****"
     end
 
-    def make_summary(ressources, headings: true, total: true, plusminus: false, percent: false)
-      _total=get_total(ressources) if total
+    def make_summary(ressources, headings: true, total: false, plusminus: false, percent: false)
+      if total
+        total=get_total(ressources)
+        pos_total=get_total(ressources, mode: 1)
+      end
       @_order.each do |summary, keys|
         s=""
         keys.each do |type|
@@ -1786,33 +1791,69 @@ class Simulator
             end
           end
           if total
-            if type==:choice_god and _total[:god]
-              s+="-> God: #{round(_total[:god])}\n"
+            if type==:choice_god and total[:god]
+              s+="-> God: #{round(total[:god])}\n"
             end
-            if type==:choice_atier and _total[:atier]
-              s+="-> Atier: #{round(_total[:atier])}\n"
+            if type==:choice_atier and total[:atier]
+              s+="-> Atier: #{round(total[:atier])}\n"
             end
             #fodder == random_fodder
           end
 
-          plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
-          unless (sum==0 or sum==0.0) and !plusminuscondition
+          unless o.empty?
             s << "#{type}: #{round(sum)}"
+            plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
             if plusminuscondition
               s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
             end
-            s << " [#{o.join}]\n"
+            s << " [#{o.join}]"
+
+            if percent and type==:gold and total and total[:total_gold]
+              s += " {#{round(pos_sum)}K gold=#{percent(pos_sum*1.0/pos_total[:total_gold])}}"
+            elsif %i(gold_h gold_hg).include?(type)
+              converted=total_gold(type => sum)
+              if total and total[:total_gold] and percent
+                s += " {#{round(converted)}K gold=#{percent(converted*1.0/pos_total[:total_gold])}}"
+              else
+                s += " {#{round(converted)}K gold}"
+              end
+            end
+
+            if percent and type==:xp and total and total[:total_xp]
+              s += " {#{round(pos_sum)}K xp=#{percent(pos_sum*1.0/pos_total[:total_xp])}}"
+            elsif %i(xp_h xp_hg).include?(type)
+              converted=total_xp(type => sum)
+              if total and total[:total_xp] and percent
+                s += " {#{round(converted)}K xp=#{percent(converted*1.0/pos_total[:total_xp])}}"
+              else
+                s += " {#{round(converted)}K xp}"
+              end
+            end
+
+            if percent and type==:dust and total and total[:total_dust]
+              s += " {#{round(pos_sum)}K dust=#{percent(pos_sum*1.0/pos_total[:total_dust])}}"
+            elsif %i(dust_h dust_hg).include?(type)
+              converted=total_dust(type => sum)
+              if total and total[:total_dust] and percent
+                s += " {#{round(converted)}K dust=#{percent(converted*1.0/pos_total[:total_dust])}}"
+              else
+                s += " {#{round(converted)}K dust}"
+              end
+            end
+
+            s << "\n"
           end
 
           if total
-            if type==:gold_hg and _total[:total_gold]
-              s+="-> Total gold: #{round(_total[:total_gold])}K\n"
+            s<< "\n" if type==:dia
+            if type==:gold_hg and total[:total_gold]
+              s+="-> Total gold: #{round(total[:total_gold])}K\n\n"
             end
-            if type==:xp_h and _total[:total_xp]
-              s+="-> Total xp: #{round(_total[:total_xp])}K\n"
+            if type==:xp_hg and total[:total_xp]
+              s+="-> Total xp: #{round(total[:total_xp])}K\n\n"
             end
-            if type==:dust_h and _total[:total_dust]
-              s+="-> Total dust: #{round(_total[:total_dust])}\n"
+            if type==:dust_hg and total[:total_dust]
+              s+="-> Total dust: #{round(total[:total_dust])}\n"
             end
           end
         end
@@ -1826,7 +1867,7 @@ class Simulator
       puts unless headings
     end
 
-    def do_summary(title, r, total_value: true, multiplier: 1, **kw)
+    def do_summary(title, r, total_value: false, multiplier: 1, **kw)
       if multiplier != 1
         r=timeframe(r, multiplier)
       end
@@ -1937,11 +1978,11 @@ class Simulator
         next if r.empty?
         case k
         when :income
-          do_summary(k,r)
+          do_summary(k,r, total: true, total_value: true)
         when :summons
-          do_summary(k,r, total_value: false)
+          do_summary(k,r, headings: false)
         else
-          do_summary(k,r, headings: false, total_value: false, total: false)
+          do_summary(k,r, headings: false)
           if k==:stores
             make_h2("30 days coin summary")
             puts @__coin_summary 
@@ -1949,7 +1990,7 @@ class Simulator
           end
         end
       end
-      do_summary("Full monthly ressources", @ressources, total_value: false, multiplier: 30, plusminus: true, percent: true)
+      do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true)
       previsions_summary
     end
 
