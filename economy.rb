@@ -621,10 +621,10 @@ class Simulator
       r=[]
       r << :garrison if garrison
       r << :dim_exchange if dim_exchange
-      r << {t3: :max} if @_unlock_shop_t3
+      r << {t3: :max} if @_unlock_t3
       r << nil #secondary items
       r += extra
-      r += [nil, :dim_gear] if @_unlock_shop_mythic
+      r += [nil, :dim_gear] if @_unlock_guild_store_mythic
       r
     end
     def get_store_lab_items(*extra, garrison: @garrison, dim_exchange: @dim_exchange)
@@ -743,7 +743,6 @@ class Simulator
       @_shop_discount =0.7 if @stage >= "33-01" #is that correct?
       #todo adjust depending on stage progression
 
-      # stargazer+abex 16-01
       @_unlock_ff=true if @stage > "03-36" #not used
       @_unlock_guild=true if @stage >"02-20"
       @_unlock_arena=true if @stage >"02-28"
@@ -758,11 +757,12 @@ class Simulator
 
       #not used except for t3
       @_unlock_shop=true if @stage > "02-08"
-      @_unlock_shop_legendary=true if @stage > "10-22"
-      @_unlock_shop_mythic=true if @stage > "12-02"
-      @_unlock_shop_t1=true if @stage > "21-01"
-      @_unlock_shop_t2=true if @stage > "26-01"
-      @_unlock_shop_t3=true if @stage > "30-01"
+      @_unlock_shop_mythic=true if @stage > "10-22"
+      @_unlock_guild_store_legendary=true if @stage > "10-22"
+      @_unlock_guild_store_mythic=true if @stage > "12-02"
+      @_unlock_t1=true if @stage > "21-01" #also for shop
+      @_unlock_t2=true if @stage > "26-01"
+      @_unlock_t3=true if @stage > "30-01"
 
       @_unlock_store_hero=true if @stage > "01-12"
       @_unlock_store_guild=true if @stage > "02-40"
@@ -772,6 +772,44 @@ class Simulator
       @_unlock_tower_kt=true if @stage > "02-12"
       @_unlock_tower_4f=true if @stage > "14-40"
       @_unlock_tower_god=true if @stage > "29-60"
+
+      #for information, not used
+      @_unlock_ranhorn=true if @stage > "01-12"
+      @_unlock_tavern=true if @stage > "01-12"
+      @_unlock_temple=true if @stage > "01-12"
+      @_unlock_rickety=true if @stage > "01-12"
+      @_unlock_dark_forest=true if @stage > "02-04"
+      @_unlock_labyrinth=true if @stage > "02-04"
+      @_unlock_labyrinth_hard=true if @stage > "09-24"
+      @_unlock_labyrinth_dismal=true if @stage > "26-60"
+      @_unlock_library=true if @stage > "02-16"
+      @_unlock_prog_rewards=true if @stage > "02-28"
+      @_unlock_wishlist=true if @stage > "04-04"
+      @_unlock_wall_legends=true if @stage > "04-36"
+      @_unlock_artifacts=true if @stage > "06-04"
+      @_unlock_artifacts_enhancements=true if @stage > "13-40"
+      @_unlock_guild_grounds=true if @stage > "06-04"
+      @_unlock_elder_tree=true if @stage > "08-40"
+      @_unlock_twisted=true if @stage > "08-40"
+      @_unlock_fos=true if @stage > "11-40"
+      @_unlock_board_autofill=true if @stage > "12-40" or @vip>=6
+      @_unlock_stargazer=true if @stage > "15-40"
+      @_unlock_abex=true if @stage > "15-40"
+      @_unlock_own_oak_inn=true if @stage > "17-40"
+
+      @_unlock_afk_legendary=true if @stage > "11-18"
+      @_unlock_afk_mythic=true if @stage > "16-11"
+      @_unlock_afk_mythic=true if @stage > "16-11"
+      @_unlock_afk_silver_e=true if @stage > "16-40"
+      @_unlock_afk_gold_e=true if @stage > "17-40"
+      @_unlock_afk_red_e=true if @stage > "18-40"
+      @_unlock_afk_twisted=true if @stage >= "14-40" #somewhere before
+      @_unlock_afk_poe=true if @stage > "17-40" #somewhere before 18-40, lets assume this is the same as oak inn opening
+
+      @_unlock_gh_skip=true if @vip>=6
+      @_unlock_arena_skip=true if @vip>=6
+      @_unlock_speed2=true if @stage > "02-16" or @vip>=2
+      @_unlock_speed4=true if @stage > "21-60" or @vip>=11
     end
 
     def get_vip
