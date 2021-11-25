@@ -620,7 +620,7 @@ class Simulator
       r += extra
       r
     end
-    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 40/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked)
+    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked)
       get_progression
       return [] unless @_unlock_store_guild
       t3=@_unlock_t3 if t3 == :unlocked
@@ -635,7 +635,7 @@ class Simulator
       r += [nil, :dim_gear] if dim_gear
       r
     end
-    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 200/2 : 0), primary: [], dim_emblems: :unlocked)
+    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), primary: [], dim_emblems: :unlocked)
       get_progression
       return [] unless @_unlock_store_lab
       dim_emblems=@_unlock_afk_red_e if dim_emblems == :unlocked

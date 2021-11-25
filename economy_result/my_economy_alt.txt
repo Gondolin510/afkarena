@@ -79,14 +79,14 @@ dura_fragments: 0.29 [0.29 (stargaze)]
 =============== Stores ===============
 guild_coins: -7356.47 [7356.47 (guild_store)]
 lab_coins: -2133.33 [2133.33 (lab_store)]
-dim_points: 0.7 [0.67 (guild_store) + 0.03 (lab_store)]
-dim_gear: 0.07 [0.07 (guild_store)]
+dim_points: 0.2 [0.17 (guild_store) + 0.03 (lab_store)]
+dim_gear: 0.1 [0.1 (guild_store)]
 arthur: 0.03 [0.03 (lab_store)]
 
 --------------- 30 days coin summary ---------------
 hero_coins: 11250.58
 lab_coins: 136276 => buy 64000 [ 4000 (dim_exchange) +  60000 (arthur)]
-guild_coins: 220694 => buy 220694 [ 80000 (20 x dim_exchange) +  140694 (2.1 x dim_gear)]
+guild_coins: 220694 => buy 220694 [ 20000 (5 x dim_exchange) +  200694 (3 x dim_gear)]
 challenger_coins: 269700
 
 =============== Towers ===============
@@ -157,8 +157,8 @@ choice_god: 0.38 [0.38 (stargaze 100%)]
 random_god: 0.67 [0.4 (stones 60%) + 0.27 (tavern 40%)]
 
 ***** Dimensional *****
-dim_points: 21 [1 (lab_store 5%) + 20 (guild_store 95%)]
-dim_gear: 2.1 [2.1 (guild_store 100%)]
+dim_points: 6 [1 (lab_store 17%) + 5 (guild_store 83%)]
+dim_gear: 3 [3 (guild_store 100%)]
 
 ***** Misc *****
 dura_fragments: 296.99 [192.24 (idle 65%) + 96.12 (ff 32%) + 8.63 (stargaze 3%)]
@@ -250,7 +250,7 @@ Max rc level: 3.63 days (8.28 by month)
 @shop_refreshes: 2
 @garrison: false
 @store_hero_items: [nil]
-@store_guild_items: [{:dim_exchange=>20}, nil, nil, :dim_gear]
+@store_guild_items: [{:dim_exchange=>5}, nil, nil, :dim_gear]
 @store_challenger_items: [nil]
 @labyrinth_mode: hard
 @tower_kt_progression: 10
