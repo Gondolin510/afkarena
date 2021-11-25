@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#TODO: tower progression, more events?
+#TODO: more events?
 #Total xp/gold/dust: percentage
 
 require './value'
@@ -1685,21 +1685,26 @@ class Simulator
       total
     end
 
-    def convert_ressources_h(r)
-      dust_h=r.fetch(:dust_h,0)
-      r[:total_dust]=(r[:dust]||0)+dust_h*real_afk_dust
-      xp_h=r.fetch(:xp_h,0)
-      r[:total_xp]=(r[:xp]||0)+xp_h*real_afk_xp
+    def total_gold(r)
       gold_h=r.fetch(:gold_h,0)
       gold_hg=r.fetch(:gold_hg,0) #this is affected only by vip
-      r[:total_gold]=(r[:gold]||0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
-      r
+      return r.fetch(:gold,0)+gold_h*real_afk_gold+gold_hg*real_afk_gold*(1+@_vip_gold_mult)
     end
-
-    def detail_ressources(r, type: :gold, percent: true)
-      #todo
+    def total_xp(r)
+      xp_h=r.fetch(:xp_h,0)
+      xp_hg=r.fetch(:xp_hg,0) #this is affected only by vip
+      return r.fetch(:xp,0)+xp_h*real_afk_xp+xp_hg*real_afk_xp*(1+@_vip_xp_mult)
+    end
+    def total_dust(r)
       dust_h=r.fetch(:dust_h,0)
-      r[:total_dust]=(r[:dust]||0)+dust_h*real_afk_dust
+      dust_hg=r.fetch(:dust_hg,0) #this is affected only by vip wich don't change dust
+      return r.fetch(:dust,0)+dust_h*real_afk_dust+dust_hg*real_afk_dust*1
+    end
+    def convert_ressources_h(r)
+      r[:total_gold]=total_gold(r)
+      r[:total_xp]=total_xp(r)
+      r[:total_dust]=total_dust(r)
+      r
     end
   end
   include Tally
@@ -1868,9 +1873,6 @@ class Simulator
     end
 
     def level_cost_summary(daily: false)
-      # total=clean_total
-      # make_h1 "Level summary"
-      # puts "Level: #{cost_summary(cost, total)}"
       cost=level_cost
       gold=cost[:gold]
       xp=cost[:xp]
