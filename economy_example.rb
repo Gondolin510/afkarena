@@ -53,11 +53,11 @@ Simulator.new do
   @board_level =5
   @hero_trial_guild_rewards = { dia: 200+100 }
 
-  @shop_items = %i(dust purple_stones) #don't buy poe
+  @shop_items = get_shop_items(poe: false) #don't buy poe
   @shop_refreshes = 0
 
   #we don't want to buy anything in the guild store
-  @store_guild_items = []
+  #@store_guild_items = []
 end.summary
 
 puts "==================== Example of a whale ===================="
@@ -92,10 +92,11 @@ Simulator.new do
   @monthly_card=get_monthly_card #default to dust
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
+  #buy more stuff!
   @shop_items = get_shop_items(:dust_h, :gold_e)
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: :max})
-  @store_challenger_items = [{red_e: :max}]
+  @store_challenger_items = get_store_challenger_items({red_e: :max})
 end.summary
 
 puts "==================== Example of detailed customisation ===================="

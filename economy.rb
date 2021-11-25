@@ -623,6 +623,7 @@ class Simulator
     def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 40/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked)
       get_progression
       return [] unless @_unlock_store_guild
+      t3=@_unlock_t3 if t3 == :unlocked
       dim_gear=@_unlock_guild_store_mythic if dim_gear == :unlocked
       r=[]
       r << {garrison: garrison} if garrison >0

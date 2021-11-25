@@ -454,13 +454,13 @@ random_god: 0.04 [0.03 (stones) + 0.01 (tavern)]
 dura_fragments: 0.67 [0.67 (stargaze)]
 
 =============== Stores ===============
-red_e: 3.33 [0.83 (lab_store) + 2.5 (challenger_store)]
+red_e: 2.5 [0.83 (lab_store) + 1.67 (challenger_store)]
 twisted: 43.33 [3.33 (hero_store) + 40 (lab_store)]
 t3: 0.07 [0.07 (guild_store)]
 guild_coins: -14195.52 [14195.52 (guild_store)]
 lab_coins: -7370.83 [7370.83 (lab_store)]
 hero_coins: -333.33 [333.33 (hero_store)]
-challenger_coins: -16500 [16500 (challenger_store)]
+challenger_coins: -11000 [11000 (challenger_store)]
 dim_gear: 0.17 [0.17 (guild_store)]
 dim_emblems: 1.67 [1.67 (lab_store)]
 
@@ -468,7 +468,7 @@ dim_emblems: 1.67 [1.67 (lab_store)]
 hero_coins: 18425.98 => buy 10000 [ 10000 (twisted)]
 lab_coins: 249900 => buy 221125 [ 64000 (dim_emblems) +  120000 (3 x twisted) +  37125 (red_e)]
 guild_coins: 425865.55 => buy 425865.55 [ 94000 (2 x t3) +  331865.55 (4.95 x dim_gear)]
-challenger_coins: 354660 => buy 495000 [ 495000 (3 x red_e)]
+challenger_coins: 354660 => buy 330000 [ 330000 (2 x red_e)]
 
 =============== Towers ===============
 dia: 90.67 [90.67 (towers_kt)]
@@ -503,7 +503,7 @@ dust_h: 6663 [60 (quests 1%) + 930 (lab 14%) + 320 (misty 5%) + 1583.33 (coe 24%
 ***** Upgrades *****
 silver_e: 277.68 [59.98 (idle 22%) + 34.99 (ff 13%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
 gold_e: 626.9 [30.02 (idle 5%) + 17.51 (ff 3%) + 42.86 (quests 7%) + 40 (vow 6%) + 450 (shop 72%) + 16.5 (tavern 3%) + 30 (towers_god 5%)]
-red_e: 366.24 [11.26 (idle 3%) + 6.57 (ff 2%) + 21.43 (quests 6%) + 40 (misty 11%) + 20 (vow 5%) + 120 (deluxe_monthly_card 33%) + 6.98 (tavern 2%) + 25 (lab_store 7%) + 75 (challenger_store 20%) + 40 (towers_4f 11%)]
+red_e: 341.24 [11.26 (idle 3%) + 6.57 (ff 2%) + 21.43 (quests 6%) + 40 (misty 12%) + 20 (vow 6%) + 120 (deluxe_monthly_card 35%) + 6.98 (tavern 2%) + 25 (lab_store 7%) + 50 (challenger_store 15%) + 40 (towers_4f 12%)]
 faction_emblems: 60 [40 (towers_4f 67%) + 20 (towers_god 33%)]
 poe: 89183.06 [16509.6 (idle 19%) + 9630.6 (ff 11%) + 25800 (tr 29%) + 2142.86 (quests 2%) + 9000 (misty 10%) + 3000 (vow 3%) + 22500 (shop 25%) + 600 (towers_4f 1%)]
 twisted: 10906.87 [803.74 (idle 7%) + 468.85 (ff 4%) + 7720 (tr 71%) + 214.29 (quests 2%) + 400 (misty 4%) + 100 (hero_store 1%) + 1200 (lab_store 11%)]
@@ -521,7 +521,7 @@ t2_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 guild_coins: 0=425865.55-425865.55 [403865.55 (guild 95%) + 20000 (lab 5%) + 2000 (guild_hero_trial 0%) - 425865.55 (guild_store 100%)]
 lab_coins: 28775=249900-221125 [249900 (lab 100%) - 221125 (lab_store 100%)]
 hero_coins: 8425.98=18425.98-10000 [18425.98 (tavern 100%) - 10000 (hero_store 100%)]
-challenger_coins: -140340=354660-495000 [288000 (lct 81%) + 66660 (lab 19%) - 495000 (challenger_store 100%)]
+challenger_coins: 24660=354660-330000 [288000 (lct 81%) + 66660 (lab 19%) - 330000 (challenger_store 100%)]
 
 ***** Summons *****
 purple_stones: 1395.86 [42.86 (quests 3%) + 91.43 (merchants 7%) + 8.1 (arena 1%) + 300 (misty 21%) + 673.47 (regal 48%) + 120 (hero_trial 9%) + 100 (shop 7%) + 60 (towers_kt 4%)]
@@ -559,7 +559,7 @@ level: 3.63 days (8.27 by month) {gold: 3.63 days, xp: 1.86 days, dust: 1.94 day
 
 SI+10: 25.93 days (1.16 by month)
 SI+20: 11.49 days (2.61 by month)
-SI+30: 24.57 days (1.22 by month)
+SI+30: 26.37 days (1.14 by month)
 
 e30: 24.17 days (1.24 by month)
 e30 to e41: 15.22 days (1.97 by month)
@@ -571,13 +571,13 @@ mythic furn: 2.48 days (12.1 by month)
 mythic furn (with cards): 1.95 days (15.4 by month)
 9F (with cards): 56.18 days (0.53 by month)
 
-Challenger celo: Infinity days (0 by month) [monthly remains: -140340 challenger_coins]
-Ascended challenger celo: Infinity days (0 by month) [monthly remains: -140340 challenger_coins]
+Challenger celo: 304.14 days (0.1 by month)
+Ascended challenger celo: 4257.91 days (0.01 by month)
 
 Ascended 4F: 10.37 days (2.89 by month) {atier: 8.93 days, fodder: 10.37 days} [monthly remains: 3.75 atier]
 Ascended god: 190.25 days (0.16 by month)
 RC slot: 5.48 days (5.47 by month)
-Max rc level: 1.97 days (15.25 by month)
+Max rc level: 1.96 days (15.28 by month)
 
 ==================== Example of detailed customisation ====================
 =============== Fast forward value ===============
