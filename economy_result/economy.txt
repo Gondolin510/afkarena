@@ -165,7 +165,11 @@ invigor: 25920 [17280 (idle 67%) + 8640 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
+500
+[500]
 level: 3.89 days (7.71 by month) {gold: 3.77 days, xp: 3.24 days, dust: 3.89 days} [monthly remains: 9202.56 gold + 472010.15 xp]
+500
+[500]
 -> Level cost: 19009.46 dia / 19609.98 dia [35389.44 gold=2020.64 dia / 1310.57 gold_h=2621.15 dia + 301900 xp=692.98 xp_h=5543.81 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 26.4 days (1.14 by month)

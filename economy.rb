@@ -44,11 +44,6 @@ class Simulator
       @friends_mercs ||= 5 #[only used when mercs unlock]
 
       ### GH [only used when guild unlocks]
-      @gh_team_wrizz_gold ||=1080
-      @gh_team_soren_gold ||=@gh_team_wrizz_gold
-      @gh_team_wrizz_coin ||=1158
-      @gh_team_soren_coin ||=@gh_team_wrizz_coin
-
       @gh_wrizz_chests ||= 23
       @gh_soren_chests ||= @gh_wrizz_chests
       #if not specified, determine the gold amount from the chest amount
@@ -134,7 +129,7 @@ class Simulator
 
       ### Tower progression and level up
       @monthly_levelup||=0
-      set_tower_progression_from_levelup(@monthly_levelup)
+      set_tower_progression_from_levelup
       #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number (which we can estimate using this simulator)
 
       ### Other variables:
@@ -723,11 +718,17 @@ class Simulator
   include Process
 
   module LevelUp
-    def level_up_ressources(levels)
+    def level_up_ressources(levels, hack: false)
+      p levels
       r=get_hero_level_stats
       gold=xp=dust=0
       if levels.is_a?(Integer)
-        return level_up_ressources([levels])
+        if hack and levels>=240
+          #simulate a non crystal setup
+          return level_up_ressources([levels]).map {|i| i/5.0}
+        else
+          return level_up_ressources([levels])
+        end
       else #an array of current hero levels
         levels.each do |level|
           gold +=r[level][:gold]
@@ -752,14 +753,16 @@ class Simulator
     end
 
     def levels_up_cost(nb_levels, level=@hero_level)
-      lev=level.dup
       r={}
-      (1..nb_levels).each do
-        add_to_hash(r, level_up_cost(level))
-        if lev.is_a?(Enumerable)
-          lev=lev.map {|i| i+1}
-        else
-          lev+=1
+      if level.is_a?(Enumerable)
+        nb_levels=[nb_levels]*level.length unless nb_levels.is_a?(Enumerable)
+        level.each_with_index do |l,i|
+          p nb_levels[i], l
+          add_to_hash(r, levels_up_cost(nb_levels[i], l))
+        end
+      else
+        (0...nb_levels).each do |i|
+          add_to_hash(r, level_up_cost(level+i))
         end
       end
       r
@@ -1130,9 +1133,11 @@ class Simulator
 
     def guild
       nb_chests=@_nb_guild_fight*(@gh_wrizz_chests+@gh_soren_chests*@gh_soren_freq)
-      coins=@GH_chest_guild*nb_chests*@_guild_mult+@gh_team_wrizz_coin+@gh_team_soren_coin*@gh_soren_freq
+      coins=@GH_chest_guild*nb_chests*@_guild_mult*1.5 #1.5 for team rewards
+      #+@gh_team_wrizz_coin+@gh_team_soren_coin*@gh_soren_freq
       dia=@GH_chest_dia*nb_chests
-      gold=@_nb_guild_fight*(@gh_wrizz_gold+@gh_soren_gold*@gh_soren_freq)+@gh_team_wrizz_gold+@gh_team_soren_gold*@gh_soren_freq
+      gold=@_nb_guild_fight*(@gh_wrizz_gold+@gh_soren_gold*@gh_soren_freq)*1.5
+      #+@gh_team_wrizz_gold+@gh_team_soren_gold*@gh_soren_freq
 
       {guild_coins: coins, dia: dia, gold: gold}
     end
@@ -1525,15 +1530,17 @@ class Simulator
 
     #return tower progression from the rate of level up
     #heuristic: one level=one floor at single, two floors at multis
-    def set_tower_progression_from_levelup(level_up)
+    def set_tower_progression_from_levelup(level_up=@monthly_levelup)
       #Multis: 700 KT, 450 4F, 350 celestial
+      level_up=[*level_up]
+      avg_level_up=level_up.sum*1.0/level_up.length
       factor_4f=factor_kt=factor_god=1
       factor_kt=2 if [*@tower_kt].min >= 600
       factor_4f=2 if [*@tower_4f].min >= 450
       factor_god=2 if [*@tower_god].min >= 350
-      @tower_kt_progression ||= level_up*factor_kt
-      @tower_4f_progression ||= level_up*factor_4f
-      @tower_god_progression ||= level_up*factor_god
+      @tower_kt_progression ||= avg_level_up*factor_kt
+      @tower_4f_progression ||= avg_level_up*factor_4f
+      @tower_god_progression ||= avg_level_up*factor_god
     end
 
     def towers_ressources

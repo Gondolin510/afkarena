@@ -1,3 +1,23 @@
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
+359
+[359]
 =============== Fast forward value ===============
 334.47 dia [295.94 gold=16.9 dia + 3039.46 xp=58.18 dia + 246.14 dust=63.24 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 24 invigor=5.76 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
 
@@ -187,7 +207,11 @@ invigor: 12960 [8640 (idle 67%) + 4320 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
+359
+[359]
 level: 11.8 days (2.54 by month) {gold: 4.82 days, xp: 3.66 days, dust: 11.8 days} [monthly remains: 69236.56 gold + 764670.08 xp]
+359
+[359]
 -> Level cost: 10307.71 dia / 10644.97 dia [18796.97 gold=1073.25 dia / 705.26 gold_h=1410.52 dia + 135300 xp=323.72 xp_h=2589.8 dia + 25861 dust=531.57 dust_h=6644.66 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -232,8 +256,8 @@ Max rc level+1: 3.17 days (9.45 by month)
 @noble_coe: {:cores=>585}
 @dura_nb_selling: 1
 @tower_kt: 561
-@tower_4f: [280, 280, 360, 360]
-@tower_god: [140, 200]
+@tower_4f: [296, 291, 361, 393]
+@tower_god: [143, 231]
 @monthly_levelup: 10
 @garrison: true
 @dim_exchange: true

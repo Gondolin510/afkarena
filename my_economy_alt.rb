@@ -17,9 +17,8 @@ s=Simulator.new do
   @tr_poe = 0
   @tr_guild = {}
 
-  @gh_team_wrizz_gold = 561
-  @gh_team_soren_gold = 559
-  @gh_team_wrizz_coin = 806
+  @gh_wrizz_gold = 561*2
+  @gh_soren_gold = 559*2
   @gh_wrizz_chests = 16
 
   @tower_kt = 245

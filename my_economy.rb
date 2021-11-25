@@ -27,8 +27,8 @@ s=Simulator.new do
   @dura_nb_selling =1
 
   @tower_kt = 561
-  @tower_4f = [280, 280, 360, 360] #lb, maulers, wilders, gb
-  @tower_god = [140, 200] #celo, hypo
+  @tower_4f = [296, 291, 361, 393] #lb, maulers, wilders, gb
+  @tower_god = [143, 231] #celo, hypo
   @monthly_levelup=10
   #set_tower_progression(10)
 
