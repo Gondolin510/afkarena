@@ -1329,94 +1329,109 @@ class Simulator
 
   module Towers
     #return the average floor reward
-    def tower_kt_ressources(level=@tower_kt)
+    def tower_kt_floor(level=@tower_kt)
       # >560: 5650 gold + 160 dia +150 dust + 30 purple every *10
       #       5650 gold + 80 dia +150 dust + 30 blue every else
       #           (except 160 dia every *5)
+      gold=dia=dust=blue=purple=0
+      if level>560
+        gold =5650
+        dia =80
+        dust =150
+        purple=blue=30
+      end
+      return {gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
+    end
+    def tower_kt_quest(level=@tower_kt)
+      # quest: 400 dia every x20, 
+      #        250-500: 1000 shards every 50
+      #        550+: 500 cores every x50
+      # Rem: stages quest: 400 shards for {22-35}-30, 200 cores afterwards
+      kt_quest={dia: 400/10} #todo or 400 dia every 10?
+      kt_quest={dia: 400/10, shards: 1000/50} if level >= 250
+      kt_quest={dia: 400/10, cores: 500/50} if level>=550
+      kt_quest
+    end
+    def tower_kt_avg(level=@tower_kt)
+      return sum_hash(tower_kt_floor(level), tower_kt_quest(level))
+    end
+    def tower_kt_ressources(level=@tower_kt)
       return {} unless @_unlock_tower_kt
-      if @_kt_floor.nil? #compute the value
-        @_kt_floor={}
-        gold=dia=dust=blue=purple=0
-        if level>560
-          gold =5650
-          dia =80
-          dust =150
-          purple=blue=30
-        end
-        @_kt_floor={gold: gold, dia: 1.2*dia, dust: dust, purple: purple/10.0, blue: blue*9/10.0}
-      end
-
-      if @_kt_quest.nil? #compute the value
-        # quest: 400 dia every x20, 
-        #        250-500: 1000 shards every 50
-        #        550+: 500 cores every x50
-        # Rem: stages quest: 400 shards for {22-35}-30, 200 cores afterwards
-        @_kt_quest={dia: 400/20, shards: 1000/50}
-        if level>=500 #todo: find the breakpoint
-          @_kt_quest={dia: 400/20, cores: 500/50} #todo or 400 dia every 10?
-        end
-      end
-      sum_hash(@_kt_floor, @_kt_quest)
+      @_tower_kt_floor ||= tower_kt_avg(level)
+      @_tower_kt_floor
     end
 
-    def tower_4f_ressources(level=@tower_4f)
-      return {} unless @_unlock_tower_4f
+    def tower_4f_floor(level=@tower_4f)
       # for 4f towers, between 240 and 360:
       # every 10 level we have 4000 dust, 5 stargaze or 10 red_e, 90 purple stones or 15 gold_e
       # above 360: every 10 levels we have 4000 dust + 5 stargaze + 10 red_
       # More precisely: (10 sg + 8k dust, 10 Red chests 10 faction emblems) every 20
-      # from quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
-      if @_4f_floor.nil? #compute the value
-        @_4f_floor={}
-        # see https://afk-arena.fandom.com/wiki/Towers_of_Esperia_Rewards
-        # before 150 the rewards change too much
-        if level>=150
-          @_4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10}
-        end
-        if level>=360
-          @_4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10}
-        end
+      # see https://afk-arena.fandom.com/wiki/Towers_of_Esperia_Rewards
+
+      # before 150 the rewards change too much
+      4f_floor={}
+      4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10} if level>=150
+      4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10} if level>=360
+      4f_floor
+    end
+    def tower_4f_quest(level=@tower_4f)
+      # quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
+      4f_quest={}
+      4f_quest={red_e: 40/20} if level>=220
+      4f_quest={poe: 600/20} if level >=460
+      4f_quest
+    end
+    #return the avg ressources from climbing one level in *all* the 4f towers
+    def tower_4f_avg(level=@tower_4f)
+      if level.is_a?(Enumerable)
+        min=level.min
+        sum_hash(*level.map {|lvl| tower_4f_floor(lvl)}, tower_4f_quest(min))
+      else #integer
+        return tower_4f_avg([level]*4])
       end
-      if @_4f_quest.nil? #compute the value
-        @_4f_quest={}
-        if level>=220
-          @_4f_quest={red_e: 40/20}
-        end
-        if level>=460
-          @_4f_quest={poe: 600/20}
-        end
-      end
-      sum_hash(@_4f_floor, @_4f_quest)
+    end
+    def tower_4f_ressources(level=@tower_4f)
+      return {} unless @_unlock_tower_4f
+      @_tower_4f_floor ||= tower_4f_avg(level)
+      @_tower_4f_floor
     end
 
-    def tower_god_ressources(level=@tower_god)
+    def tower_god_floor(level=@tower_god)
       #every *5: 4000 dust + 5 stargazer
       #every *10: 10 faction_emblem or 15 gold_e
-      return {} unless @_unlock_tower_god
-      if @_god_floor.nil? #compute the value
-        @_god_floor={ #start at level 1
-          dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10
-        }
-      end
-
+      return { #start at level 1
+        dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10
+      }
+    end
+    def tower_god_quest(level=@tower_god)
       # celhypo quests: 400 cores every x20
-      if @_god_quest.nil? #compute the value
-        @_god_quest={cores: 400/20}
+      return {cores: 400/20}
+    end
+    def tower_god_avg(level=@tower_god)
+      if level.is_a?(Enumerable)
+        min=level.min
+        sum_hash(*level.map {|lvl| tower_4f_floor(lvl)}, tower_4f_quest(min))
+      else #integer
+        return tower_god_avg([level]*2])
       end
-      sum_hash(@_god_floor, @_god_quest)
+    end
+    def tower_god_ressources(level=@tower_god)
+      return {} unless @_unlock_tower_god
+      @_tower_god_floor ||= tower_god_avg(level)
+      @_tower_god_floor
     end
 
-    def tower_kt_progression(nb_levels=@tower_kt_progression)
-      @_tower_kt ||= tower_kt_ressources
-      mult_hash(@_tower_kt, nb_levels)
+    def tower_kt_progression(level=@tower_kt, nb_levels=@tower_kt_progression)
+      tower_kt=tower_kt_ressources(level)
+      mult_hash(tower_kt, nb_levels)
     end
-    def tower_4f_progression(nb_levels=@tower_4f_progression)
-      @_tower_4f ||= tower_4f_ressources
-      mult_hash(@_tower_4f, nb_levels)
+    def tower_4f_progression(level=@tower_4f, nb_levels=@tower_4f_progression)
+      tower_4f=tower_4f_ressources(level)
+      mult_hash(tower_4f, nb_levels)
     end
-    def tower_god_progression(nb_levels=@tower_god_progression)
-      @_tower_god ||= tower_god_ressources
-      mult_hash(@_tower_god, nb_levels)
+    def tower_god_progression(level=@tower_god, nb_levels=@tower_god_progression)
+      tower_god = tower_god_ressources(level)
+      mult_hash(tower_god, nb_levels)
     end
 
     #return tower progression from the rate of level up
@@ -1433,9 +1448,9 @@ class Simulator
     end
 
     def towers_ressources
-      @_tower_kt_ressources ||= tower_kt_ressources
-      @_tower_4f_ressources ||= tower_4f_ressources
-      @_tower_god_ressources ||= tower_god_ressources
+      @_tower_kt_ressources ||= tower_kt_ressources(@tower_kt, @tower_kt_progression)
+      @_tower_4f_ressources ||= tower_4f_ressources(@tower_4f, @tower_4f_progression)
+      @_tower_god_ressources ||= tower_god_ressources(@tower_god, @tower_god_progression)
       return {
         towers_kt: mult_hash(@_tower_kt_ressources, @tower_kt_progression/30.0),
         towers_4f: mult_hash(@_tower_4f_ressources, @tower_4f_progression/30.0),
