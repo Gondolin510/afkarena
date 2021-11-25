@@ -14,6 +14,9 @@ Simulator.new do
 
   #the other default settings assume max fos tower, max gh rewards,
   #non paid regal subscriptions, ...
+  #
+  @garrison=true #let's garrison
+  @dim_exchange=true #and do a dim exchange
 
   #see `setup_vars` for the list of all settings
   #Some are determined automatically if not filled, for instance
@@ -90,8 +93,6 @@ Simulator.new do
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
   @shop_items = get_shop_items(:dust_h, :gold_e)
-  @garrison=false #we have all dims
-  @dim_exchange=false #there is no dim exchange
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: :max})
   @store_challenger_items = [{red_e: :max}]

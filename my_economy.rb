@@ -31,9 +31,10 @@ s=Simulator.new do
   @tower_god = 200
   set_tower_progression(10)
 
-  @misty = get_misty(guild_twisted: :guild)
+  @garrison=true
+  @dim_exchange=true
 
-  
+  @misty = get_misty(guild_twisted: :guild)
 end
 
 if __FILE__ == $0

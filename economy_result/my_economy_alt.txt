@@ -205,7 +205,7 @@ Max rc level: 3.63 days (8.28 by month)
 @lc_rewards: {:gold=>7668}
 @board_level: 6
 @hero_trial_guild_rewards: {:dia=>300}
-@garrison: false
+@dim_exchange: true
 @shop_items: [:dust, :purple_stones, :poe]
 @store_lab_items: [:dim_exchange, :arthur]
 @nb_ff: 6
@@ -234,7 +234,7 @@ Max rc level: 3.63 days (8.28 by month)
 @monthly_card: {}
 @deluxe_monthly_card: {}
 @shop_refreshes: 2
-@dim_exchange: true
+@garrison: false
 @store_hero_items: [nil]
 @store_guild_items: [:dim_exchange, nil, nil, :dim_gear]
 @store_challenger_items: [nil]

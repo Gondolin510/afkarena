@@ -232,6 +232,8 @@ Max rc level: 3.17 days (9.45 by month)
 @tower_kt_progression: 10
 @tower_4f_progression: 10
 @tower_god_progression: 10
+@garrison: true
+@dim_exchange: true
 @misty: {:dust_h=>96, :guild_coins=>30000, :blue_stones=>360, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
 @nb_ff: 6
 @monthly_stargazing: 0
@@ -260,8 +262,6 @@ Max rc level: 3.17 days (9.45 by month)
 @deluxe_monthly_card: {}
 @shop_items: [:dust, :purple_stones, :poe, :shards]
 @shop_refreshes: 2
-@garrison: true
-@dim_exchange: true
 @store_hero_items: [:garrison, nil]
 @store_guild_items: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
 @store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]

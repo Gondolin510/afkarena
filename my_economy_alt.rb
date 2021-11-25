@@ -30,8 +30,9 @@ s=Simulator.new do
   @board_level =6
   @hero_trial_guild_rewards ={ dia: 200+100 }
 
-  @garrison=false
+  @dim_exchange=true
   @shop_items = %i(dust purple_stones poe) #( shards gold_e)
+  #@store_lab_items = get_store_lab_items(:arthur)
   @store_lab_items = %i(dim_exchange arthur)
 
   #tweaks

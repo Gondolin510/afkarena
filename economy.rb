@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?
-#Total xp/gold/dust: percentage
+#leveling up, dim/garrison points
 
 require './value'
 require 'json'
@@ -117,8 +117,8 @@ class Simulator
       @shop_refreshes ||= 2
 
       ### Monthly store buys
-      @garrison = true if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
-      @dim_exchange = true if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
+      @garrison = false if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
+      @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
       @store_hero_items ||= get_store_hero_items
       @store_guild_items ||= get_store_guild_items
       @store_lab_items ||= get_store_lab_items
@@ -633,7 +633,8 @@ class Simulator
       r=[]
       r << :garrison if garrison
       r << :dim_exchange if dim_exchange
-      r += [nil, :dim_emblems] if @_unlock_afk_red_e
+      r << nil
+      r << :dim_emblems if @_unlock_afk_red_e
       r += extra
       r
     end
