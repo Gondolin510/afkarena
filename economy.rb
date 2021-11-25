@@ -1412,13 +1412,33 @@ class Simulator
       # >560: 5650 gold + 160 dia +150 dust + 30 purple every *10
       #       5650 gold + 80 dia +150 dust + 30 blue every else
       #           (except 160 dia every *5)
-      gold=dia=dust=blue=purple=0
-      if level>560
-        gold =5650
-        dia =80
-        dust =150
-        purple=blue=30
-      end
+      gold=1; dia=20; dust=10; blue=5; purple=10
+      ( gold=12; dia=30 ) if level>40
+      ( gold=17; dust=15 ) if level>50
+      ( gold=30; blue=10 ) if level>60
+      ( gold=49; dust=20 ) if level>75
+      ( gold=55; dia=40 ) if level>80
+      ( gold=72; purple=20; dust=25 ) if level>100
+      ( gold=200; dia=50; blue=15 ) if level>120
+      ( gold=248; dust=30 ) if level>125
+      ( gold=461; dust=35 ) if level>150
+      ( gold=512; dia=60 ) if level>160
+      ( gold=578; dust=40 ) if level>175
+      ( gold=591; blue=20 ) if level>180
+      ( gold=667; dia=70; dust=45; purple=30 ) if level>200 #purple max out at 210
+      ( gold=760; dust=50 ) if level>225
+      ( gold=826; dia=80; dust=50; blue=25 ) if level>240 #dia max out at 241
+      ( gold=875; dust=55 ) if level>250
+      ( gold=3475; dust=60; blue=30 ) if level>275 #blue max out at 276
+      ( gold=4180; dust=65 ) if level>300
+      ( gold=4560; dust=70 ) if level>325
+      ( gold=4900; dust=75 ) if level>350
+      ( gold=5050; dust=80 ) if level>375
+      ( gold=5200; dust=85 ) if level>400
+      ( gold=5500; dust=95 ) if level>450
+      ( gold=5580; dust=100 ) if level>475
+      ( gold=5500; dust=150 ) if level>500 #dust max out at 501
+      ( gold=5650 ) if level>560 #gold max out at 561
       return {gold: gold, dia: 1.2*dia, dust: dust, purple_stones: purple/10.0, blue_stones: blue*9/10.0}
     end
     def tower_kt_quest(level=@tower_kt)
@@ -1426,9 +1446,13 @@ class Simulator
       #        250-500: 1000 shards every 50
       #        550+: 500 cores every x50
       # Rem: stages quest: 400 shards for {22-35}-30, 200 cores afterwards
-      kt_quest={dia: 400/10} #todo or 400 dia every 10?
-      kt_quest={dia: 400/10, shards: 1000/50} if level >= 250
-      kt_quest={dia: 400/10, cores: 500/50} if level>=550
+      dia=100
+      dia=200 if level>=60
+      dia=300 if level>=110
+      dia=400 if level>=160
+      kt_quest={dia: dia/10}
+      kt_quest={dia: dia/10, shards: 1000/50} if level >= 250
+      kt_quest={dia: dia/10, cores: 500/50} if level>=550
       kt_quest
     end
     def tower_kt_avg(level=@tower_kt)
@@ -1440,15 +1464,25 @@ class Simulator
 
     def tower_4f_floor(level=@tower_4f)
       # for 4f towers, between 240 and 360:
-      # every 10 level we have 4000 dust, 5 stargaze or 10 red_e, 90 purple stones or 15 gold_e
-      # above 360: every 10 levels we have 4000 dust + 5 stargaze + 10 red_
-      # More precisely: (10 sg + 8k dust, 10 Red chests 10 faction emblems) every 20
+      # between 150-240: *5 4000 dust+5 stargaze, *0 90 purple stones or 15 gold_e
+      # above 240: *5 4000 dust+5 stargaze or red_e, *0 90 purple stones or 15 gold_e
+      #   funnily 361-370 is a copy of 351-360 but after they alternate
+      #   again
+      # above 450?: *5 4000 dust+5 stargaze, *0 10 red_e or 10 faction emblems
+      #   funny: 5 sg+5000K gold at 470...
       # see https://afk-arena.fandom.com/wiki/Towers_of_Esperia_Rewards
 
+      gold=200
+      gold=240 if level>=40
+      gold=300 if level>=80
+      gold=400 if level>=90
+      gold=500 if level>=110
+      gold=600 if level>=120
       # before 150 the rewards change too much
-      t4f_floor={}
-      t4f_floor={dust: 4000/10, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*600/10} if level>=150
-      t4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*600/10} if level>=360
+      t4f_floor={gold: 4*gold/10}
+      t4f_floor={dust: 4000/10, stargazers: 5.0/10, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*gold/10} if level>=150
+      t4f_floor={dust: 4000/20, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*gold/10} if level>=240
+      t4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*gold/10} if level>=360
       t4f_floor
     end
     def tower_4f_quest(level=@tower_4f)
@@ -1471,9 +1505,10 @@ class Simulator
     def tower_god_floor(level=@tower_god)
       #every *5: 4000 dust + 5 stargazer
       #every *10: 10 faction_emblem or 15 gold_e
-      return { #start at level 1
-        dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10
-      }
+      #  this becom 10 faction_emblem or 10 red_e at??
+      god_floor= { dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10 } #start at level 1
+      god_floor= { dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, red_e: 10.0/20, gold: 4*600/10 } if level >=200
+      return god_floor
     end
     def tower_god_quest(level=@tower_god)
       # celhypo quests: 400 cores every x20
