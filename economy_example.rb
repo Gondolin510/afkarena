@@ -53,6 +53,8 @@ Simulator.new do
   @shop_items = get_shop_items(poe: false) #don't buy poe
   @shop_refreshes = 0 #don't refresh shop
 
+  @monthly_levelup=5
+
   #we don't want to buy anything in the guild store
   #@store_guild_items = []
 end.summary

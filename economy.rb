@@ -2158,7 +2158,7 @@ class Simulator
         when :summons
           title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
         when :levelup
-          title="Level up (#{round(@monthly_levelup)})"
+          title="Level up (#{[*@monthly_levelup].map {|i| round(i)}.join(', ')})"
         when :towers
           title="Towers (#{round(@tower_kt_progression)} kt, #{round(@tower_4f_progression)} 4f, #{round(@tower_god_progression)} god)"
         end
