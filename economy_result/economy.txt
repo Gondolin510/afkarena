@@ -4,15 +4,18 @@
 =============== Income ===============
 ***** Base *****
 dia: 1259.11 [152.5 (board) + 309.26 (guild) + 75 (oak_inn) + 66.67 (tr) + 207.14 (quests) + 24.52 (merchants) + 170.68 (arena) + 200 (lab) + 20 (hero_trial) + 33.33 (guild_hero_trial)]
+
 gold: 21959.35 [3594.97 (idle) + 1797.49 (ff) + 298.42 (board) + 12549.6 (guild) + 1125 (oak_inn) + 311.85 (arena) + 511.2 (lc) + 1404.16 (lab) + 233.33 (misty) + 133.33 (hero_trial)]
-gold_h: 125.49 [4.29 (quests) + 118 (lab) + 3.2 (hero_trial)]
-gold_hg: 2 [2 (quests)]
+gold_h: 125.49 [4.29 (quests) + 118 (lab) + 3.2 (hero_trial)] {3388.49K gold}
+gold_hg: 2 [2 (quests)] {108.01K gold}
 -> Total gold: 25455.85K
+
 xp: 66526.24 [43189.07 (idle) + 21594.54 (ff) + 1742.63 (lab)]
-xp_h: 60.33 [2 (quests) + 31 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)]
+xp_h: 60.33 [2 (quests) + 31 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)] {26282K xp}
 -> Total xp: 92808.23K
+
 dust: 7071.12 [3420.76 (idle) + 1710.38 (ff) + 1315 (board) + 375 (oak_inn) + 41.65 (arena) + 208.33 (coe)]
-dust_h: 57.96 [2 (quests) + 31 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_trial) + 2.93 (vow)]
+dust_h: 57.96 [2 (quests) + 31 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_trial) + 2.93 (vow)] {2819.54K dust}
 -> Total dust: 9890.66
 
 ***** Upgrades *****
@@ -62,38 +65,22 @@ shards: 60 [60 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 
 =============== Summons ===============
-***** Base *****
 dia: 1.5 [1.5 (stargaze)]
-gold_h: 2.47 [2.47 (stargaze)]
--> Total gold: 66.73K
-xp_h: 1.1 [1.1 (stargaze)]
--> Total xp: 477.47K
+gold_h: 2.47 [2.47 (stargaze)] {66.73K gold}
+xp_h: 1.1 [1.1 (stargaze)] {477.47K xp}
 dust: 11.72 [11.72 (tavern)]
-dust_h: 0.82 [0.82 (stargaze)]
--> Total dust: 51.8
-
-***** Upgrades *****
+dust_h: 0.82 [0.82 (stargaze)] {40.08K dust}
 silver_e: 1.4 [1.4 (tavern)]
 gold_e: 0.55 [0.55 (tavern)]
 red_e: 0.09 [0.09 (tavern)]
-
-***** Gear *****
 mythic_gear: 0 [0 (stargaze)]
-
-***** Coins *****
 hero_coins: 375.02 [375.02 (tavern)]
-
-***** Hero_summons *****
 random_fodder: 0.69 [0.47 (stones) + 0.22 (tavern) + 0 (stargaze)]
--> Atier: 0.46
 choice_atier: 0.03 [0.03 (hero_chest)]
 wishlist_atier: 0.14 [0.14 (tavern)]
 random_atier: 0.28 [0.25 (stones) + 0.02 (tavern) + 0.02 (stargaze)]
--> God: 0.04
 choice_god: 0.01 [0.01 (stargaze)]
 random_god: 0.02 [0.01 (stones) + 0.01 (tavern)]
-
-***** Misc *****
 dura_fragments: 0.29 [0.29 (stargaze)]
 
 =============== Stores ===============
@@ -116,15 +103,18 @@ challenger_coins: 340260 =>
 =============== Full monthly ressources ===============
 ***** Base *****
 dia: 14118.16=37818.16-23700 [4575 (board 12%) + 9277.74 (guild 25%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 14%) + 6000 (lab 16%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%)]
-gold: 175030.53=658780.53-483750 [107849.23 (idle 16%) + 53924.62 (ff 8%) + 8952.5 (board 1%) + 376488 (guild 57%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 42124.68 (lab 6%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 100%)]
-gold_h: 3838.71 [128.57 (quests 3%) + 3540 (lab 92%) + 96 (hero_trial 3%) + 74.14 (stargaze 2%)]
-gold_hg: 60 [60 (quests 100%)]
+
+gold: 175030.53=658780.53-483750 [107849.23 (idle 16%) + 53924.62 (ff 8%) + 8952.5 (board 1%) + 376488 (guild 57%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 42124.68 (lab 6%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 100%)] {658780.53K gold=86%}
+gold_h: 3838.71 [128.57 (quests 3%) + 3540 (lab 92%) + 96 (hero_trial 3%) + 74.14 (stargaze 2%)] {103656.72K gold=14%}
+gold_hg: 60 [60 (quests 100%)] {3240.36K gold=0%}
 -> Total gold: 281927.61K
-xp: 1995787.08 [1295672.16 (idle 65%) + 647836.08 (ff 32%) + 52278.84 (lab 3%)]
-xp_h: 1842.7 [60 (quests 3%) + 930 (lab 50%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 32.88 (stargaze 2%)]
+
+xp: 1995787.08 [1295672.16 (idle 65%) + 647836.08 (ff 32%) + 52278.84 (lab 3%)] {1995787.08K xp=71%}
+xp_h: 1842.7 [60 (quests 3%) + 930 (lab 50%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 32.88 (stargaze 2%)] {802784.09K xp=29%}
 -> Total xp: 2798571.17K
-dust: 257485.28 [102622.8 (idle 40%) + 51311.4 (ff 20%) + 39450 (board 15%) + 11250 (oak_inn 4%) + 1249.5 (arena 0%) + 6250 (coe 2%) + 45000 (shop 17%) + 351.58 (tavern 0%)]
-dust_h: 1763.38 [60 (quests 3%) + 930 (lab 53%) + 320 (misty 18%) + 316.67 (coe 18%) + 24 (hero_trial 1%) + 88 (vow 5%) + 24.71 (stargaze 1%)]
+
+dust: 257485.28 [102622.8 (idle 40%) + 51311.4 (ff 20%) + 39450 (board 15%) + 11250 (oak_inn 4%) + 1249.5 (arena 0%) + 6250 (coe 2%) + 45000 (shop 17%) + 351.58 (tavern 0%)] {257485.28K dust=75%}
+dust_h: 1763.38 [60 (quests 3%) + 930 (lab 53%) + 320 (misty 18%) + 316.67 (coe 18%) + 24 (hero_trial 1%) + 88 (vow 5%) + 24.71 (stargaze 1%)] {85788.43K dust=25%}
 -> Total dust: 343273.71
 
 ***** Upgrades *****

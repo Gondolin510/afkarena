@@ -209,8 +209,8 @@ Simulator.new.show_variables
 
 =begin
 =============== Variables ===============
-@stage: 37-01
-@hero_level: 350
+@stage: 38-01
+@hero_level: 500
 @player_level: 180
 @nb_ff: 6
 @vip: 10
@@ -218,17 +218,12 @@ Simulator.new.show_variables
 @tower_kt: 550
 @tower_4f: 280
 @tower_god: 300
-@shop_items: [:dust, :purple_stones, :poe, :shards]
-@shop_refreshes: 2
-@buy_hero: [:garrison]
-@buy_guild: [:garrison, :dim_exchange, :t3, :t3, nil, nil, :dim_gear]
-@buy_lab: [:garrison, :dim_exchange, nil, :dim_emblems]
-@buy_challenger: []
 @monthly_stargazing: 0
 @monthly_tavern: 0
-@monthly_hcp: 0
-@friends_mercs: 5
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
 @friends_nb: 20
+@friends_mercs: 5
 @gh_team_wrizz_gold: 1080
 @gh_team_soren_gold: 1080
 @gh_team_wrizz_coin: 1158
@@ -238,19 +233,37 @@ Simulator.new.show_variables
 @gh_wrizz_gold: 2160
 @gh_soren_gold: 2160
 @gh_soren_freq: 0.66
-@tr_twisted: 250
-@tr_poe: 1000
+@tr_twisted: 380
+@tr_poe: 1290
 @tr_guild: {:dia=>100, :twisted=>6}
+@cursed_realm: {}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
 @lct_coins: 380
-@misty: {:dust_h=>96, :purple_stones=>120, :red_e=>40, :t3=>2, :cores=>300, :hero_choice_chest=>1, :twisted=>400, :blue_stones=>720}
+@lc_rewards: {:gold=>7668}
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>360, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@board_level: 8
+@dura_nb_selling: 0
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @noble_coe: {:dust=>7500, :dust_h=>380}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
-@board_level: 8
-@dura_nb_selling: 0
+@merchant_daily: {}
+@merchant_weekly: {}
+@merchant_monthly: {}
+@monthly_card: {}
+@deluxe_monthly_card: {}
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@shop_refreshes: 2
+@garrison: true
+@dim_exchange: true
+@store_hero_items: [:garrison, nil]
+@store_guild_items: [:garrison, :dim_exchange, {:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [:garrison, :dim_exchange, nil, :dim_emblems]
+@store_challenger_items: [nil]
 @labyrinth_mode: dismal
-@lab_flat_rewards: {:gold=>1758.6359999999997, :xp=>2473.3799999999997}
+@tower_kt_progression: 0
+@tower_4f_progression: 0
+@tower_god_progression: 0
+@lab_flat_rewards: {:gold=>2106.2339999999995, :xp=>2613.942}
 =end
