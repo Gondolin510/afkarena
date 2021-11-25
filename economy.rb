@@ -316,14 +316,40 @@ class Simulator
   include Setup
 
   module UserSetupHelpers
+    def get_guild_chests(dmg)
+      nb=0
+      nb=1 if dmg >= 5000
+      nb=2 if dmg >= 10000
+      nb=3 if dmg >= 20000
+      nb=4 if dmg >= 40000
+      nb=5 if dmg >= 70000
+      nb=6 if dmg >= 120000 # 120k
+      nb=7 if dmg >= 220000
+      nb=8 if dmg >= 450000
+      nb=9 if dmg >= 820000
+      nb=10 if dmg >= 1550000 # 1.55M
+      nb=11 if dmg >= 3000000
+      nb=12 if dmg >= 5500000
+      nb=13 if dmg >= 10000000 # 10M
+      nb=14 if dmg >= 20000000
+      nb=15 if dmg >= 45000000
+      nb=16 if dmg >= 99999999 # 100M
+      nb=17 if dmg >= 30000000
+      nb=18 if dmg >= 999999999 # 1B
+      nb=19 if dmg >= 199999999 # 2B
+      nb=20 if dmg >= 499999999 # 5B 
+      nb=21 if dmg >= 999999999 # 10B
+      nb=22 if dmg >= 1999999999 # 20B
+      nb=23 if dmg >= 9999999999 # 100B
+      nb
+    end
     def get_guild_gold(chests)
-      #Soren
       case chests
       when 1; 2     # 5k
       when 2; 4     # 10k
       when 3; 7.5   # 20k
       when 4; 15    # 40k
-      when 5; 24    # 70k
+      when 5; 20    # 70k
       when 6; 30    # 120k
       when 7; 38    # 220k
       when 8; 55    # 450k
