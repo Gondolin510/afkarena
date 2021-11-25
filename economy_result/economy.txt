@@ -188,5 +188,5 @@ Ascended challenger celo: 308.59 days (0.1 by month)
 Ascended 4F: 17.48 days (1.72 by month) {atier: 17.48 days, fodder: 14.41 days} [monthly remains: 3.66 fodder]
 Ascended god: 387.47 days (0.08 by month)
 RC slot: 5.79 days (5.18 by month)
-Max rc level: 3.17 days (9.45 by month)
+Max rc level+1: 3.17 days (9.45 by month)
 

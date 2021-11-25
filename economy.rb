@@ -988,17 +988,17 @@ class Simulator
       @_fos_dust_mult += 0.4 if @player_level >= 180
 
       @_fos_t1_gear_bonus=0
-      @_fos_t1_gear_bonus +=1 if @tower_kt >= 250
-      @_fos_t1_gear_bonus +=1 if @tower_kt >= 300
-      @_fos_t1_gear_bonus +=1 if @tower_kt >= 350
+      @_fos_t1_gear_bonus +=1 if [*@tower_kt].min >= 250
+      @_fos_t1_gear_bonus +=1 if [*@tower_kt].min >= 300
+      @_fos_t1_gear_bonus +=1 if [*@tower_kt].min >= 350
       @_fos_t2_gear_bonus=0
-      @_fos_t2_gear_bonus +=1 if @tower_4f >= 200
-      @_fos_t2_gear_bonus +=1 if @tower_4f >= 240
-      @_fos_t2_gear_bonus +=1 if @tower_4f >= 280
+      @_fos_t2_gear_bonus +=1 if [*@tower_4f].min >= 200
+      @_fos_t2_gear_bonus +=1 if [*@tower_4f].min >= 240
+      @_fos_t2_gear_bonus +=1 if [*@tower_4f].min >= 280
       @_fos_invigor_bonus=0
-      @_fos_invigor_bonus +=1 if @tower_god >= 100
-      @_fos_invigor_bonus +=1 if @tower_god >= 200
-      @_fos_invigor_bonus +=1 if @tower_god >= 300
+      @_fos_invigor_bonus +=1 if [*@tower_god].min >= 100
+      @_fos_invigor_bonus +=1 if [*@tower_god].min >= 200
+      @_fos_invigor_bonus +=1 if [*@tower_god].min >= 300
 
       @_fos_daily_quest = {}
       @_fos_daily_quest[:dia]=50 if @stage > "16-40"
@@ -1528,9 +1528,9 @@ class Simulator
     def set_tower_progression_from_levelup(level_up)
       #Multis: 700 KT, 450 4F, 350 celestial
       factor_4f=factor_kt=factor_god=1
-      factor_kt=2 if @tower_kt >= 600
-      factor_4f=2 if @tower_4f >= 450
-      factor_god=2 if @tower_god >= 350
+      factor_kt=2 if [*@tower_kt].min >= 600
+      factor_4f=2 if [*@tower_4f].min >= 450
+      factor_god=2 if [*@tower_god].min >= 350
       @tower_kt_progression ||= level_up*factor_kt
       @tower_4f_progression ||= level_up*factor_4f
       @tower_god_progression ||= level_up*factor_god
