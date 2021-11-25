@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 #TODO: more events?
-#leveling up
 
 require './value'
 require 'json'
@@ -1598,7 +1597,6 @@ class Simulator
         o<<=" #{round(qty*cost)} (#{(qty==1 || qty==1.0) ? '': "#{round(qty)} x "}#{item})"
       end
       s << "buy #{round(total_cost)} [#{o.join(' + ')}]" unless o.empty?
-      s << "\n"
       s
     end
 
@@ -1674,7 +1672,10 @@ class Simulator
         r,bought=handle_buys(instance_variable_get(:"@store_#{i}_items"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
         cost=r.delete(:cost)
         r[coin_name]=cost
-        @__coin_summary << "#{coin_name}: #{round(_total)} => #{buy_summary(bought)}"
+        b=buy_summary(bought)
+        @__coin_summary << "#{coin_name}: #{round(_total)}"
+        @__coin_summary << " => #{b}" unless b.empty?
+        @__coin_summary << "\n"
         add_to_hash(@ressources[:"#{i}_store"], r.map {|k,v| [k, v/30.0]}.to_h)
       end
     end

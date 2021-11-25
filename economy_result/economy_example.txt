@@ -97,7 +97,7 @@ dim_gear: 0.09 [0.09 (guild_store)]
 hero_coins: 11250.58 => buy 27200 [ 27200 (34 x garrison)]
 lab_coins: 142100 => buy 480000 [ 80000 (100 x garrison) +  400000 (100 x dim_exchange)]
 guild_coins: 403530.25 => buy 403530.25 [ 52800 (66 x garrison) +  80000 (20 x dim_exchange) +  94000 (2 x t3) +  176730.25 (2.64 x dim_gear)]
-challenger_coins: 340260 => 
+challenger_coins: 340260
 
 =============== Towers ===============
 
@@ -275,10 +275,10 @@ dura_fragments: 0.29 [0.29 (stargaze)]
 =============== Stores ===============
 
 --------------- 30 days coin summary ---------------
-hero_coins: 9802.35 => 
-lab_coins: 77340 => 
-guild_coins: 112320 => 
-challenger_coins: 0 => 
+hero_coins: 9802.35
+lab_coins: 77340
+guild_coins: 112320
+challenger_coins: 0
 
 =============== Towers ===============
 
@@ -682,10 +682,10 @@ dim_gear: 0.17 [0.17 (guild_store)]
 dim_emblems: 1.67 [1.67 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 16992.75 => 
+hero_coins: 16992.75
 lab_coins: 142100 => buy 64000 [ 64000 (dim_emblems)]
 guild_coins: 433530.25 => buy 433530.25 [ 94000 (2 x t3) +  339530.25 (5.07 x dim_gear)]
-challenger_coins: 340260 => 
+challenger_coins: 340260
 
 =============== Towers ===============
 

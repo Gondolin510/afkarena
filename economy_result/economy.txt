@@ -91,10 +91,10 @@ dim_gear: 0.15 [0.15 (guild_store)]
 dim_emblems: 1.67 [1.67 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 11250.58 => 
+hero_coins: 11250.58
 lab_coins: 142100 => buy 64000 [ 64000 (dim_emblems)]
 guild_coins: 403530.25 => buy 403530.25 [ 94000 (2 x t3) +  309530.25 (4.62 x dim_gear)]
-challenger_coins: 340260 => 
+challenger_coins: 340260
 
 =============== Towers ===============
 

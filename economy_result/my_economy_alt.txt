@@ -84,10 +84,10 @@ dim_gear: 0.07 [0.07 (guild_store)]
 arthur: 0.03 [0.03 (lab_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 11250.58 => 
+hero_coins: 11250.58
 lab_coins: 136276 => buy 64000 [ 4000 (dim_exchange) +  60000 (arthur)]
 guild_coins: 220694 => buy 220694 [ 80000 (20 x dim_exchange) +  140694 (2.1 x dim_gear)]
-challenger_coins: 269700 => 
+challenger_coins: 269700
 
 =============== Towers ===============
 dia: 13.33 [13.33 (towers_kt)]

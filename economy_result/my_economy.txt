@@ -97,7 +97,7 @@ dim_gear: 0.1 [0.1 (guild_store)]
 hero_coins: 11250.58 => buy 27200 [ 27200 (34 x garrison)]
 lab_coins: 151900 => buy 480000 [ 80000 (100 x garrison) +  400000 (100 x dim_exchange)]
 guild_coins: 420781.45 => buy 420781.45 [ 52800 (66 x garrison) +  80000 (20 x dim_exchange) +  94000 (2 x t3) +  193981.45 (2.9 x dim_gear)]
-challenger_coins: 340260 => 
+challenger_coins: 340260
 
 =============== Towers ===============
 dia: 45.33 [45.33 (towers_kt)]
