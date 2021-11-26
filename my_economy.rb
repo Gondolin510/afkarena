@@ -35,6 +35,8 @@ s=Simulator.new do
   @dim_exchange=true
 
   @misty = get_misty(guild_twisted: :guild)
+
+  @shop_items = get_shop_items(:dust_h)
 end
 
 if __FILE__ == $0
