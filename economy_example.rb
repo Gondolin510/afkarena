@@ -37,8 +37,7 @@ Simulator.new do
   @gh_soren_chests = 21
   @gh_soren_freq = 0.7 #active guild
 
-  @tr_twisted =300
-  @tr_poe = 900
+  @tr={twisted: 300, poe: 900}
   @tr_guild = {dia: 10} #a guildie is in legend
   @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
 
@@ -91,8 +90,7 @@ Simulator.new do
   @gh_wrizz_chests = 13
   @gh_soren_freq = 0.5 #moderatly active guild
 
-  @tr_twisted = 150
-  @tr_poe = 0
+  @tr={twisted: 150}
   @tr_guild = {} #no guildie in fabled or legend
 
   @arena_daily_dia = get_arena(200) #rank 200 in arena

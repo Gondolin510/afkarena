@@ -49,17 +49,17 @@ class Simulator
       ### GH [only used when guild unlocks]
       @gh_wrizz_chests ||= 23
       @gh_soren_chests ||= @gh_wrizz_chests
-      #if not specified, determine the gold amount from the chest amount
+      #if not specified, determine the gold amount from the chest amount:
       @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
       @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
       @gh_soren_freq ||= 0.66 #or round(5.0/7.0) =0.71
       # we can get the gold from the guild mail (the guild coins and gold
       # we get in the mail is half what we get for our best run)
-      # see also
+      # see also `guild_chest_from_gold` and `guild_chest_from_coins` to
+      # get the number of guild chests
 
       ### twisted realm (use fabled rewards) [only used when tr unlocks]
-      @tr_twisted ||=380
-      @tr_poe ||=1290
+      @tr ||= {twisted: 380, poe: 1290}
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
       ### cursed realm
@@ -365,7 +365,7 @@ class Simulator
       when 18; 1410 # 1B
       when 19; 1560 # 2B
       when 20; 1710 # 5B
-      when 21; 1860 # 10B
+      when 21; 1865 # 10B
       when 22; 2010 # 20B
       when 23; 2160 # 100B
       end
@@ -1188,9 +1188,9 @@ class Simulator
     end
 
     def tr
-      tr={twisted: @tr_twisted, poe: @tr_poe}
-      add_to_hash(tr, @tr_guild)
-      mult_hash(tr, 2.0/3) #to account for double events
+      r=@tr.dup
+      add_to_hash(r, @tr_guild)
+      mult_hash(r, 2.0/3) #to account for double events
     end
 
     def cursed_realm

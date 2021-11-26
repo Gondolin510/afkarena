@@ -12,8 +12,7 @@ s=Simulator.new do
   @subscription=true
 
   #dia 5 at floor 360
-  @tr_twisted ||=257
-  @tr_poe ||=905
+  @tr= {twisted: 257, poe: 905}
 
   @gh_team_wrizz_gold = 948
   @gh_team_soren_gold = 978

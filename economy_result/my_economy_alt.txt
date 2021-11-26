@@ -201,8 +201,7 @@ Max rc level+1: 3.63 days (8.28 by month)
 @player_level: 102
 @vip: 5
 @subscription: true
-@tr_twisted: 160
-@tr_poe: 0
+@tr: {:twisted=>160}
 @tr_guild: {}
 @gh_wrizz_gold: 1122
 @gh_soren_gold: 1118

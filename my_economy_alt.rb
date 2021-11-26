@@ -13,8 +13,7 @@ s=Simulator.new do
   @vip=5
   @subscription=true
 
-  @tr_twisted = 160 #gold 1
-  @tr_poe = 0
+  @tr = {twisted: 160} #gold 1
   @tr_guild = {}
 
   @gh_wrizz_gold = 561*2
