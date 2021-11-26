@@ -839,8 +839,13 @@ class Simulator
   module LevelUp
     def one_level_up_cost(*levels, hack: false)
       r=get_hero_level_stats
+      max=r.keys.max
       gold=xp=dust=0
       levels.each do |level|
+        if level>max
+          warn "[Warning]: no cost data for hero level #{level}, using the one from level #{max}"
+          level=max
+        end
         g=r[level][:gold]
         x=r[level][:xp]
         d=r[level][:dust]
@@ -2345,6 +2350,7 @@ if __FILE__ == $0
     binding.pry
     #Simulator.level_cost(500, stage: "38-01")
   else
+    #Simulator.new.one_level_up_cost(900)
     s=Simulator.new do #example run
       # @monthly_stargazing=50
       # @misty = get_misty(guild_twisted: :guild)
