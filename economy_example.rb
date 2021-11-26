@@ -56,7 +56,7 @@ Simulator.new do
   @lct_coins =395 #top 5. Hourly coins: 400-rank
   @lc_rewards = {gold: -6*1278} #we lose all wagers!
 
-  @misty = get_misty(%i(t3 shards red_e blue_stones purple_stones poe)) #privilege t3>shards>red_e>...
+  @misty = get_misty(%i(t3 shards red_e poe)) #privilege t3>shards>red_e>poe
   @dura_nb_selling =2 #dura's fragments we have maxed out and are selling
 
   @noble_regal = get_regal(paid: true)

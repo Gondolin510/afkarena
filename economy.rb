@@ -539,7 +539,7 @@ class Simulator
       @Misty_chests={
         chest1: [{gold_h: 24*12}, {xp_h: 8*12}, {dust_h: 8*12}],
         chest2: [ {dia: 1000}, {guild_coins: 30000}, {twisted: 400} ],
-        chest3: [ {purple_stones: 60}, {blue_stones: 360} ],
+        chest3: [ {purple_stones: 60}, {blue_stones: 720} ],
         chest4: [ {scrolls: 5}, {poe: 1000}, {purple_stones: 60} ],
         chest5: [ {poe: 1000}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ],
         chest6: [ {t1: 1}, {t2: 1}, {t3: 1} ],
