@@ -359,7 +359,8 @@ class Simulator
       @GH_chest_dia ||=2.7
       @GH_chest_guild ||=65
 
-      @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
+      #todo: check quantity
+      @Oak_amount={blue_stones: 30, dia: 100, dust: 100, gold: 1500}
       @Oak_quantity=3; @Oak_proba=0.25
 
       @Misty_base={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
