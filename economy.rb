@@ -1706,7 +1706,7 @@ class Simulator
         value=shop_item
       else
         unless shop_item
-          warn "[Warning!] Shop item #{item} not found"
+          warn "[Warning!] Shop item `#{item}` not found"
           return[item, 0, {}, 1]
         end
         cost=shop_item
@@ -1716,7 +1716,7 @@ class Simulator
       return [item, cost, value, qty]
     end
 
-    def handle_buys(buys, shop, total)
+    def buy_in_store(shop, *secondary, primary: [], filler: nil, total: 0)
       r={ cost: 0 }
       o={}
 
@@ -1729,35 +1729,43 @@ class Simulator
         o[item][:qty]+=qty
       end
 
-      primary, secondary, extra=split_array(buys)
+      if total==nil
+        primary=secondary
+        secondary=[]
+        total=0
+      end
+
       primary.each do |item|
         item, cost, value, qty=get_item_value(item, shop)
         do_buy[item, cost, value, qty: qty]
         total -= qty*cost
       end
 
-      if secondary
-        secondary.each do |item|
-          item, cost, value, qty=get_item_value(item, shop)
-          qty=[(total/cost).floor(), qty].min
-          qty=[qty, 0].max
-          if qty>0
-            do_buy[item, cost, value, qty: qty]
-            total -= qty*cost
-          end
+      secondary.each do |item|
+        item, cost, value, qty=get_item_value(item, shop)
+        qty=[(total/cost).floor(), qty].min
+        qty=[qty, 0].max
+        if qty>0
+          do_buy[item, cost, value, qty: qty]
+          total -= qty*cost
         end
       end
 
-      if extra and total > 0.0
-        item=extra.first
-        item, cost, value, _qty =get_item_value(item, shop)
+      if filler and total > 0.0
+        item, cost, value, _qty =get_item_value(filler, shop)
         qty=total*1.0/cost
         qty=[qty, 0].max
         do_buy[item, cost, value, qty: qty] if qty>0
       end
 
+      # ressources exchanged, list of items bought
       return [r, o]
-      r
+    end
+
+    def handle_buys(buys, shop, total)
+      primary, secondary, extra=split_array(buys)
+      filler = extra && extra.first
+      buy_in_store(shop, *secondary, primary: primary, filler: filler, total: total)
     end
 
     def buy_summary(buy)
@@ -2041,13 +2049,14 @@ class Simulator
             if v.key?(type)
               value=v[type]
               per=0
+              oo=""
               if value>0
                 per=value/pos_sum
-                oo = o.empty? ? "" : " + "
+                oo << (o.empty? ? "" : " + ")
                 oo<<"#{round(value)}"
               elsif value<0
                 per=value/neg_sum
-                oo = o.empty? ? "" : " - "
+                oo << (o.empty? ? "" : " - ")
                 oo<<"#{round(value.abs)}"
               end
               unless value == 0 or value == 0.0
