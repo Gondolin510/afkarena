@@ -70,8 +70,9 @@ Simulator.new do
   @garrison=true #(default to false) let's garrison
   @dim_exchange=true #(default to false) and do a dim exchange
 
-  #use our remaining lab coins to buy all twisted essence, we don't buy dim emblems
-  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false)
+  #use our lab coins to buy all twisted essence, we don't buy dim emblems,
+  #and any remaining coin is spent on red_e
+  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: %i(red_e))
 end.summary
 
 puts "==================== Example of new player ===================="
@@ -149,7 +150,7 @@ Simulator.new do
   @shop_items = get_shop_items(:dust_h, {gold_e: 2}, poe: false)
   #buy up to 2 gold emblems (if possible with our amount of shop refresh), but no poe
   @store_hero_items = get_store_hero_items({twisted: :max})
-  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: 2}, dim_emblems: false) #we don't need dim emblems, buy red_e after twisted if we have enough coins
+  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: %i(red_e))
   @store_challenger_items = get_store_challenger_items({red_e: :max}) #buy all possible red_e (if we have enough coins)
 end.summary
 

@@ -164,7 +164,7 @@ class Simulator
       # -> set up 10 garrison stone using guild coins, buy max (ie 2) t3 and use dim_gear as a filler
 
       # Helper functions:
-      #   @store_foo_items=get_store_foo_items(secondary_item1, {secondary_item2: qty2}, primary: [{primary_item1: qty1}, primary_item2], filler: filler_item)
+      #   @store_foo_items=get_store_foo_items(primary_item1, {primary_item2: qty2}, secondary: [{secondary_item3: qty3}, secondary_item4], filler: filler_item)
       # - These handle dim exchange and garrison automatically if they are active: they are added as primary items
       #  By default we use 50 lab points+10 guild points for dim exchange,
       #  and 100 lab points + 66 guild points + 34 hero points for garrison.
@@ -178,8 +178,8 @@ class Simulator
 
       @store_guild_items ||= get_store_guild_items
       #  By default, get_store_guild_items adds t3 as a primary (if they are unlocked), and dim_emblems as fillers (if they are unlocked). This can be tweaked via the options `t3: false`, `dim_gear: false`
-      #  Example: @store_guild_items = get_store_guild_items({t1: :max}, :t2, filler: :random_mythic_gear)
-      #  -> buy max (ie 2) t3 as primary, and then if we have money still buy max (ie 2) t1, and then spend all the rest on random mythic gear
+      #  Example: @store_guild_items = get_store_guild_items({t1: :2}, :t2, filler: :random_mythic_gear)
+      #  -> buy max (ie 2) t3 as primary, and 2 t1 + 1 t2 , and then spend all the rest on random mythic gears
 
       @store_lab_items ||= get_store_lab_items
       # By default adds dim_emblems as secondary (if they are unlocked), use `dim_emblems: false` to remove them.
@@ -722,19 +722,19 @@ class Simulator
       r
     end
 
-    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, primary: [], filler: nil)
+    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, secondary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_hero
       r=[]
       r << {garrison: garrison} if garrison >0
       r << {dim_exchange: dim_exchange} if dim_exchange>0
-      r += primary
-      r << nil #for secondary items
       r += extra
+      r << nil #for secondary items
+      r += secondary
       r+=[nil, filler] if filler
       r
     end
-    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), primary: [], t3: :unlocked, dim_gear: :unlocked, filler: nil)
+    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), secondary: [], t3: :unlocked, dim_gear: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_guild
       t3=@_unlock_t3 if t3 == :unlocked
@@ -742,10 +742,10 @@ class Simulator
       r=[]
       r << {garrison: garrison} if garrison >0
       r << {dim_exchange: dim_exchange} if dim_exchange>0
-      r += primary
+      r += extra
       r << {t3: :max} if t3
       r << nil #secondary items
-      r += extra
+      r += secondary
       if filler
         r+=[nil, filler]
       else
@@ -753,29 +753,29 @@ class Simulator
       end
       r
     end
-    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), primary: [], dim_emblems: :unlocked, filler: nil)
+    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), secondary: [], dim_emblems: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_lab
       dim_emblems=@_unlock_afk_red_e if dim_emblems == :unlocked
       r=[]
       r << {garrison: garrison} if garrison >0
       r << {dim_exchange: dim_exchange} if dim_exchange>0
-      r += primary
-      r << nil
-      r << :dim_emblems if dim_emblems
       r += extra
+      r << nil
+      r += secondary
+      r << :dim_emblems if dim_emblems
       r+=[nil, filler] if filler
       r
     end
-    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, primary: [], filler: nil)
+    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, secondary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_challenger
       r=[]
       r << {garrison: garrison} if garrison >0
       r << {dim_exchange: dim_exchange} if dim_exchange>0
-      r += primary
-      r << nil #secondary items
       r += extra
+      r << nil #secondary items
+      r += secondary
       r+=[nil, filler] if filler
       r
     end

@@ -280,9 +280,10 @@ random_god: 0.04 [0.03 (stones) + 0.01 (tavern)]
 dura_fragments: 0.29 [0.29 (stargaze)]
 
 =============== Stores ===============
+twisted: 40 [40 (lab_store)]
 t3: 0.07 [0.07 (guild_store)]
 guild_coins: -12906.41 [12906.41 (guild_store)]
-lab_coins: -6000 [6000 (lab_store)]
+lab_coins: -10000 [10000 (lab_store)]
 hero_coins: -906.67 [906.67 (hero_store)]
 garrison_stone: 6.67 [1.13 (hero_store) + 2.2 (guild_store) + 3.33 (lab_store)]
 dim_points: 1 [0.17 (guild_store) + 0.83 (lab_store)]
@@ -290,7 +291,7 @@ dim_gear: 0.11 [0.11 (guild_store)]
 
 --------------- 30 days coin summary ---------------
 hero_coins: 12320.32 => buy 27200 [ 27200 (34 x garrison)]
-lab_coins: 142100 => buy 180000 [ 80000 (100 x garrison) +  100000 (25 x dim_exchange)]
+lab_coins: 142100 => buy 300000 [ 80000 (100 x garrison) +  100000 (25 x dim_exchange) +  120000 (3 x twisted)]
 guild_coins: 387192.38 => buy 387192.38 [ 52800 (66 x garrison) +  20000 (5 x dim_exchange) +  94000 (2 x t3) +  220392.38 (3.29 x dim_gear)]
 challenger_coins: 351060
 
@@ -316,7 +317,7 @@ silver_e: 512.68 [59.98 (idle 12%) + 29.99 (ff 6%) + 85.71 (quests 17%) + 55 (vo
 gold_e: 144.39 [30.02 (idle 21%) + 15.01 (ff 10%) + 42.86 (quests 30%) + 40 (vow 28%) + 16.5 (tavern 11%)]
 red_e: 82.05 [11.26 (idle 14%) + 5.63 (ff 7%) + 21.43 (quests 26%) + 20 (misty 24%) + 20 (vow 24%) + 3.73 (tavern 5%)]
 poe: 75907.26 [16509.6 (idle 22%) + 8254.8 (ff 11%) + 18000 (tr 24%) + 2142.86 (quests 3%) + 13000 (misty 17%) + 3000 (vow 4%) + 15000 (shop 20%)]
-twisted: 8539.89 [803.74 (idle 9%) + 401.87 (ff 5%) + 6000 (tr 70%) + 214.29 (quests 3%) + 400 (misty 5%) + 720 (deluxe_monthly_card 8%)]
+twisted: 9739.89 [803.74 (idle 8%) + 401.87 (ff 4%) + 6000 (tr 62%) + 214.29 (quests 2%) + 400 (misty 4%) + 720 (deluxe_monthly_card 7%) + 1200 (lab_store 12%)]
 shards: 5527.73 [900 (idle 16%) + 450 (ff 8%) + 1220 (lab 22%) + 600 (misty 11%) + 797.73 (tr_bounties 14%) + 210 (vow 4%) + 1350 (monthly_card 24%)]
 cores: 1595 [450 (idle 28%) + 225 (ff 14%) + 820 (lab 51%) + 100 (vow 6%)]
 
@@ -329,7 +330,7 @@ t2_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
 
 ***** Coins *****
 guild_coins: 0=387192.38-387192.38 [363192.38 (guild 94%) + 20000 (lab 5%) + 4000 (guild_hero_trial 1%) - 387192.38 (guild_store 100%)]
-lab_coins: -37900=142100-180000 [142100 (lab 100%) - 180000 (lab_store 100%)]
+lab_coins: -157900=142100-300000 [142100 (lab 100%) - 300000 (lab_store 100%)]
 hero_coins: -14879.68=12320.32-27200 [12320.32 (tavern 100%) - 27200 (hero_store 100%)]
 challenger_coins: 351060 [284400 (lct 81%) + 66660 (lab 19%)]
 
@@ -377,7 +378,7 @@ e30 to e41: 31.03 days (0.97 by month)
 e30 to e60: 84.64 days (0.35 by month)
 e30 to e65: 112.85 days (0.27 by month)
 
-tree level: 2.81 days (10.67 by month)
+tree level: 2.46 days (12.17 by month)
 mythic furn: 2.91 days (10.3 by month)
 mythic furn (with cards): 2.29 days (13.11 by month)
 9F (with cards): 66 days (0.45 by month)
@@ -655,20 +656,20 @@ random_god: 0.05 [0.03 (stones) + 0.01 (tavern)]
 dura_fragments: 0.67 [0.67 (stargaze)]
 
 =============== Stores ===============
-red_e: 3.33 [1.67 (lab_store) + 1.67 (challenger_store)]
-twisted: 43.33 [3.33 (hero_store) + 40 (lab_store)]
+red_e: 3.33 [0.83 (lab_store) + 2.5 (challenger_store)]
+twisted: 93.33 [53.33 (hero_store) + 40 (lab_store)]
 t3: 0.07 [0.07 (guild_store)]
 guild_coins: -14196.56 [14196.56 (guild_store)]
-lab_coins: -6475 [6475 (lab_store)]
-hero_coins: -333.33 [333.33 (hero_store)]
-challenger_coins: -11000 [11000 (challenger_store)]
+lab_coins: -5237.5 [5237.5 (lab_store)]
+hero_coins: -5333.33 [5333.33 (hero_store)]
+challenger_coins: -16500 [16500 (challenger_store)]
 dim_gear: 0.17 [0.17 (guild_store)]
 
 --------------- 30 days coin summary ---------------
-hero_coins: 18425.98 => buy 10000 [ 10000 (twisted)]
-lab_coins: 249900 => buy 194250 [ 120000 (3 x twisted) +  74250 (2 x red_e)]
+hero_coins: 18425.98 => buy 160000 [ 160000 (16 x twisted)]
+lab_coins: 249900 => buy 157125 [ 120000 (3 x twisted) +  37125 (red_e)]
 guild_coins: 425896.67 => buy 425896.67 [ 94000 (2 x t3) +  331896.67 (4.95 x dim_gear)]
-challenger_coins: 354660 => buy 330000 [ 330000 (2 x red_e)]
+challenger_coins: 354660 => buy 495000 [ 495000 (3 x red_e)]
 
 =============== Full monthly ressources ===============
 ***** Base *****
@@ -690,9 +691,9 @@ dust_h: 8103 [60 (quests 1%) + 930 (lab 11%) + 320 (misty 4%) + 1583.33 (coe 20%
 ***** Upgrades *****
 silver_e: 277.68 [59.98 (idle 22%) + 34.99 (ff 13%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
 gold_e: 896.9 [30.02 (idle 3%) + 17.51 (ff 2%) + 42.86 (quests 5%) + 40 (vow 4%) + 750 (shop 84%) + 16.5 (tavern 2%)]
-red_e: 326.24 [11.26 (idle 3%) + 6.57 (ff 2%) + 21.43 (quests 7%) + 40 (misty 12%) + 20 (vow 6%) + 120 (deluxe_monthly_card 37%) + 6.98 (tavern 2%) + 50 (lab_store 15%) + 50 (challenger_store 15%)]
+red_e: 326.24 [11.26 (idle 3%) + 6.57 (ff 2%) + 21.43 (quests 7%) + 40 (misty 12%) + 20 (vow 6%) + 120 (deluxe_monthly_card 37%) + 6.98 (tavern 2%) + 25 (lab_store 8%) + 75 (challenger_store 23%)]
 poe: 66083.06 [16509.6 (idle 25%) + 9630.6 (ff 15%) + 25800 (tr 39%) + 2142.86 (quests 3%) + 9000 (misty 14%) + 3000 (vow 5%)]
-twisted: 10906.87 [803.74 (idle 7%) + 468.85 (ff 4%) + 7720 (tr 71%) + 214.29 (quests 2%) + 400 (misty 4%) + 100 (hero_store 1%) + 1200 (lab_store 11%)]
+twisted: 12406.87 [803.74 (idle 6%) + 468.85 (ff 4%) + 7720 (tr 62%) + 214.29 (quests 2%) + 400 (misty 3%) + 1600 (hero_store 13%) + 1200 (lab_store 10%)]
 shards: 4655 [900 (idle 19%) + 525 (ff 11%) + 1220 (lab 26%) + 210 (vow 5%) + 1800 (shop 39%)]
 cores: 2652.5 [450 (idle 17%) + 262.5 (ff 10%) + 820 (lab 31%) + 300 (misty 11%) + 100 (vow 4%) + 720 (deluxe_monthly_card 27%)]
 
@@ -705,9 +706,9 @@ t2_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 
 ***** Coins *****
 guild_coins: 0=425896.67-425896.67 [403896.67 (guild 95%) + 20000 (lab 5%) + 2000 (guild_hero_trial 0%) - 425896.67 (guild_store 100%)]
-lab_coins: 55650=249900-194250 [249900 (lab 100%) - 194250 (lab_store 100%)]
-hero_coins: 8425.98=18425.98-10000 [18425.98 (tavern 100%) - 10000 (hero_store 100%)]
-challenger_coins: 24660=354660-330000 [288000 (lct 81%) + 66660 (lab 19%) - 330000 (challenger_store 100%)]
+lab_coins: 92775=249900-157125 [249900 (lab 100%) - 157125 (lab_store 100%)]
+hero_coins: -141574.02=18425.98-160000 [18425.98 (tavern 100%) - 160000 (hero_store 100%)]
+challenger_coins: -140340=354660-495000 [288000 (lct 81%) + 66660 (lab 19%) - 495000 (challenger_store 100%)]
 
 ***** Summons *****
 purple_stones: 1402.52 [42.86 (quests 3%) + 91.43 (merchants 7%) + 8.1 (arena 1%) + 300 (misty 21%) + 673.47 (regal 48%) + 120 (hero_trial 9%) + 166.67 (shop 12%)]
@@ -751,18 +752,18 @@ e30 to e41: 18.66 days (1.61 by month)
 e30 to e60: 50.9 days (0.59 by month)
 e30 to e65: 67.86 days (0.44 by month)
 
-tree level: 2.2 days (13.63 by month)
+tree level: 1.93 days (15.51 by month)
 mythic furn: 3.35 days (8.97 by month)
 mythic furn (with cards): 2.63 days (11.41 by month)
 9F (with cards): 75.81 days (0.4 by month)
 
-Challenger celo: 304.14 days (0.1 by month)
-Ascended challenger celo: 4257.91 days (0.01 by month)
+Challenger celo: Infinity days (0 by month) [monthly remains: -140340 challenger_coins]
+Ascended challenger celo: Infinity days (0 by month) [monthly remains: -140340 challenger_coins]
 
 Ascended 4F: 10.26 days (2.92 by month) {atier: 8.68 days, fodder: 10.26 days} [monthly remains: 4.26 atier]
 Ascended god: 186.49 days (0.16 by month)
 RC slot: 5.48 days (5.47 by month)
-Max rc level+1: 1.94 days (15.45 by month)
+Max rc level+1: 1.95 days (15.42 by month)
 
 ==================== Example of detailed customisation ====================
 =============== Fast forward value ===============
