@@ -5,10 +5,10 @@
 ***** Base *****
 dia: 1248.46 [168.75 (board) + 282.37 (guild) + 75 (oak_inn) + 66.67 (tr) + 207.14 (quests) + 24.52 (merchants) + 170.68 (arena) + 200 (lab) + 20 (hero_trial) + 33.33 (guild_hero_trial)]
 
-gold: 20672.37 [3613.61 (idle) + 1806.8 (ff) + 391.79 (board) + 11160.17 (guild) + 1125 (oak_inn) + 311.85 (arena) + 511.2 (lc) + 1385.28 (lab) + 233.33 (misty) + 133.33 (hero_trial)]
+gold: 20949.43 [3613.61 (idle) + 1806.8 (ff) + 391.79 (board) + 11160.17 (guild) + 1125 (oak_inn) + 311.85 (arena) + 511.2 (lc) + 1662.34 (lab) + 233.33 (misty) + 133.33 (hero_trial)]
 gold_h: 125.49 [4.29 (quests) + 118 (lab) + 3.2 (hero_trial)] {3342.94K gold}
 gold_hg: 2 [2 (quests)] {106.56K gold}
--> Total gold: 24121.87K
+-> Total gold: 24398.93K
 
 xp: 65411.74 [42493.26 (idle) + 21246.63 (ff) + 1671.84 (lab)]
 xp_h: 60.33 [2 (quests) + 31 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)] {25214.39K xp}
@@ -54,7 +54,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 432 [288 (idle) + 144 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 18640.26 dia [2 arena_tickets=5.71 dia + 201.48 blue_stones=523.86 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 79.42 cores=906.44 dia + 1248.46 dia=1248.46 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6237.23 dust=1602.58 dia + 47.4 dust_h=592.5 dia + 2.71 friend_summons=651.43 dia + 20672.37 gold=1180.33 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14025.84 guild_coins=935.06 dia + 0.03 hero_choice_chest=213.33 dia + 432 invigor=103.68 dia + 5063.33 lab_coins=532.98 dia + 0.33 mythic_gear=166.9 dia + 1900.24 poe=1282.66 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=422.86 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 222.66 twisted=1502.98 dia + 65411.74 xp=1252.02 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 18656.08 dia [2 arena_tickets=5.71 dia + 201.48 blue_stones=523.86 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 79.42 cores=906.44 dia + 1248.46 dia=1248.46 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6237.23 dust=1602.58 dia + 47.4 dust_h=592.5 dia + 2.71 friend_summons=651.43 dia + 20949.43 gold=1196.15 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14025.84 guild_coins=935.06 dia + 0.03 hero_choice_chest=213.33 dia + 432 invigor=103.68 dia + 5063.33 lab_coins=532.98 dia + 0.33 mythic_gear=166.9 dia + 1900.24 poe=1282.66 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=422.86 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 222.66 twisted=1502.98 dia + 65411.74 xp=1252.02 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -790 [530 (ff_cost) - 260 (shop)]
@@ -120,10 +120,10 @@ dust: -11532.47 [11532.47 (levelup)]
 ***** Base *****
 dia: 15158.9=38858.9-23700 [5062.5 (board 13%) + 8470.98 (guild 22%) + 2250 (oak_inn 6%) + 2000 (tr 5%) + 6214.29 (quests 16%) + 735.71 (merchants 2%) + 5120.42 (arena 13%) + 6000 (lab 15%) + 600 (hero_trial 2%) + 1000 (guild_hero_trial 3%) - 15900 (ff_cost 67%) - 7800 (shop 33%) + 45 (stargaze 0%) + 1360 (towers_kt 3%)]
 
-gold: -41442.3=693130.82-734573.12 [108408.24 (idle 16%) + 54204.12 (ff 8%) + 11753.75 (board 2%) + 334805.1 (guild 48%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 41558.4 (lab 6%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 66%) + 2059.71 (dura_fragments_sell 0%) + 56500 (towers_kt 8%) + 9600 (towers_4f 1%) + 4800 (towers_god 1%) - 250823.12 (levelup 34%)] {693130.82K gold=87%}
+gold: -33130.62=701442.5-734573.12 [108408.24 (idle 15%) + 54204.12 (ff 8%) + 11753.75 (board 2%) + 334805.1 (guild 48%) + 33750 (oak_inn 5%) + 9355.5 (arena 1%) + 15336 (lc 2%) + 49870.08 (lab 7%) + 7000 (misty 1%) + 4000 (hero_trial 1%) - 483750 (shop 66%) + 2059.71 (dura_fragments_sell 0%) + 56500 (towers_kt 8%) + 9600 (towers_4f 1%) + 4800 (towers_god 1%) - 250823.12 (levelup 34%)] {701442.5K gold=87%}
 gold_h: 3838.71 [128.57 (quests 3%) + 3540 (lab 92%) + 96 (hero_trial 3%) + 74.14 (stargaze 2%)] {102263.27K gold=13%}
 gold_hg: 60 [60 (quests 100%)] {3196.8K gold=0%}
--> Total gold: 64017.77K
+-> Total gold: 72329.45K
 
 xp: 131652.08=1962352.08-1830700 [1274797.92 (idle 65%) + 637398.96 (ff 32%) + 50155.2 (lab 3%) - 1830700 (levelup 100%)] {1962352.08K xp=72%}
 xp_h: 1842.7 [60 (quests 3%) + 930 (lab 50%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 32.88 (stargaze 2%)] {770173.87K xp=28%}
@@ -187,7 +187,7 @@ invigor: 12960 [8640 (idle 67%) + 4320 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: Infinity days (0 by month) {gold: 10.65 days, xp: 5.47 days, dust: -43.48 days} [monthly remains: 64017.77 gold + 901825.95 xp + -21622.92 dust]
+level: Infinity days (0 by month) {gold: 9.42 days, xp: 5.47 days, dust: -43.48 days} [monthly remains: 72329.45 gold + 901825.95 xp + -21622.92 dust]
 -> Level cost: 12497.98 dia / 12906.47 dia [22722.26 gold=1297.38 dia / 852.94 gold_h=1705.88 dia + 164450 xp=393.46 xp_h=3147.67 dia + 31342 dust=644.23 dust_h=8052.93 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -256,6 +256,7 @@ Max rc level+1: 3.17 days (9.45 by month)
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@labyrinth_mode: auto
 @merchant_daily: {}
 @merchant_weekly: {}
 @merchant_monthly: {}
@@ -267,11 +268,9 @@ Max rc level+1: 3.17 days (9.45 by month)
 @store_guild_items: [{:garrison=>66}, {:dim_exchange=>5}, {:t3=>:max}, nil, nil, :dim_gear]
 @store_lab_items: [{:garrison=>100}, {:dim_exchange=>25}, nil, :dim_emblems]
 @store_challenger_items: [nil]
-@labyrinth_mode: auto
 @tower_kt_progression: 10.0
 @tower_4f_progression: 10.0
 @tower_god_progression: 10.0
-@lab_flat_rewards: {:gold=>2077.92, :xp=>2507.7599999999998}
 
 --------------- Fixed vars ---------------
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}

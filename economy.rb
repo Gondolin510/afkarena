@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#TODO: more events?
+#TODO: more events?, board level<7 + team quests
 
 require './value'
 require 'json'
@@ -44,7 +44,7 @@ class Simulator
       @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
       @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
       @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
-      @monthly_hcp ||= @monthly_hcp_heroes*round(10/0.461) #number of hcp pulls
+      @monthly_hcp ||= get_hcp_from_nb_heroes(@monthly_hcp_heroes) #number of hcp pulls
 
       ### Friends and weekly mercs
       @friends_nb ||= 20
@@ -102,6 +102,11 @@ class Simulator
         dia: 200+100+200,
         guild_coins: 1000 #assume top 500
       }
+
+      ### Labyrinth
+      @labyrinth_mode = :auto #automatically select the hardest instance
+      # modes: :skip, :easy, :hard, :dismal, :dismal_skip_large
+      # see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
       # Spending money
       # ##############
@@ -181,11 +186,6 @@ class Simulator
 
       @store_challenger_items ||= get_store_challenger_items
       # By default do nothing, since we don't use challengers tokens for garrison/dim exchange!
-
-      ### Labyrinth
-      @labyrinth_mode = :auto #automatically select the hardest instance
-      # modes: :skip, :easy, :hard, :dismal, :dismal_skip_large
-      # see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
       # Tower progression and level up
       # ##############################
@@ -470,6 +470,9 @@ class Simulator
   extend GuildHelpers
 
   module UserSetupHelpers
+    def get_hcp_from_nb_heroes(heroes=@monthly_hcp_heroes)
+      heroes*round(10/0.461)
+    end
     #call this function when @_guild_mult is built
     #either in post_setup_hook, or by calling setup_internals first
     def guild_chest_from_coins(coins)
@@ -1373,20 +1376,24 @@ class Simulator
         #or dismal_skip_large
       end
       if @lab_flat_rewards.nil?
-        @lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
+        lab_flat_rewards = {gold: @_lab_flat_gold_h * real_afk_gold * @_lab_gold_mult, xp: @_lab_flat_xp_h* real_afk_xp}
+        lab_flat_rewards[:gold] *= @_lab_gold_mult
+      else
+        lab_flat_rewards=@lab_flat_rewards
+        #do we also use the lab_gold_mult? It depends if the user supplied
+        #the value without vip or not, by default assume these are the full
+        #value, vip included
       end
-      lab_flat_rewards=@lab_flat_rewards.dup
-      lab_flat_rewards[:gold] *= @_lab_gold_mult
       rewards=case mode
         when :skip; return {} #skip the lab
         when :dismal
-          [@Dismal_rewards, @Dismal_stage_chest_rewards, @Dismal_end_rewards, @lab_flat_rewards]
+          [@Dismal_rewards, @Dismal_stage_chest_rewards, @Dismal_end_rewards, lab_flat_rewards]
         when :dismal_skip_large
-          [@Dismal_rewards, @Dismal_stage_chest_skip_rewards, @Dismal_end_rewards, @lab_flat_rewards]
+          [@Dismal_rewards, @Dismal_stage_chest_skip_rewards, @Dismal_end_rewards, lab_flat_rewards]
         when :hard
-          [@Lab_hard_rewards, @Lab_end_rewards, @lab_flat_rewards]
+          [@Lab_hard_rewards, @Lab_end_rewards, lab_flat_rewards]
         when :easy
-          [@Lab_easy_rewards, @Lab_end_rewards, @lab_flat_rewards]
+          [@Lab_easy_rewards, @Lab_end_rewards, lab_flat_rewards]
         end
       total=sum_hash(*rewards, multiplier: 2.0/3) #for double events
       total[:lab_coins]*=@_lab_mult

@@ -233,6 +233,7 @@ Max rc level+1: 3.63 days (8.28 by month)
 @noble_regal: {:blue_stones=>3300}
 @noble_twisted: {:xp_h=>956}
 @noble_coe: {:dust=>7500, :dust_h=>380}
+@labyrinth_mode: auto
 @merchant_daily: {}
 @merchant_weekly: {}
 @merchant_monthly: {}
@@ -243,11 +244,9 @@ Max rc level+1: 3.63 days (8.28 by month)
 @store_hero_items: [nil]
 @store_guild_items: [{:dim_exchange=>5}, nil, nil, :dim_gear]
 @store_challenger_items: [nil]
-@labyrinth_mode: auto
 @tower_kt_progression: 2.0
 @tower_4f_progression: 2.0
 @tower_god_progression: 0.0
-@lab_flat_rewards: {:gold=>1274.9999999999998, :xp=>780.9230769230768}
 
 --------------- Fixed vars ---------------
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>100, :gold=>-500}, :shards=>{:shards=>20, :gold=>-2000, :max=>3}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
