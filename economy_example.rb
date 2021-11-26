@@ -5,13 +5,17 @@ puts "==================== Example of minimal customisation ====================
 # Minimal settings
 Simulator.new do
   @stage = "37-01" #(default to 38-01)
-  @hero_level= 350 #(default to 500)
+  @hero_level= 350 #(default to 450)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
   @nb_ff=6 #ff by day (default)
   @vip=10 #vip level (default)
   @subscription=false # (default)
-  #the other default settings assume max fos tower, max gh rewards,
-  #non paid regal subscriptions, ...
+
+  # the other default settings assume max fos tower, max gh rewards, non paid regal subscriptions, ...
+  # see `setup_vars` for the list of all settings
+  # Some are determined automatically if not filled, for instance
+  # the amount of Wrizz gold is determined from the amount of Wrizz chests:
+  #    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
 end.summary
 
 puts "==================== Example of moderate customisation ===================="
@@ -31,7 +35,7 @@ Simulator.new do
   @monthly_tavern = 0
   @monthly_hcp_heroes=1 #number of hcp heroes we want to summon monthly
 
-  @friends_mercs ||= 5
+  @friends_mercs ||= 3 #3 weekly mercs
 
   @gh_wrizz_chests = 22
   @gh_soren_chests = 21
@@ -42,8 +46,8 @@ Simulator.new do
   @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
 
   @arena_daily_dia = get_arena(3) #rank 3 in arena
-  @lct_coins =380 #top 20. Hourly coins: 400-rank
-  @lc_rewards = {gold: 6*1278} #we win all wagers
+  @lct_coins =395 #top 5. Hourly coins: 400-rank
+  @lc_rewards = {gold: -6*1278} #we lose all wagers!
 
   @misty = get_misty(shard_red: :shard, core_red: :red, core_poe_twisted: :poe)
   @dura_nb_selling =2 #dura's fragments we have maxed out and are selling
@@ -61,18 +65,13 @@ Simulator.new do
   @deluxe_monthly_card=get_deluxe_monthly_card(red: :silver_e, purple: :twisted) #select silver emblems and twisted essence
 
   @shop_refreshes = 1 #only one shop refresh
-  @shop_items = get_shop_items({dust_h: 1}, shards: false) #buy dust chest, but only once
+  @shop_items = get_shop_items({dust_h: 1}, shards: false) #buy dust chest only once, don't buy shards
 
   @garrison=true #(default to false) let's garrison
   @dim_exchange=true #(default to false) and do a dim exchange
 
-  #use our remaining lab coins to buy all twisted essence
+  #use our remaining lab coins to buy all twisted essence, we don't buy dim emblems
   @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false)
-
-  #see `setup_vars` for the list of all settings
-  #Some are determined automatically if not filled, for instance
-  #the amount of Wrizz gold is determined from the amount of Wrizz chests:
-  #    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
 end.summary
 
 puts "==================== Example of new player ===================="
@@ -126,7 +125,7 @@ Simulator.new do
   @tower_kt = 900 #multi at 600
   @tower_4f = [600, 550, 480, 750] #multi at 450
   @tower_god = [349, 370] #multi at 350
-  set_tower_progression_from_levelup(10) #progression of 10 levels a month, so 20 levels in kt/4f since we are at multi, 10 at god since we are at singles
+  set_tower_progression_from_levelup(10) #progression of 10 levels a month, so 20 levels in kt/4f since we are at multi, 10/20 at god since we are at singles/multi respectively
 
   @monthly_stargazing = 20
   @monthly_hcp_heroes = 4
@@ -146,14 +145,16 @@ Simulator.new do
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
   # Buy more stuff!
+  @shop_refreshes=4
   @shop_items = get_shop_items(:dust_h, {gold_e: 2}, poe: false)
-  @store_guild_items=[{garrison: 10}, nil, {t3: :max}, nil, :dim_gear]
+  #buy up to 2 gold emblems (if possible with our amount of shop refresh), but no poe
   @store_hero_items = get_store_hero_items({twisted: :max})
-  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: 2}, dim_emblems: false)
-  @store_challenger_items = get_store_challenger_items({red_e: :max})
+  @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: 2}, dim_emblems: false) #we don't need dim emblems, buy red_e after twisted if we have enough coins
+  @store_challenger_items = get_store_challenger_items({red_e: :max}) #buy all possible red_e (if we have enough coins)
 end.summary
 
 puts "==================== Example of detailed customisation ===================="
+
 =begin
 Detailed customizations
   Conventions:
@@ -166,7 +167,11 @@ Detailed customizations
   Call `show_variables(verbose: true)` to see all these variables.
   See the variable list below for the full settings
 =end
+
 s=Simulator.new do
+  # User variables
+  # ##############
+
   @stage="37-01"
 
   #Enter the afk timer value for xp and gold:
@@ -180,6 +185,7 @@ s=Simulator.new do
   @misty = { red_e: 4*10, t3: 2 } #our misty rewards
   #alternative: see `get_misty` as an helper function to build them
   @misty = get_misty(guild_twisted: :guild)
+
   @noble_regal = get_regal(paid: true) #we pay the regal pass
   @noble_coe = get_coe(:cores) #we select cores rather than dust in champion of esperia regals, by default paid is false, ie we use the f2p version
   
@@ -192,14 +198,38 @@ s=Simulator.new do
   # Better:
   @labyrinth_mode = :dismal_skip_large
 
+  # Game variables
+  # ##############
+
+  # The game variables are supposed to be constant and automatically
+  # determined from progression. But in case of a game update we may want
+  # to change things.
+
+  # As an example, the shop use 250 poe for 1125 gold when poe unlock.
+  # But when they first unlock it is actually 100 poe for 500 gold.
+  # But I don't know when it changes, so in the program I use the 250 poe
+  # quantity.
+  # Let's tweak this here:
+  @Shop={ poe: { poe: 100, gold: -500 } }
+
+  # For misty we assume we get all stages silver+gold unlock
+  # To change this:
+  @Misty_base={ poe: 19*450} #only got 19 gold chests!
+  
+  # If we are feeling adventurous we can even change internal variables:
+
   # assume that vows only give 10 stargaze cards
   @_average_vow_rewards=({stargazers: 10})
 
-  # If we are feeling adventurous we can even change internal variables in post_setup_hook
+  # Usually the internal variables are determined automatically, but we use the user supplied internal variables in priority.
+  # For the exceptions (the @_fos_* variables), we can still change them in post_setup_hook:
   def post_setup_hook
      #the program determines fos values from stage progression, but we can change it:
      @_fos_mythic_mult=0.3*2 #we forgot to activate the last mythic fos even though we are at chapter 37
   end
+
+  # Hooks
+  # #####
 
   #There are hooks `custom_income` and `custom_exchange` to customize income and spendings:
   def custom_income
@@ -221,11 +251,11 @@ s=Simulator.new do
 
     {event: daily_event_rewards, abex: daily_abex_rewards, hf: daily_hf_rewards}
   end
-  
+
   def custom_exchange
     #we sell our daily arena tickets and dura's tears
-    #nb: don't do this! One arena ticket sells for 50K gold, but using it gives a lot more value:
-    #Arena ticket value: 6.81 [44.55 gold=2.54 dia + 5.95 dust=1.53 dia + 0.12 blue_stones=0.31 dia + 0.03 purple_stones=0.94 dia + 1.49 dia=1.49 dia]
+    #  nb: don't do this! One arena ticket sells for 50K gold, but using it gives a lot more value:
+    #  Arena ticket value: 6.81 [44.55 gold=2.54 dia + 5.95 dust=1.53 dia + 0.12 blue_stones=0.31 dia + 0.03 purple_stones=0.94 dia + 1.49 dia=1.49 dia]
     arena_tickets_to_sell=tally[:arena_tickets]
     dura_tears_to_sell=tally[:dura_tears]
     gold=arena_tickets_to_sell*50+dura_tears_to_sell*10
@@ -238,6 +268,8 @@ s=Simulator.new do
 
     {selling_items: sell_stuff, lct_buy_tickets: lct}
   end
+
+  ### More customisations
 
   # This is an OO program, so we can customize some existing functions
 
@@ -262,7 +294,7 @@ s=Simulator.new do
   #
   # But we can actually use the built in functionality here:
   @Shop={reset_scroll: {reset_scrolls: 1, gold: -6000}} #it's already in the program, but let's pretend it was not
-  @shop_items = get_shop_items({reset_scroll: 1}) #we only buy one scroll daily, by default we assume we buy the full number of store refreshes
+  @shop_items = get_shop_items({reset_scroll: 1}) #we only buy one scroll daily
 end
 
 #Now let's look at the summary!

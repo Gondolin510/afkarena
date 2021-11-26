@@ -17,7 +17,7 @@ class Simulator
   end
 
   module UserSetup
-    def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
+    def setup_vars #assume an f2p vip 10 hero level 450 player at chap 38 with max fos by default and in fabled
 
       # Main settings
       # #############
@@ -25,7 +25,7 @@ class Simulator
       # Core settings
       @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
 
-      @hero_level ||= 500
+      @hero_level ||= 450
       # If the rc is not yet 240, we can be more precise:
       # @hero_level = [240, 220, 200, 201, 205]
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
@@ -154,6 +154,9 @@ class Simulator
       # - we buy the secondary items if we have enough coins.
       # - if there are still coins remaining, use them all with `filler_item`.
       # - If not specified the qty is 1. With `qty=:max` we buy up to the maximal number of items in the shop. Example: in the hero store we can only buy up to 4 purple stones, so {purple_stones: :max} maxes out at 4.
+      # Example: 
+      #     @store_guild_items=[{garrison: 10}, nil, {t3: :max}, nil, :dim_gear]
+      # -> set up 10 garrison stone using guild coins, buy max (ie 2) t3 and use dim_gear as a filler
 
       # Helper functions:
       #   @store_foo_items=get_store_foo_items(secondary_item1, {secondary_item2: qty2}, primary: [{primary_item1: qty1}, primary_item2], filler: filler_item)
@@ -244,7 +247,7 @@ class Simulator
         "Ascended 4F": { atier: 8, fodder: 10},
         "Ascended god": { god: 14},
         "RC slot": { invigor: 5000},
-      }
+      }.merge(@Cost||{})
 
       @Shop = {
         # there are 2 extra slots, for 24h gold, 24h xp, tokens, 500 dust,
@@ -317,21 +320,21 @@ class Simulator
         dim_exchange: {cost: 13333, dim_points: 1, max: 15},
       }.merge(@StoreChallenger||{})
 
-      @Merchant_daily ||={ dia: 20, purple_stones: 2}
-      @Merchant_weekly ||={ dia: 20, purple_stones: 5}
-      @Merchant_monthly ||={ dia: 50, purple_stones: 10}
+      @Merchant_daily={ dia: 20, purple_stones: 2}.merge(@Merchant_daily||{})
+      @Merchant_weekly={ dia: 20, purple_stones: 5}.merge(@Merchant_weekly||{})
+      @Merchant_monthly={ dia: 50, purple_stones: 10}.merge(@Merchant_monthly||{})
 
-      @Quest_daily ||= {
+      @Quest_daily={ #quest without fos
         gold_hg: 2,
         blue_stones: 5, arena_tickets: 2, xp_h: 2, scrolls: 1,
         dia: 100
-      }
-      @Quest_weekly ||= {
+      }.merge(@Quest_daily||{})
+      @Quest_weekly= {
         gold_h: 8+8,
         blue_stones: 60, purple_stones: 10,
         dia: 400, scrolls: 3,
         dura_tears: 3
-      }
+      }.merge(@Quest_weekly||{})
 
       @Dismal_rewards ||= { dia: 300, lab_coins: (4200+700), guild_coins: 1000, challenger_coins: 3333 }
       @Lab_hard_rewards ||= { dia: 300, lab_coins: 3867+1000, guild_coins: 1000, challenger_coins: 3333 }
@@ -356,9 +359,9 @@ class Simulator
       @Oak_amount={blue_stones: 30, dia: 100, dust: 500, gold: 1500}
       @Oak_quantity=3; @Oak_proba=0.25
 
-      @Misty_base ||={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
+      @Misty_base={ gold: 7000, dust_h: 7*4*8, xp_h: 6*24,
              blue_stones: 10*120, purple_stones: 10*18,
-             poe: 20*450}
+             poe: 20*450}.merge(@Misty_base || {})
 
       @Noble_regal_days ||=49
       @Noble_twisted_days ||=44
@@ -366,11 +369,11 @@ class Simulator
 
       @Monthly_vows ||=2 #2 by month
       @Monthly_hero_trial ||=2
-      @Hero_trial_rewards ||={
+      @Hero_trial_rewards={
         gold: 2000, dia: 300,
         dust_h: 6*2, xp_h: 6*2, gold_h: 6*8,
         blue_stones: 60, purple_stones: 60
-      }
+      }.merge(@Hero_trial_rewards||{})
 
       @Dura_nb ||=7.0
     end
