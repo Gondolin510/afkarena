@@ -2223,7 +2223,7 @@ class Simulator
       puts
     end
 
-    def show_summary
+    def show_summary(daily: false, monthly: true)
       ff_summary
       economy.each do |k,v|
         r=@ressources.slice(*v)
@@ -2249,12 +2249,13 @@ class Simulator
           end
         end
       end
-      do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true)
+      do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true) if monthly
+      do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true) if monthly
       previsions_summary
     end
 
-    def summary
-      show_summary
+    def summary(*a, **kw)
+      show_summary(*a, **kw)
     end
 
     def show_variables(verbose: false)
