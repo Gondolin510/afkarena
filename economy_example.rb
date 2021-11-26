@@ -3,7 +3,7 @@ require './economy'
 
 puts "==================== Example of minimal customisation ===================="
 # Minimal settings
-Simulator.new do
+s=Simulator.new do
   @stage = "37-01" #(default to 38-01)
   @hero_level= 350 #(default to 450)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
@@ -16,7 +16,14 @@ Simulator.new do
   # Some are determined automatically if not filled, for instance
   # the amount of Wrizz gold is determined from the amount of Wrizz chests:
   #    @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
-end.summary
+end
+
+puts "-> cost of one level up:"
+puts s.level_cost_summary
+puts "-> cost of ten level up:"
+puts s.level_cost_summary(10)
+puts "\n-> Full summary:"
+s.summary
 
 puts "==================== Example of moderate customisation ===================="
 Simulator.new do

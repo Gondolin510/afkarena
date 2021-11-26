@@ -2198,8 +2198,8 @@ class Simulator
       puts
     end
 
-    def level_cost_summary(daily: false)
-      cost=current_level_cost
+    def level_cost_summary(n=1, daily: false)
+      cost=level_up_cost(n)
       gold=cost[:gold]
       xp=cost[:xp]
       dust=cost[:dust]
@@ -2328,12 +2328,12 @@ class Simulator
   include Summary
 
   module Utilities
-    def level_cost(level, stage: "37-01")
+    def level_cost(n, level: 1, stage: "37-01")
       s=self.new do
         @hero_level=level
         @stage=stage
       end
-      puts s.level_cost_summary(daily: true)
+      puts s.level_cost_summary(n, daily: true)
     end
   end
   extend Utilities
