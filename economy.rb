@@ -249,6 +249,7 @@ class Simulator
         "Ascended god": { god: 14},
         "RC slot": { invigor: 5000},
       }.merge(@Cost||{})
+      @DiaValues ||= {}.merge(@DiaValues || {}) #user supplied diamond values
 
       @Shop = {
         # there are 2 extra slots, for 24h gold, 24h xp, tokens, 500 dust,
@@ -1982,6 +1983,9 @@ class Simulator
   include Ordering
 
   module Summary
+    def items_value(*a, values: {}, **kw)
+      super(*a, values: values.merge(@DiaValues), **kw)
+    end
     def make_h1(t)
       "=============== #{t.capitalize} ===============\n"
     end

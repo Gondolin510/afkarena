@@ -57,8 +57,8 @@ module Value
     #i am using values from chap 37, gold and xp are in K
   end
 
-  def items_value(summons: true, extra: {})
-    scroll=240
+  def items_value(summons: true, values: {}) #values if for user supplied values
+    scroll=270
     value = {
       dia: 1,
       gold: gold_conversion,
@@ -121,7 +121,7 @@ module Value
       })
     end
 
-    value.merge(extra)
+    value.merge(values)
   end
 
   def dia_value(items, **kw)
