@@ -56,7 +56,7 @@ Simulator.new do
   @lct_coins =395 #top 5. Hourly coins: 400-rank
   @lc_rewards = {gold: -6*1278} #we lose all wagers!
 
-  @misty = get_misty(shard_red: :shard, core_red: :red, core_poe_twisted: :poe)
+  @misty = get_misty(%i(t3 shards red_e blue_stones purple_stones poe)) #privilege t3>shards>red_e>...
   @dura_nb_selling =2 #dura's fragments we have maxed out and are selling
 
   @noble_regal = get_regal(paid: true)
@@ -201,7 +201,7 @@ s=Simulator.new do
   @nb_ff =3 #we only do ff up to 80 dia
   @misty = { red_e: 4*10, t3: 2 } #our misty rewards
   #alternative: see `get_misty` as an helper function to build them
-  @misty = get_misty(guild_twisted: :guild)
+  @misty = get_misty(chest2: :guild_coins) #take guild coins
 
   @noble_regal = get_regal(paid: true) #we pay the regal pass
   @noble_coe = get_coe(:cores) #we select cores rather than dust in champion of esperia regals, by default paid is false, ie we use the f2p version
