@@ -75,7 +75,7 @@ Simulator.new do
   @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: [{red_e: :max}])
 end.summary
 
-puts "==================== Example of new player ===================="
+puts "==================== Example of a beginner ===================="
 Simulator.new do
   @stage = "08-01"
   @hero_level= [160, 140, 120, 120, 120] #our 5 heroes
@@ -88,7 +88,7 @@ Simulator.new do
   @friends_mercs = 1 #we only lend one weekly merc
 
   @gh_wrizz_chests = 13
-  @gh_soren_freq = 0.5 #moderatly active guild
+  @gh_soren_freq = 0.5 #moderately active guild
 
   @tr={twisted: 150}
   @tr_guild = {} #no guildie in fabled or legend
@@ -152,6 +152,15 @@ Simulator.new do
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: [{red_e: :max}])
   @store_challenger_items = get_store_challenger_items({red_e: :max}) #buy all possible red_e (if we have enough coins)
+end.summary
+
+puts "==================== Example of a new player with everything locked ===================="
+Simulator.new do
+  @stage = "01-01"
+  @vip=0
+  @hero_level= [1,1,1,1,1]
+  @player_level=1
+  @nb_ff=1
 end.summary
 
 puts "==================== Example of detailed customisation ===================="

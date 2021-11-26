@@ -134,14 +134,14 @@ module Value
     end
     return sum
   end
-  def detailed_dia_value(items, **kw)
+  def detailed_dia_value(items, skip_null: false, **kw)
     o=[]; sum=0
     values=items_value(**kw)
     items.each do |k,v|
       #p "Missing: #{k}" unless values.key?(k)
       value=v*(values[k]||0)
       sum+=value
-      o.push("#{round(v)} #{k}=#{round(value)} dia")
+      o.push("#{round(v)} #{k}=#{round(value)} dia") unless skip_null and (value == 0.0 or value == 0)
     end
     return [sum, o]
   end

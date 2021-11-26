@@ -903,7 +903,7 @@ class Simulator
   module SetupHelpers
     def get_progression #variables depending on progression
       stage= @stage || "01-01" #in case we call this from the setup function
-      vip=@vip || 1
+      vip=@vip || 0
 
       @_shop_discount =1
       @_shop_discount =0.7 if stage >= "33-01" #is that correct?
@@ -959,7 +959,7 @@ class Simulator
       @_unlock_elder_tree=true if stage > "08-40"
       @_unlock_twisted=true if stage > "08-40"
       @_unlock_fos=true if stage > "11-40"
-      @_unlock_board_autofill=true if stage > "12-40" or @vip>=6
+      @_unlock_board_autofill=true if stage > "12-40" or vip>=6
       @_unlock_stargazer=true if stage > "15-40"
       @_unlock_abex=true if stage > "15-40"
       @_unlock_own_oak_inn=true if stage > "17-40"
@@ -1064,9 +1064,10 @@ class Simulator
       if @vip >=  18
         @_vip_gold_mult=3.0
       end
-      if @vip >18
-        warn "[Warning] vip=#{@vip} not fully implemented"
-      end
+
+      warn "[Warning] The number of ff #{@nb_ff} is greater than the max #{@_vip_max_ff} possible from your vip #{@vip}" if @nb_ff > @_vip_max_ff
+      warn "[Warning] #{@nb_ff} fast forward requested, but fast forwards not yet unlocked" if @nb_ff>0 and !@_unlock_ff
+
       @_vip_xp_mult||=@_vip_gold_mult
     end
 
@@ -1185,8 +1186,8 @@ class Simulator
 
       @_raw_idle_hourly ||= get_idle(@stage)
       t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
-      @_raw_idle_hourly[:t1_gear]=t_gear_hourly
-      @_raw_idle_hourly[:t2_gear]=t_gear_hourly
+      @_raw_idle_hourly[:t1_gear]= @_unlock_tower_kt ? t_gear_hourly : 0
+      @_raw_idle_hourly[:t2_gear]= @_unlock_tower_4f ? t_gear_hourly : 0
 
       # we use gold and xp in K
       unless @afk_xp.nil?
@@ -2163,7 +2164,7 @@ class Simulator
         summary=make_h1(title)+summary
 
         if total_value
-          summary+="=> Total value: #{show_dia_value(tally(r))}\n\n"
+          summary+="=> Total value: #{show_dia_value(tally(r), skip_null: true)}\n\n"
         end
         puts summary
       end
