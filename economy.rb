@@ -2194,7 +2194,7 @@ class Simulator
 
     def ff_summary
       h1 "Fast Forward Value"
-      puts show_dia_value(one_ff)
+      puts show_dia_value(one_ff, skip_null: true)
       puts
     end
 

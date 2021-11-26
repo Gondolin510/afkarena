@@ -393,7 +393,7 @@ Max rc level+1: 2.26 days (13.27 by month)
 
 ==================== Example of a beginner ====================
 =============== Fast forward value ===============
-57.24 dia [65.81 gold=3.76 dia + 38.14 xp=20.8 dia + 17.77 dust=25 dia + 0 poe=0 dia + 0 twisted=0 dia + 0 silver_e=0 dia + 0 gold_e=0 dia + 0 red_e=0 dia + 0 dura_fragments=0 dia + 0 class_fragments=0 dia + 0 mythic_gear=0 dia + 0 t2=0 dia + 32 invigor=7.68 dia + 0 t3=0 dia + 0 t1_gear=0 dia + 0 t2_gear=0 dia + 0 shards=0 dia + 0 cores=0 dia]
+57.24 dia [65.81 gold=3.76 dia + 38.14 xp=20.8 dia + 17.77 dust=25 dia + 32 invigor=7.68 dia]
 
 =============== Income ===============
 ***** Base *****
@@ -763,7 +763,7 @@ Max rc level+1: 1.95 days (15.42 by month)
 
 ==================== Example of a new player with everything locked ====================
 =============== Fast forward value ===============
-41.62 dia [10.8 gold=0.62 dia + 2.88 xp=16 dia + 9.26 dust=25 dia + 0 poe=0 dia + 0 twisted=0 dia + 0 silver_e=0 dia + 0 gold_e=0 dia + 0 red_e=0 dia + 0 dura_fragments=0 dia + 0 class_fragments=0 dia + 0 mythic_gear=0 dia + 0 t2=0 dia + 0 invigor=0 dia + 0 t3=0 dia + 0 t1_gear=0 dia + 0 t2_gear=0 dia + 0 shards=0 dia + 0 cores=0 dia]
+41.62 dia [10.8 gold=0.62 dia + 2.88 xp=16 dia + 9.26 dust=25 dia]
 
 =============== Income ===============
 ***** Base *****

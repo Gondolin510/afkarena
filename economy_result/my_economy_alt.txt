@@ -1,5 +1,5 @@
 =============== Fast forward value ===============
-186.39 dia [98.39 gold=5.62 dia + 540.75 xp=33.24 dia + 103.8 dust=37.4 dia + 35.17 poe=23.74 dia + 1.27 twisted=8.56 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0 class_fragments=0 dia + 0.02 mythic_gear=9.03 dia + 0.02 t2=43.74 dia + 48 invigor=11.52 dia + 0 t3=0 dia + 0 t1_gear=0 dia + 0 t2_gear=0 dia + 0.08 shards=0.48 dia + 0 cores=0 dia]
+186.39 dia [98.39 gold=5.62 dia + 540.75 xp=33.24 dia + 103.8 dust=37.4 dia + 35.17 poe=23.74 dia + 1.27 twisted=8.56 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.02 mythic_gear=9.03 dia + 0.02 t2=43.74 dia + 48 invigor=11.52 dia + 0.08 shards=0.48 dia]
 
 =============== Income ===============
 ***** Base *****
