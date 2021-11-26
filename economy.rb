@@ -79,6 +79,7 @@ class Simulator
       @misty ||= get_misty
       # can specify the required chest using: `chest5: poe` for instance
       # can also specify an ordering: get_misty(%i(cores red_e poe)) to ask for cores in priority if available, then red_e, then poe
+      # the default order is: %i(dust_h t3 cores red_e blue_stones purple_stones twisted)
 
       ### misc
       @board_level ||=8 #[only used when board unlocks]
@@ -536,6 +537,8 @@ class Simulator
 
     #by default we take the last one, so no need for ordering
     #use order=%i(cores shards red_e poe) to priviliege cores then shards then red_e then poe
+    #the default is the same as specifying
+    #    order=%i(dust_h t3 cores red_e blue_stones purple_stones twisted)
     def get_misty(order=%i(), chest1: nil, chest2: nil, chest3: nil, chest4: nil, chest5: nil, chest6: nil, chest7: nil, chest8: nil, chest9: nil, chest10: nil, chest11: nil, chest12: nil, chest13: nil, chest14: nil, chest15: nil)
       @Misty_chests={
         chest1: [{gold_h: 24*12}, {xp_h: 8*12}, {dust_h: 8*12}],
@@ -1401,6 +1404,15 @@ class Simulator
     def bounties
       if @board_level < 8
         #todo: find the probas in the game files
+        #Weights:
+        #[100,0,0,0,0,0,0,0]
+        #[0,30,15,5,0,0,0,0]
+        #[0,20,15,10,5,0,0,0]
+        #[0,0,25,15,7,3,0,0]
+        #[0,0,15,22,7,3,3,0]
+        #[0,0,0,30,10,5,5,0]
+        #[0,0,0,15,20,10,4,1]
+        #[0,0,0,0,25,20,4,1]
         warn "[Warning] Board level #{@board_level} not implemented, skipping"
         return {}
       end
