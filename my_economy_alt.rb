@@ -32,8 +32,7 @@ s=Simulator.new do
 
   @dim_exchange=true
   @shop_items = get_shop_items(shards: false)
-  @store_lab_items = get_store_lab_items(primary: %i(:arthur))
-  @store_lab_items = %i(dim_exchange arthur)
+  @store_lab_items = get_store_lab_items(primary: %i(arthur))
 
   #tweaks (I don't know when poe goes from 100 to 250 in shop, so it is not automatic for now)
   @Shop={ poe: { poe: 100, gold: -500 } }

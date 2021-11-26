@@ -1707,7 +1707,7 @@ class Simulator
       else
         unless shop_item
           warn "[Warning!] Shop item #{item} not found"
-          return[0, {}, 1]
+          return[item, 0, {}, 1]
         end
         cost=shop_item
         value={item => 1}
