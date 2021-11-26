@@ -146,38 +146,8 @@ Simulator.new do
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
   # Buy more stuff!
-  # @shop_items = [item1, {item2: qty2}, item3, {item4: qty4}]
-  # if qty is not set, assume buy each time the shop is refreshed
-  # the program handles probability and maximal number of buyings (eg for
-  # shards) automatically
-  # we can use an helper function
   @shop_items = get_shop_items(:dust_h, {gold_e: 2}, poe: false)
-  #-> daily, we buy dust chests at each shop refresh, but only up to 2 time gold emblems
-  #- By default this function adds dust, purple_stones, poe and shards when they unlock, using `poe: false` we say to not buy poe
-  
-  ### Stores
-  #@store_foo_items=[primary_item1, {primary_item2: qty2}, primary_item3,
-  #nil, {secondary_item4: qty4}, secondary_item5, nil, filler_item]
-  #-> we buy the primary items, even if we don't have enough coins (mainly
-  #used for garrison/dim exchange). We buy the secondary items if we have
-  #enough coins. If there are more coins remaining, use them all with
-  #filler_item. If not specified the qty is 1. With qty=:max we buy up to
-  #the maximal number of items in the shop. EG in the hero store we can
-  #only buy up to 4 purple stones, so {purple_stones: :max} maxes out at 4.
   @store_guild_items=[{garrison: 10}, nil, {t3: :max}, nil, :dim_gear]
-
-  # we can use the helper function `get_store_foo_items` that handles dim
-  # exchange and garrison automatically if they are active.
-  #   get_store_items(secondary_item1, {secondary_item2: qty2}, primary: [primary_item1], filler: filler_item)
-  #- By default we use 50 lab points+10 guild points for dim exchange,
-  #  100 lab points + 66 guild points + 34 hero points for garrison but
-  #  that can be changed with the options `garrison: qty`, `dim_exchange:
-  #  qty` of these functions.
-  #- By default, get_store_guild_items adds t3 as a primary (if they are
-  #unlocked), and dim_emblems as fillers (if they are unlocked). This can
-  #be tweaked via the options `t3: false`, `dim_gear: false`
-  #- By default, get_store_lab_items adds dim_emblems as a secondary (if
-  #they are unlocked), use `dim_emblems: false` to remove them.
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, {red_e: 2}, dim_emblems: false)
   @store_challenger_items = get_store_challenger_items({red_e: :max})
@@ -233,14 +203,23 @@ s=Simulator.new do
 
   #There are hooks `custom_income` and `custom_exchange` to customize income and spendings:
   def custom_income
+    # add a current event
+    event_duration=7
+    event_frequency=0.2 #once every 5 months
+    event_rewards={dia: 200, dust_h: 10}
+    event_pass={dia: 800, stargazers: 10}
+    daily_event_rewards=mult_hash(sum_hash(event_rewards, event_pass), event_duration/30.0*event_frequency)
+
     #let's try to add abex rewards and hf rewards to our income
     abex_rewards={stargazers: 20, dia: 3000} #todo: add other ones
     abex_frequency=1/60.0 #1 every 2 months
     daily_abex_rewards=mult_hash(abex_rewards, abex_frequency)
+
     hf_rewards={scrolls: 20, dia: 1000} #todo: add other ones
     hf_frequency=1/90.0 #1 every 3 months
     daily_hf_rewards=mult_hash(hf_rewards, hf_frequency)
-    {abex: daily_abex_rewards, hf: daily_hf_rewards}
+
+    {event: daily_event_rewards, abex: daily_abex_rewards, hf: daily_hf_rewards}
   end
   
   def custom_exchange
@@ -319,7 +298,6 @@ Simulator.new.show_variables
 @gh_soren_freq: 0.66
 @tr_twisted: 380
 @tr_poe: 1290
-@tr_guild: {:dia=>100, :twisted=>6}
 @cursed_realm: {}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660

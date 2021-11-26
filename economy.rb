@@ -16,17 +16,21 @@ class Simulator
     self.process if process
   end
 
-  module Setup
+  module UserSetup
     def setup_vars #assume an f2p vip 10 hero level 500 player at chap 38 with max fos by default and in fabled
 
-      ### core settings
+      # Main settings
+      # #############
+
+      # Core settings
       @stage ||= "38-01" #warning: for stage comparison we want @stage="02-04" rather than @stage="2-04" for earlier chapters
 
       @hero_level ||= 500
+      # If the rc is not yet 240, we can be more precise:
+      # @hero_level = [240, 220, 200, 201, 205]
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
       @nb_ff ||=6
-      @subscription ||=false if @subscription.nil?
 
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -49,17 +53,16 @@ class Simulator
       ### GH [only used when guild unlocks]
       @gh_wrizz_chests ||= 23
       @gh_soren_chests ||= @gh_wrizz_chests
-      #if not specified, determine the gold amount from the chest amount:
+      #if not specified, we determine the gold amount from the chest amount:
       @gh_wrizz_gold ||= get_guild_gold(@gh_wrizz_chests)
       @gh_soren_gold ||= get_guild_gold(@gh_soren_chests)
       @gh_soren_freq ||= 0.66 #or round(5.0/7.0) =0.71
       # we can get the gold from the guild mail (the guild coins and gold
       # we get in the mail is half what we get for our best run)
-      # see also `guild_chest_from_gold` and `guild_chest_from_coins` to
-      # get the number of guild chests
+      # see also `guild_chest_from_gold` and `guild_chest_from_coins` to conversely get the number of guild chests from our gold or amount of guild coin
 
-      ### twisted realm (use fabled rewards) [only used when tr unlocks]
-      @tr ||= {twisted: 380, poe: 1290}
+      ### twisted realm [only used when tr unlocks]
+      @tr ||= {twisted: 380, poe: 1290} #use fabled rewards
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
       ### cursed realm
@@ -74,28 +77,36 @@ class Simulator
 
       ### misty valley [only used when misty unlocks]
       @misty ||= get_misty
+      # default options: gold_xp_dust: :dust, guild_twisted: :twisted, purple_blue: :blue, shard_red: :red, core_red: :core, core_poe_twisted: :core
 
       ### misc
       @board_level ||=8 #[only used when board unlocks]
       @dura_nb_selling ||=0 #dura's fragments we have maxed out and are selling
 
       ### Noble societies [only when they unlock]
-      #by default paid is false [only used when they unlock]
+      #by default paid is false
+
       @noble_regal ||= get_regal #opens after 10 days of account creation
       # Paid version: @noble_regal = get_regal(paid: true)
+
       @noble_twisted ||= get_twisted_bounties #default to xp
-      #example for the paid version and shard selection:
-      #  @noble_twisted = get_twisted_bounties(:shards, paid: true)
+      # Example for the paid version and shard selection:
+      #    @noble_twisted = get_twisted_bounties(:shards, paid: true)
+
       @noble_coe ||= get_coe #default to dust
-      #example for the paid version and cores selection:
-      #  @noble_coe = get_twisted_bounties(:cores, paid: true)
+      # Example for the paid version and cores selection:
+      #    @noble_coe = get_twisted_bounties(:cores, paid: true)
 
       ### Hero trials [only used when hero trials unlock]
-      #average guild hero trial rewards
-      @hero_trial_guild_rewards ||={
+      @hero_trial_guild_rewards ||={ #average guild hero trial rewards
         dia: 200+100+200,
         guild_coins: 1000 #assume top 500
       }
+
+      # Spending money
+      # ##############
+
+      @subscription ||=false if @subscription.nil?
 
       ### Merchants
       #Paid version, f2p versions are in Merchant_daily, Merchant_weekly, Merchant_monthly
@@ -104,42 +115,115 @@ class Simulator
       @merchant_monthly ||={}
 
       ### Cards
+
       @monthly_card ||={} #f2p
-      #@monthly_card=get_monthly_card #default to dust
-      #@monthly_card=get_monthly_card(:shard) #select shards
+      # Exemples:
+      #    @monthly_card={dia: 110, dust_h: 4*2*6}
+      # Or use the helper function:
+      #    @monthly_card=get_monthly_card #default to dust
+      #    @monthly_card=get_monthly_card(:shard) #select shards
+
       @deluxe_monthly_card ||={} #f2p
-      # @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
-      # @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted) #select silver emblems and twisted essence
+      # Exemples with the helper function:
+      #    @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
+      #    @deluxe_monthly_card=get_deluxe_monthly_card(red: silver_e, purple: twisted) #select silver emblems and twisted essence
+
+      # Stores
+      # ======
 
       ### Daily shopping
-      @shop_items ||= get_shop_items #get items depending on stage progression
       @shop_refreshes ||= 2
 
+      # Set the items we want to buy:
+      #   @shop_items = [item1, {item2: qty2}, item3, {item4: qty4}]
+      # if qty is not set, assume we buy each time the shop is refreshed
+      # (the program automatically handles probability and maximal number of buyings, eg for shards the daily max)
+
+      # We can use an helper function:
+      @shop_items ||= get_shop_items #get items depending on stage progression
+      # - By default this function adds dust, purple_stones, poe and shards when they unlock. 
+      # - Options: `poe: false` we say to not buy poe, idem for shards, ...
+      # - Arguments are added to the list of items:
+      #     @shop_items = get_shop_items(:dust_h, {gold_e: 2})
+      #   -> Buy as many dust_h box as shop refreshes, but only max 2 gold emblems
+
       ### Monthly store buys
+      #    @store_foo_items=[primary_item1, {primary_item2: qty2}, primary_item3, nil, {secondary_item4: qty4}, secondary_item5, nil, filler_item]
+      # - we buy the primary items, even if we don't have enough coins (mainly
+      #used for garrison/dim exchange). 
+      # - we buy the secondary items if we have enough coins.
+      # - if there are still coins remaining, use them all with `filler_item`.
+      # - If not specified the qty is 1. With `qty=:max` we buy up to the maximal number of items in the shop. Example: in the hero store we can only buy up to 4 purple stones, so {purple_stones: :max} maxes out at 4.
+
+      # Helper functions:
+      #   @store_foo_items=get_store_foo_items(secondary_item1, {secondary_item2: qty2}, primary: [{primary_item1: qty1}, primary_item2], filler: filler_item)
+      # - These handle dim exchange and garrison automatically if they are active: they are added as primary items
+      #  By default we use 50 lab points+10 guild points for dim exchange,
+      #  and 100 lab points + 66 guild points + 34 hero points for garrison.
+      # - Thes can be changed with the options `garrison: qty`, `dim_exchange: qty`.
+      # Example: @store_lab_items = get_store_lab_items({red_e: 2}, {twisted: :max}, dim_exchange: 40)
+      # -> buy 2 red emblems and the max number of twisted essence (if we have enough coins since these are secondary), and do a dim exchange with 40 points (as primary).
       @garrison = false if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
       @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
+
       @store_hero_items ||= get_store_hero_items
+
       @store_guild_items ||= get_store_guild_items
+      #  By default, get_store_guild_items adds t3 as a primary (if they are unlocked), and dim_emblems as fillers (if they are unlocked). This can be tweaked via the options `t3: false`, `dim_gear: false`
+      #  Example: @store_guild_items = get_store_guild_items({t1: :max}, :t2, filler: :random_mythic_gear)
+      #  -> buy max (ie 2) t3 as primary, and then if we have money still buy max (ie 2) t1, and then spend all the rest on random mythic gear
+
       @store_lab_items ||= get_store_lab_items
+      # By default adds dim_emblems as secondary (if they are unlocked), use `dim_emblems: false` to remove them.
+
       @store_challenger_items ||= get_store_challenger_items
+      # By default do nothing, since we don't use challengers tokens for garrison/dim exchange!
 
       ### Labyrinth
       @labyrinth_mode = :auto #automatically select the hardest instance
-      #modes: :skip, :easy, :hard, :dismal, :dismal_skip_large
-      #see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
+      # modes: :skip, :easy, :hard, :dismal, :dismal_skip_large
+      # see @lab_flat_rewards for the flat rewards, we use an approximation if this is not set
 
-      ### Tower progression and level up
+      # Tower progression and level up
+      # ##############################
       @monthly_levelup||=0
+      # If the rc is less than 240, @monthly_levelup=10 means to add 10
+      # levels on each hero. We can be more precise:
+      #    @monthly_levelup = [10, 0, 5, 0, 0]
+      # to add 10 levels to the first hero, and 5 to the third;
+
+      # Examples:
+      #  @tower_kt_progression=10 #we expect to climb 10 floors
+      #  @tower_4f_progression=5 #we expect to climb 5 floors in all 4f towers
+      #  @tower_4f_progression=[5, 0, 10, 2] #we expect to climb 5/0/10/2 floors respectively
+      #  @tower_god_progression=2 #we expect to climb 2 floors in all celo/hypo towers
+      #  @tower_god_progression=[1,3] #climb 1/3 floors respectively
+
+      # Helper:
       set_tower_progression_from_levelup
       #this setup @tower_{kt,4f,god}_progression, the average number of floor we do monthly from our monthly level up number @monthly_levelup (which we can estimate using this simulator)
 
-      ### Other variables:
+      # Other variables
+      # ###############
+
       #@afk_xp=13265     # the displayed value by minute, this include the vip bonus but not the fos bonus
       #@afk_gold=844     # the displayed value by minute (include vip)
       #@afk_dust=1167.6  # the value by day, ie 48.65 by hour
       #-> determined from stage progression, but can be set up directly for more precise results
     end
 
+    # Redefine these functions to add custom source of income and exchange
+    # see the examples in economy_example.rb
+    def custom_income
+      {}
+    end
+    def custom_exchange
+      {}
+    end
+  end
+  include UserSetup
+
+  module Setup
     def setup_constants
       @Cost={
         "SI+10": {silver_e: 240},
@@ -732,18 +816,12 @@ class Simulator
       @ressources[:deluxe_monthly_card]=@deluxe_monthly_card
       @ressources.merge!(custom_income)
     end
-    def custom_income
-      {}
-    end
 
     def make_exchange
       @ressources[:ff_cost]=exchange_ff
       @ressources[:shop]=exchange_shop
       @ressources[:dura_fragments_sell]=sell_dura
       @ressources.merge!(custom_exchange)
-    end
-    def custom_exchange
-      {}
     end
 
     def handle_towers
