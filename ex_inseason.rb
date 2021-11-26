@@ -40,4 +40,6 @@ Simulator.new do
 
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: true)
+
+  @DiaValues={scrolls: 240}
 end.summary(daily: true)
