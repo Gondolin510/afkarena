@@ -234,11 +234,11 @@ Max rc level+1: 3.17 days (9.45 by month)
 @tower_kt: 561
 @tower_4f: [296, 291, 361, 393]
 @tower_god: [143, 231]
-@monthly_levelup: 10
 @garrison: true
 @dim_exchange: true
 @misty: {:dust_h=>96, :guild_coins=>30000, :blue_stones=>360, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
 @shop_items: [:dust, :purple_stones, :poe, :shards, :dust_h]
+@monthly_levelup: 10
 @nb_ff: 6
 @monthly_stargazing: 0
 @monthly_tavern: 0
