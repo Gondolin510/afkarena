@@ -19,8 +19,8 @@ Simulator.new do
 
   @cursed_realm = get_cursed_realm(10) #in cursed and in top 10%
 
-  @arena_daily_dia = get_arena(2) #rank 1 in arena
-  @lct_coins =309 #top 1
+  @arena_daily_dia = get_arena(1) #rank 1 in arena
+  @lct_coins =399 #rank 2
   @lc_rewards ||= {gold: 6*1278} #we win all wagers
 
   @dura_nb_selling=7 #we have maxed out all artifacts
