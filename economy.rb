@@ -66,7 +66,7 @@ class Simulator
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
       ### cursed realm
-      @cursed_realm = {} #not in cursed
+      @cursed_realm ||= {} #not in cursed
       # @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
 
       ### arena [only used when arena/lc/lct unlocks]
@@ -804,6 +804,7 @@ class Simulator
       @ressources[:guild]=guild if @_unlock_guild
       @ressources[:oak_inn]=oak_inn if @_unlock_oak_inn
       @ressources[:tr]=tr if @_unlock_tr
+      @ressources[:cursed]=cursed_realm if @cursed_realm and not @cursed_realm.empty?
       @ressources[:quests]=quests
       @ressources[:merchants]=merchants
       @ressources[:friends]=friends
