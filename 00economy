@@ -2,3 +2,4 @@
 ./economy_example.rb >! economy_result/economy_example.txt
 ./my_economy.rb >! economy_result/my_economy.txt
 ./my_economy_alt.rb >! economy_result/my_economy_alt.txt
+./ex_inseason.rb >! economy_result/ex_inseason.txt

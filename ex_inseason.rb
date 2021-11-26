@@ -36,6 +36,8 @@ Simulator.new do
   @monthly_card=get_monthly_card #default to dust
   @deluxe_monthly_card=get_deluxe_monthly_card #default to red_e+core
 
+  @misty = get_misty(%i(t3 shards red_e poe)) #privilege t3>shards>red_e>poe in misty
+
   @store_hero_items = get_store_hero_items({twisted: :max})
   @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: true)
 end.summary
