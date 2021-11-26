@@ -1636,6 +1636,7 @@ class Simulator
     #return tower progression from the rate of level up
     #heuristic: one level=one floor at single, two floors at multis
     def set_tower_progression_from_levelup(level_up=@monthly_levelup)
+      get_progression
       #Multis: 700 KT, 450 4F, 350 celestial
       level_up=[*level_up]
       avg_level_up=level_up.sum*1.0/level_up.length
