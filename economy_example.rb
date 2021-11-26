@@ -72,7 +72,7 @@ Simulator.new do
 
   #use our lab coins to buy all twisted essence, we don't buy dim emblems,
   #and any remaining coin is spent on red_e
-  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: %i(red_e))
+  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: [{red_e: :max}])
 end.summary
 
 puts "==================== Example of new player ===================="
@@ -150,7 +150,7 @@ Simulator.new do
   @shop_items = get_shop_items(:dust_h, {gold_e: 2}, poe: false)
   #buy up to 2 gold emblems (if possible with our amount of shop refresh), but no poe
   @store_hero_items = get_store_hero_items({twisted: :max})
-  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: %i(red_e))
+  @store_lab_items = get_store_lab_items({twisted: :max}, dim_emblems: false, secondary: [{red_e: :max}])
   @store_challenger_items = get_store_challenger_items({red_e: :max}) #buy all possible red_e (if we have enough coins)
 end.summary
 

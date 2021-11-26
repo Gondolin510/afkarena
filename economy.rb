@@ -170,7 +170,7 @@ class Simulator
       #  and 100 lab points + 66 guild points + 34 hero points for garrison.
       # - Thes can be changed with the options `garrison: qty`, `dim_exchange: qty`.
       # Example: @store_lab_items = get_store_lab_items({red_e: 2}, {twisted: :max}, dim_exchange: 40)
-      # -> buy 2 red emblems and the max number of twisted essence (if we have enough coins since these are secondary), and do a dim exchange with 40 points (as primary).
+      # -> buy 2 red emblems and the max number of twisted essence, and do a dim exchange with 40 points
       @garrison = false if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
       @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
 
@@ -1697,13 +1697,14 @@ class Simulator
   include Towers
 
   module Store
+    #returns item, cost, the item value, and the actual buyable quantity
     def get_item_value(item, shop)
       qty=1
       if item.is_a?(Hash)
         item, qty=item.to_a.first
       end
 
-      shop_item=shop[item]
+      shop_item=shop[item].dup
       if shop_item.is_a?(Hash)
         cost=shop_item.delete(:cost)
         max=shop_item.delete(:max)
@@ -1723,7 +1724,7 @@ class Simulator
       return [item, cost, value, qty]
     end
 
-    def buy_in_store(shop, *secondary, primary: [], filler: nil, total: 0)
+    def buy_in_store(shop, *secondary, primary: [], filler: nil, total: nil)
       r={ cost: 0 }
       o={}
 
