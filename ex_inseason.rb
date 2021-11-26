@@ -21,8 +21,13 @@ Simulator.new do
 
   @arena_daily_dia = get_arena(2) #rank 1 in arena
   @lct_coins =309 #top 1
+  @lc_rewards ||= {gold: 6*1278} #we win all wagers
 
   @dura_nb_selling=7 #we have maxed out all artifacts
+  @hero_trial_guild_rewards={ #average guild hero trial rewards
+      dia: 200+100+200,
+      guild_coins: 1000 #assume top 500
+  }
 
   @noble_regal = get_regal(paid: true)
   @noble_twisted = get_twisted_bounties(paid: true) #default to xp
