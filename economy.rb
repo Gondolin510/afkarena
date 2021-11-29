@@ -394,11 +394,35 @@ class Simulator
     end
 
     def setup_internals
+      setup_internal_variables
       get_vip
       get_fos
       get_subscription
       get_mult
       get_numbers
+    end
+
+
+    def setup_internal_variables
+      # for pretty printing and grouping ressources
+      @_order={
+        base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
+        upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
+        gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
+        coins: %i(guild_coins lab_coins hero_coins challenger_coins),
+        summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
+        hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
+        dimensional: %i(garrison_stone dim_points dim_gear dim_emblems),
+        misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
+      }.merge(@_order || {})
+
+      @_classify= {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
+       exchange: %i(ff_cost shop dura_fragments_sell),
+       summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
+       stores: %i(hero_store guild_store lab_store challenger_store),
+       towers: %i(towers_kt towers_4f towers_god),
+       levelup: %i(levelup),
+      }.merge(@_classify || {})
     end
 
     def post_setup_hook
@@ -756,7 +780,6 @@ class Simulator
       exchange_coins #long term coin exchange, ditto
       handle_towers #tower progression
       monthly_levelup(@monthly_levelup) #levelup
-      get_ressource_order
     end
 
     def process
@@ -1966,32 +1989,18 @@ class Simulator
   include Tally
 
   module Ordering
-    def get_ressource_order
+    #regroup equivalent ressources types
+    def classify_income
+      order=@_order.dup
       ressources=tally.keys
-      order={
-        base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
-        upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
-        gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
-        coins: %i(guild_coins lab_coins hero_coins challenger_coins),
-        summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
-        hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
-        dimensional: %i(garrison_stone dim_points dim_gear dim_emblems),
-        misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
-      }
       ressources2=order.values.flatten.sort.uniq
       missing=ressources-ressources2
       order[:extra]=missing unless missing.empty?
-      @_order=order
+      order
     end
 
-    def economy
-      {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
-       exchange: %i(ff_cost shop dura_fragments_sell),
-       summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
-       stores: %i(hero_store guild_store lab_store challenger_store),
-       towers: %i(towers_kt towers_4f towers_god),
-       levelup: %i(levelup),
-      }
+    def classify
+      @_classify
     end
   end
   include Ordering
@@ -2025,7 +2034,7 @@ class Simulator
         pos_total=get_total(ressources, mode: 1)
       end
       summary=""
-      @_order.each do |header, keys|
+      classify_income.each do |header, keys|
         s=""
         keys.each do |type|
           #next if %i(total_gold total_xp total_dust).include?(type)
@@ -2159,7 +2168,7 @@ class Simulator
     #not used anymore
     def do_total_summary(total, headings: true, title: "Total")
       make_h2(title)
-      @_order.each do |summary, keys|
+      classify_income.each do |summary, keys|
         s=""
         keys.each do |type|
           next unless %i(total_gold total_xp total_dust god fodder atier).include?(type)
@@ -2243,7 +2252,7 @@ class Simulator
 
     def show_summary(daily: false, monthly: true)
       ff_summary
-      economy.each do |k,v|
+      classify.each do |k,v|
         r=@ressources.slice(*v)
         next if r.empty?
         title=k

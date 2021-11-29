@@ -21,9 +21,9 @@ xp: 63059.04 [40940.08 (idle) + 20470.04 (ff) + 1648.92 (lab)]
 xp_h: 60.33 [2 (quests) + 31 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)] {24868.71K xp}
 -> Total xp: 87927.75K
 
-dust: 7071.12 [3420.76 (idle) + 1710.38 (ff) + 1315 (board) + 375 (oak_inn) + 41.65 (arena) + 208.33 (coe)]
+dust: 6771.12 [3420.76 (idle) + 1710.38 (ff) + 1315 (board) + 75 (oak_inn) + 41.65 (arena) + 208.33 (coe)]
 dust_h: 57.96 [2 (quests) + 31 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_trial) + 2.93 (vow)] {2819.54K dust}
--> Total dust: 9890.66
+-> Total dust: 9590.66
 
 ***** Upgrades *****
 silver_e: 7.69 [2 (idle) + 1 (ff) + 2.86 (quests) + 1.83 (vow)]
@@ -61,7 +61,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 864 [576 (idle) + 288 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 19862.22 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 63.17 cores=720.97 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 7071.12 dust=1816.84 dia + 57.96 dust_h=724.44 dia + 2.71 friend_summons=732.86 dia + 22151.07 gold=1264.76 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 13327.96 guild_coins=888.53 dia + 0.03 hero_choice_chest=213.33 dia + 864 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2156.91 poe=1455.91 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=475.71 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 318 twisted=2146.48 dia + 63059.04 xp=1223.76 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 19785.14 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 63.17 cores=720.97 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6771.12 dust=1739.75 dia + 57.96 dust_h=724.44 dia + 2.71 friend_summons=732.86 dia + 22151.07 gold=1264.76 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 13327.96 guild_coins=888.53 dia + 0.03 hero_choice_chest=213.33 dia + 864 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2156.91 poe=1455.91 dia + 18.69 purple_stones=583.01 dia + 3.28 red_e=442.44 dia + 1.76 scrolls=475.71 dia + 92.67 shards=529.1 dia + 7.69 silver_e=147.52 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 318 twisted=2146.48 dia + 63059.04 xp=1223.76 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -790 [530 (ff_cost) - 260 (shop)]
@@ -116,9 +116,9 @@ xp: 63059.04 [40940.08 (idle 65%) + 20470.04 (ff 32%) + 1648.92 (lab 3%)] {63059
 xp_h: 61.42 [2 (quests 3%) + 31 (lab 50%) + 4.8 (misty 8%) + 21.73 (tr_bounties 35%) + 0.8 (hero_trial 1%) + 1.1 (stargaze 2%)] {25320.51K xp=29%}
 -> Total xp: 88379.55K
 
-dust: 8582.84 [3420.76 (idle 40%) + 1710.38 (ff 20%) + 1315 (board 15%) + 375 (oak_inn 4%) + 41.65 (arena 0%) + 208.33 (coe 2%) + 1500 (shop 17%) + 11.72 (tavern 0%)] {8582.84K dust=75%}
-dust_h: 58.78 [2 (quests 3%) + 31 (lab 53%) + 10.67 (misty 18%) + 10.56 (coe 18%) + 0.8 (hero_trial 1%) + 2.93 (vow 5%) + 0.82 (stargaze 1%)] {2859.61K dust=25%}
--> Total dust: 11442.46
+dust: 8282.84 [3420.76 (idle 41%) + 1710.38 (ff 21%) + 1315 (board 16%) + 75 (oak_inn 1%) + 41.65 (arena 1%) + 208.33 (coe 3%) + 1500 (shop 18%) + 11.72 (tavern 0%)] {8282.84K dust=74%}
+dust_h: 58.78 [2 (quests 3%) + 31 (lab 53%) + 10.67 (misty 18%) + 10.56 (coe 18%) + 0.8 (hero_trial 1%) + 2.93 (vow 5%) + 0.82 (stargaze 1%)] {2859.61K dust=26%}
+-> Total dust: 11142.46
 
 ***** Upgrades *****
 silver_e: 9.09 [2 (idle 22%) + 1 (ff 11%) + 2.86 (quests 31%) + 1.83 (vow 20%) + 1.4 (tavern 15%)]
@@ -184,9 +184,9 @@ xp: 1891771.2 [1228202.4 (idle 65%) + 614101.2 (ff 32%) + 49467.6 (lab 3%)] {189
 xp_h: 1842.7 [60 (quests 3%) + 930 (lab 50%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 32.88 (stargaze 2%)] {759615.21K xp=29%}
 -> Total xp: 2651386.41K
 
-dust: 257485.28 [102622.8 (idle 40%) + 51311.4 (ff 20%) + 39450 (board 15%) + 11250 (oak_inn 4%) + 1249.5 (arena 0%) + 6250 (coe 2%) + 45000 (shop 17%) + 351.58 (tavern 0%)] {257485.28K dust=75%}
-dust_h: 1763.38 [60 (quests 3%) + 930 (lab 53%) + 320 (misty 18%) + 316.67 (coe 18%) + 24 (hero_trial 1%) + 88 (vow 5%) + 24.71 (stargaze 1%)] {85788.43K dust=25%}
--> Total dust: 343273.71
+dust: 248485.28 [102622.8 (idle 41%) + 51311.4 (ff 21%) + 39450 (board 16%) + 2250 (oak_inn 1%) + 1249.5 (arena 1%) + 6250 (coe 3%) + 45000 (shop 18%) + 351.58 (tavern 0%)] {248485.28K dust=74%}
+dust_h: 1763.38 [60 (quests 3%) + 930 (lab 53%) + 320 (misty 18%) + 316.67 (coe 18%) + 24 (hero_trial 1%) + 88 (vow 5%) + 24.71 (stargaze 1%)] {85788.43K dust=26%}
+-> Total dust: 334273.71
 
 ***** Upgrades *****
 silver_e: 272.68 [59.98 (idle 22%) + 29.99 (ff 11%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
@@ -240,7 +240,7 @@ invigor: 25920 [17280 (idle 67%) + 8640 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 2.16 days (13.9 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.16 days} [monthly remains: 34294.57 gold + 843512.46 xp]
+level: 2.22 days (13.53 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.22 days} [monthly remains: 40900.8 gold + 890911.56 xp]
 -> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361 dia + 130100 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
 
 SI+10: 26.4 days (1.14 by month)
@@ -282,9 +282,9 @@ xp: 63059.04 [40940.08 (idle) + 20470.04 (ff) + 1648.92 (lab)]
 xp_h: 38.6 [2 (quests) + 31 (lab) + 4.8 (misty) + 0.8 (hero_trial)] {15912.08K xp}
 -> Total xp: 78971.12K
 
-dust: 7071.12 [3420.76 (idle) + 1710.38 (ff) + 1315 (board) + 375 (oak_inn) + 41.65 (arena) + 208.33 (coe)]
+dust: 6771.12 [3420.76 (idle) + 1710.38 (ff) + 1315 (board) + 75 (oak_inn) + 41.65 (arena) + 208.33 (coe)]
 dust_h: 57.96 [2 (quests) + 31 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_trial) + 2.93 (vow)] {2819.54K dust}
--> Total dust: 9890.66
+-> Total dust: 9590.66
 
 ***** Upgrades *****
 silver_e: 15.69 [2 (idle) + 1 (ff) + 2.86 (quests) + 1.83 (vow) + 8 (deluxe_monthly_card)]
@@ -322,7 +322,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 648 [432 (idle) + 216 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 21143 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11702 challenger_coins=780.13 dia + 12.75 class_fragments=193.66 dia + 53.17 cores=606.83 dia + 2176.74 dia=2176.74 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 7071.12 dust=1816.84 dia + 57.96 dust_h=724.44 dia + 2.43 friend_summons=655.71 dia + 20183.32 gold=1152.41 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 12906.41 guild_coins=860.43 dia + 0.03 hero_choice_chest=213.33 dia + 648 invigor=155.52 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2096.91 poe=1415.41 dia + 37.14 purple_stones=1158.62 dia + 2.61 red_e=352.44 dia + 1.76 scrolls=475.71 dia + 184.26 shards=1052.06 dia + 15.69 silver_e=300.99 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 284.66 twisted=1921.48 dia + 63059.04 xp=1223.76 dia + 38.6 xp_h=308.8 dia]
+=> Total value: 21065.92 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11702 challenger_coins=780.13 dia + 12.75 class_fragments=193.66 dia + 53.17 cores=606.83 dia + 2176.74 dia=2176.74 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6771.12 dust=1739.75 dia + 57.96 dust_h=724.44 dia + 2.43 friend_summons=655.71 dia + 20183.32 gold=1152.41 dia + 4.26 gold_e=132.9 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 12906.41 guild_coins=860.43 dia + 0.03 hero_choice_chest=213.33 dia + 648 invigor=155.52 dia + 4736.67 lab_coins=498.6 dia + 0.33 mythic_gear=166.9 dia + 2096.91 poe=1415.41 dia + 37.14 purple_stones=1158.62 dia + 2.61 red_e=352.44 dia + 1.76 scrolls=475.71 dia + 184.26 shards=1052.06 dia + 15.69 silver_e=300.99 dia + 0.5 stargazers=250 dia + 0.1 t1_gear=150 dia + 0.33 t2=667.58 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 284.66 twisted=1921.48 dia + 63059.04 xp=1223.76 dia + 38.6 xp_h=308.8 dia]
 
 =============== Exchange ===============
 dia: -970 [530 (ff_cost) - 440 (shop)]
@@ -382,9 +382,9 @@ xp: 63059.04 [40940.08 (idle 65%) + 20470.04 (ff 32%) + 1648.92 (lab 3%)] {63059
 xp_h: 39.7 [2 (quests 5%) + 31 (lab 78%) + 4.8 (misty 12%) + 0.8 (hero_trial 2%) + 1.1 (stargaze 3%)] {16363.87K xp=21%}
 -> Total xp: 79422.91K
 
-dust: 8083.96 [3420.76 (idle 42%) + 1710.38 (ff 21%) + 1315 (board 16%) + 375 (oak_inn 5%) + 41.65 (arena 1%) + 208.33 (coe 3%) + 1000 (shop 12%) + 12.83 (tavern 0%)] {8083.96K dust=67%}
-dust_h: 82.78 [2 (quests 2%) + 31 (lab 37%) + 10.67 (misty 13%) + 10.56 (coe 13%) + 0.8 (hero_trial 1%) + 2.93 (vow 4%) + 24 (shop 29%) + 0.82 (stargaze 1%)] {4027.21K dust=33%}
--> Total dust: 12111.17
+dust: 7783.96 [3420.76 (idle 44%) + 1710.38 (ff 22%) + 1315 (board 17%) + 75 (oak_inn 1%) + 41.65 (arena 1%) + 208.33 (coe 3%) + 1000 (shop 13%) + 12.83 (tavern 0%)] {7783.96K dust=66%}
+dust_h: 82.78 [2 (quests 2%) + 31 (lab 37%) + 10.67 (misty 13%) + 10.56 (coe 13%) + 0.8 (hero_trial 1%) + 2.93 (vow 4%) + 24 (shop 29%) + 0.82 (stargaze 1%)] {4027.21K dust=34%}
+-> Total dust: 11811.17
 
 ***** Upgrades *****
 silver_e: 17.09 [2 (idle 12%) + 1 (ff 6%) + 2.86 (quests 17%) + 1.83 (vow 11%) + 8 (deluxe_monthly_card 47%) + 1.4 (tavern 8%)]
@@ -452,9 +452,9 @@ xp: 1891771.2 [1228202.4 (idle 65%) + 614101.2 (ff 32%) + 49467.6 (lab 3%)] {189
 xp_h: 1190.88 [60 (quests 5%) + 930 (lab 78%) + 144 (misty 12%) + 24 (hero_trial 2%) + 32.88 (stargaze 3%)] {490916.2K xp=21%}
 -> Total xp: 2382687.4K
 
-dust: 242518.71 [102622.8 (idle 42%) + 51311.4 (ff 21%) + 39450 (board 16%) + 11250 (oak_inn 5%) + 1249.5 (arena 1%) + 6250 (coe 3%) + 30000 (shop 12%) + 385.01 (tavern 0%)] {242518.71K dust=67%}
-dust_h: 2483.38 [60 (quests 2%) + 930 (lab 37%) + 320 (misty 13%) + 316.67 (coe 13%) + 24 (hero_trial 1%) + 88 (vow 4%) + 720 (shop 29%) + 24.71 (stargaze 1%)] {120816.43K dust=33%}
--> Total dust: 363335.14
+dust: 233518.71 [102622.8 (idle 44%) + 51311.4 (ff 22%) + 39450 (board 17%) + 2250 (oak_inn 1%) + 1249.5 (arena 1%) + 6250 (coe 3%) + 30000 (shop 13%) + 385.01 (tavern 0%)] {233518.71K dust=66%}
+dust_h: 2483.38 [60 (quests 2%) + 930 (lab 37%) + 320 (misty 13%) + 316.67 (coe 13%) + 24 (hero_trial 1%) + 88 (vow 4%) + 720 (shop 29%) + 24.71 (stargaze 1%)] {120816.43K dust=34%}
+-> Total dust: 354335.14
 
 ***** Upgrades *****
 silver_e: 512.68 [59.98 (idle 12%) + 29.99 (ff 6%) + 85.71 (quests 17%) + 55 (vow 11%) + 240 (deluxe_monthly_card 47%) + 42 (tavern 8%)]
@@ -510,7 +510,7 @@ invigor: 19440 [12960 (idle 67%) + 6480 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 2.04 days (14.71 by month) {gold: 1.06 days, xp: 1.64 days, dust: 2.04 days} [monthly remains: 245905.91 gold + 469158.6 xp]
+level: 2.09 days (14.34 by month) {gold: 1.06 days, xp: 1.64 days, dust: 2.09 days} [monthly remains: 252512.14 gold + 516557.7 xp]
 -> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361 dia + 130100 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
 
 SI+10: 14.04 days (2.14 by month)
@@ -552,9 +552,9 @@ xp: 554.53 [457.7 (idle) + 38.14 (ff) + 58.68 (lab)]
 xp_h: 5.91 [2 (quests) + 3.11 (lab) + 0.8 (hero_trial)] {86.72K xp}
 -> Total xp: 641.24K
 
-dust: 635.82 [213.29 (idle) + 17.77 (ff) + 375 (oak_inn) + 29.75 (arena)]
+dust: 335.82 [213.29 (idle) + 17.77 (ff) + 75 (oak_inn) + 29.75 (arena)]
 dust_h: 6.84 [3.11 (lab) + 0.8 (hero_trial) + 2.93 (vow)] {60.83K dust}
--> Total dust: 696.65
+-> Total dust: 396.65
 
 ***** Upgrades *****
 silver_e: 1.83 [1.83 (vow)]
@@ -580,7 +580,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 416 [384 (idle) + 32 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 5168.39 dia [2 arena_tickets=5.71 dia + 108.02 blue_stones=280.85 dia + 3.33 cores=38.05 dia + 696.82 dia=696.82 dia + 0.43 dura_tears=0.24 dia + 635.82 dust=894.28 dia + 6.84 dust_h=85.56 dia + 2.14 friend_summons=578.57 dia + 4338.1 gold=247.69 dia + 1.33 gold_e=41.57 dia + 67.71 gold_h=135.42 dia + 2 gold_hg=4 dia + 3168.75 guild_coins=211.25 dia + 416 invigor=99.84 dia + 2578 lab_coins=271.37 dia + 100 poe=67.5 dia + 8.63 purple_stones=269.14 dia + 0.67 red_e=90 dia + 1.76 scrolls=475.71 dia + 7 shards=39.97 dia + 1.83 silver_e=35.17 dia + 0.5 stargazers=250 dia + 554.53 xp=302.4 dia + 5.91 xp_h=47.29 dia]
+=> Total value: 4746.44 dia [2 arena_tickets=5.71 dia + 108.02 blue_stones=280.85 dia + 3.33 cores=38.05 dia + 696.82 dia=696.82 dia + 0.43 dura_tears=0.24 dia + 335.82 dust=472.33 dia + 6.84 dust_h=85.56 dia + 2.14 friend_summons=578.57 dia + 4338.1 gold=247.69 dia + 1.33 gold_e=41.57 dia + 67.71 gold_h=135.42 dia + 2 gold_hg=4 dia + 3168.75 guild_coins=211.25 dia + 416 invigor=99.84 dia + 2578 lab_coins=271.37 dia + 100 poe=67.5 dia + 8.63 purple_stones=269.14 dia + 0.67 red_e=90 dia + 1.76 scrolls=475.71 dia + 7 shards=39.97 dia + 1.83 silver_e=35.17 dia + 0.5 stargazers=250 dia + 554.53 xp=302.4 dia + 5.91 xp_h=47.29 dia]
 
 =============== Exchange ===============
 dia: -20 [20 (shop)]
@@ -637,9 +637,9 @@ xp: 283.83=554.53-270.7 [457.7 (idle 83%) + 38.14 (ff 7%) + 58.68 (lab 11%) - 27
 xp_h: 7.01 [2 (quests 29%) + 3.11 (lab 44%) + 0.8 (hero_trial 11%) + 1.1 (stargaze 16%)] {102.79K xp=16%}
 -> Total xp: 386.62K
 
-dust: 251.03=1151.03-900 [213.29 (idle 19%) + 17.77 (ff 2%) + 375 (oak_inn 33%) + 29.75 (arena 3%) + 500 (shop 43%) + 10.21 (tavern 1%) + 5 (towers_kt 0%) - 900 (levelup 100%)] {1151.03K dust=94%}
-dust_h: 7.67 [3.11 (lab 41%) + 0.8 (hero_trial 10%) + 2.93 (vow 38%) + 0.82 (stargaze 11%)] {68.15K dust=6%}
--> Total dust: 319.18
+dust: -48.97=851.03-900 [213.29 (idle 25%) + 17.77 (ff 2%) + 75 (oak_inn 9%) + 29.75 (arena 3%) + 500 (shop 59%) + 10.21 (tavern 1%) + 5 (towers_kt 1%) - 900 (levelup 100%)] {851.03K dust=93%}
+dust_h: 7.67 [3.11 (lab 41%) + 0.8 (hero_trial 10%) + 2.93 (vow 38%) + 0.82 (stargaze 11%)] {68.15K dust=7%}
+-> Total dust: 19.18
 
 ***** Upgrades *****
 silver_e: 3.23 [1.83 (vow 57%) + 1.4 (tavern 43%)]
@@ -692,9 +692,9 @@ xp: 8514.78=16635.78-8121 [13731.12 (idle 83%) + 1144.26 (ff 7%) + 1760.4 (lab 1
 xp_h: 210.21 [60 (quests 29%) + 93.33 (lab 44%) + 24 (hero_trial 11%) + 32.88 (stargaze 16%)] {3083.82K xp=16%}
 -> Total xp: 11598.6K
 
-dust: 7530.88=34530.88-27000 [6398.82 (idle 19%) + 533.24 (ff 2%) + 11250 (oak_inn 33%) + 892.5 (arena 3%) + 15000 (shop 43%) + 306.32 (tavern 1%) + 150 (towers_kt 0%) - 27000 (levelup 100%)] {34530.88K dust=94%}
-dust_h: 230.05 [93.33 (lab 41%) + 24 (hero_trial 10%) + 88 (vow 38%) + 24.71 (stargaze 11%)] {2044.48K dust=6%}
--> Total dust: 9575.36
+dust: -1469.12=25530.88-27000 [6398.82 (idle 25%) + 533.24 (ff 2%) + 2250 (oak_inn 9%) + 892.5 (arena 3%) + 15000 (shop 59%) + 306.32 (tavern 1%) + 150 (towers_kt 1%) - 27000 (levelup 100%)] {25530.88K dust=93%}
+dust_h: 230.05 [93.33 (lab 41%) + 24 (hero_trial 10%) + 88 (vow 38%) + 24.71 (stargaze 11%)] {2044.48K dust=7%}
+-> Total dust: 575.36
 
 ***** Upgrades *****
 silver_e: 97 [55 (vow 57%) + 42 (tavern 43%)]
@@ -735,7 +735,7 @@ invigor: 12480 [11520 (idle 92%) + 960 (ff 8%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 84.59 days (0.35 by month) {gold: 0.35 days, xp: 3.9 days, dust: 84.59 days} [monthly remains: 92031.59 gold + 11064.51 xp]
+level: 1407.81 days (0.02 by month) {gold: 0.35 days, xp: 3.9 days, dust: 1407.81 days} [monthly remains: 92391 gold + 11566.51 xp]
 -> Level cost: 38858.58 dia / 38934.64 dia [1078.22 gold=61.56 dia / 68.81 gold_h=137.63 dia + 1506 xp=102.66 xp_h=821.27 dia + 27000 dust=3038.06 dust_h=37975.75 dia
 
 SI+10: 74.23 days (0.4 by month)
@@ -777,9 +777,9 @@ xp: 104044.28 [64481.85 (idle) + 37614.41 (ff) + 1948.02 (lab)]
 xp_h: 116.87 [2 (quests) + 31 (lab) + 4.8 (misty) + 78.27 (tr_bounties) + 0.8 (hero_trial)] {56917.6K xp}
 -> Total xp: 160961.88K
 
-dust: 8942.64 [3420.76 (idle) + 1995.44 (ff) + 1709 (board) + 375 (oak_inn) + 53.55 (arena) + 1388.89 (coe)]
+dust: 8642.64 [3420.76 (idle) + 1995.44 (ff) + 1709 (board) + 75 (oak_inn) + 53.55 (arena) + 1388.89 (coe)]
 dust_h: 148.18 [2 (quests) + 31 (lab) + 10.67 (misty) + 52.78 (coe) + 0.8 (hero_trial) + 2.93 (vow) + 48 (monthly_card)] {7208.85K dust}
--> Total dust: 16151.49
+-> Total dust: 15851.49
 
 ***** Upgrades *****
 silver_e: 7.86 [2 (idle) + 1.17 (ff) + 2.86 (quests) + 1.83 (vow)]
@@ -817,7 +817,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 912 [576 (idle) + 336 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 26176.64 dia [2 arena_tickets=5.71 dia + 219.06 blue_stones=569.55 dia + 11822 challenger_coins=788.13 dia + 13.46 class_fragments=204.42 dia + 88.42 cores=1009.16 dia + 2514.68 dia=2514.68 dia + 10.15 dura_fragments=57.93 dia + 0.43 dura_tears=0.24 dia + 8942.64 dust=2297.7 dia + 148.18 dust_h=1852.22 dia + 2.71 friend_summons=732.86 dia + 27424.97 gold=1565.89 dia + 4.35 gold_e=135.5 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14196.56 guild_coins=946.44 dia + 0.03 hero_choice_chest=213.33 dia + 912 invigor=218.88 dia + 8330 lab_coins=876.84 dia + 0.35 mythic_gear=176.17 dia + 2202.77 poe=1486.87 dia + 41.2 purple_stones=1285.29 dia + 7.31 red_e=986.66 dia + 1.76 scrolls=475.71 dia + 95.17 shards=543.37 dia + 7.86 silver_e=150.71 dia + 0.5 stargazers=250 dia + 0.11 t1_gear=158.33 dia + 0.35 t2=704.67 dia + 0.11 t2_gear=369.44 dia + 0.18 t3=539.29 dia + 320.23 twisted=2161.55 dia + 104044.28 xp=1709.13 dia + 116.87 xp_h=934.98 dia]
+=> Total value: 26099.56 dia [2 arena_tickets=5.71 dia + 219.06 blue_stones=569.55 dia + 11822 challenger_coins=788.13 dia + 13.46 class_fragments=204.42 dia + 88.42 cores=1009.16 dia + 2514.68 dia=2514.68 dia + 10.15 dura_fragments=57.93 dia + 0.43 dura_tears=0.24 dia + 8642.64 dust=2220.62 dia + 148.18 dust_h=1852.22 dia + 2.71 friend_summons=732.86 dia + 27424.97 gold=1565.89 dia + 4.35 gold_e=135.5 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14196.56 guild_coins=946.44 dia + 0.03 hero_choice_chest=213.33 dia + 912 invigor=218.88 dia + 8330 lab_coins=876.84 dia + 0.35 mythic_gear=176.17 dia + 2202.77 poe=1486.87 dia + 41.2 purple_stones=1285.29 dia + 7.31 red_e=986.66 dia + 1.76 scrolls=475.71 dia + 95.17 shards=543.37 dia + 7.86 silver_e=150.71 dia + 0.5 stargazers=250 dia + 0.11 t1_gear=158.33 dia + 0.35 t2=704.67 dia + 0.11 t2_gear=369.44 dia + 0.18 t3=539.29 dia + 320.23 twisted=2161.55 dia + 104044.28 xp=1709.13 dia + 116.87 xp_h=934.98 dia]
 
 =============== Exchange ===============
 dia: -3030 [830 (ff_cost) - 2200 (shop)]
@@ -891,9 +891,9 @@ xp: 104044.28 [64481.85 (idle 62%) + 37614.41 (ff 36%) + 1948.02 (lab 2%)] {1040
 xp_h: 121.31 [2 (quests 2%) + 31 (lab 26%) + 4.8 (misty 4%) + 78.27 (tr_bounties 65%) + 0.8 (hero_trial 1%) + 4.44 (stargaze 4%)] {59078.01K xp=36%}
 -> Total xp: 163122.29K
 
-dust: 12895.17 [3420.76 (idle 27%) + 1995.44 (ff 15%) + 1709 (board 13%) + 375 (oak_inn 3%) + 53.55 (arena 0%) + 1388.89 (coe 11%) + 2500 (shop 19%) + 19.19 (tavern 0%) + 100 (towers_kt 1%) + 1066.67 (towers_4f 8%) + 266.67 (towers_god 2%)] {12895.17K dust=49%}
+dust: 12595.17 [3420.76 (idle 27%) + 1995.44 (ff 16%) + 1709 (board 14%) + 75 (oak_inn 1%) + 53.55 (arena 0%) + 1388.89 (coe 11%) + 2500 (shop 20%) + 19.19 (tavern 0%) + 100 (towers_kt 1%) + 1066.67 (towers_4f 8%) + 266.67 (towers_god 2%)] {12595.17K dust=49%}
 dust_h: 271.51 [2 (quests 1%) + 31 (lab 11%) + 10.67 (misty 4%) + 52.78 (coe 19%) + 0.8 (hero_trial 0%) + 2.93 (vow 1%) + 48 (monthly_card 18%) + 120 (shop 44%) + 3.33 (stargaze 1%)] {13209.06K dust=51%}
--> Total dust: 26104.23
+-> Total dust: 25804.23
 
 ***** Upgrades *****
 silver_e: 9.26 [2 (idle 22%) + 1.17 (ff 13%) + 2.86 (quests 31%) + 1.83 (vow 20%) + 1.4 (tavern 15%)]
@@ -960,9 +960,9 @@ xp: 3121328.38 [1934455.44 (idle 62%) + 1128432.34 (ff 36%) + 58440.6 (lab 2%)] 
 xp_h: 3639.26 [60 (quests 2%) + 930 (lab 26%) + 144 (misty 4%) + 2348.18 (tr_bounties 65%) + 24 (hero_trial 1%) + 133.08 (stargaze 4%)] {1772340.24K xp=36%}
 -> Total xp: 4893668.62K
 
-dust: 386855.08 [102622.8 (idle 27%) + 59863.3 (ff 15%) + 51270 (board 13%) + 11250 (oak_inn 3%) + 1606.5 (arena 0%) + 41666.67 (coe 11%) + 75000 (shop 19%) + 575.81 (tavern 0%) + 3000 (towers_kt 1%) + 32000 (towers_4f 8%) + 8000 (towers_god 2%)] {386855.08K dust=49%}
+dust: 377855.08 [102622.8 (idle 27%) + 59863.3 (ff 16%) + 51270 (board 14%) + 2250 (oak_inn 1%) + 1606.5 (arena 0%) + 41666.67 (coe 11%) + 75000 (shop 20%) + 575.81 (tavern 0%) + 3000 (towers_kt 1%) + 32000 (towers_4f 8%) + 8000 (towers_god 2%)] {377855.08K dust=49%}
 dust_h: 8145.36 [60 (quests 1%) + 930 (lab 11%) + 320 (misty 4%) + 1583.33 (coe 19%) + 24 (hero_trial 0%) + 88 (vow 1%) + 1440 (monthly_card 18%) + 3600 (shop 44%) + 100.03 (stargaze 1%)] {396271.92K dust=51%}
--> Total dust: 783127
+-> Total dust: 774127
 
 ***** Upgrades *****
 silver_e: 277.68 [59.98 (idle 22%) + 34.99 (ff 13%) + 85.71 (quests 31%) + 55 (vow 20%) + 42 (tavern 15%)]
@@ -1017,7 +1017,7 @@ invigor: 27360 [17280 (idle 63%) + 10080 (ff 37%)]
 arena_tickets: 60 [60 (quests 100%)]
 
 =============== 30 days previsions summary ===============
-level: 6.42 days (4.67 by month) {gold: 6.42 days, xp: 1.85 days, dust: 1.71 days} [monthly remains: 3482783.64 xp + 574957.2 dust]
+level: 6.42 days (4.67 by month) {gold: 6.42 days, xp: 1.85 days, dust: 1.73 days} [monthly remains: 3482783.64 xp + 565957.2 dust]
 -> Level cost: 18424.94 dia / 18973.79 dia [35389.44 gold=2020.64 dia / 1284.74 gold_h=2569.48 dia + 301900 xp=619.91 xp_h=4959.29 dia + 44544 dust=915.6 dust_h=11445.02 dia
 
 SI+10: 25.93 days (1.16 by month)
@@ -1258,9 +1258,9 @@ xp: 55677.26 [43149.04 (idle) + 10787.26 (ff) + 1740.96 (lab)]
 xp_h: 60.33 [2 (quests) + 31 (lab) + 4.8 (misty) + 21.73 (tr_bounties) + 0.8 (hero_trial)] {26256.84K xp}
 -> Total xp: 81934.1K
 
-dust: 6007.6 [3420.76 (idle) + 855.19 (ff) + 1315 (board) + 375 (oak_inn) + 41.65 (arena)]
+dust: 5707.6 [3420.76 (idle) + 855.19 (ff) + 1315 (board) + 75 (oak_inn) + 41.65 (arena)]
 dust_h: 44.47 [2 (quests) + 31 (lab) + 10.67 (misty) + 0.8 (hero_trial)] {2163.3K dust}
--> Total dust: 8170.9
+-> Total dust: 7870.9
 
 ***** Upgrades *****
 silver_e: 5.36 [2 (idle) + 0.5 (ff) + 2.86 (quests)]
@@ -1298,7 +1298,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 720 [576 (idle) + 144 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 19663.72 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342 challenger_coins=756.13 dia + 10.63 class_fragments=161.38 dia + 72.33 cores=825.59 dia + 1371.35 dia=1371.35 dia + 8.01 dura_fragments=45.73 dia + 0.43 dura_tears=0.24 dia + 6007.6 dust=1543.58 dia + 44.47 dust_h=555.83 dia + 4.38 friend_summons=1182.86 dia + 21340.78 gold=1218.5 dia + 2.68 gold_e=83.54 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14327.96 guild_coins=955.2 dia + 0.03 hero_choice_chest=213.33 dia + 720 invigor=172.8 dia + 4736.67 lab_coins=498.6 dia + 0.28 mythic_gear=139.08 dia + 1904.33 poe=1285.42 dia + 41.14 purple_stones=1283.42 dia + 2.52 red_e=339.77 dia + 1.43 scrolls=385.71 dia + 78.17 shards=446.31 dia + 5.36 silver_e=102.76 dia + 0.67 stargazers=333.33 dia + 0.08 t1_gear=125 dia + 0.28 t2=556.32 dia + 0.08 t2_gear=291.67 dia + 0.16 t3=467.86 dia + 297.97 twisted=2011.27 dia + 55677.26 xp=1023.38 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 19586.64 dia [2 arena_tickets=5.71 dia + 209.41 blue_stones=544.46 dia + 11342 challenger_coins=756.13 dia + 10.63 class_fragments=161.38 dia + 72.33 cores=825.59 dia + 1371.35 dia=1371.35 dia + 8.01 dura_fragments=45.73 dia + 0.43 dura_tears=0.24 dia + 5707.6 dust=1466.5 dia + 44.47 dust_h=555.83 dia + 4.38 friend_summons=1182.86 dia + 21340.78 gold=1218.5 dia + 2.68 gold_e=83.54 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14327.96 guild_coins=955.2 dia + 0.03 hero_choice_chest=213.33 dia + 720 invigor=172.8 dia + 4736.67 lab_coins=498.6 dia + 0.28 mythic_gear=139.08 dia + 1904.33 poe=1285.42 dia + 41.14 purple_stones=1283.42 dia + 2.52 red_e=339.77 dia + 1.43 scrolls=385.71 dia + 78.17 shards=446.31 dia + 5.36 silver_e=102.76 dia + 0.67 stargazers=333.33 dia + 0.08 t1_gear=125 dia + 0.28 t2=556.32 dia + 0.08 t2_gear=291.67 dia + 0.16 t3=467.86 dia + 297.97 twisted=2011.27 dia + 55677.26 xp=1023.38 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -390 [130 (ff_cost) - 260 (shop)]
@@ -1356,9 +1356,9 @@ xp: 55677.26 [43149.04 (idle 77%) + 10787.26 (ff 19%) + 1740.96 (lab 3%)] {55677
 xp_h: 65 [2 (quests 3%) + 31 (lab 48%) + 4.8 (misty 7%) + 21.73 (tr_bounties 33%) + 0.8 (hero_trial 1%) + 4.68 (stargaze 7%)] {28292.1K xp=34%}
 -> Total xp: 83969.36K
 
-dust: 7525.3 [3420.76 (idle 45%) + 855.19 (ff 11%) + 1315 (board 17%) + 375 (oak_inn 5%) + 41.65 (arena 1%) + 1500 (shop 20%) + 17.7 (tavern 0%)] {7525.3K dust=76%}
-dust_h: 48.45 [2 (quests 4%) + 31 (lab 64%) + 10.67 (misty 22%) + 0.8 (hero_trial 2%) + 0.47 (event 1%) + 3.51 (stargaze 7%)] {2357K dust=24%}
--> Total dust: 9882.3
+dust: 7225.3 [3420.76 (idle 47%) + 855.19 (ff 12%) + 1315 (board 18%) + 75 (oak_inn 1%) + 41.65 (arena 1%) + 1500 (shop 21%) + 17.7 (tavern 0%)] {7225.3K dust=75%}
+dust_h: 48.45 [2 (quests 4%) + 31 (lab 64%) + 10.67 (misty 22%) + 0.8 (hero_trial 2%) + 0.47 (event 1%) + 3.51 (stargaze 7%)] {2357K dust=25%}
+-> Total dust: 9582.3
 
 ***** Upgrades *****
 silver_e: 6.76 [2 (idle 30%) + 0.5 (ff 7%) + 2.86 (quests 42%) + 1.4 (tavern 21%)]
@@ -1429,9 +1429,9 @@ xp: 1670317.8 [1294471.2 (idle 77%) + 323617.8 (ff 19%) + 52228.8 (lab 3%)] {167
 xp_h: 1950.1 [60 (quests 3%) + 930 (lab 48%) + 144 (misty 7%) + 651.82 (tr_bounties 33%) + 24 (hero_trial 1%) + 140.29 (stargaze 7%)] {848763.05K xp=34%}
 -> Total xp: 2519080.85K
 
-dust: 225759.02 [102622.8 (idle 45%) + 25655.7 (ff 11%) + 39450 (board 17%) + 11250 (oak_inn 5%) + 1249.5 (arena 1%) + 45000 (shop 20%) + 531.02 (tavern 0%)] {225759.02K dust=76%}
-dust_h: 1453.44 [60 (quests 4%) + 930 (lab 64%) + 320 (misty 22%) + 24 (hero_trial 2%) + 14 (event 1%) + 105.44 (stargaze 7%)] {70710.01K dust=24%}
--> Total dust: 296469.04
+dust: 216759.02 [102622.8 (idle 47%) + 25655.7 (ff 12%) + 39450 (board 18%) + 2250 (oak_inn 1%) + 1249.5 (arena 1%) + 45000 (shop 21%) + 531.02 (tavern 0%)] {216759.02K dust=75%}
+dust_h: 1453.44 [60 (quests 4%) + 930 (lab 64%) + 320 (misty 22%) + 24 (hero_trial 2%) + 14 (event 1%) + 105.44 (stargaze 7%)] {70710.01K dust=25%}
+-> Total dust: 287469.04
 
 ***** Upgrades *****
 silver_e: 202.68 [59.98 (idle 30%) + 14.99 (ff 7%) + 85.71 (quests 42%) + 42 (tavern 21%)]
@@ -1490,7 +1490,7 @@ lct_tickets: 150 [150 (lct_buy_tickets 100%)]
 reset_scrolls: 30 [30 (shop 100%)]
 
 =============== 30 days previsions summary ===============
-level: 10.43 days (2.88 by month) {gold: 10.43 days, xp: 3.07 days, dust: 4.23 days} [monthly remains: 1777293.07 xp + 176376.5 dust]
+level: 10.43 days (2.88 by month) {gold: 10.43 days, xp: 3.07 days, dust: 4.36 days} [monthly remains: 1777293.07 xp + 167376.5 dust]
 -> Level cost: 17314.96 dia / 17864.04 dia [32342.82 gold=1846.68 dia / 1197.88 gold_h=2395.76 dia + 257900 xp=592.55 xp_h=4740.37 dia + 41753 dust=858.23 dust_h=10727.9 dia
 
 SI+10: 35.52 days (0.84 by month)
