@@ -248,8 +248,8 @@ s=Simulator.new do
   # Hooks
   # #####
 
-  #There are hooks `custom_income` and `custom_exchange` to customize income and spendings:
-  def custom_income
+  #There is an hook `custom_ressources` to customize income and spendings:
+  def custom_ressources
     # add a current event
     event_duration=7
     event_frequency=0.2 #once every 5 months
@@ -266,10 +266,6 @@ s=Simulator.new do
     hf_frequency=1/90.0 #1 every 3 months
     daily_hf_rewards=mult_hash(hf_rewards, hf_frequency)
 
-    {event: daily_event_rewards, abex: daily_abex_rewards, hf: daily_hf_rewards}
-  end
-
-  def custom_exchange
     #we sell our daily arena tickets and dura's tears
     #  nb: don't do this! One arena ticket sells for 50K gold, but using it gives a lot more value:
     #  Arena ticket value: 6.81 [44.55 gold=2.54 dia + 5.95 dust=1.53 dia + 0.12 blue_stones=0.31 dia + 0.03 purple_stones=0.94 dia + 1.49 dia=1.49 dia]
@@ -283,7 +279,10 @@ s=Simulator.new do
     #we also buy lct tickets every day, 300 dia for 5 tickets
     lct={dia: -300, lct_tickets: 5}
 
-    {selling_items: sell_stuff, lct_buy_tickets: lct}
+    {event: daily_event_rewards, abex: daily_abex_rewards, hf: daily_hf_rewards, selling_items: sell_stuff, lct_buy_tickets: lct}
+  end
+
+  def custom_exchange
   end
 
   ### More customisations

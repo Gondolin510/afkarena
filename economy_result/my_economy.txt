@@ -445,7 +445,7 @@ Max rc level+1: 3.17 days (9.45 by month)
 @_unlock_speed4: true
 @_lab_flat_gold_h: 65
 @_lab_flat_xp_h: 6
-@_classify: {:income=>[:idle, :ff, :board, :guild, :oak_inn, :tr, :quests, :merchants, :friends, :arena, :lct, :lc, :lab, :misty, :regal, :tr_bounties, :coe, :hero_trial, :guild_hero_trial, :vow, :monthly_card, :deluxe_monthly_card], :exchange=>[:ff_cost, :shop, :dura_fragments_sell], :summons=>[:wishlist, :hcp, :stargazing, :hero_chest, :stones, :tavern, :stargaze], :stores=>[:hero_store, :guild_store, :lab_store, :challenger_store], :towers=>[:towers_kt, :towers_4f, :towers_god], :levelup=>[:levelup]}
+@_classify: {:income=>[:idle, :ff, :board, :guild, :oak_inn, :tr, :cursed, :quests, :merchants, :friends, :arena, :lct, :lc, :lab, :misty, :regal, :tr_bounties, :coe, :hero_trial, :guild_hero_trial, :vow, :monthly_card, :deluxe_monthly_card], :exchange=>[:ff_cost, :shop, :dura_fragments_sell], :summons=>[:wishlist, :hcp, :stargazing, :hero_chest, :stones, :tavern, :stargaze], :stores=>[:hero_store, :guild_store, :lab_store, :challenger_store], :towers=>[:towers_kt, :towers_4f, :towers_god], :levelup=>[:levelup]}
 @_vip_solo_bounty: 8
 @_vip_gold_mult: 1.0
 @_vip_max_ff: 7

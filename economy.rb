@@ -219,10 +219,7 @@ class Simulator
 
     # Redefine these functions to add custom source of income and exchange
     # see the examples in economy_example.rb
-    def custom_income
-      {}
-    end
-    def custom_exchange
+    def custom_ressources
       {}
     end
   end
@@ -416,7 +413,7 @@ class Simulator
         misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
       }.merge(@_order || {})
 
-      @_classify= {income: %i(idle ff board guild oak_inn tr quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
+      @_classify= {income: %i(idle ff board guild oak_inn tr cursed quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
@@ -776,14 +773,19 @@ class Simulator
     def process!
       get_income
       make_exchange
-      summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly
+      get_custom_ressources #use the `custom_ressources` hook
+      summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly, plus we want get_custom_ressources in case it gives stargazers/scrolls
       exchange_coins #long term coin exchange, ditto
       handle_towers #tower progression
-      monthly_levelup(@monthly_levelup) #levelup
+      monthly_levelup #levelup
     end
 
     def process
       process!
+    end
+
+    def get_custom_ressources
+      @ressources.merge!(custom_ressources)
     end
 
     def get_income
@@ -810,14 +812,12 @@ class Simulator
       @ressources[:vow]=vow
       @ressources[:monthly_card]=@monthly_card
       @ressources[:deluxe_monthly_card]=@deluxe_monthly_card
-      @ressources.merge!(custom_income)
     end
 
     def make_exchange
       @ressources[:ff_cost]=exchange_ff
       @ressources[:shop]=exchange_shop
       @ressources[:dura_fragments_sell]=sell_dura
-      @ressources.merge!(custom_exchange)
     end
 
     def handle_towers
@@ -884,7 +884,7 @@ class Simulator
       r
     end
 
-    def monthly_levelup(nb_levels)
+    def monthly_levelup(nb_levels=@monthly_levelup)
       @ressources[:levelup]=mult_hash(level_up_cost(nb_levels), -1/30.0)
     end
 
@@ -2000,7 +2000,11 @@ class Simulator
     end
 
     def classify
-      @_classify
+      classify=@_classify.dup
+      keys=@ressources.keys
+      missing=keys - classify.values.flatten.uniq
+      classify[:extra]=missing
+      classify
     end
   end
   include Ordering
