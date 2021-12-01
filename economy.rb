@@ -1242,14 +1242,15 @@ class Simulator
   include SetupHelpers
 
   module Income # Income functions ################
-    def idle
-      @_idle_hourly.map {|k,v| [k, v*24.0]}.to_h
+    def idle(time=24.0)
+      @_idle_hourly.map {|k,v| [k, v*time]}.to_h
     end
     def one_ff
-      @_idle_hourly.map {|k,v| [k, v*2.0]}.to_h
+      idle(2.0)
     end
-    def ff
+    def ff(nb=@nb_ff)
       one_ff.map {|k,v| [k, v*@nb_ff]}.to_h
+      #idle(@nb_ff*2.0)
     end
 
     def guild
@@ -2194,6 +2195,9 @@ class Simulator
       h1 "Fast Forward Value"
       puts show_dia_value(one_ff, skip_null: true)
       puts
+    end
+    def ff_value
+      dia_value(one_ff)
     end
 
     def level_cost_summary(n=1, daily: false)

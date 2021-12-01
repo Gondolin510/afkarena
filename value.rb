@@ -62,8 +62,11 @@ module Value
     value = {
       dia: 1,
       gold: gold_conversion,
+        #Alternative: gold: 2 / raw_idle_hourly[:gold]
       xp: 8 / raw_idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
       dust: 12.5 / raw_idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
+        #Alternative: dust caps out at 1167.6 dust by day, ie 48.65 by hour
+      # dust: 300/1167.6,
       gold_h: 2, #24h gold=48 dia, 1h gold=2 dia
       gold_hg: 2, #Alternative: raw_idle_hourly[:gold]*gold_conversion,
       xp_h: 8,
