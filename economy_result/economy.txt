@@ -198,7 +198,7 @@ t1_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
 t2_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
 
 ***** Coins *****
-guild_coins: 0=399838.82-399838.83 [377838.82 (guild 94%) + 20000 (lab 5%) + 2000 (guild_hero_trial 1%) - 399838.83 (guild_store 100%)]
+guild_coins: 0=399838.82-399838.82 [377838.82 (guild 94%) + 20000 (lab 5%) + 2000 (guild_hero_trial 1%) - 399838.82 (guild_store 100%)]
 lab_coins: 78100=142100-64000 [142100 (lab 100%) - 64000 (lab_store 100%)]
 hero_coins: 11250.58 [11250.58 (tavern 100%)]
 challenger_coins: 340260 [273600 (lct 80%) + 66660 (lab 20%)]
@@ -236,6 +236,7 @@ arena_tickets: 60 [60 (quests 100%)]
 level: 3.75 days (8.01 by month) {gold: 3.34 days, xp: 2.76 days, dust: 3.75 days} [monthly remains: 31416.55 gold + 733828.74 xp + 0 dust]
 -> Level cost: 17310.42 dia / 17859.24 dia [32342.82 gold=1846.68 dia / 1197.75 gold_h=2395.5 dia + 257900 xp=591.98 xp_h=4735.84 dia + 41753 dust=858.23 dust_h=10727.9 dia
 
+T0 to T3: 5.99 days (5.01 by month) {t2: 5.99 days, t3: 4.16 days} [monthly remains: 2.21 t3]
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
 SI+30: 89.14 days (0.34 by month)

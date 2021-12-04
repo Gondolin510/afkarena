@@ -772,12 +772,13 @@ class Simulator
 
   module Process
     def process!
-      get_income
-      make_exchange
+      handle_income
+      handle_exchange
       get_custom_ressources #use the `custom_ressources` hook
-      summonings #summons, could be seen as an exchange but sufficiently different to be treated separatly, plus we want get_custom_ressources in case it gives stargazers/scrolls
-      exchange_coins #long term coin exchange, ditto
-      handle_towers #tower progression
+      handle_summons #summons, could be seen as an exchange but sufficiently different to be treated separatly, plus we want get_custom_ressources in case it gives stargazers/scrolls
+      handle_coins #long term coin exchange, ditto
+      handle_towers
+
       monthly_levelup #levelup
     end
 
@@ -786,43 +787,70 @@ class Simulator
     end
 
     def get_custom_ressources
-      @ressources.merge!(custom_ressources)
+      merge_ressources(custom_ressources)
     end
 
     def get_income
-      @ressources[:idle]=idle
-      @ressources[:ff]=ff
-      @ressources[:board]=bounties if @_unlock_board
-      @ressources[:guild]=guild if @_unlock_guild
-      @ressources[:oak_inn]=oak_inn if @_unlock_oak_inn
-      @ressources[:tr]=tr if @_unlock_tr
-      @ressources[:cursed]=cursed_realm if @cursed_realm and not @cursed_realm.empty?
-      @ressources[:quests]=quests
-      @ressources[:merchants]=merchants
-      @ressources[:friends]=friends
-      @ressources[:arena]=arena if @_unlock_arena
-      @ressources[:lct]=lct if @_unlock_lct
-      @ressources[:lc]=lc if @_unlock_lc
-      @ressources[:lab]=labyrinth
-      @ressources[:misty]=misty if @_unlock_misty
-      @ressources[:regal]=regal
-      @ressources[:tr_bounties]=twisted_bounties
-      @ressources[:coe]=coe
-      @ressources[:hero_trial]=hero_trial if @_unlock_trials
-      @ressources[:guild_hero_trial]=guild_hero_trial if @_unlock_trials
-      @ressources[:vow]=vow
-      @ressources[:monthly_card]=@monthly_card
-      @ressources[:deluxe_monthly_card]=@deluxe_monthly_card
+      res={}
+      res[:idle]=idle
+      res[:ff]=ff
+      res[:board]=bounties if @_unlock_board
+      res[:guild]=guild if @_unlock_guild
+      res[:oak_inn]=oak_inn if @_unlock_oak_inn
+      res[:tr]=tr if @_unlock_tr
+      res[:cursed]=cursed_realm if @cursed_realm and not @cursed_realm.empty?
+      res[:quests]=quests
+      res[:merchants]=merchants
+      res[:friends]=friends
+      res[:arena]=arena if @_unlock_arena
+      res[:lct]=lct if @_unlock_lct
+      res[:lc]=lc if @_unlock_lc
+      res[:lab]=labyrinth
+      res[:misty]=misty if @_unlock_misty
+      res[:regal]=regal
+      res[:tr_bounties]=twisted_bounties
+      res[:coe]=coe
+      res[:hero_trial]=hero_trial if @_unlock_trials
+      res[:guild_hero_trial]=guild_hero_trial if @_unlock_trials
+      res[:vow]=vow
+      res[:monthly_card]=@monthly_card
+      res[:deluxe_monthly_card]=@deluxe_monthly_card
+      res
     end
 
     def make_exchange
-      @ressources[:ff_cost]=exchange_ff
-      @ressources[:shop]=exchange_shop
-      @ressources[:dura_fragments_sell]=sell_dura
+      res={}
+      res[:ff_cost]=exchange_ff
+      res[:shop]=exchange_shop
+      res[:dura_fragments_sell]=sell_dura
+      res
     end
 
+    def handle_income
+      merge_ressources(get_income)
+    end
+    def handle_exchange
+      merge_ressources(make_exchange)
+    end
     def handle_towers
-      @ressources.merge!(towers_ressources)
+      merge_ressources(towers_ressources) #tower progression
+    end
+    def handle_coins
+      merge_ressources(exchange_coins)
+    end
+    def handle_summons
+      merge_ressources(summonings)
+      merge_ressources(summons_ressources(tally)) #get extra ressources from summons
+    end
+
+    #like merge! except we sum the hash values instead of replacing them if they already exists
+    def merge_ressources(*args, to: @ressources)
+      args.each do |h|
+        h.each do |k,v|
+          to[k]||={}
+          add_to_hash(to[k], v)
+        end
+      end
     end
   end
   include Process
@@ -1243,8 +1271,8 @@ class Simulator
   include SetupHelpers
 
   module Income # Income functions ################
-    def idle(time=24.0)
-      @_idle_hourly.map {|k,v| [k, v*time]}.to_h
+    def idle(time=24.0, idle_hourly: @_idle_hourly)
+      idle_hourly.map {|k,v| [k, v*time]}.to_h
     end
     def one_ff
       idle(2.0)
@@ -1818,9 +1846,8 @@ class Simulator
   include Store
 
   module Exchange
-    def exchange_ff
+    def exchange_ff(nb_ff=@nb_ff)
       @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
-      nb_ff=@nb_ff
       if nb_ff > @FF_cost.length
         nb_ff=@FF_cost.length
         warn "[Warning] FF cost not implemented for #{@nb_ff} FF"
@@ -1829,20 +1856,19 @@ class Simulator
       {dia: -full_cost}
     end
 
-    def exchange_shop
-      shop_refreshes=@shop_refreshes
+    def exchange_shop(shop_items=@shop_items, refreshes: @shop_refreshes)
 
-      @Shop_refresh_cost= [100, 100, 200, 200]
-      if @shop_refreshes > @Shop_refresh_cost.length
-        warn "[Warning] Extra cost of shop refreshes not implemented when shop refreshes = #{@shop_refreshes}"
-        shop_refreshes=@Shop_refresh_cost.length
+      @Shop_refresh_cost ||= [100, 100, 200, 200]
+      if refreshes > @Shop_refresh_cost.length
+        warn "[Warning] Extra cost of shop refreshes not implemented when shop refreshes = #{refreshes}"
+        refreshes=@Shop_refresh_cost.length
       end
-      refresh_cost=(0...shop_refreshes).reduce(0) {|sum, i| sum+@Shop_refresh_cost[i]}
+      refresh_cost=(0...refreshes).reduce(0) {|sum, i| sum+@Shop_refresh_cost[i]}
 
-      nb_shop=1+shop_refreshes
+      nb_shop=1+refreshes
       shop={dia: -refresh_cost, gold: 0}
 
-      @shop_items.each do |item|
+      shop_items.each do |item|
         if item.is_a?(Hash) # {item: qty}
           item, qty=item.to_a.first
         else
@@ -1859,12 +1885,13 @@ class Simulator
       shop
     end
 
-    def exchange_coins
+    def exchange_coins(stores=%i(hero lab guild challenger))
       @__coin_summary=""
       total=tally
+      res={}
 
-      %i(hero lab guild challenger).each do |i|
-        @ressources[:"#{i}_store"] ||={}
+      stores.each do |i|
+        res[:"#{i}_store"] ||={}
         coin_name=:"#{i}_coins"
         _total=(total[coin_name]||0)*30
         r,bought=handle_buys(instance_variable_get(:"@store_#{i}_items"), instance_variable_get(:"@Store#{i.to_s.capitalize}"), _total)
@@ -1874,8 +1901,9 @@ class Simulator
         @__coin_summary << "#{coin_name}: #{round(_total)}"
         @__coin_summary << " => #{b}" unless b.empty?
         @__coin_summary << "\n"
-        add_to_hash(@ressources[:"#{i}_store"], r.map {|k,v| [k, v/30.0]}.to_h)
+        res[:"#{i}_store"]=mult_hash(r, 1/30.0)
       end
+      res
     end
 
     def sell_dura
@@ -1885,22 +1913,23 @@ class Simulator
     end
 
     def summonings
-      @ressources[:stargazing]={
+      res={}
+      res[:stargazing]={
         dia: -500.0*@monthly_stargazing/30,
         stargazers: @monthly_stargazing/30.0
       }
-      @ressources[:wishlist]={
+      res[:wishlist]={
         dia: -270.0*@monthly_tavern/30,
         scrolls: @monthly_tavern/30.0
       }
-      @ressources[:hcp]={
+      res[:hcp]={
         dia: -300.0*@monthly_hcp/30,
         hcp: @monthly_hcp/30.0
       }
-      @ressources.merge!(handle_summons(tally)) #get extra ressources from summons
+      res
     end
 
-    def handle_summons(total)
+    def summons_ressources(total)
       hero_chest = total[:hero_choice_chest]||0
       purple_summons=purple_stone(total[:purple_stones]||0)
       blue_summons=blue_stone(total[:blue_stones]||0)
