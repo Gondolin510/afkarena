@@ -228,6 +228,7 @@ class Simulator
   module Setup
     def setup_constants
       @Cost={
+        "T0 to T3": {t2: 2, t3: 1}, #T3 is 1T1+1T2+1T3, but with fos the t2 drop get converted into t1/t2 gear choice chests, so this means 2 t2 drop to get the t1+t2
         "SI+10": {silver_e: 240},
         "SI+20": {gold_e: 240},
         "SI+30": {red_e: 300},

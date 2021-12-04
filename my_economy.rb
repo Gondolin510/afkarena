@@ -32,10 +32,10 @@ s=Simulator.new do
   @garrison=true
   @dim_exchange=true
 
-  @misty = get_misty(chest2: :guild_coins) #take guild coins
+  #@misty = get_misty(chest2: :guild_coins) #take guild coins
 
   @shop_items = get_shop_items(:dust_h)
-  @monthly_levelup=10
+  @monthly_levelup=12
   #set_tower_progression_from_levelup(10)
 
 =begin
