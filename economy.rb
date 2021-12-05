@@ -2322,7 +2322,49 @@ class Simulator
       puts
     end
 
-    def show_summary(daily: false, monthly: true)
+    def show_a_summary(summary)
+      case summary
+      when :ff; ff_summary
+      when :daily
+        do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true) if monthly
+      when :monthly
+        do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true) if monthly
+      when :prevision
+        previsions_summary
+      when :incomes
+        classify.keys.each { |k| show_a_summary(k) }
+      when -> (s) { classify.key?(s)}
+        k=s; v=classify[k]
+        r=@ressources.slice(*v)
+        return "" if r.empty?
+        title=k
+        case k
+        when :summons
+          title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
+        when :levelup
+          title="Level up (#{[*@monthly_levelup].map {|i| round(i)}.join(', ')})"
+        when :towers
+          title="Towers (#{round(@tower_kt_progression)} kt, #{round(@tower_4f_progression)} 4f, #{round(@tower_god_progression)} god)"
+        end
+        case k
+        when :income
+          do_summary(title,r, total: true, total_value: true)
+        else
+          do_summary(title,r, headings: false)
+          if k==:stores
+            h2("30 days coin summary")
+            puts @__coin_summary
+            puts
+          end
+        end
+      end
+    end
+
+    def all_summaries
+      [:ff, :incomes, :daily, :monthly, :prevision]
+    end
+
+    def show_summary(type=:all, **rest, daily: false, **keys)
       ff_summary
       classify.each do |k,v|
         r=@ressources.slice(*v)
