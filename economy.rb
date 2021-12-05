@@ -884,12 +884,17 @@ class Simulator
       {gold: gold, xp: xp, dust: dust}
     end
 
-    def level_up_rc(levels)
-      return level_up_rc([levels]*5) if levels.is_a?(Integer)
+    def level_up_rc(levels, add: 0)
+      return level_up_rc([levels]*5, add: add) if levels.is_a?(Integer)
+      if add.is_a?(Integer)
+        levels.map! {|i| i+add}
+      else
+        levels.map!.with_index{|l,i| l+add[i]}
+      end
       return one_level_up_cost(*levels, hack: true)
     end
-    def level_up_rc_h(levels)
-      gold, xp, dust = level_up_rc(levels)
+    def level_up_rc_h(levels, add: 0)
+      gold, xp, dust = level_up_rc(levels, add: add)
       {gold: gold, xp: xp, dust: dust}
     end
 
@@ -920,6 +925,35 @@ class Simulator
     def ressources_cost
       r={level: current_level_cost}
       r.merge(@Cost)
+    end
+
+    def can_buy?(item, ressources)
+      item.all? do |k,v|
+        v <= (ressources[k]||0)
+      end
+    end
+    #given a list of items and their cost, return all buyable items
+    #(starting from the first), ie such that their sum is below ressources
+    def get_possible_items(items, ressources)
+      r=ressources.dup
+      res=[]
+      items.each do |item|
+        if can_buy?(item, r)
+          add_to_hash(r, item, multiplier: -1)
+          res<<item
+        else
+          return res, r
+        end
+      end
+    end
+
+    def get_possible_levelups(ressources=mult_hash(clean_total.slice(:dust, :gold, :xp), 30), start_level=@hero_level)
+      items=Enumerator.new do |y|
+        (0...1000).each do |i|
+          y << level_up_rc_h(start_level, add: i)
+        end
+      end
+      get_possible_items(items, ressources)
     end
   end
   include LevelUp

@@ -35,8 +35,9 @@ s=Simulator.new do
   #@misty = get_misty(chest2: :guild_coins) #take guild coins
 
   @shop_items = get_shop_items(:dust_h)
-  @monthly_levelup=12
+  #@monthly_levelup=12
   #set_tower_progression_from_levelup(10)
+end
 
 =begin
 With set_tower_progression_from_levelup(10) and @monthly_levelup=0
@@ -50,7 +51,6 @@ With @monthly_levelup=10
   - Buying dust:
   level: 11.27 days (2.66 by month) {gold: 9.42 days, xp: 5.47 days, dust: 11.27 days} [monthly remains: 11822 gold + 463909.59 xp]
 =end
-end
 
 if __FILE__ == $0
   if ARGV.first == "--debug"
