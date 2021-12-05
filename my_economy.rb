@@ -50,6 +50,14 @@ With @monthly_levelup=10
   level: Infinity days (0 by month) {gold: 9.42 days, xp: 5.47 days, dust: -43.48 days} [monthly remains: 72329.45 gold + 901825.95 xp + -21622.92 dust]
   - Buying dust:
   level: 11.27 days (2.66 by month) {gold: 9.42 days, xp: 5.47 days, dust: 11.27 days} [monthly remains: 11822 gold + 463909.59 xp]
+
+A-tier vs fodder ratio: we need 8 a-tier E and 20 fodder E to ascend an hero, ie a ratio of 8/20=04.
+- In tavern, the ratio is 0.0461/(0.4370/9.0)=0.95.
+- Via passive blue/stones acquisition, I get daily 213.48 blue stones and 18.60 purple stones s.blue_stone(213.48). The ratio is:
+  s.blue_stone(213.48) => {:random_fodder=>0.3953333333333333}
+  s.purple_stone(18.69) => {:random_fodder=>0.08722, :random_atier=>0.21182, :random_god=>0.01246}
+  0.21182/0.3953333333333333+0.08722 => 0.4389566610944559
+- Stargazers: 0.03183671803245229/0.00994897438514134=3.2
 =end
 
 if __FILE__ == $0
