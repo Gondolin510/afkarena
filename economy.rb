@@ -2084,9 +2084,15 @@ class Simulator
   end
   include Ordering
 
-  module Summary
+  module SummaryHelper
     def items_value(*a, values: {}, **kw)
       super(*a, values: values.merge(@DiaValues), **kw)
+    end
+    def make_h0(t)
+      "!!! =============== #{t.capitalize} =============== !!!\n"
+    end
+    def h0(t)
+      puts make_h0(t)
     end
     def make_h1(t)
       "=============== #{t.capitalize} ===============\n"
@@ -2106,7 +2112,11 @@ class Simulator
     def h3(t)
       puts make_h3(t)
     end
+  end
+  include SummaryHelper
+  extend SummaryHelper
 
+  module Summary
     def make_summary(ressources, headings: true, total: false, plusminus: false, percent: false)
       if total
         total=get_total(ressources)
@@ -2307,8 +2317,8 @@ class Simulator
       return "#{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
     end
 
-    def level_summary
-      h1 "Monthly level up summary"
+    def level_summary(title="Monthly level up summary")
+      h1 title
       total=clean_total
       puts "one level: #{cost_summary(current_level_cost, total)}\n"
       levels, rest=get_possible_levelups
