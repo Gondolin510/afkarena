@@ -2376,11 +2376,20 @@ class Simulator
       end
       selection=([type, *rest]+keys.select {|k,v| v==true}.keys).map do |i|
         case i
-        when :all; filter[all_summaries]
-        when :default; filter[default_summaries]
+        when :all; all_summaries
+        when :default
+          all_summaries.map do |s|
+            if keys[s]==true
+              s
+            elsif keys[s]==false
+              nil
+            else #no value, use default value
+              s if default_summaries.include?(s)
+            end
+          end
         else i
         end
-      end.flatten.uniq
+      end.flatten.uniq.compact
       selection.each do |s|
         show_a_summary(s)
       end

@@ -65,7 +65,7 @@ if __FILE__ == $0
     require "pry"
     binding.pry
   else
-    s.summary
+    s.summary(daily: true)
     s.show_variables(verbose: true)
   end
 end
