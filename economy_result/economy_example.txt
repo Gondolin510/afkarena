@@ -171,10 +171,11 @@ dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 25920 [17280 (idle 67%) + 8640 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 2.22 days (13.53 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.22 days} [monthly remains: 40900.8 gold + 890911.56 xp]
--> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361 dia + 130100 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
+=============== Monthly level up summary ===============
+one level: 2.22 days (13.53 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.22 days} [monthly remains: 40900.8 gold + 890911.56 xp]
+monthly levels: 12, total_cost: 225382.38 gold + 1626500 xp + 310050 dust, remains: 24223.71 dust + 60883.69 gold + 1024886.41 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: 5.99 days (5.01 by month) {t2: 5.99 days, t3: 4.16 days} [monthly remains: 2.21 t3]
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
@@ -372,10 +373,11 @@ dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 19440 [12960 (idle 67%) + 6480 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 2.09 days (14.34 by month) {gold: 1.06 days, xp: 1.64 days, dust: 2.09 days} [monthly remains: 252512.14 gold + 516557.7 xp]
--> Level cost: 9907.25 dia / 10232.93 dia [18132.62 gold=1035.32 dia / 680.5 gold_h=1361 dia + 130100 xp=315.6 xp_h=2524.8 dia + 24703 dust=507.77 dust_h=6347.12 dia
+=============== Monthly level up summary ===============
+one level: 2.09 days (14.34 by month) {gold: 1.06 days, xp: 1.64 days, dust: 2.09 days} [monthly remains: 252512.14 gold + 516557.7 xp]
+monthly levels: 13, total_cost: 248104.64 gold + 1790950 xp + 341392 dust, remains: 12943.14 dust + 264498.35 gold + 591737.4 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: 5.99 days (5.01 by month) {t2: 5.99 days, t3: 4.16 days} [monthly remains: 2.21 t3]
 SI+10: 14.04 days (2.14 by month)
 SI+20: 49.86 days (0.6 by month)
@@ -543,10 +545,11 @@ dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 12480 [11520 (idle 92%) + 960 (ff 8%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 1407.81 days (0.02 by month) {gold: 0.35 days, xp: 3.9 days, dust: 1407.81 days} [monthly remains: 92391 gold + 11566.51 xp]
--> Level cost: 38858.58 dia / 38934.64 dia [1078.22 gold=61.56 dia / 68.81 gold_h=137.63 dia + 1506 xp=102.66 xp_h=821.27 dia + 27000 dust=3038.06 dust_h=37975.75 dia
+=============== Monthly level up summary ===============
+one level: 1407.81 days (0.02 by month) {gold: 0.35 days, xp: 3.9 days, dust: 1407.81 days} [monthly remains: 92391 gold + 11566.51 xp]
+monthly levels: 0, total_cost: 0, remains: 575.36 dust + 92413.97 gold + 11598.6 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: Infinity days (0 by month) {t2: Infinity days, t3: Infinity days}
 SI+10: 74.23 days (0.4 by month)
 SI+20: 127.43 days (0.24 by month)
@@ -757,10 +760,11 @@ dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 27360 [17280 (idle 63%) + 10080 (ff 37%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 6.42 days (4.67 by month) {gold: 6.42 days, xp: 1.85 days, dust: 1.73 days} [monthly remains: 3482783.64 xp + 565957.2 dust]
--> Level cost: 18424.94 dia / 18973.79 dia [35389.44 gold=2020.64 dia / 1284.74 gold_h=2569.48 dia + 301900 xp=619.91 xp_h=4959.29 dia + 44544 dust=915.6 dust_h=11445.02 dia
+=============== Monthly level up summary ===============
+one level: 6.42 days (4.67 by month) {gold: 6.42 days, xp: 1.85 days, dust: 1.73 days} [monthly remains: 3482783.64 xp + 565957.2 dust]
+monthly levels: 4, total_cost: 141557.76 gold + 1211000 xp + 178176 dust, remains: 595951 dust + 23829.55 gold + 3682668.62 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: 5.68 days (5.29 by month) {t2: 5.68 days, t3: 4.06 days} [monthly remains: 2.11 t3]
 SI+10: 25.93 days (1.16 by month)
 SI+20: 8.03 days (3.74 by month)
@@ -905,10 +909,11 @@ dura_fragments: 8.63 [8.63 (stargaze 100%)]
 dura_tears: 12.86 [12.86 (quests 100%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 0.01 days (2824.6 by month) {gold: 0 days, xp: 0.01 days, dust: 0 days} [monthly remains: 4981.81 gold + 4428.27 dust]
--> Level cost: 2.48 dia / 2.51 dia [0.12 gold=0.01 dia / 0.02 gold_h=0.04 dia + 0.44 xp=0.31 xp_h=2.47 dia + 0 dust=0 dust_h=0 dia
+=============== Monthly level up summary ===============
+one level: 0.01 days (2824.6 by month) {gold: 0 days, xp: 0.01 days, dust: 0 days} [monthly remains: 4981.81 gold + 4428.27 dust]
+monthly levels: 15, total_cost: 1168.2 gold + 722.36 xp + 0 dust, remains: 4428.27 dust + 4138.45 gold + 534.59 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: Infinity days (0 by month) {t2: Infinity days, t3: Infinity days}
 SI+10: 74.23 days (0.4 by month)
 SI+20: 127.43 days (0.24 by month)
@@ -1117,10 +1122,11 @@ arena_tickets: 0=60-60 [60 (quests 100%) - 60 (selling_items 100%)]
 lct_tickets: 150 [150 (lct_buy_tickets 100%)]
 reset_scrolls: 30 [30 (shop 100%)]
 
-=============== 30 days previsions summary ===============
-level: 10.43 days (2.88 by month) {gold: 10.43 days, xp: 3.07 days, dust: 4.36 days} [monthly remains: 1777293.07 xp + 167376.5 dust]
--> Level cost: 17314.96 dia / 17864.04 dia [32342.82 gold=1846.68 dia / 1197.88 gold_h=2395.76 dia + 257900 xp=592.55 xp_h=4740.37 dia + 41753 dust=858.23 dust_h=10727.9 dia
+=============== Monthly level up summary ===============
+one level: 10.43 days (2.88 by month) {gold: 10.43 days, xp: 3.07 days, dust: 4.36 days} [monthly remains: 1777293.07 xp + 167376.5 dust]
+monthly levels: 2, total_cost: 64758.64 gold + 516900 xp + 83600 dust, remains: 203869.04 dust + 28267.76 gold + 2002180.85 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: 7.19 days (4.17 by month) {t2: 7.19 days, t3: 4.49 days} [monthly remains: 2.51 t3]
 SI+10: 35.52 days (0.84 by month)
 SI+20: 74.31 days (0.4 by month)

@@ -40,6 +40,16 @@ module Helpers
     end
     result << arr
   end
+
+  def show_items(items, separator: ' + ', empty: '0')
+    return empty if items.respond_to?(:empty?) && items.empty?
+    case items
+    when Hash
+      items.map {|k,v| "#{round(v)} #{k}"}.join(separator)
+    else
+      [*items].map {|i| round(i)}.join(separator)
+    end
+  end
 end
 
 module Value

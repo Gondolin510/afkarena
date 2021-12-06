@@ -923,6 +923,10 @@ class Simulator
     end
 
     def ressources_cost
+      @Cost
+    end
+
+    def all_ressources_cost
       r={level: current_level_cost}
       r.merge(@Cost)
     end
@@ -947,13 +951,19 @@ class Simulator
       end
     end
 
-    def get_possible_levelups(ressources=mult_hash(clean_total.slice(:dust, :gold, :xp), 30), start_level=@hero_level)
+    def get_possible_levelups(total=mult_hash(clean_total.slice(:dust, :gold, :xp), 30), start_level=@hero_level)
+      ressources=total.slice(:dust, :gold, :xp)
       items=Enumerator.new do |y|
         (0...1000).each do |i|
           y << level_up_rc_h(start_level, add: i)
         end
       end
       get_possible_items(items, ressources)
+    end
+
+    def possible_levelups #not used
+      levels, _rest=get_possible_levelups
+      return levels.length
     end
   end
   include LevelUp
@@ -2292,9 +2302,23 @@ class Simulator
       end
 
       monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
-      o_remain += " [monthly remains: #{monthly_remain.map {|k,v| "#{round(v)} #{k}"}.join(" + ")}]" unless monthly_remain == {}
+      o_remain += " [monthly remains: #{show_items(monthly_remain)}]" unless monthly_remain == {}
 
       return "#{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
+    end
+
+    def level_summary
+      h1 "Monthly level up summary"
+      total=clean_total
+      puts "one level: #{cost_summary(current_level_cost, total)}\n"
+      levels, rest=get_possible_levelups
+      #p levels, rest
+      nb_levels=levels.length
+      total_cost=sum_hash(*levels)
+      puts "monthly levels: #{nb_levels}, total_cost: #{show_items(total_cost)}, remains: #{show_items(rest)}"
+      puts
+      # r+=levels.to_s
+      # r+=rest.to_s
     end
 
     def previsions_summary
@@ -2333,6 +2357,8 @@ class Simulator
         previsions_summary
       when :incomes
         classify.keys.each { |k| show_a_summary(k) }
+      when :level
+        level_summary
       when -> (s) { classify.key?(s)}
         k=summary; v=classify[k]
         r=@ressources.slice(*v)
@@ -2342,7 +2368,7 @@ class Simulator
         when :summons
           title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
         when :levelup
-          title="Level up (#{[*@monthly_levelup].map {|i| round(i)}.join(', ')})"
+          title="Level up (#{show_items(@monthly_levelup, separator: ', ')})"
         when :towers
           title="Towers (#{round(@tower_kt_progression)} kt, #{round(@tower_4f_progression)} 4f, #{round(@tower_god_progression)} god)"
         end
@@ -2361,10 +2387,10 @@ class Simulator
     end
 
     def all_summaries
-      [:ff, :incomes, :daily, :monthly, :prevision]
+      [:ff, :incomes, :daily, :monthly, :level, :prevision]
     end
     def default_summaries
-      [:ff, :incomes, :monthly, :prevision]
+      [:ff, :incomes, :monthly, :level, :prevision]
     end
 
     #exemples: show_summary(monthly: true)

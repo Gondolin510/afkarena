@@ -165,10 +165,11 @@ arena_tickets: 60 [60 (quests 100%)]
 ***** Extra *****
 arthur: 1 [1 (lab_store 100%)]
 
-=============== 30 days previsions summary ===============
-level: 27.57 days (1.09 by month) {gold: 1.23 days, xp: 0.64 days, dust: 27.57 days} [monthly remains: 58428.64 gold + 344860.93 xp]
--> Level cost: 43843.59 dia / 43956.34 dia [2513.27 gold=143.5 dia / 128.13 gold_h=256.25 dia + 7490 xp=57.55 xp_h=460.38 dia + 120000 dust=3459.18 dust_h=43239.71 dia
+=============== Monthly level up summary ===============
+one level: 27.57 days (1.09 by month) {gold: 1.23 days, xp: 0.64 days, dust: 27.57 days} [monthly remains: 58428.64 gold + 344860.93 xp]
+monthly levels: 10, total_cost: 30436.39 gold + 114381 xp + 128938 dust, remains: 1649.9 dust + 30727.27 gold + 238630.79 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: Infinity days (0 by month) {t2: 6.53 days, t3: Infinity days} [monthly remains: 9.18 t2]
 SI+10: 43.12 days (0.7 by month)
 SI+20: 78.66 days (0.38 by month)
@@ -194,7 +195,7 @@ Max rc level+1: 3.63 days (8.28 by month)
 
 =============== Variables ===============
 --------------- Setup vars: ---------------
-@hero_level: [221, 200, 200, 200, 200]
+@hero_level: [276, 255, 255, 255, 255]
 @monthly_levelup: [10, 0, 0, 0, 0]
 @stage: 22-02
 @afk_xp: 2820

@@ -238,10 +238,11 @@ dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 12960 [8640 (idle 67%) + 4320 (ff 33%)]
 arena_tickets: 60 [60 (quests 100%)]
 
-=============== 30 days previsions summary ===============
-level: 2.7 days (11.1 by month) {gold: 2.7 days, xp: 1.81 days, dust: 2.36 days} [monthly remains: 906874.14 xp + 50989.94 dust]
--> Level cost: 12497.98 dia / 12906.47 dia [22722.26 gold=1297.38 dia / 852.94 gold_h=1705.88 dia + 164450 xp=393.46 xp_h=3147.67 dia + 31342 dust=644.23 dust_h=8052.93 dia
+=============== Monthly level up summary ===============
+one level: 2.7 days (11.1 by month) {gold: 2.7 days, xp: 1.81 days, dust: 2.36 days} [monthly remains: 906874.14 xp + 50989.94 dust]
+monthly levels: 10, total_cost: 250823.12 gold + 1830700 xp + 345974 dust, remains: 52961.08 dust + 1429.45 gold + 901825.95 xp
 
+=============== 30 days previsions summary ===============
 T0 to T3: 5.99 days (5.01 by month) {t2: 5.99 days, t3: 4.16 days} [monthly remains: 2.21 t3]
 SI+10: 26.4 days (1.14 by month)
 SI+20: 49.86 days (0.6 by month)
