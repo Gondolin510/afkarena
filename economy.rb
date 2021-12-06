@@ -2326,15 +2326,15 @@ class Simulator
       case summary
       when :ff; ff_summary
       when :daily
-        do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true) if monthly
+        do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true)
       when :monthly
-        do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true) if monthly
+        do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true)
       when :prevision
         previsions_summary
       when :incomes
         classify.keys.each { |k| show_a_summary(k) }
       when -> (s) { classify.key?(s)}
-        k=s; v=classify[k]
+        k=summary; v=classify[k]
         r=@ressources.slice(*v)
         return "" if r.empty?
         title=k
@@ -2363,36 +2363,27 @@ class Simulator
     def all_summaries
       [:ff, :incomes, :daily, :monthly, :prevision]
     end
+    def default_summaries
+      [:ff, :incomes, :monthly, :prevision]
+    end
 
-    def show_summary(type=:all, **rest, daily: false, **keys)
-      ff_summary
-      classify.each do |k,v|
-        r=@ressources.slice(*v)
-        next if r.empty?
-        title=k
-        case k
-        when :summons
-          title="Summons (#{round(@monthly_stargazing)} sg + #{round(@monthly_hcp)} hcp + #{round(@monthly_tavern)} wl)"
-        when :levelup
-          title="Level up (#{[*@monthly_levelup].map {|i| round(i)}.join(', ')})"
-        when :towers
-          title="Towers (#{round(@tower_kt_progression)} kt, #{round(@tower_4f_progression)} 4f, #{round(@tower_god_progression)} god)"
-        end
-        case k
-        when :income
-          do_summary(title,r, total: true, total_value: true)
-        else
-          do_summary(title,r, headings: false)
-          if k==:stores
-            h2("30 days coin summary")
-            puts @__coin_summary 
-            puts
-          end
-        end
+    #exemples: show_summary(monthly: true)
+    #show_summary(:all, monthly: false)
+    #show_summary(:monthly)
+    def show_summary(type=:default, *rest, **keys)
+      filter=lambda do |l|
+        l.reject {|i| keys[i]==false}
       end
-      do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true) if monthly
-      do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true) if monthly
-      previsions_summary
+      selection=([type, *rest]+keys.select {|k,v| v==true}.keys).map do |i|
+        case i
+        when :all; filter[all_summaries]
+        when :default; filter[default_summaries]
+        else i
+        end
+      end.flatten.uniq
+      selection.each do |s|
+        show_a_summary(s)
+      end
     end
 
     def summary(*a, **kw)
