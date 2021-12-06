@@ -2089,7 +2089,7 @@ class Simulator
       super(*a, values: values.merge(@DiaValues), **kw)
     end
     def make_h0(t)
-      "!!! =============== #{t.capitalize} =============== !!!\n"
+      "     ====================   #{t.capitalize}   ====================     \n\n"
     end
     def h0(t)
       puts make_h0(t)

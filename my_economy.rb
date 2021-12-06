@@ -67,9 +67,10 @@ A-tier vs fodder ratio: we need 8 a-tier E and 20 fodder E to ascend an hero, ie
 - Stargazers: 0.03183671803245229/0.00994897438514134=3.2
 =end
 
-def level_ups_summary(without_dust=10, with_dust=12)
+def level_ups_summary(without_dust=:auto, with_dust=:auto)
   s=MySimulator.new
   s.level_summary "Without dust"
+  without_dust = s.possible_levelups if without_dust == :auto
 
   s=MySimulator.new do
     @monthly_levelup = without_dust
@@ -80,6 +81,7 @@ def level_ups_summary(without_dust=10, with_dust=12)
     @shop_items = get_shop_items(:dust_h)
   end
   s.level_summary "With dust"
+  with_dust = s.possible_levelups if with_dust == :auto
 
   s=MySimulator.new do
     @shop_items = get_shop_items(:dust_h)
