@@ -87,13 +87,13 @@ dura_fragments: 0.29 [0.29 (stargaze)]
 t3: 0.07 [0.07 (guild_store)]
 guild_coins: -13327.96 [13327.96 (guild_store)]
 lab_coins: -2133.33 [2133.33 (lab_store)]
-dim_gear: 0.15 [0.15 (guild_store)]
+dim_gear: 0.17 [0.17 (guild_store)]
 dim_emblems: 1.67 [1.67 (lab_store)]
 
 --------------- 30 days coin summary ---------------
 hero_coins: 11250.58
 lab_coins: 142100 => buy 64000 [ 64000 (dim_emblems)]
-guild_coins: 399838.82 => buy 399838.83 [ 94000 (2 x t3) +  305838.83 (4.56 x dim_gear)]
+guild_coins: 399838.82 => buy 399838.82 [ 94000 (2 x t3) +  305838.82 (5.19 x dim_gear)]
 challenger_coins: 340260
 
 =============== Full monthly ressources ===============
@@ -154,7 +154,7 @@ choice_god: 0.38 [0.38 (stargaze 100%)]
 random_god: 0.71 [0.44 (stones 62%) + 0.27 (tavern 38%)]
 
 ***** Dimensional *****
-dim_gear: 4.56 [4.56 (guild_store 100%)]
+dim_gear: 5.19 [5.19 (guild_store 100%)]
 dim_emblems: 50 [50 (lab_store 100%)]
 
 ***** Misc *****

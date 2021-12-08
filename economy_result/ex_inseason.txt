@@ -92,13 +92,13 @@ t3: 0.07 [0.07 (guild_store)]
 guild_coins: -14196.56 [14196.56 (guild_store)]
 lab_coins: -6133.33 [6133.33 (lab_store)]
 hero_coins: -5333.33 [5333.33 (hero_store)]
-dim_gear: 0.17 [0.17 (guild_store)]
+dim_gear: 0.19 [0.19 (guild_store)]
 dim_emblems: 1.67 [1.67 (lab_store)]
 
 --------------- 30 days coin summary ---------------
 hero_coins: 18425.98 => buy 160000 [ 160000 (16 x twisted)]
 lab_coins: 249900 => buy 184000 [ 120000 (3 x twisted) +  64000 (dim_emblems)]
-guild_coins: 425896.67 => buy 425896.67 [ 94000 (2 x t3) +  331896.67 (4.95 x dim_gear)]
+guild_coins: 425896.67 => buy 425896.67 [ 94000 (2 x t3) +  331896.67 (5.63 x dim_gear)]
 challenger_coins: 353940
 
 =============== Towers (20 kt, 20 4f, 20 god) ===============
@@ -173,7 +173,7 @@ choice_god: 0.04 [0.04 (stargaze 100%)]
 random_god: 0.04 [0.03 (stones 65%) + 0.01 (tavern 35%)]
 
 ***** Dimensional *****
-dim_gear: 0.17 [0.17 (guild_store 100%)]
+dim_gear: 0.19 [0.19 (guild_store 100%)]
 dim_emblems: 1.67 [1.67 (lab_store 100%)]
 
 ***** Misc *****
@@ -243,7 +243,7 @@ choice_god: 1.2 [1.2 (stargaze 100%)]
 random_god: 1.25 [0.81 (stones 65%) + 0.44 (tavern 35%)]
 
 ***** Dimensional *****
-dim_gear: 4.95 [4.95 (guild_store 100%)]
+dim_gear: 5.63 [5.63 (guild_store 100%)]
 dim_emblems: 50 [50 (lab_store 100%)]
 
 ***** Misc *****

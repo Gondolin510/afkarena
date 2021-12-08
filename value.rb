@@ -3,8 +3,8 @@
 module Helpers
   extend self
   @@rounding=2
-  def round(p)
-    r=p.round(@@rounding)
+  def round(p, prec: @@rounding)
+    r=p.round(prec)
     r == r.to_i ? r.to_i : r rescue r #coerce to int if possible
   end
   def percent(r)

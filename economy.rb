@@ -285,8 +285,8 @@ class Simulator
         t2: 40875,
         t3: {cost: 47000, t3: 1, max: 2},
         random_mythic_gear: 31350,
-        mythic_gear: 84260*@_shop_discount, #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
-        dim_gear: 84260*@_shop_discount,
+        mythic_gear: round(84260*@_shop_discount, prec: 0), #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
+        dim_gear: round(84260*@_shop_discount, prec: 0),
         garrison: { cost: 800, garrison_stone: 1, max: 66},
         dim_exchange: {cost: 4000, dim_points: 1, max: 40},
       }.merge(@StoreGuild||{})
