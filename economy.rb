@@ -1576,6 +1576,29 @@ class Simulator
 
     def vow
       @Vows={
+        final_night: { #30/07/2021
+          shards: 200, cores: 100,
+          silver_e: 20, gold_e: 20, red_e: 10,
+          purple_chests: 6,
+          poe: 1000,
+          stargazers: 10,
+        },
+        lost_in_the_wild: { #14/08/2021
+          shards: 200, cores: 100,
+          silver_e: 20, gold_e: 20, red_e: 10,
+          purple_chests: 4,
+          poe: 1500,
+          stargazers: 10,
+        },
+        sealing_sword: { #30/08/2021
+          shards: 200, cores: 100,
+          purple_chests: 2,
+          reset_scrolls: 2,
+          poe: 3000,
+          purple_stones: 60,
+          stargazers: 10,
+          scrolls: 10
+        },
         gold_rush: { #15/09/2021
           shards: 120, cores: 50,
           silver_e: 30, gold_e: 20, red_e: 10,
@@ -1612,6 +1635,14 @@ class Simulator
           shards: 100, cores: 50,
           silver_e: 40, gold_e: 20, red_e: 10,
           stargazers: 10
+        },
+        frozen_lake: { #01/12/2021
+          purple_chests: 4,
+          shards: 100, cores: 50,
+          silver_e: 30, gold_e: 20, red_e: 10,
+          poe: 3000,
+          scrolls: 10,
+          faction_scrolls: 10,
         },
       }.merge(@Vows||{})
 
