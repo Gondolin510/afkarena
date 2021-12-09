@@ -405,9 +405,9 @@ class Simulator
       @_order={
         base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
         upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
-        gear: %i(t2 t3 mythic_gear t1_gear t2_gear),
+        gear: %i(t2 t3 mythic_gear t1_gear t2_gear reset_scrolls),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
-        summons: %i(purple_stones blue_stones scrolls friend_summons hcp hero_choice_chest stargazers),
+        summons: %i(purple_stones blue_stones faction_scrolls scrolls friend_summons hcp hero_choice_chest stargazing stargazers),
         hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
         dimensional: %i(garrison_stone dim_points dim_gear dim_emblems),
         misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
@@ -1576,27 +1576,38 @@ class Simulator
 
     def vow
       @Vows={
-        demonic: {
-          purple_chests: 4,
-          shards: 100, cores: 50,
-          silver_e: 20, gold_e: 20, red_e: 10,
-          poe: 1000,
-          scrolls: 20
-        },
-        gold_rush: {
+        gold_rush: { #15/09/2021
           shards: 120, cores: 50,
           silver_e: 30, gold_e: 20, red_e: 10,
           poe: 3000,
           stargazers: 10
         },
-        frontier: {
+        demonic_incursion: { #01/10/2021
+          purple_chests: 4,
+          shards: 100, cores: 50,
+          silver_e: 20, gold_e: 20, red_e: 10,
+          poe: 1000,
+          reset_scrolls: 2,
+          scrolls: 10,
+          faction_scrolls: 10,
+        },
+        forgotten_frontier: { #17/10/2021
           purple_chests: 5,
           shards: 100, cores: 50,
           silver_e: 20, gold_e: 20, red_e: 10,
           poe: 2000,
+          reset_scrolls: 2,
           stargazers: 10
         },
-        setting_sun: {
+        road_home: { #1/11/2021
+          purple_chests: 4,
+          shards: 100, cores: 50,
+          poe: 3000,
+          reset_scrolls: 2,
+          scrolls: 10,
+          faction_scrolls: 10,
+        },
+        setting_sun: { #17/11/2021
           purple_chests: 2,
           shards: 100, cores: 50,
           silver_e: 40, gold_e: 20, red_e: 10,
@@ -1701,8 +1712,8 @@ class Simulator
       t4f_floor={gold: 4*gold/10}
       t4f_floor={dust: 4000/10, stargazers: 5.0/10, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*gold/10} if level>=150
       t4f_floor={dust: 4000/20, stargazers: 5.0/20, red_e: 10.0/20, purple_stones: 90.0/20, gold_e: 15.0/20, gold: 4*gold/10} if level>=240
-      t4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*gold/10} if level>=360
-      t4f_floor
+    t4f_floor={dust: 4000/10, stargazers: 5.0/10, red_e: 10.0/20, faction_emblems: 10.0/20, gold: 4*gold/10} if level>=360
+    t4f_floor
     end
     def tower_4f_quest(level=@tower_4f)
       # quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
@@ -1959,11 +1970,11 @@ class Simulator
       res={}
       res[:stargazing]={
         dia: -500.0*@monthly_stargazing/30,
-        stargazers: @monthly_stargazing/30.0
+        stargazing: @monthly_stargazing/30.0
       }
       res[:wishlist]={
         dia: -270.0*@monthly_tavern/30,
-        scrolls: @monthly_tavern/30.0
+        wishlist: @monthly_tavern/30.0
       }
       res[:hcp]={
         dia: -300.0*@monthly_hcp/30,
@@ -1977,9 +1988,9 @@ class Simulator
       purple_summons=purple_stone(total[:purple_stones]||0)
       blue_summons=blue_stone(total[:blue_stones]||0)
       friend_summons=friend_summon(total[:friend_summons]||0)
-      wl_summons=tavern_summon((total[:scrolls]||0)+(total[:wishlist]||0))
-      hcp_summons=choice_summon(total[:hcp]||0)
-      stargaze_summons=stargaze(total[:stargazers]||0)
+      wl_summons=tavern_summon((total[:faction_scrolls]||0)+(total[:scrolls]||0)+(total[:wishlist]||0))
+      hcp_summons=choice_summon((total[:hcp]||0))
+      stargaze_summons=stargaze((total[:stargazing]||0) + (total[:stargazers]||0))
 
       r={}
       r[:hero_chest]={choice_atier: hero_chest}

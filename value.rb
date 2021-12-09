@@ -216,6 +216,7 @@ module Value
       gold_h: n * ratio*(2*24*0.045+5*6*0.0936),
       xp_h: n * ratio*(1*24*0.045+2*6*0.0936),
       dust_h: n * ratio*(2*8*0.045+5*2*0.0936),
+      arena_tickets: n * ratio*(2*0.0501)
     }
   end
 
