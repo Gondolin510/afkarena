@@ -2158,46 +2158,97 @@ class Simulator
   extend SummaryHelper
 
   module Summary
-    def make_summary(ressources, headings: true, total: false, plusminus: false, percent: false)
+    def a_ressource_summary(type, ressources, total: false, plusminus: false, percent: false)
+      sum=pos_sum=neg_sum=0
+      o=[]
       if total
         total=get_total(ressources)
         pos_total=get_total(ressources, mode: 1)
       end
+
+      ressources.each do |_k,v|
+        if v.key?(type)
+          value=v[type]
+          sum+=value
+          pos_sum+=value if value>0
+          neg_sum+=value if value<0
+        end
+      end #we need to tally the sums first
+      ressources.each do |k,v|
+        if v.key?(type)
+          value=v[type]
+          per=0
+          oo=""
+          if value>0
+            per=value/pos_sum
+            oo << (o.empty? ? "" : " + ")
+            oo<<"#{round(value)}"
+          elsif value<0
+            per=value/neg_sum
+            oo << (o.empty? ? "" : " - ")
+            oo<<"#{round(value.abs)}"
+          end
+          unless value == 0 or value == 0.0
+            oo << (percent ? " (#{k} #{percent(per)})" : " (#{k})" )
+            o.push(oo)
+          end
+        end
+      end
+
+      s=""
+      unless o.empty?
+        s << "#{type}: #{round(sum)}"
+        plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
+        if plusminuscondition
+          s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
+        end
+        s << " [#{o.join}]"
+
+        if percent and type==:gold and total and total[:total_gold]
+          s += " {#{round(pos_sum)}K gold=#{percent(pos_sum*1.0/pos_total[:total_gold])}}"
+        elsif %i(gold_h gold_hg).include?(type)
+          converted=total_gold(type => sum)
+          if total and total[:total_gold] and percent
+            s += " {#{round(converted)}K gold=#{percent(converted*1.0/pos_total[:total_gold])}}"
+          else
+            s += " {#{round(converted)}K gold}"
+          end
+        end
+
+        if percent and type==:xp and total and total[:total_xp]
+          s += " {#{round(pos_sum)}K xp=#{percent(pos_sum*1.0/pos_total[:total_xp])}}"
+        elsif %i(xp_h xp_hg).include?(type)
+          converted=total_xp(type => sum)
+          if total and total[:total_xp] and percent
+            s += " {#{round(converted)}K xp=#{percent(converted*1.0/pos_total[:total_xp])}}"
+          else
+            s += " {#{round(converted)}K xp}"
+          end
+        end
+
+        if percent and type==:dust and total and total[:total_dust]
+          s += " {#{round(pos_sum)}K dust=#{percent(pos_sum*1.0/pos_total[:total_dust])}}"
+        elsif %i(dust_h dust_hg).include?(type)
+          converted=total_dust(type => sum)
+          if total and total[:total_dust] and percent
+            s += " {#{round(converted)}K dust=#{percent(converted*1.0/pos_total[:total_dust])}}"
+          else
+            s += " {#{round(converted)}K dust}"
+          end
+        end
+      end
+      return s
+    end
+
+    def make_summary(ressources, headings: true, total: false, **kw)
       summary=""
+      if total
+        total=get_total(ressources)
+      end
+
       classify_income.each do |header, keys|
         s=""
         keys.each do |type|
-          #next if %i(total_gold total_xp total_dust).include?(type)
-          sum=pos_sum=neg_sum=0
-          o=[]
-          ressources.each do |k,v|
-            if v.key?(type)
-              value=v[type]
-              sum+=value
-              pos_sum+=value if value>0
-              neg_sum+=value if value<0
-            end
-          end #we need to tally the sums first
-          ressources.each do |k,v|
-            if v.key?(type)
-              value=v[type]
-              per=0
-              oo=""
-              if value>0
-                per=value/pos_sum
-                oo << (o.empty? ? "" : " + ")
-                oo<<"#{round(value)}"
-              elsif value<0
-                per=value/neg_sum
-                oo << (o.empty? ? "" : " - ")
-                oo<<"#{round(value.abs)}"
-              end
-              unless value == 0 or value == 0.0
-                oo << (percent ? " (#{k} #{percent(per)})" : " (#{k})" )
-                o.push(oo)
-              end
-            end
-          end
           if total
             if type==:choice_god and total[:god]
               s+="-> God: #{round(total[:god])}\n"
@@ -2208,49 +2259,8 @@ class Simulator
             #fodder == random_fodder
           end
 
-          unless o.empty?
-            s << "#{type}: #{round(sum)}"
-            plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
-            if plusminuscondition
-              s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
-            end
-            s << " [#{o.join}]"
-
-            if percent and type==:gold and total and total[:total_gold]
-              s += " {#{round(pos_sum)}K gold=#{percent(pos_sum*1.0/pos_total[:total_gold])}}"
-            elsif %i(gold_h gold_hg).include?(type)
-              converted=total_gold(type => sum)
-              if total and total[:total_gold] and percent
-                s += " {#{round(converted)}K gold=#{percent(converted*1.0/pos_total[:total_gold])}}"
-              else
-                s += " {#{round(converted)}K gold}"
-              end
-            end
-
-            if percent and type==:xp and total and total[:total_xp]
-              s += " {#{round(pos_sum)}K xp=#{percent(pos_sum*1.0/pos_total[:total_xp])}}"
-            elsif %i(xp_h xp_hg).include?(type)
-              converted=total_xp(type => sum)
-              if total and total[:total_xp] and percent
-                s += " {#{round(converted)}K xp=#{percent(converted*1.0/pos_total[:total_xp])}}"
-              else
-                s += " {#{round(converted)}K xp}"
-              end
-            end
-
-            if percent and type==:dust and total and total[:total_dust]
-              s += " {#{round(pos_sum)}K dust=#{percent(pos_sum*1.0/pos_total[:total_dust])}}"
-            elsif %i(dust_h dust_hg).include?(type)
-              converted=total_dust(type => sum)
-              if total and total[:total_dust] and percent
-                s += " {#{round(converted)}K dust=#{percent(converted*1.0/pos_total[:total_dust])}}"
-              else
-                s += " {#{round(converted)}K dust}"
-              end
-            end
-
-            s << "\n"
-          end
+          ss=a_ressource_summary(type, ressources, total: total, **kw)
+          s+=ss+"\n" unless ss.empty?
 
           if total
             s<< "\n" if type==:dia
@@ -2264,7 +2274,6 @@ class Simulator
               s+="-> Total dust: #{round(total[:total_dust])}\n"
             end
           end
-
         end
 
         unless s.empty?
