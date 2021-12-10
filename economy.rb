@@ -2158,11 +2158,12 @@ class Simulator
   extend SummaryHelper
 
   module Summary
+    #total: also do the total percent (if percent) and show the converted output
     def a_ressource_summary(type, ressources, total: false, plusminus: false, percent: false)
       sum=pos_sum=neg_sum=0
       o=[]
       if total
-        total=get_total(ressources)
+        total_res=get_total(ressources)
         pos_total=get_total(ressources, mode: 1)
       end
 
@@ -2204,33 +2205,33 @@ class Simulator
         end
         s << " [#{o.join}]"
 
-        if percent and type==:gold and total and total[:total_gold]
+        if percent and type==:gold and total and total_res[:total_gold]
           s += " {#{round(pos_sum)}K gold=#{percent(pos_sum*1.0/pos_total[:total_gold])}}"
         elsif %i(gold_h gold_hg).include?(type)
           converted=total_gold(type => sum)
-          if total and total[:total_gold] and percent
+          if percent and total and total_res[:total_gold]
             s += " {#{round(converted)}K gold=#{percent(converted*1.0/pos_total[:total_gold])}}"
           else
             s += " {#{round(converted)}K gold}"
           end
         end
 
-        if percent and type==:xp and total and total[:total_xp]
+        if percent and type==:xp and total and total_res[:total_xp]
           s += " {#{round(pos_sum)}K xp=#{percent(pos_sum*1.0/pos_total[:total_xp])}}"
         elsif %i(xp_h xp_hg).include?(type)
           converted=total_xp(type => sum)
-          if total and total[:total_xp] and percent
+          if percent and total and total_res[:total_xp]
             s += " {#{round(converted)}K xp=#{percent(converted*1.0/pos_total[:total_xp])}}"
           else
             s += " {#{round(converted)}K xp}"
           end
         end
 
-        if percent and type==:dust and total and total[:total_dust]
+        if percent and type==:dust and total and total_res[:total_dust]
           s += " {#{round(pos_sum)}K dust=#{percent(pos_sum*1.0/pos_total[:total_dust])}}"
         elsif %i(dust_h dust_hg).include?(type)
           converted=total_dust(type => sum)
-          if total and total[:total_dust] and percent
+          if percent and total and total_res[:total_dust]
             s += " {#{round(converted)}K dust=#{percent(converted*1.0/pos_total[:total_dust])}}"
           else
             s += " {#{round(converted)}K dust}"
@@ -2243,18 +2244,18 @@ class Simulator
     def make_summary(ressources, headings: true, total: false, **kw)
       summary=""
       if total
-        total=get_total(ressources)
+        total_res=get_total(ressources)
       end
 
       classify_income.each do |header, keys|
         s=""
         keys.each do |type|
           if total
-            if type==:choice_god and total[:god]
-              s+="-> God: #{round(total[:god])}\n"
+            if type==:choice_god and total_res[:god]
+              s+="-> God: #{round(total_res[:god])}\n"
             end
-            if type==:choice_atier and total[:atier]
-              s+="-> Atier: #{round(total[:atier])}\n"
+            if type==:choice_atier and total_res[:atier]
+              s+="-> Atier: #{round(total_res[:atier])}\n"
             end
             #fodder == random_fodder
           end
@@ -2264,14 +2265,21 @@ class Simulator
 
           if total
             s<< "\n" if type==:dia
-            if type==:gold_hg and total[:total_gold]
-              s+="-> Total gold: #{round(total[:total_gold])}K\n\n"
+            if type==:gold_hg and total_res[:total_gold]
+              p total
+              s+="-> Total gold: #{round(total_res[:total_gold])}K\n"
+              if total == :all
+                ss=a_ressource_summary(:total_gold, total_res, total: total, **kw)
+                s+=ss+"\n" unless ss.empty?
+              else
+                s+="\n"
+              end
             end
-            if type==:xp_hg and total[:total_xp]
-              s+="-> Total xp: #{round(total[:total_xp])}K\n\n"
+            if type==:xp_hg and total_res[:total_xp]
+              s+="-> Total xp: #{round(total_res[:total_xp])}K\n\n"
             end
-            if type==:dust_hg and total[:total_dust]
-              s+="-> Total dust: #{round(total[:total_dust])}\n"
+            if type==:dust_hg and total_res[:total_dust]
+              s+="-> Total dust: #{round(total_res[:total_dust])}\n"
             end
           end
         end
@@ -2287,6 +2295,7 @@ class Simulator
       summary
     end
 
+    #kw: total: false, plusminus: false, percent: false
     def do_summary(title, r, total_value: false, multiplier: 1, **kw)
       if multiplier != 1
         r=timeframe(r, multiplier)
@@ -2406,17 +2415,17 @@ class Simulator
       puts
     end
 
-    def show_a_summary(summary)
+    def show_a_summary(summary, total: true, **kw)
       case summary
       when :ff; ff_summary
       when :daily
-        do_summary("Full daily ressources", @ressources, total: true, plusminus: true, percent: true)
+        do_summary("Full daily ressources", @ressources, total: total, plusminus: true, percent: true, **kw)
       when :monthly
-        do_summary("Full monthly ressources", @ressources, total: true, multiplier: 30, plusminus: true, percent: true)
+        do_summary("Full monthly ressources", @ressources, total: total, multiplier: 30, plusminus: true, percent: true, **kw)
       when :prevision
         previsions_summary
       when :incomes
-        classify.keys.each { |k| show_a_summary(k) }
+        classify.keys.each { |k| show_a_summary(k, total: total, **kw) }
       when :level
         level_summary
       when -> (s) { classify.key?(s)}
@@ -2434,9 +2443,9 @@ class Simulator
         end
         case k
         when :income
-          do_summary(title,r, total: true, total_value: true)
+          do_summary(title,r, total: total, total_value: true, **kw)
         else
-          do_summary(title,r, headings: false)
+          do_summary(title,r, headings: false, **kw)
           if k==:stores
             h2("30 days coin summary")
             puts @__coin_summary
@@ -2456,7 +2465,7 @@ class Simulator
     #exemples: show_summary(monthly: true)
     #show_summary(:all, monthly: false)
     #show_summary(:monthly)
-    def show_summary(type=:default, *rest, **keys)
+    def show_summary(type=:default, *rest, options: {}, **keys)
       filter=lambda do |l|
         l.reject {|i| keys[i]==false}
       end
@@ -2477,7 +2486,7 @@ class Simulator
         end
       end.flatten.uniq.compact
       selection.each do |s|
-        show_a_summary(s)
+        show_a_summary(s, **options)
       end
     end
 
