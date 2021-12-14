@@ -2125,9 +2125,9 @@ class Simulator
 
   module Ordering
     #regroup equivalent ressources types
-    def classify_income
+    def classify_income(r=tally)
       order=@_order.dup
-      ressources=tally.keys
+      ressources=r.keys
       ressources2=order.values.flatten.sort.uniq
       missing=ressources-ressources2
       order[:extra]=missing unless missing.empty?
@@ -2218,7 +2218,7 @@ class Simulator
       s=""
       unless o.empty?
         post=""
-        post="K" if type==:gold or type==:xp
+        post="K" if %i(gold xp total_gold total_xp).include?(type)
         s << "#{header}: #{round(sum)}#{post}"
         plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
         if plusminuscondition
@@ -2266,11 +2266,11 @@ class Simulator
       summary=""
       full_ressources=total_ressources(ressources)
 
-      classify_income.each do |header, keys|
+      classify_income(tally(full_ressources)).each do |header, keys|
         s=""
         keys.each do |type|
           ss=""
-          if %i(god atier total_gold total_xp total_dust).include?(type)
+          if %i(god atier fodder total_gold total_xp total_dust).include?(type)
             if total
               head="-> #{type.to_s.capitalize.tr('_',' ')}"
               details=false
@@ -2281,7 +2281,7 @@ class Simulator
             ss=a_ressource_summary(type, full_ressources, **kw)
           end
           s+=ss+"\n" unless ss.empty?
-          s+="\n" if total and type.to_s =~/^total_/
+          s+="\n" if total and [:dia, :total_gold, :total_xp].include?(type)
         end
 
         unless s.empty?
@@ -2311,27 +2311,6 @@ class Simulator
         puts summary
       end
       r
-    end
-
-    #not used anymore
-    def do_total_summary(total, headings: true, title: "Total")
-      make_h2(title)
-      classify_income.each do |summary, keys|
-        s=""
-        keys.each do |type|
-          next unless %i(total_gold total_xp total_dust god fodder atier).include?(type)
-          sum=total[type]||0
-          s+="#{type}: #{round(sum)}\n" unless sum==0 or sum == 0.0
-        end
-        unless s.empty?
-          make_h3(summary) if headings
-          yield(summary) if block_given?
-          puts s
-          puts if headings
-        end
-      end
-      puts unless headings
-      total
     end
 
     def ff_summary
