@@ -89,7 +89,7 @@ if __FILE__ == $0
     level_ups_summary
 
     s.h0 "Income"
-    s.summary(daily: true, options: {total: :all})
+    s.summary(daily: true, options: {total: :all, conservative_ff: true})
     s.show_variables(verbose: true)
   end
 end

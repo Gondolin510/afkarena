@@ -20,6 +20,7 @@ monthly levels: 2, total_cost: 46753.34 gold + 338700 xp + 64489 dust, remains: 
 
 =============== One fast forward value [using 6'th ff costs 200 dia] ===============
 344.36 dia [301.13 gold=17.19 dia + 3541.11 xp=67.78 dia + 246.14 dust=63.24 dia + 45.86 poe=30.96 dia + 2.23 twisted=15.07 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.71 class_fragments=10.76 dia + 0.02 mythic_gear=9.27 dia + 0.02 t2=37.09 dia + 24 invigor=5.76 dia + 0.01 t3=17.86 dia + 0.01 t1_gear=8.33 dia + 0.01 t2_gear=19.44 dia + 2.5 shards=14.27 dia + 1.25 cores=14.27 dia]
+-> Conservative estimate: 163.29 dia [301.13 gold=17.19 dia + 3541.11 xp=67.78 dia + 246.14 dust=63.24 dia + 2.23 twisted=15.07 dia]
 
 =============== Income ===============
 ***** Base *****
