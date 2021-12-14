@@ -30,7 +30,7 @@ class Simulator
       # @hero_level = [240, 220, 200, 201, 205]
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
-      @nb_ff ||=6
+      @max_ff_cost ||= 200
 
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -227,6 +227,8 @@ class Simulator
 
   module Setup
     def setup_constants
+      @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
+
       @Cost={
         "T0 to T3": {t2: 2, t3: 1}, #T3 is 1T1+1T2+1T3, but with fos the t2 drop get converted into t1/t2 gear choice chests, so this means 2 t2 drop to get the t1+t2
         "SI+10": {silver_e: 240},
@@ -393,6 +395,7 @@ class Simulator
     def setup_internals
       setup_internal_variables
       get_vip
+      get_nb_ff
       get_fos
       get_subscription
       get_mult
@@ -1132,10 +1135,25 @@ class Simulator
         @_vip_gold_mult=3.0
       end
 
+      @_vip_xp_mult||=@_vip_gold_mult
+    end
+
+    def get_nb_ff(max_ff=@max_ff_cost)
+      unless @nb_ff
+        if @_unlock_ff
+          nb=0
+          @FF_cost.each_with_index do |c,i|
+            break if c>max_ff
+            nb=i
+          end
+          @nb_ff=nb+1
+        else
+          @nb_ff=0
+        end
+      end
       warn "[Warning] The number of ff #{@nb_ff} is greater than the max #{@_vip_max_ff} possible from your vip #{@vip}" if @nb_ff > @_vip_max_ff
       warn "[Warning] #{@nb_ff} fast forward requested, but fast forwards not yet unlocked" if @nb_ff>0 and !@_unlock_ff
-
-      @_vip_xp_mult||=@_vip_gold_mult
+      @nb_ff
     end
 
     def get_fos
@@ -1932,7 +1950,6 @@ class Simulator
 
   module Exchange
     def exchange_ff(nb_ff=@nb_ff)
-      @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
       if nb_ff > @FF_cost.length
         nb_ff=@FF_cost.length
         warn "[Warning] FF cost not implemented for #{@nb_ff} FF"
@@ -2314,7 +2331,7 @@ class Simulator
     end
 
     def ff_summary
-      h1 "Fast Forward Value"
+      h1 "One Fast Forward Value [using #{@nb_ff} ff costs #{@FF_cost[@nb_ff-1]} dia]"
       puts show_dia_value(one_ff, skip_null: true)
       puts
     end

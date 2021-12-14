@@ -1,4 +1,4 @@
-=============== Fast forward value ===============
+=============== One fast forward value [using 2 ff costs 50 dia] ===============
 186.39 dia [98.39 gold=5.62 dia + 540.75 xp=33.24 dia + 103.8 dust=37.4 dia + 35.17 poe=23.74 dia + 1.27 twisted=8.56 dia + 0.17 silver_e=3.2 dia + 0.08 gold_e=2.6 dia + 0.03 red_e=4.22 dia + 0.53 dura_fragments=3.05 dia + 0.02 mythic_gear=9.03 dia + 0.02 t2=43.74 dia + 48 invigor=11.52 dia + 0.08 shards=0.48 dia]
 
 =============== Income ===============
@@ -225,6 +225,7 @@ Max rc level+1: 3.52 days (8.52 by month)
 @dim_exchange: true
 @shop_items: [:dust, :purple_stones, :poe]
 @store_lab_items: [{:dim_exchange=>25}, :arthur, nil, :dim_emblems]
+@max_ff_cost: 200
 @tower_god: 300
 @monthly_stargazing: 0
 @monthly_tavern: 0
@@ -259,6 +260,7 @@ Max rc level+1: 3.52 days (8.52 by month)
 --------------- Fixed vars ---------------
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>100, :gold=>-500}, :shards=>{:shards=>20, :gold=>-2000, :max=>3}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
 @Misty_chests: {:chest1=>[{:gold_h=>288}, {:xp_h=>96}, {:dust_h=>96}], :chest2=>[{:dia=>1000}, {:guild_coins=>30000}, {:twisted=>400}], :chest3=>[{:purple_stones=>60}, {:blue_stones=>720}], :chest4=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest5=>[{:poe=>1000}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest6=>[{:t1=>1}, {:t2=>1}, {:t3=>1}], :chest7=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}], :chest8=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest9=>[{:hero_choice_chest=>1}], :chest10=>[{:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}, {:cores=>100}], :chest11=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest12=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest13=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest14=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest15=>[{:poe=>1000}, {:t1=>1}, {:t2=>1}, {:t3=>1}]}
+@FF_cost: [0, 50, 80, 100, 100, 200, 300, 400]
 @Cost: {:"T0 to T3"=>{:t2=>2, :t3=>1}, :"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"Challenger celo"=>{:challenger_coins=>250000}, :"Ascended challenger celo"=>{:challenger_coins=>3500000}, :"Ascended 4F"=>{:atier=>8, :fodder=>10}, :"Ascended god"=>{:god=>14}, :"RC slot"=>{:invigor=>5000}}
 @DiaValues: {}
 @StoreHero: {:fodder=>{:cost=>4800, :choice_fodder=>0.1111111111111111}, :purple_stone=>{:cost=>18000, :purple_stones=>60, :max=>4}, :blue_stone=>{:cost=>2400, :blue_stones=>60, :max=>10}, :twisted=>{:cost=>10000, :twisted=>100, :max=>16}, :garrison=>{:cost=>800, :garrison_stone=>1, :max=>66}, :dim_exchange=>{:cost=>4000, :dim_points=>1, :max=>40}}
@@ -290,7 +292,6 @@ Max rc level+1: 3.52 days (8.52 by month)
 @Monthly_hero_trial: 2
 @Hero_trial_rewards: {:gold=>2000, :dia=>300, :dust_h=>12, :xp_h=>12, :gold_h=>48, :blue_stones=>60, :purple_stones=>60}
 @Dura_nb: 7.0
-@FF_cost: [0, 50, 80, 100, 100, 200, 300, 400]
 @Shop_refresh_cost: [100, 100, 200, 200]
 
 --------------- Internal vars ---------------
