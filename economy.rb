@@ -2059,27 +2059,6 @@ class Simulator
       end.to_h
     end
 
-    def get_total(r=@ressources, **kw)
-      s=tally(r, **kw)
-      s=convert_ressources_h(s)
-      unless (s.keys & %i(god choice_god random_god fodder choice_fodder random_fodder atier random_atier wishlist_atier choice_atier)).empty?
-        s[:god]||=0
-        s[:god]+=(s[:choice_god]||0)+(s[:random_god]||0)
-        s[:fodder]||=0
-        s[:fodder]+=(s[:choice_fodder]||0)+(s[:random_fodder]||0)
-        s[:atier]||=0
-        s[:atier]+=(s[:random_atier]||0)+(s[:wishlist_atier]||0)+(s[:choice_atier]||0)
-      end
-      s
-    end
-    def clean_total
-      total=get_total
-      total[:gold]=total.delete(:total_gold)
-      total[:xp]=total.delete(:total_xp)
-      total[:dust]=total.delete(:total_dust)
-      total
-    end
-
     def total_gold(r)
       gold_h=r.fetch(:gold_h,0)
       gold_hg=r.fetch(:gold_hg,0) #this is affected only by vip
@@ -2100,6 +2079,46 @@ class Simulator
       r[:total_xp]=total_xp(r)
       r[:total_dust]=total_dust(r)
       r
+    end
+    def convert_ascended(r)
+      unless (r.keys & %i(god choice_god random_god fodder choice_fodder random_fodder atier random_atier wishlist_atier choice_atier)).empty?
+        r[:god]||=0
+        r[:god]+=(r[:choice_god]||0)+(r[:random_god]||0)
+        r[:fodder]||=0
+        r[:fodder]+=(r[:choice_fodder]||0)+(r[:random_fodder]||0)
+        r[:atier]||=0
+        r[:atier]+=(r[:random_atier]||0)+(r[:wishlist_atier]||0)+(r[:choice_atier]||0)
+      end
+      r
+    end
+
+    #convert gold_h and so on
+    def convert_ressources(r, clean: false)
+      r=r.dup
+      r=convert_ressources_h(r)
+      r=convert_ascended(r)
+      if clean
+        r[:gold]=r.delete(:total_gold)
+        r[:xp]=r.delete(:total_xp)
+        r[:dust]=r.delete(:total_dust)
+      end
+      r
+    end
+    def get_total(r=@ressources, clean: false, **kw)
+      s=tally(r, **kw)
+      s=convert_ressources(s, clean: clean)
+      s
+    end
+    def clean_total(r=@ressources, **kw)
+      get_total(r, clean: true, **kw)
+    end
+
+    def total_ressources(r=@ressources, **opts)
+      s={}
+      r.each do |k,v|
+        s[k]=convert_ressources(v, **opts)
+      end
+      s
     end
   end
   include Tally
@@ -2159,10 +2178,10 @@ class Simulator
 
   module Summary
     #total: also do the total percent (if percent) and show the converted output
-    def a_ressource_summary(type, ressources, total: false, plusminus: false, percent: false)
+    def a_ressource_summary(type, ressources, details: true, plusminus: false, percent: false, header: type)
       sum=pos_sum=neg_sum=0
       o=[]
-      if total
+      if percent
         total_res=get_total(ressources)
         pos_total=get_total(ressources, mode: 1)
       end
@@ -2198,40 +2217,42 @@ class Simulator
 
       s=""
       unless o.empty?
-        s << "#{type}: #{round(sum)}"
+        post=""
+        post="K" if type==:gold or type==:xp
+        s << "#{header}: #{round(sum)}#{post}"
         plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
         if plusminuscondition
           s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
         end
-        s << " [#{o.join}]"
+        s << " [#{o.join}]" if details
 
-        if percent and type==:gold and total and total_res[:total_gold]
+        if percent and type==:gold and total_res[:total_gold]
           s += " {#{round(pos_sum)}K gold=#{percent(pos_sum*1.0/pos_total[:total_gold])}}"
         elsif %i(gold_h gold_hg).include?(type)
           converted=total_gold(type => sum)
-          if percent and total and total_res[:total_gold]
+          if percent and total_res[:total_gold]
             s += " {#{round(converted)}K gold=#{percent(converted*1.0/pos_total[:total_gold])}}"
           else
             s += " {#{round(converted)}K gold}"
           end
         end
 
-        if percent and type==:xp and total and total_res[:total_xp]
+        if percent and type==:xp and total_res[:total_xp]
           s += " {#{round(pos_sum)}K xp=#{percent(pos_sum*1.0/pos_total[:total_xp])}}"
         elsif %i(xp_h xp_hg).include?(type)
           converted=total_xp(type => sum)
-          if percent and total and total_res[:total_xp]
+          if percent and total_res[:total_xp]
             s += " {#{round(converted)}K xp=#{percent(converted*1.0/pos_total[:total_xp])}}"
           else
             s += " {#{round(converted)}K xp}"
           end
         end
 
-        if percent and type==:dust and total and total_res[:total_dust]
+        if percent and type==:dust and total_res[:total_dust]
           s += " {#{round(pos_sum)}K dust=#{percent(pos_sum*1.0/pos_total[:total_dust])}}"
         elsif %i(dust_h dust_hg).include?(type)
           converted=total_dust(type => sum)
-          if percent and total and total_res[:total_dust]
+          if percent and total_res[:total_dust]
             s += " {#{round(converted)}K dust=#{percent(converted*1.0/pos_total[:total_dust])}}"
           else
             s += " {#{round(converted)}K dust}"
@@ -2241,47 +2262,26 @@ class Simulator
       return s
     end
 
-    def make_summary(ressources, headings: true, total: false, **kw)
+    def make_summary(ressources=@ressources, headings: true, total: false, **kw)
       summary=""
-      if total
-        total_res=get_total(ressources)
-      end
+      full_ressources=total_ressources(ressources)
 
       classify_income.each do |header, keys|
         s=""
         keys.each do |type|
-          if total
-            if type==:choice_god and total_res[:god]
-              s+="-> God: #{round(total_res[:god])}\n"
+          ss=""
+          if %i(god atier total_gold total_xp total_dust).include?(type)
+            if total
+              head="-> #{type.to_s.capitalize.tr('_',' ')}"
+              details=false
+              details=true if ["full", "all"].include?(total.to_s)
+              ss=a_ressource_summary(type, full_ressources, details: details, header: head, **kw)
             end
-            if type==:choice_atier and total_res[:atier]
-              s+="-> Atier: #{round(total_res[:atier])}\n"
-            end
-            #fodder == random_fodder
+          else
+            ss=a_ressource_summary(type, full_ressources, **kw)
           end
-
-          ss=a_ressource_summary(type, ressources, total: total, **kw)
           s+=ss+"\n" unless ss.empty?
-
-          if total
-            s<< "\n" if type==:dia
-            if type==:gold_hg and total_res[:total_gold]
-              p total
-              s+="-> Total gold: #{round(total_res[:total_gold])}K\n"
-              if total == :all
-                ss=a_ressource_summary(:total_gold, total_res, total: total, **kw)
-                s+=ss+"\n" unless ss.empty?
-              else
-                s+="\n"
-              end
-            end
-            if type==:xp_hg and total_res[:total_xp]
-              s+="-> Total xp: #{round(total_res[:total_xp])}K\n\n"
-            end
-            if type==:dust_hg and total_res[:total_dust]
-              s+="-> Total dust: #{round(total_res[:total_dust])}\n"
-            end
-          end
+          s+="\n" if total and type.to_s =~/^total_/
         end
 
         unless s.empty?
@@ -2296,7 +2296,7 @@ class Simulator
     end
 
     #kw: total: false, plusminus: false, percent: false
-    def do_summary(title, r, total_value: false, multiplier: 1, **kw)
+    def do_summary(title, r=@ressources, total_value: false, multiplier: 1, **kw)
       if multiplier != 1
         r=timeframe(r, multiplier)
       end
