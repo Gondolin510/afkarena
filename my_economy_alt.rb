@@ -11,7 +11,7 @@ s=Simulator.new do
 
   @player_level=102
   @vip=5
-  @nb_ff=2
+  @max_ff_cost=80
   @subscription=true
 
   @tr = {twisted: 160} #gold 1

@@ -30,7 +30,7 @@ class Simulator
       # @hero_level = [240, 220, 200, 201, 205]
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
-      @max_ff_cost ||= 200
+      @max_ff_cost ||= 200 #we automatically set @nb_ff from this (taking into account vip)
 
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -1146,7 +1146,7 @@ class Simulator
             break if c>max_ff
             nb=i
           end
-          @nb_ff=nb+1
+          @nb_ff=[nb+1, @_vip_max_ff].min
         else
           @nb_ff=0
         end
@@ -2331,7 +2331,7 @@ class Simulator
     end
 
     def ff_summary
-      h1 "One Fast Forward Value [using #{@nb_ff} ff costs #{@FF_cost[@nb_ff-1]} dia]"
+      h1 "One Fast Forward Value [using #{@nb_ff}'th ff costs #{@nb_ff == 0 ? 0 : @FF_cost[@nb_ff-1]} dia]"
       puts show_dia_value(one_ff, skip_null: true)
       puts
     end

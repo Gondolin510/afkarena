@@ -7,7 +7,7 @@ s=Simulator.new do
   @stage = "37-01" #(default to 38-01)
   @hero_level= 350 #(default to 450)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
-  @nb_ff=6 #ff by day (default)
+  @max_ff_cost=200 #up to 6 ff by day if possible from vip (default)
   @vip=10 #vip level (default)
   @subscription=false # (default)
 
@@ -30,7 +30,7 @@ Simulator.new do
   @stage = "37-01" #(default to 38-01)
   @hero_level= 350 #(default to 500)
   @player_level=180 #for fos (default), 180 is max fos for gold/xp/dust mult
-  @nb_ff=6 #ff by day (default)
+  @max_ff_cost=100
   @vip=10 #vip level (default)
   @subscription=false # (default)
 
@@ -127,7 +127,7 @@ Simulator.new do
   @hero_level = 500
   @player_level=300
   @vip =16
-  @nb_ff =7 #up to 300 dia
+  @max_ff_cost =300 #up to 300 dia
   @subscription =true
 
   @tower_kt = 900 #multi at 600
@@ -167,7 +167,7 @@ Simulator.new do
   @vip=0
   @hero_level= [1,1,1,1,1]
   @player_level=1
-  @nb_ff=1
+  @max_ff_cost=80 #we will have less ff than this value
 end.summary
 
 puts "==================== Example of detailed customisation ===================="
@@ -324,7 +324,7 @@ s=Simulator.new do
   @hero_level = 450
   @player_level =180
   @vip =10
-  @nb_ff =6
+  @max_ff_cost =200
 
   @tower_kt = 550
   @tower_4f = 280
