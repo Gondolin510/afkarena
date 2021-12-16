@@ -147,6 +147,7 @@ module Value
     end
     return sum
   end
+
   def detailed_dia_value(items, skip_null: false, **kw)
     o=[]; sum=0
     values=items_value(**kw)
@@ -162,6 +163,25 @@ module Value
     total, o=detailed_dia_value(items, **kw)
     s="#{round(total)} dia"
     s+=" [#{o.join(' + ')}]" if details
+  end
+
+  def dia_value_h(items, **kw)
+    r={}
+    values=items_value(**kw)
+    items.each do |k,v|
+      value=v*(values[k]||0)
+      r[k]=value
+    end
+    r
+  end
+  def sort_dia_value(items, pretty: true, **kw)
+    r=dia_value_h(items,**kw).sort {|a,b| a[1] <=> b[1]}.reverse
+    if pretty
+      r.each do |k,v|
+        puts "- #{k}: #{round(v)} dia"
+      end
+    end
+    r
   end
 
   def blue_stone(n=60)
@@ -311,7 +331,7 @@ if __FILE__ == $0
 
   puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10), summons: false)}"
   # 10 summons value: 96.14 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=0.0 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
-  # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+  # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia] {with hero coins included}
   
   #puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10))}"
   ## 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
@@ -322,3 +342,19 @@ if __FILE__ == $0
   # puts "*** Level stats: ***"
   # puts Data.get_hero_level_stats
 end
+
+=begin
+load "value.rb"
+Value.sort_dia_value({red_e: 2, gold_e: 6, silver_e: 10, poe: 400, blue_stones: 120, shards: 40, twisted: 40, faction_scrolls: 1, xp_h: 32, dust_h: 32, gold: 2000})
+- dust_h: 400 dia
+- blue_stones: 312 dia
+- faction_scrolls: 270 dia
+- twisted: 270 dia
+- poe: 270 dia
+- red_e: 270 dia
+- xp_h: 256 dia
+- shards: 228.39 dia
+- silver_e: 191.85 dia
+- gold_e: 187.05 dia
+- gold: 114.19 dia
+=end
