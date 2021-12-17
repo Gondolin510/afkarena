@@ -357,4 +357,19 @@ Value.sort_dia_value({red_e: 2, gold_e: 6, silver_e: 10, poe: 400, blue_stones: 
 - silver_e: 191.85 dia
 - gold_e: 187.05 dia
 - gold: 114.19 dia
+Value.sort_dia_value({cores: 75, stargazers: 3, scrolls: 5, red_e: 8, gold_e: 24, silver_e: 40, poe: 1500, blue_stones: 480, shards: 150, twisted: 150, faction_scrolls: 3, xp_h: 120, dust_h: 120, gold: 7500})
+- dust_h: 1500 dia
+- stargazers: 1500 dia
+- scrolls: 1350 dia
+- blue_stones: 1248 dia
+- red_e: 1080 dia
+- poe: 1012.5 dia
+- twisted: 1012.5 dia
+- xp_h: 960 dia
+- shards: 856.46 dia
+- cores: 856.03 dia
+- faction_scrolls: 810 dia
+- silver_e: 767.39 dia
+- gold_e: 748.2 dia
+- gold: 428.23 dia
 =end

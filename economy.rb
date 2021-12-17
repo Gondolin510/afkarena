@@ -408,7 +408,7 @@ class Simulator
       @_order={
         base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
         upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
-        gear: %i(t2 t3 mythic_gear t1_gear t2_gear reset_scrolls),
+        gear: %i(t1 t2 t3 mythic_gear t1_gear t2_gear reset_scrolls),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
         summons: %i(purple_stones blue_stones faction_scrolls scrolls friend_summons hcp hero_choice_chest stargazing stargazers),
         hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
@@ -416,7 +416,7 @@ class Simulator
         misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
       }.merge(@_order || {})
 
-      @_classify= {income: %i(idle ff board guild oak_inn tr cursed quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
+      @_classify= {income: %i(idle ff stage_clear board guild oak_inn tr cursed quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
@@ -796,6 +796,7 @@ class Simulator
       res={}
       res[:idle]=idle
       res[:ff]=ff
+      res[:stage_clear]=stage_clear
       res[:board]=bounties if @_unlock_board
       res[:guild]=guild if @_unlock_guild
       res[:oak_inn]=oak_inn if @_unlock_oak_inn
@@ -1036,7 +1037,6 @@ class Simulator
 
       @_unlock_afk_legendary=true if stage > "11-18"
       @_unlock_afk_mythic=true if stage > "16-11"
-      @_unlock_afk_mythic=true if stage > "16-11"
       @_unlock_afk_silver_e=true if stage > "16-40"
       @_unlock_afk_gold_e=true if stage > "17-40"
       @_unlock_afk_red_e=true if stage > "18-40"
@@ -1257,7 +1257,6 @@ class Simulator
 
     def get_raw_idle_hourly
       # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
-      #todo: we may need to mult gear_hourly by 2 to account for stage rewards
       
       # @_Idle_hourly ||={
       #   poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
@@ -1268,6 +1267,14 @@ class Simulator
       #   t2_gear: t_gear_hourly,
       #   invigor: 6, dura_fragments: 0.267,
       # } #the last of these items to max out is poe at Chap 33
+
+      @_raw_idle_hourly ||= get_idle(@stage)
+      if @_unlock_t1 and !@_unlock_t2 #t2 correspond to t1 here
+        t1=@_raw_idle_hourly.delete(:t2)
+        @_raw_idle_hourly[:t1]=t1
+      end
+      @_raw_idle_hourly[:t1]||=0
+      @_raw_idle_hourly[:t2]||=0
 
       @_raw_idle_hourly ||= get_idle(@stage)
       t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
@@ -1292,6 +1299,7 @@ class Simulator
 
       @_idle_hourly=@_raw_idle_hourly.dup
       @_idle_hourly[:mythic_gear] *= @_mythic_mult
+      @_idle_hourly[:t1] *= @_mythic_mult
       @_idle_hourly[:t2] *= @_mythic_mult
       @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
       @_idle_hourly[:t2_gear] *= @_fos_t2_gear_bonus
@@ -1326,6 +1334,19 @@ class Simulator
     end
     def real_afk_dust=(v)
       @_raw_idle_hourly[:dust]=v
+    end
+
+    def stage_clear
+      # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
+      gear_hourly=1.0/7.0 #around 1 by week
+      r={}
+      r[:mythic_gear]=gear_hourly if @_unlock_afk_mythic
+      if @_unlock_t2
+        r[:t2]=gear_hourly
+      elsif @_unlock_t1 #we either get t1 or t2 but not both
+        r[:t1]=gear_hourly
+      end
+      r
     end
 
   end
