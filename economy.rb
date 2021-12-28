@@ -234,7 +234,7 @@ class Simulator
       @FF_cost=[0, 50, 80, 100, 100, 200, 300, 400]
 
       @Cost={
-        "T0 to T3": {t2: 2, t3: 1}, #T3 is 1T1+1T2+1T3, but with fos the t2 drop get converted into t1/t2 gear choice chests, so this means 2 t2 drop to get the t1+t2
+        #"T0 to T3": {t2: 2, t3: 1}, #T3 is 1T1+1T2+1T3, but with fos the t2 drop get converted into t1/t2 gear choice chests, so this means 2 t2 drop to get the t1+t2
         "SI+10": {silver_e: 240},
         "SI+20": {gold_e: 240},
         "SI+30": {red_e: 300},
@@ -247,13 +247,14 @@ class Simulator
         #90 pulls = 1 mythic card, so 90 pulls = 1+ 90*0.0407 = 4.663 mythic furns
         "mythic furn (with cards)": {poe: 90*300/(1+90*0.0407)},
         "9F (with cards)": {poe: 167000},
-        "Challenger celo": {challenger_coins: 250000},
-        "Ascended challenger celo": {challenger_coins: 250000*14},
-
-        "Ascended 4F": { atier: 8, fodder: 10},
-        "Ascended god": { god: 14},
         "RC slot": { invigor: 5000},
       }.merge(@Cost||{})
+      @AscensionCost={
+        "Challenger celo": {challenger_coins: 250000},
+        "Ascended challenger celo": {challenger_coins: 250000*14},
+        "Ascended 4F": { atier: 8, fodder: 10},
+        "Ascended god": { god: 14},
+      }
       @DiaValues ||= {}.merge(@DiaValues || {}) #user supplied diamond values
 
       @Shop = {
@@ -978,6 +979,9 @@ class Simulator
     def ressources_cost
       @Cost
     end
+    def ascension_cost
+      @AscensionCost
+    end
 
     def all_ressources_cost
       r={level: current_level_cost}
@@ -1365,11 +1369,6 @@ class Simulator
       @_idle_hourly[:mythic_gear] *= @_mythic_mult
       @_idle_hourly[:t1] *= @_mythic_mult
       @_idle_hourly[:t2] *= @_mythic_mult
-      t2=@_idle_hourly.delete(:t2)
-      t1t2_chest=t2*@_fos_t2_convert
-      t2=t2*(1-@_fos_t2_convert)
-      @_idle_hourly[:t2]=t2
-      @_idle_hourly[:t1t2_chest]=t1t2_chest
 
       @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
       @_idle_hourly[:t2_gear] *= @_fos_t2_gear_bonus
@@ -1379,6 +1378,17 @@ class Simulator
         xp: real_afk_xp*@_xp_mult + @_fos_base_xp/24.0,
         dust: real_afk_dust*@_dust_mult + @_fos_base_dust/24.0
       })
+      @_idle_hourly=convert_t2chests(@_idle_hourly)
+    end
+
+    def convert_t2chests(r)
+      r=r.dup
+      t2=r.delete(:t2)
+      t1t2_chest=t2*@_fos_t2_convert
+      t2=t2*(1-@_fos_t2_convert)
+      r[:t2]=t2
+      r[:t1t2_chest]=t1t2_chest
+      r
     end
 
     def raw_idle_hourly
@@ -1416,7 +1426,7 @@ class Simulator
       elsif @_unlock_t1 #we either get t1 or t2 but not both
         r[:t1]=gear_hourly
       end
-      r
+      convert_t2chests(r)
     end
 
     #convert purple and gold chests
@@ -1425,6 +1435,7 @@ class Simulator
       #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
       purple_chests=r.delete(:purple_chests)
       r[:dust_h]=purple_chests*16.0
+      # TODO: gold chests
       r
     end
 
@@ -2494,19 +2505,13 @@ class Simulator
     end
 
     def ascended_summary
-    end
-
-    def previsions_summary
       total=clean_total
-
-      h1 "30 days previsions summary"
-      #puts "Extra rc levels: #{round((ascended+ascended_god)*5)}"
+      h1 "30 days ascension summary"
       nb_ascended=0
-
-      ressources_cost.each do |k,v|
-
+      ascension_cost.each do |k,v|
         o=cost_summary(v, total)
         puts "#{k}: #{o}"
+        #TODO: fodders are not equiprobable, lb have more fodders
 
         if ["Ascended challenger celo", "Ascended 4F", "Ascended god"].include?(k.to_s)
           _res_buy, buy, _remain=spending(v, total)
@@ -2516,10 +2521,6 @@ class Simulator
             puts
           end
         end
-        #puts "-> #{level_cost_summary}" if k.to_s=="level"
-
-        #puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
-        puts if ["SI+30", "e30 to e65", "9F (with cards)"].include?(k.to_s)
       end
 
       increase_rc_level=5 #one ascended = 5 levels
@@ -2531,6 +2532,20 @@ class Simulator
       puts
     end
 
+    def previsions_summary
+      total=clean_total
+
+      h1 "30 days previsions summary"
+      #TODO: t3 upgrades
+      ressources_cost.each do |k,v|
+        o=cost_summary(v, total)
+        puts "#{k}: #{o}"
+        #puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
+        puts if ["SI+30", "e30 to e65", "9F (with cards)"].include?(k.to_s)
+      end
+      puts
+    end
+
     def show_a_summary(summary, total: true, **kw)
       conservative=kw.delete(:conservative_ff)
       case summary
@@ -2539,6 +2554,8 @@ class Simulator
         do_summary("Full daily ressources", @ressources, total: total, plusminus: true, percent: true, **kw)
       when :monthly
         do_summary("Full monthly ressources", @ressources, total: total, multiplier: 30, plusminus: true, percent: true, **kw)
+      when :ascended
+        ascended_summary
       when :prevision
         previsions_summary
       when :incomes
@@ -2573,10 +2590,10 @@ class Simulator
     end
 
     def all_summaries
-      [:ff, :incomes, :daily, :monthly, :level, :prevision]
+      [:ff, :incomes, :daily, :monthly, :level, :ascended, :prevision]
     end
     def default_summaries
-      [:ff, :incomes, :monthly, :level, :prevision]
+      [:ff, :incomes, :monthly, :level, :ascended, :prevision]
     end
 
     #exemples: show_summary(monthly: true)
