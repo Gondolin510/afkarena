@@ -710,6 +710,13 @@ class Simulator
       add_to_hash(r, {gold: 5000, faction_scrolls: 3}) if level >= 220
       add_to_hash(r, {dust: 1000, scrolls: 5, gold_chests: 1}) if level >= 230
       add_to_hash(r, {xp: 5000, faction_scrolls: 3}) if level >= 240
+      add_to_hash(r, {gold: 5000, scrolls: 5, gold_chests: 1, t1t2_chest: 1}) if level >= 250
+
+      add_to_hash(r, {dust: 1000, faction_scrolls: 3}) if level >= 260
+      add_to_hash(r, {xp: 5000, scrolls: 5}) if level >= 270
+      add_to_hash(r, {gold: 5000, faction_scrolls: 3, gold_chests: 1}) if level >= 280
+      add_to_hash(r, {dust: 1000, scrolls: 5}) if level >= 290
+      add_to_hash(r, {xp: 5000, stargazers: 5, gold_chests: 1, t1t2_chest: 1}) if level >= 300
 
       convert_chests(r) #convert purple and gold chests
     end
@@ -1430,12 +1437,15 @@ class Simulator
     end
 
     #convert purple and gold chests
+    #TODO: better way to customize this than to sub this function?
     def convert_chests(r)
       r=r.dup
       #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
       purple_chests=r.delete(:purple_chests)
-      r[:dust_h]=purple_chests*16.0
-      # TODO: gold chests
+      add_to_hash(r, {dust_h: purple_chests*16.0}) if purple_chests
+      # gold chests: 200 shards, 2000 poe, 200 twisted, 10 red_e, 40 silver_e, 25 yellow_e
+      gold_chests=r.delete(:gold_chests)
+      add_to_hash(r, {twisted: gold_chests*200}) if gold_chests
       r
     end
 
