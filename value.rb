@@ -208,13 +208,13 @@ module Value
     # 400 pulls = 20 red 110 gold 280 purple 4 purple cards
     # 1 common_summon= 5 dust + 160 hero coins
     common_summons=n*0.5169
-    {random_fodder: n * 0.4370/9.0,
+    { random_fodder: n * 0.4370/9.0,
       wishlist_atier: n * 0.0461,
       random_god: n*0.002,
       dust: common_summons*5,
       hero_coins: common_summons*160,
       #
-      random_atier: n/100.0,
+      faction_purple_card: n/100.0, #purple card with faction choice
       red_e: n*20/400.0,
       gold_e: 110/400.0,
       silver_e: 280/400.0}
@@ -229,6 +229,8 @@ module Value
     r=tavern_summon(n)
     wl=r.delete(:wishlist_atier)
     r[:faction_atier]=wl
+    fodder=r.delete(:random_fodder)
+    r[:faction_fodder]=fodder
     r
   end
   def stargaze(n=1)
@@ -237,8 +239,8 @@ module Value
     ratio=(1.0-real_proba-diamond_proba)/(1.0-0.02-diamond_proba)
     #p ratio
     { choice_god: n/40.0,
-      random_atier: n * 4*ratio*0.008, #purple card
-      random_fodder: n * 4*ratio*0.0225/9.0, #blue card
+      purple_card: n * 4*ratio*0.008, #purple card
+      blue_card: n * 4*ratio*0.0225/9.0, #blue card
       #
       dia: n*30000*diamond_proba,
       mythic_gear: n * 12*ratio*0.0007,

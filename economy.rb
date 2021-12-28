@@ -66,8 +66,12 @@ class Simulator
       @tr_guild ||= {dia: 100, twisted: 420/70} #a guildie is in fabled
 
       ### cursed realm
-      @cursed_realm ||= {} #not in cursed
-      # @cursed_realm = get_cursed_realm(30) #in cursed and in top 30%
+      @cursed_realm ||= get_cursed_realm(nil) #not in cursed
+      # @cursed_realm ||= get_cursed_realm(30) #in cursed and in top 30%
+
+      ### Temporal rift (only if unlocked)
+      @temporal_rift_level ||=0
+      @temporal_rift ||= get_temporal_rift #default to level=@temporal_rift_level
 
       ### arena [only used when arena/lc/lct unlocks]
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
@@ -378,6 +382,8 @@ class Simulator
         blue_stones: 60, purple_stones: 60
       }.merge(@Hero_trial_rewards||{})
 
+      @Temporal_duration=90
+
       @Dura_nb ||=7.0
 
       #17 LB, 17 Maulers, 16 wilders, 17 GB, 11 Celo, 10 Hypos, 11 dims
@@ -411,19 +417,21 @@ class Simulator
 
 
     def setup_internal_variables
+      @Summon_Types=%i(fodder random_fodder faction_blue_card blue_card atier choice_atier faction_atier wishlist_atier random_atier faction_purple_card purple_card god choice_god random_god)
+
       # for pretty printing and grouping ressources
       @_order={
         base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
         upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
-        gear: %i(t1 t2 t3 mythic_gear t1_gear t2_gear reset_scrolls),
+        gear: %i(t1 t2 t3 t1t2_chest t1t2t3_chest mythic_gear t1_gear t2_gear reset_scrolls),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
         summons: %i(purple_stones blue_stones faction_scrolls scrolls friend_summons hcp hero_choice_chest stargazing stargazers),
-        hero_summons: %i(fodder random_fodder atier choice_atier wishlist_atier random_atier god choice_god random_god),
+        hero_summons: @Summon_Types,
         dimensional: %i(garrison_stone dim_points dim_gear dim_emblems),
         misc: %i(dura_fragments class_fragments dura_tears invigor arena_tickets),
       }.merge(@_order || {})
 
-      @_classify= {income: %i(idle ff stage_clear board guild oak_inn tr cursed quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
+      @_classify= {income: %i(idle ff stage_clear board guild oak_inn tr cursed temporal quests merchants friends arena lct lc lab misty regal tr_bounties coe hero_trial guild_hero_trial vow monthly_card deluxe_monthly_card),
        exchange: %i(ff_cost shop dura_fragments_sell),
        summons: %i(wishlist hcp stargazing hero_chest stones tavern stargaze),
        stores: %i(hero_store guild_store lab_store challenger_store),
@@ -671,6 +679,40 @@ class Simulator
       return r
     end
 
+    def get_temporal_rift(level=@temporal_rift_level||0)
+      r={}
+      add_to_hash(r, {gold: 5000, blue_stones: 90}) if level >= 10
+      add_to_hash(r, {dust: 1000, purple_stones: 15}) if level >= 20
+      add_to_hash(r, {xp: 5000, blue_stones: 90, purple_chests: 1}) if level >= 30
+      add_to_hash(r, {gold: 5000, purple_stones: 15}) if level >= 40
+      add_to_hash(r, {dust: 1000, blue_stones: 90, purple_chests: 1, t1t2_chest: 1}) if level >= 50
+
+      add_to_hash(r, {xp: 5000, purple_stones: 15}) if level >= 60
+      add_to_hash(r, {gold: 5000, blue_stones: 90}) if level >= 70
+      add_to_hash(r, {dust: 1000, purple_stones: 15, purple_chests: 1}) if level >= 80
+      add_to_hash(r, {xp: 5000, blue_stones: 90}) if level >= 90
+      add_to_hash(r, {gold: 5000, stargazers: 5, purple_chests: 1, t1t2_chest: 1}) if level >= 100
+
+      add_to_hash(r, {dust: 1000, purple_stones: 30}) if level >= 110
+      add_to_hash(r, {xp: 5000, blue_stones: 120}) if level >= 120
+      add_to_hash(r, {gold: 5000, purple_stones: 30, purple_chests: 1}) if level >= 130
+      add_to_hash(r, {dust: 1000, blue_stones: 120}) if level >= 140
+      add_to_hash(r, {xp: 5000, purple_stones: 30, purple_chests: 1, t1t2_chest: 1}) if level >= 150
+
+      add_to_hash(r, {gold: 5000, blue_stones: 120}) if level >= 160
+      add_to_hash(r, {dust: 1000, purple_stones: 30}) if level >= 170
+      add_to_hash(r, {xp: 5000, blue_stones: 120, purple_chests: 1}) if level >= 180
+      add_to_hash(r, {gold: 5000, purple_stones: 30}) if level >= 190
+      add_to_hash(r, {dust: 1000, stargazers: 5, purple_chests: 1, t1t2_chest: 1}) if level >= 200
+
+      add_to_hash(r, {xp: 5000, scrolls: 5}) if level >= 210
+      add_to_hash(r, {gold: 5000, faction_scrolls: 3}) if level >= 220
+      add_to_hash(r, {dust: 1000, scrolls: 5, gold_chests: 1}) if level >= 230
+      add_to_hash(r, {xp: 5000, faction_scrolls: 3}) if level >= 240
+
+      convert_chests(r) #convert purple and gold chests
+    end
+
     def get_monthly_card(type=:dust)
       purple=case type
       when :shard; {shards: 15}
@@ -809,6 +851,7 @@ class Simulator
       res[:oak_inn]=oak_inn if @_unlock_oak_inn
       res[:tr]=tr if @_unlock_tr
       res[:cursed]=cursed_realm if @cursed_realm and not @cursed_realm.empty?
+      res[:temporal]=temporal_rift if @_unlock_temporal and @temporal_rift and not @temporal_rift.empty?
       res[:quests]=quests
       res[:merchants]=merchants
       res[:friends]=friends
@@ -987,7 +1030,7 @@ class Simulator
       @_shop_discount =0.7 if stage >= "33-01" #is that correct?
       #todo adjust depending on stage progression
 
-      @_unlock_ff=true if stage > "03-36" #not used
+      @_unlock_ff=true if stage > "03-36"
       @_unlock_guild=true if stage >"02-20"
       @_unlock_arena=true if stage >"02-28"
       @_unlock_board=true if stage >"03-12"
@@ -996,6 +1039,7 @@ class Simulator
       @_unlock_coe=true if stage >"08-20"
       @_unlock_lct=true if stage >"09-20"
       @_unlock_tr=true if stage >"12-40" #and twisted bounties
+      @_unlock_temporal=true if stage >"19-40"
       @_unlock_oak_inn=true if stage >"04-40" #we unlock our own oak inn at 17-40, but can access friends ones at 04-40
       @_unlock_misty=true if stage >"16-40"
       @_unlock_mercs=true if stage > "06-40"
@@ -1221,6 +1265,19 @@ class Simulator
       @_fos_invigor_bonus +=1 if [*@tower_god].min >= 200
       @_fos_invigor_bonus +=1 if [*@tower_god].min >= 300
 
+      @_fos_t2_convert=0 #proba a t2 stones get converted into a chest
+      @_fos_t2_convert+=0.25 if[*@tower_kt].min >= 400
+      @_fos_t2_convert+=0.25 if[*@tower_kt].min >= 450
+      @_fos_t2_convert+=0.25 if[*@tower_kt].min >= 500
+      @_fos_t2_convert+=0.25 if[*@tower_kt].min >= 550
+
+      @_fos_gear_convert=0 #proba an afk gear gets a faction bonus, not used
+      @_fos_gear_convert+=0.25 if[*@tower_4f].min >= 40
+      @_fos_gear_convert+=0.25 if[*@tower_4f].min >= 80
+      @_fos_gear_convert+=0.25 if[*@tower_4f].min >= 120
+      @_fos_gear_convert+=0.25 if[*@tower_4f].min >= 160
+
+
       @_fos_daily_quest = {}
       @_fos_daily_quest[:dia]=50 if @stage > "16-40"
       @_fos_daily_quest[:dust_h]=2 if @stage > "20-60"
@@ -1308,6 +1365,12 @@ class Simulator
       @_idle_hourly[:mythic_gear] *= @_mythic_mult
       @_idle_hourly[:t1] *= @_mythic_mult
       @_idle_hourly[:t2] *= @_mythic_mult
+      t2=@_idle_hourly.delete(:t2)
+      t1t2_chest=t2*@_fos_t2_convert
+      t2=t2*(1-@_fos_t2_convert)
+      @_idle_hourly[:t2]=t2
+      @_idle_hourly[:t1t2_chest]=t1t2_chest
+
       @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
       @_idle_hourly[:t2_gear] *= @_fos_t2_gear_bonus
       @_idle_hourly[:invigor] *= (1+@_fos_invigor_bonus)
@@ -1356,6 +1419,15 @@ class Simulator
       r
     end
 
+    #convert purple and gold chests
+    def convert_chests(r)
+      r=r.dup
+      #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
+      purple_chests=r.delete(:purple_chests)
+      r[:dust_h]=purple_chests*16.0
+      r
+    end
+
   end
   include SetupHelpers
 
@@ -1394,6 +1466,10 @@ class Simulator
 
     def cursed_realm
       mult_hash(@cursed_realm, 1.0/7) #open every week
+    end
+
+    def temporal_rift
+      mult_hash(@temporal_rift, 1.0/@Temporal_duration)
     end
 
     def quests
@@ -1699,9 +1775,7 @@ class Simulator
           @_average_vow_rewards[k]= (@Vows.values.map {|i| i[k]||0}).sum / (@Vows.keys.length*1.0)
         end
 
-        #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
-        purple_chests=@_average_vow_rewards.delete(:purple_chests)
-        @_average_vow_rewards[:dust_h]=purple_chests*16.0
+        @_average_vow_rewards=convert_chests(@_average_vow_rewards) #convert purple chests
 
         # p @_average_vow_rewards
       end
@@ -2064,14 +2138,15 @@ class Simulator
       purple_summons=purple_stone(total[:purple_stones]||0)
       blue_summons=blue_stone(total[:blue_stones]||0)
       friend_summons=friend_summon(total[:friend_summons]||0)
-      wl_summons=tavern_summon((total[:faction_scrolls]||0)+(total[:scrolls]||0)+(total[:wishlist]||0))
+      wl_summons=tavern_summon((total[:scrolls]||0)+(total[:wishlist]||0))
+      faction_summons=faction_summon(total[:faction_scrolls]||0)
       hcp_summons=choice_summon((total[:hcp]||0))
       stargaze_summons=stargaze((total[:stargazing]||0) + (total[:stargazers]||0))
 
       r={}
       r[:hero_chest]={choice_atier: hero_chest}
       r[:stones]=tally({purple: purple_summons, blue: blue_summons})
-      r[:tavern]=tally({friends: friend_summons, wl: wl_summons, hcp: hcp_summons})
+      r[:tavern]=tally({friends: friend_summons, wl: wl_summons, faction_wl: faction_summons, hcp: hcp_summons})
       r[:stargaze]=stargaze_summons
       r
     end
@@ -2126,13 +2201,14 @@ class Simulator
       r
     end
     def convert_ascended(r)
-      unless (r.keys & %i(god choice_god random_god fodder choice_fodder random_fodder atier random_atier wishlist_atier choice_atier)).empty?
+      unless (r.keys & @Summon_Types).empty?
         r[:god]||=0
         r[:god]+=(r[:choice_god]||0)+(r[:random_god]||0)
         r[:fodder]||=0
-        r[:fodder]+=(r[:choice_fodder]||0)+(r[:random_fodder]||0)
+        r[:fodder]+=(r[:choice_fodder]||0)+(r[:random_fodder]||0)+(r[:faction_fodder]||0)+(r[:blue_card]||0)+(r[:faction_blue_card]||0)
         r[:atier]||=0
-        r[:atier]+=(r[:random_atier]||0)+(r[:wishlist_atier]||0)+(r[:choice_atier]||0)
+        r[:atier]+=(r[:random_atier]||0)+(r[:wishlist_atier]||0)+(r[:choice_atier]||0)+(r[:faction_atier]||0)+(r[:purple_card]||0)+(r[:faction_purple_card]||0) #TODO: a purple card can give a fodder
+
       end
       r
     end
@@ -2415,6 +2491,9 @@ class Simulator
       puts
       # r+=levels.to_s
       # r+=rest.to_s
+    end
+
+    def ascended_summary
     end
 
     def previsions_summary

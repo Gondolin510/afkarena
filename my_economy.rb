@@ -15,6 +15,7 @@ class MySimulator < Simulator
 
       #dia 5 at floor 360
       @tr= {twisted: 257, poe: 905}
+      @temporal_rift_level = 150
 
       @gh_team_wrizz_gold = 948
       @gh_team_soren_gold = 978
