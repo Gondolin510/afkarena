@@ -11,6 +11,10 @@ module Helpers
     "#{(r*100).round}%"
   end
 
+  def non_zero(r)
+    r.abs >= 1e-10
+  end
+
 
   def add_to_hash(r,*hashes, multiplier: 1)
     hashes.each do |h|
@@ -219,6 +223,12 @@ module Value
     r=tavern_summon(n)
     wl=r.delete(:wishlist_atier)
     r[:choice_atier]=wl
+    r
+  end
+  def faction_summon(n=1)
+    r=tavern_summon(n)
+    wl=r.delete(:wishlist_atier)
+    r[:faction_atier]=wl
     r
   end
   def stargaze(n=1)

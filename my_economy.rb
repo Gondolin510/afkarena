@@ -58,25 +58,25 @@ A-tier vs fodder ratio: we need 8 a-tier E and 20 fodder E to ascend an hero, ie
 
 def level_ups_summary(without_dust=:auto, with_dust=:auto)
   s=MySimulator.new
-  s.level_summary "Without dust"
+  s.level_summary "Without dust chests"
   without_dust = s.possible_levelups if without_dust == :auto
 
   s=MySimulator.new do
     @monthly_levelup = without_dust
   end
-  s.level_summary "Without dust and #{without_dust} monthly level ups for tower"
+  s.level_summary "Without dust chests and #{without_dust} monthly level ups for tower"
 
   s=MySimulator.new do
     @shop_items = get_shop_items(:dust_h)
   end
-  s.level_summary "With dust"
+  s.level_summary "With dust chests"
   with_dust = s.possible_levelups if with_dust == :auto
 
   s=MySimulator.new do
     @shop_items = get_shop_items(:dust_h)
     @monthly_levelup = with_dust
   end
-  s.level_summary "With dust and #{with_dust} monthly level ups for tower"
+  s.level_summary "With dust chests and #{with_dust} monthly level ups for tower"
 end
 
 s=MySimulator.new

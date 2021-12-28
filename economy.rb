@@ -379,6 +379,13 @@ class Simulator
       }.merge(@Hero_trial_rewards||{})
 
       @Dura_nb ||=7.0
+
+      #17 LB, 17 Maulers, 16 wilders, 17 GB, 11 Celo, 10 Hypos, 11 dims
+      @Atiers={
+        lb: 17, mauler: 17, wilder: 16, gb: 17,
+        celo: 11, hypo: 10, dim: 11
+      }
+      @Fodders={ lb: 4, mauler: 3, wilder: 3, gb: 3}
     end
 
     def setup 
@@ -2258,7 +2265,7 @@ class Simulator
         post=""
         post="K" if %i(gold xp total_gold total_xp).include?(type)
         s << "#{header}: #{round(sum)}#{post}"
-        plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0)
+        plusminuscondition=(plusminus and pos_sum !=0 and pos_sum != 0.0 and neg_sum !=0 and neg_sum != 0.0)
         if plusminuscondition
           s+="=#{round(pos_sum)}-#{round(-neg_sum)}"
         end
@@ -2381,7 +2388,7 @@ class Simulator
       o
     end
 
-    def cost_summary(cost, total)
+    def cost_summary(cost, total, duration: 30)
       res_buy, buy, remain=spending(cost, total)
       o_remain=""
 
@@ -2389,10 +2396,11 @@ class Simulator
         o_remain+=" {#{res_buy.map { |k,v| "#{k}: #{round(1/v)} days"}.join(', ')}}"
       end
 
-      monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*30]}.to_h
+      #monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*duration]}.to_h
+      monthly_remain=remain.select {|k,v| non_zero(v)}.map {|k,v| [k, v*duration]}.to_h
       o_remain += " [monthly remains: #{show_items(monthly_remain)}]" unless monthly_remain == {}
 
-      return "#{round(1.0/buy)} days (#{round(buy*30.0)} by month)#{o_remain}"
+      return "#{round(1.0/buy)} days (#{round(buy*duration*1.0)} by month)#{o_remain}"
     end
 
     def level_summary(title="Monthly level up summary")
@@ -2424,13 +2432,23 @@ class Simulator
         if ["Ascended challenger celo", "Ascended 4F", "Ascended god"].include?(k.to_s)
           _res_buy, buy, _remain=spending(v, total)
           nb_ascended += buy
+          if "Ascended god" == k.to_s
+            puts "-> Total monthly ascended: #{round(nb_ascended*30.0)}"
+            puts
+          end
         end
-        puts "-> #{level_cost_summary}" if k.to_s=="level"
+        #puts "-> #{level_cost_summary}" if k.to_s=="level"
 
-        puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
+        #puts if ["level", "SI+30", "e30 to e65", "9F (with cards)", "Ascended challenger celo"].include?(k.to_s)
+        puts if ["SI+30", "e30 to e65", "9F (with cards)"].include?(k.to_s)
       end
+
       increase_rc_level=5 #one ascended = 5 levels
       puts "Max rc level+1: #{round(1.0/(increase_rc_level*nb_ascended))} days (#{round(increase_rc_level*nb_ascended*30)} by month)"
+
+      dura_flawless=24 #24 flawless droplets for one level
+      ascended_flawless= 1+1 + 4+2 +8+8 + 4 #e/e+/l/l+/m/m+/a. Each star=2 droplets
+      puts "Max Dura's tree+1: #{round(dura_flawless*1.0/(nb_ascended*ascended_flawless))} days (#{round(nb_ascended*30*ascended_flawless*1.0/dura_flawless)} by month)"
       puts
     end
 
