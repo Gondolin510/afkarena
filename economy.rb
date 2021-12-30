@@ -1812,6 +1812,13 @@ class Simulator
           scrolls: 10,
           faction_scrolls: 10,
         },
+        delectable_delight: { #15/12/2021
+          purple_chests: 4,
+          blue_stones: 120, purple_stones: 60,
+          shards: 100, cores: 50,
+          silver_e: 30, gold_e: 20, red_e: 10,
+          stargazers: 10,
+        },
         #TODO: latest vow
       }.merge(@Vows||{})
 
