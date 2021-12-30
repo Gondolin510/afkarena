@@ -235,9 +235,10 @@ RC slot: 6.94 days (4.32 by month)
 @lc_rewards: {:gold=>5646}
 @board_level: 6
 @hero_trial_guild_rewards: {:dia=>300}
-@dim_exchange: true
+@dim_exchange: {:hero=>0, :lab=>25, :guild=>5, :challenger=>0}
 @shop_items: [:dust, :purple_stones, :poe]
-@store_lab_items: [{:dim_exchange=>25.0}, :arthur, nil, :dim_emblems]
+@garrison: {}
+@store_lab_items: [{:dim_exchange=>25}, :arthur, nil, :dim_emblems]
 @tower_god: 300
 @monthly_stargazing: 0
 @monthly_tavern: 0
@@ -263,9 +264,8 @@ RC slot: 6.94 days (4.32 by month)
 @monthly_card: {}
 @deluxe_monthly_card: {}
 @shop_refreshes: 2
-@garrison: false
 @store_hero_items: [nil]
-@store_guild_items: [{:dim_exchange=>5.0}, nil, nil, :dim_gear]
+@store_guild_items: [{:dim_exchange=>5}, nil, nil, :dim_gear]
 @store_challenger_items: [nil]
 @tower_kt_progression: 2.0
 @tower_4f_progression: 2.0
@@ -273,8 +273,6 @@ RC slot: 6.94 days (4.32 by month)
 @nb_ff: 3
 
 --------------- Fixed vars ---------------
-@Garrison: {:hero=>34, :lab=>66, :guild=>66, :challenger=>0}
-@DimExchange: {:hero=>0, :lab=>50, :guild=>10, :challenger=>0}
 @Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>100, :gold=>-500}, :shards=>{:shards=>20, :gold=>-2000, :max=>3}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
 @ChestConversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
 @Misty_chests: {:chest1=>[{:gold_h=>288}, {:xp_h=>96}, {:dust_h=>96}], :chest2=>[{:dia=>1000}, {:guild_coins=>30000}, {:twisted=>400}], :chest3=>[{:purple_stones=>60}, {:blue_stones=>720}], :chest4=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest5=>[{:poe=>1000}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest6=>[{:t1=>1}, {:t2=>1}, {:t3=>1}], :chest7=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}], :chest8=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest9=>[{:hero_choice_chest=>1}], :chest10=>[{:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}, {:cores=>100}], :chest11=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest12=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest13=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest14=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest15=>[{:poe=>1000}, {:t1=>1}, {:t2=>1}, {:t3=>1}]}

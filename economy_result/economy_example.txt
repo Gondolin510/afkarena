@@ -1318,8 +1318,8 @@ RC slot: 6.94 days (4.32 by month)
 @deluxe_monthly_card: {}
 @shop_refreshes: 2
 @shop_items: [:dust, :purple_stones, :poe, :shards]
-@garrison: false
-@dim_exchange: false
+@garrison: {}
+@dim_exchange: {}
 @store_hero_items: [nil]
 @store_guild_items: [{:t3=>:max}, nil, nil, :dim_gear]
 @store_lab_items: [nil, :dim_emblems]
@@ -1375,8 +1375,8 @@ RC slot: 6.94 days (4.32 by month)
 @deluxe_monthly_card: {}
 @shop_refreshes: 2
 @shop_items: [:dust, :purple_stones, :poe, :shards]
-@garrison: false
-@dim_exchange: false
+@garrison: {}
+@dim_exchange: {}
 @store_hero_items: [nil]
 @store_guild_items: [{:t3=>:max}, nil, nil, :dim_gear]
 @store_lab_items: [nil, :dim_emblems]

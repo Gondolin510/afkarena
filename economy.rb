@@ -159,6 +159,16 @@ class Simulator
       #   -> Buy as many dust_h box as shop refreshes, but only max 2 gold emblems
 
       ### Monthly store buys
+      # By default, @garrison and @dim_exchange are false.
+      # - Set them to true to enable them:
+      #    @garrison=true # Will set it to the default of @garrison={hero: 34, lab: 66, guild: 66}, see garrison_helper
+      #    @dim_exchange=true # Will set it to the default of @dim_exchange={hero: 0, lab: 50/2, guild: 10/2, challenger: 0}, see dimexchange_helper (we divide by 2 because a dim exchange last 60 days)
+      # - Or we can set up the values we want:
+      #    @garrison={lab: 66, guild: 33} #we only garrison one hero
+      #    @dim_exchange={lab: 50/4.0, guild: 12/4.0} #on average there are 3 dim hero a year, so a dim exchange is active one month out of two
+      #       There is actually a shortcut, if @dim_exchange is a float, it is taken as a frequency: @dim_exchange=0.5 will multiply the default dim exchange value by this amount, so here the frequency is one dim exchange active out of two months, ie we recover the above value
+      # -> These are use by store_guild_item, store_hero_items, store_lab_items, store_challenger_items
+
       #    @store_foo_items=[primary_item1, {primary_item2: qty2}, primary_item3, nil, {secondary_item4: qty4}, secondary_item5, nil, filler_item]
       # - we buy the primary items, even if we don't have enough coins (mainly
       #used for garrison/dim exchange). 
@@ -171,16 +181,10 @@ class Simulator
 
       # Helper functions:
       #   @store_foo_items=get_store_foo_items(primary_item1, {primary_item2: qty2}, secondary: [{secondary_item3: qty3}, secondary_item4], filler: filler_item)
-      # - These handle dim exchange and garrison automatically if they are active: they are added as primary items
-      #  By default we use 50 lab points+10 guild points for dim exchange,
-      #  and 100 lab points + 66 guild points + 34 hero points for garrison.
+      # - These handle dim exchange and garrison automatically, see @dim_exchange and @garrison above
       # - These can be changed with the options `garrison: qty`, `dim_exchange: qty`.
       # Example: @store_lab_items = get_store_lab_items({red_e: 2}, {twisted: :max}, dim_exchange: 40)
       # -> buy 2 red emblems and the max number of twisted essence, and do a dim exchange with 40 points
-      @garrison = false if @garrison.nil? #used by get_store_*_items; by default we only use hero+guild+lab for garrison
-      @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items; by default we only use guild+lab for exchange
-      #Note: we can also put a frequency, this smooth dimensional exchange across this frequency. We roughly get 3 dim hero a year, each exchange last 2 months, so a good frequency can be
-      #  @dim_exchange=0.5
 
       @store_hero_items ||= get_store_hero_items #by default do nothing apart from garrison
 
@@ -771,19 +775,26 @@ class Simulator
     end
 
     def garrison_helper(type)
-      @Garrison = {hero: 34, lab: 66, guild: 66, challenger: 0}.merge(@Garrison||{})
-      @garrison ? @Garrison[type] : 0
-    end
-    def dimexchange_helper(type)
-      @DimExchange = {hero: 0, lab: 50, guild: 10, challenger: 0}.merge(@DimExchange||{})
-      if @dim_exchange
-        dim=@DimExchange[type]
-        dim*=@dim_exchange if @dim_exchange.is_a?(Float)
-        dim/=2.0
-        dim
-      else
-        0
+      case @garrison
+      when nil,false
+        @garrison={}
+      when true
+        @garrison={hero: 34, lab: 66, guild: 66, challenger: 0}
       end
+      @garrison[type] || 0
+    end
+
+    def dimexchange_helper(type)
+      default={hero: 0, lab: 50/2, guild: 10/2, challenger: 0}
+      case @dim_exchange
+      when nil,false
+        @dim_exchange={}
+      when true
+        @dim_exchange=default
+      when Float
+        @dim_exchange=mult_hash(default, @dim_exchange)
+      end
+      @dim_exchange[type] || 0
     end
 
     def get_store_hero_items(*extra, garrison: garrison_helper(:hero), dim_exchange: dimexchange_helper(:hero), secondary: [], filler: nil)
