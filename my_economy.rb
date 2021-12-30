@@ -17,13 +17,9 @@ class MySimulator < Simulator
       @tr= {twisted: 257, poe: 905}
       @temporal_rift_level = 150
 
-      @gh_team_wrizz_gold = 948
-      @gh_team_soren_gold = 978
-      @gh_team_wrizz_coin = 1058
-
       @gh_wrizz_chests = 22
-      @gh_wrizz_gold = 1897
-      @gh_soren_gold = 1957
+      @gh_wrizz_gold = 2000
+      #@gh_soren_gold = 1957
 
       @noble_coe = get_coe(:cores)
       @dura_nb_selling =2
@@ -33,7 +29,7 @@ class MySimulator < Simulator
       @tower_god = [143, 231] #celo, hypo
 
       @garrison=true
-      @dim_exchange=0.5
+      @dim_exchange=0.5 #3 dim by year
 
       #@misty = get_misty(chest2: :guild_coins) #take guild coins
 

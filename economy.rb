@@ -1460,15 +1460,17 @@ class Simulator
     end
 
     #convert purple and gold chests
-    #TODO: better way to customize this than to sub this function?
     def convert_chests(r)
+      @ChestConversion={
+        purple_chests: {dust_h: 16.0}, #from vow and temporal rift: 2x8h dust or 2x8h xp or 8x8h gold
+        gold_chests: {twisted: 200}, # from temporal rift: 200 shards, 2000 poe, 200 twisted, 10 red_e, 40 silver_e, 25 yellow_e
+      }.merge(@ChestConversion || {})
+
       r=r.dup
-      #purple chest: 2x8h dust or 2x8h xp or 8x8h gold
-      purple_chests=r.delete(:purple_chests)
-      add_to_hash(r, {dust_h: purple_chests*16.0}) if purple_chests
-      # gold chests: 200 shards, 2000 poe, 200 twisted, 10 red_e, 40 silver_e, 25 yellow_e
-      gold_chests=r.delete(:gold_chests)
-      add_to_hash(r, {twisted: gold_chests*200}) if gold_chests
+      @ChestConversion.each do |k,v|
+        nb_items=r.delete(k)
+        add_to_hash(r, mult_hash(v, nb_items)) if nb_items
+      end
       r
     end
 
