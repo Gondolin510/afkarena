@@ -174,13 +174,15 @@ class Simulator
       # - These handle dim exchange and garrison automatically if they are active: they are added as primary items
       #  By default we use 50 lab points+10 guild points for dim exchange,
       #  and 100 lab points + 66 guild points + 34 hero points for garrison.
-      # - Thes can be changed with the options `garrison: qty`, `dim_exchange: qty`.
+      # - These can be changed with the options `garrison: qty`, `dim_exchange: qty`.
       # Example: @store_lab_items = get_store_lab_items({red_e: 2}, {twisted: :max}, dim_exchange: 40)
       # -> buy 2 red emblems and the max number of twisted essence, and do a dim exchange with 40 points
-      @garrison = false if @garrison.nil? #used by get_store_*_items, by default we only use hero+guild+lab for exchange
-      @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items, by default we only use guild+lab for exchange
+      @garrison = false if @garrison.nil? #used by get_store_*_items; by default we only use hero+guild+lab for garrison
+      @dim_exchange = false if @dim_exchange.nil? #used by get_store_*_items; by default we only use guild+lab for exchange
+      #Note: we can also put a frequency, this smooth dimensional exchange across this frequency. We roughly get 3 dim hero a year, each exchange last 2 months, so a good frequency can be
+      #  @dim_exchange=0.5
 
-      @store_hero_items ||= get_store_hero_items
+      @store_hero_items ||= get_store_hero_items #by default do nothing apart from garrison
 
       @store_guild_items ||= get_store_guild_items
       #  By default, get_store_guild_items adds t3 as a primary (if they are unlocked), and dim_emblems as fillers (if they are unlocked). This can be tweaked via the options `t3: false`, `dim_gear: false`
@@ -383,7 +385,7 @@ class Simulator
         blue_stones: 60, purple_stones: 60
       }.merge(@Hero_trial_rewards||{})
 
-      @Temporal_duration=90
+      @TemporalRift_duration=90
 
       @Dura_nb ||=7.0
 
@@ -424,7 +426,7 @@ class Simulator
       @_order={
         base: %i(dia gold gold_h gold_hg total_gold xp xp_h xp_hg total_xp dust dust_h dust_hg total_dust),
         upgrades: %i(silver_e gold_e red_e faction_emblems poe twisted shards cores),
-        gear: %i(t1 t2 t3 t1t2_chest t1t2t3_chest mythic_gear t1_gear t2_gear reset_scrolls),
+        gear: %i(t1 t2 t1t2_chest t3 t1t2t3_chest mythic_gear t1_gear t2_gear reset_scrolls),
         coins: %i(guild_coins lab_coins hero_coins challenger_coins),
         summons: %i(purple_stones blue_stones faction_scrolls scrolls friend_summons hcp hero_choice_chest stargazing stargazers),
         hero_summons: @Summon_Types,
@@ -769,7 +771,23 @@ class Simulator
       r
     end
 
-    def get_store_hero_items(*extra, garrison: (@garrison ? 34 : 0), dim_exchange: 0, secondary: [], filler: nil)
+    def garrison_helper(type)
+      @Garrison = {hero: 34, lab: 66, guild: 66, challenger: 0}.merge(@Garrison||{})
+      @garrison ? @Garrison[type] : 0
+    end
+    def dimexchange_helper(type)
+      @DimExchange = {hero: 0, lab: 50, guild: 10, challenger: 0}.merge(@DimExchange||{})
+      if @dim_exchange
+        dim=@DimExchange[type]
+        dim*=@dim_exchange if @dim_exchange.is_a?(Float)
+        dim/=2.0
+        dim
+      else
+        0
+      end
+    end
+
+    def get_store_hero_items(*extra, garrison: garrison_helper(:hero), dim_exchange: dimexchange_helper(:hero), secondary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_hero
       r=[]
@@ -781,7 +799,7 @@ class Simulator
       r+=[nil, filler] if filler
       r
     end
-    def get_store_guild_items(*extra, garrison: (@garrison ? 66 : 0), dim_exchange: (@dim_exchange ? 10/2 : 0), secondary: [], t3: :unlocked, dim_gear: :unlocked, filler: nil)
+    def get_store_guild_items(*extra, garrison: garrison_helper(:guild), dim_exchange: dimexchange_helper(:guild), secondary: [], t3: :unlocked, dim_gear: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_guild
       t3=@_unlock_t3 if t3 == :unlocked
@@ -800,7 +818,7 @@ class Simulator
       end
       r
     end
-    def get_store_lab_items(*extra, garrison: (@garrison ? 100 : 0), dim_exchange: (@dim_exchange ? 50/2 : 0), secondary: [], dim_emblems: :unlocked, filler: nil)
+    def get_store_lab_items(*extra, garrison: garrison_helper(:lab), dim_exchange: dimexchange_helper(:lab), secondary: [], dim_emblems: :unlocked, filler: nil)
       get_progression
       return [] unless @_unlock_store_lab
       dim_emblems=@_unlock_afk_red_e if dim_emblems == :unlocked
@@ -814,7 +832,7 @@ class Simulator
       r+=[nil, filler] if filler
       r
     end
-    def get_store_challenger_items(*extra, garrison: 0, dim_exchange: 0, secondary: [], filler: nil)
+    def get_store_challenger_items(*extra, garrison: garrison_helper(:challenger), dim_exchange: dimexchange_helper(:challenger), secondary: [], filler: nil)
       get_progression
       return [] unless @_unlock_store_challenger
       r=[]
@@ -1390,11 +1408,17 @@ class Simulator
 
     def convert_t2chests(r)
       r=r.dup
-      t2=r.delete(:t2)
-      t1t2_chest=t2*@_fos_t2_convert
-      t2=t2*(1-@_fos_t2_convert)
-      r[:t2]=t2
-      r[:t1t2_chest]=t1t2_chest
+      t2=r[:t2]
+      if t2
+        t1t2_chest=t2*@_fos_t2_convert
+        t2=t2*(1-@_fos_t2_convert)
+        r[:t2]=t2
+        #r[:t1t2_chest]=t1t2_chest
+        #Hack to insert the t1t2_chest below the t2 position
+        s=r.to_a
+        s.insert(s.index(s.assoc(:t2))+1, [:t1t2_chest, t1t2_chest])
+        r=s.to_h
+      end
       r
     end
 
@@ -1490,7 +1514,7 @@ class Simulator
     end
 
     def temporal_rift
-      mult_hash(@temporal_rift, 1.0/@Temporal_duration)
+      mult_hash(@temporal_rift, 1.0/@TemporalRift_duration)
     end
 
     def quests
@@ -1787,6 +1811,7 @@ class Simulator
           scrolls: 10,
           faction_scrolls: 10,
         },
+        #TODO: latest vow
       }.merge(@Vows||{})
 
       keys=@Vows.values.map {|i| i.keys}.flatten.uniq
@@ -1805,6 +1830,10 @@ class Simulator
         [k, v*@Monthly_vows/30.0]
       end.to_h
     end
+
+    #TODO: yuexi ship
+    #f2p is 20 dia + 10 purple_stones + 1 wish every 14 days
+    #Chapter 25 or VIP Level 13
   end
   include Income
 

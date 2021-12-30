@@ -103,7 +103,9 @@ module Value
       dim_gear: 500,
       t1: 1000,
       t2: 2000,
+      t1t2_chest: 2000,
       t3: 3000,
+      t1t2t3_chest: 3000,
       t1_gear: 500 + 1000,
       t2_gear: 500 + 1000 + 2000,
 
@@ -141,11 +143,11 @@ module Value
     value.merge(values)
   end
 
-  def dia_value(items, **kw)
+  def dia_value(items, debug: false, **kw)
     sum=0
     values=items_value(**kw)
     items.each do |k,v|
-      #p "Missing: #{k}" unless values.key?(k)
+      p "Missing value for #{k}" unless values.key?(k) if debug
       value=v*(values[k]||0)
       sum+=value
     end
