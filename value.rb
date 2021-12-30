@@ -100,6 +100,7 @@ module Value
       class_fragments: 9000 * 0.675 / 400, #=15.1875
 
       mythic_gear: 500,
+      reset_scrolls: 250,
       dim_gear: 500,
       t1: 1000,
       t2: 2000,
@@ -154,11 +155,11 @@ module Value
     return sum
   end
 
-  def detailed_dia_value(items, skip_null: false, **kw)
+  def detailed_dia_value(items, debug: false, skip_null: false, **kw)
     o=[]; sum=0
     values=items_value(**kw)
     items.each do |k,v|
-      #p "Missing: #{k}" unless values.key?(k)
+      p "Missing value for #{k}" unless values.key?(k) if debug
       value=v*(values[k]||0)
       sum+=value
       o.push("#{round(v)} #{k}=#{round(value)} dia") unless skip_null and (value == 0.0 or value == 0)
