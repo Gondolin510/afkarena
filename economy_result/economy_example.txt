@@ -1298,6 +1298,7 @@ RC slot: 6.94 days (4.32 by month)
 @tr_guild: {:dia=>100, :twisted=>6}
 @cursed_realm: {}
 @temporal_rift_level: 0
+@chest_conversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
 @temporal_rift: {}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
@@ -1355,6 +1356,7 @@ RC slot: 6.94 days (4.32 by month)
 @tr_guild: {:dia=>100, :twisted=>6}
 @cursed_realm: {}
 @temporal_rift_level: 0
+@chest_conversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
 @temporal_rift: {}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660

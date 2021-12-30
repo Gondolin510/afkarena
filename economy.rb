@@ -225,6 +225,8 @@ class Simulator
       #@afk_gold=844     # the displayed value by minute (include vip)
       #@afk_dust=1167.6  # the value by day, ie 48.65 by hour
       #-> determined from stage progression, but can be set up directly for more precise results
+ 
+      #@chest_conversion: how we convert purple chests from vow, gold chests from temporal rift, ... Cf `convert_chest` for the default values
     end
 
     # Redefine these functions to add custom source of income and exchange
@@ -1472,13 +1474,13 @@ class Simulator
 
     #convert purple and gold chests
     def convert_chests(r)
-      @ChestConversion={
+      @chest_conversion={
         purple_chests: {dust_h: 16.0}, #from vow and temporal rift: 2x8h dust or 2x8h xp or 8x8h gold
         gold_chests: {twisted: 200}, # from temporal rift: 200 shards, 2000 poe, 200 twisted, 10 red_e, 40 silver_e, 25 yellow_e
-      }.merge(@ChestConversion || {})
+      }.merge(@chest_conversion || {})
 
       r=r.dup
-      @ChestConversion.each do |k,v|
+      @chest_conversion.each do |k,v|
         nb_items=r.delete(k)
         add_to_hash(r, mult_hash(v, nb_items)) if nb_items
       end

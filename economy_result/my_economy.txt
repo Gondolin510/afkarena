@@ -349,6 +349,7 @@ RC slot: 11.57 days (2.59 by month)
 @gh_soren_freq: 0.66
 @tr_guild: {:dia=>100, :twisted=>6}
 @cursed_realm: {}
+@chest_conversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
 @temporal_rift: {:gold=>25000, :blue_stones=>690, :dust=>5000, :purple_stones=>150, :xp=>25000, :t1t2_chest=>3, :stargazers=>5, :dust_h=>96.0}
 @arena_daily_dia: 66
 @arena_weekly_dia: 660
@@ -378,7 +379,6 @@ RC slot: 11.57 days (2.59 by month)
 @nb_ff: 6
 
 --------------- Fixed vars ---------------
-@ChestConversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
 @Misty_chests: {:chest1=>[{:gold_h=>288}, {:xp_h=>96}, {:dust_h=>96}], :chest2=>[{:dia=>1000}, {:guild_coins=>30000}, {:twisted=>400}], :chest3=>[{:purple_stones=>60}, {:blue_stones=>720}], :chest4=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest5=>[{:poe=>1000}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest6=>[{:t1=>1}, {:t2=>1}, {:t3=>1}], :chest7=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}], :chest8=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest9=>[{:hero_choice_chest=>1}], :chest10=>[{:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}, {:cores=>100}], :chest11=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest12=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest13=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest14=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest15=>[{:poe=>1000}, {:t1=>1}, {:t2=>1}, {:t3=>1}]}
 @FF_cost: [0, 50, 80, 100, 100, 200, 300, 400]
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"RC slot"=>{:invigor=>5000}}
