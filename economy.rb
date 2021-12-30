@@ -418,7 +418,6 @@ class Simulator
       get_numbers
     end
 
-
     def setup_internal_variables
       @Summon_Types=%i(fodder random_fodder faction_blue_card blue_card atier choice_atier faction_atier wishlist_atier random_atier faction_purple_card purple_card god choice_god random_god)
 
@@ -2466,7 +2465,7 @@ class Simulator
       summary
     end
 
-    #kw: total: false, plusminus: false, percent: false
+    #kw: details: true (individual contributions), total: false (aggregate gold and gold_h), plusminus (show total=incomes-expense): false, percent: false (show percentage of total gold)
     def do_summary(title, r=@ressources, total_value: false, multiplier: 1, **kw)
       if multiplier != 1
         r=timeframe(r, multiplier)
@@ -2529,7 +2528,7 @@ class Simulator
       return "#{round(1.0/buy)} days (#{round(buy*duration*1.0)} by month)#{o_remain}"
     end
 
-    def level_summary(title="Monthly level up summary")
+    def level_summary(title="Monthly level up summary (above the baseline of #{@monthly_levelup} levels)")
       h1 title
       total=clean_total
       puts "one level: #{cost_summary(current_level_cost, total)}\n"
@@ -2635,13 +2634,19 @@ class Simulator
       [:ff, :incomes, :monthly, :level, :ascended, :prevision]
     end
 
-    #exemples: show_summary(monthly: true)
-    #show_summary(:all, monthly: false)
+    #exemples: show_summary(daily: true) (cf default_summaries)
+    #show_summary(:all, monthly: false) (cf all_summaries)
     #show_summary(:monthly)
+    # Options
+    #   total: true (by default)
+    #          Aggregate gold_h and gold into a total gold
+    #          If total="all"/"full"/:all/:full, then detail the total gold ressources contributions
+    #   conservative_ff: false (by default)
+    #          If true, also show a conservative ff dia value estimate (using only gold/xp/dust/twisted)
     def show_summary(type=:default, *rest, options: {}, **keys)
-      filter=lambda do |l|
-        l.reject {|i| keys[i]==false}
-      end
+      #filter=lambda do |l|
+      #  l.reject {|i| keys[i]==false}
+      #end
       selection=([type, *rest]+keys.select {|k,v| v==true}.keys).map do |i|
         case i
         when :all; all_summaries

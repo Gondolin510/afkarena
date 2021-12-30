@@ -4,14 +4,14 @@ require './economy'
 class MySimulator < Simulator
   def initialize(*args, **kw, &b)
     super do
-      @hero_level=362
-      @stage="37-16"
+      @hero_level=380
+      @stage="37-28"
       @afk_xp=13932
       @afk_gold=888
 
-      @player_level=170
+      @player_level=180
       @vip=10
-      @subscription=true
+      @subscription=false
 
       #dia 5 at floor 360
       @tr= {twisted: 257, poe: 905}
@@ -21,19 +21,19 @@ class MySimulator < Simulator
       @gh_team_soren_gold = 978
       @gh_team_wrizz_coin = 1058
 
-      @gh_wrizz_chests = 21
+      @gh_wrizz_chests = 22
       @gh_wrizz_gold = 1897
       @gh_soren_gold = 1957
 
       @noble_coe = get_coe(:cores)
-      @dura_nb_selling =1
+      @dura_nb_selling =2
 
-      @tower_kt = 561
+      @tower_kt = 575
       @tower_4f = [296, 291, 361, 393] #lb, maulers, wilders, gb
       @tower_god = [143, 231] #celo, hypo
 
       @garrison=true
-      @dim_exchange=false
+      @dim_exchange=0.5
 
       #@misty = get_misty(chest2: :guild_coins) #take guild coins
 

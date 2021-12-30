@@ -28,8 +28,8 @@ shards: 174.35 [30 (idle) + 17.5 (ff) + 57.14 (cursed) + 40.67 (lab) + 20 (misty
 cores: 102.38 [15 (idle) + 8.75 (ff) + 22.86 (cursed) + 27.33 (lab) + 4.44 (vow) + 24 (deluxe_monthly_card)]
 
 ***** Gear *****
-t3: 0.18 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 t1t2_chest: 0.5 [0.22 (idle) + 0.13 (ff) + 0.14 (stage_clear)]
+t3: 0.18 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 mythic_gear: 0.5 [0.22 (idle) + 0.13 (ff) + 0.14 (stage_clear)]
 t1_gear: 0.11 [0.07 (idle) + 0.04 (ff)]
 t2_gear: 0.11 [0.07 (idle) + 0.04 (ff)]
@@ -149,8 +149,8 @@ shards: 234.35 [30 (idle 13%) + 17.5 (ff 7%) + 57.14 (cursed 24%) + 40.67 (lab 1
 cores: 122.38 [15 (idle 12%) + 8.75 (ff 7%) + 22.86 (cursed 19%) + 27.33 (lab 22%) + 4.44 (vow 4%) + 24 (deluxe_monthly_card 20%) + 6.67 (towers_kt 5%) + 13.33 (towers_god 11%)]
 
 ***** Gear *****
-t3: 0.25 [0.07 (idle 29%) + 0.04 (ff 17%) + 0.07 (misty 27%) + 0.07 (guild_store 27%)]
 t1t2_chest: 0.5 [0.22 (idle 45%) + 0.13 (ff 26%) + 0.14 (stage_clear 29%)]
+t3: 0.25 [0.07 (idle 29%) + 0.04 (ff 17%) + 0.07 (misty 27%) + 0.07 (guild_store 27%)]
 mythic_gear: 0.51 [0.22 (idle 44%) + 0.13 (ff 26%) + 0.14 (stage_clear 28%) + 0.01 (stargaze 3%)]
 t1_gear: 0.11 [0.07 (idle 63%) + 0.04 (ff 37%)]
 t2_gear: 0.11 [0.07 (idle 63%) + 0.04 (ff 37%)]
@@ -230,8 +230,8 @@ shards: 7030.4 [900 (idle 13%) + 525 (ff 7%) + 1714.29 (cursed 24%) + 1220 (lab 
 cores: 3671.55 [450 (idle 12%) + 262.5 (ff 7%) + 685.71 (cursed 19%) + 820 (lab 22%) + 133.33 (vow 4%) + 720 (deluxe_monthly_card 20%) + 200 (towers_kt 5%) + 400 (towers_god 11%)]
 
 ***** Gear *****
-t3: 7.39 [2.14 (idle 29%) + 1.25 (ff 17%) + 2 (misty 27%) + 2 (guild_store 27%)]
 t1t2_chest: 14.86 [6.68 (idle 45%) + 3.89 (ff 26%) + 4.29 (stage_clear 29%)]
+t3: 7.39 [2.14 (idle 29%) + 1.25 (ff 17%) + 2 (misty 27%) + 2 (guild_store 27%)]
 mythic_gear: 15.24 [6.68 (idle 44%) + 3.89 (ff 26%) + 4.29 (stage_clear 28%) + 0.39 (stargaze 3%)]
 t1_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 t2_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
@@ -283,7 +283,7 @@ arena_tickets: 64.6 [60 (quests 93%) + 4.6 (stargaze 7%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 2.32 days (12.95 by month) {gold: 1.81 days, xp: 2.16 days, dust: 2.32 days} [monthly remains: 132930.87 gold + 329295.37 xp]
 monthly levels: 12, total_cost: 450330.62 gold + 4373850 xp + 534528 dust, remains: 42390.33 dust + 163869.48 gold + 628400.99 xp
 

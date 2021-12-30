@@ -35,8 +35,8 @@ shards: 94.7 [30 (idle) + 15 (ff) + 40.67 (lab) + 9.04 (vow)]
 cores: 64.28 [15 (idle) + 7.5 (ff) + 27.33 (lab) + 10 (misty) + 4.44 (vow)]
 
 ***** Gear *****
-t3: 0.17 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 t1t2_chest: 0.48 [0.22 (idle) + 0.11 (ff) + 0.14 (stage_clear)]
+t3: 0.17 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 mythic_gear: 0.48 [0.22 (idle) + 0.11 (ff) + 0.14 (stage_clear)]
 t1_gear: 0.1 [0.07 (idle) + 0.03 (ff)]
 t2_gear: 0.1 [0.07 (idle) + 0.03 (ff)]
@@ -138,8 +138,8 @@ shards: 4641.11 [900 (idle 19%) + 450 (ff 10%) + 1220 (lab 26%) + 271.11 (vow 6%
 cores: 1928.33 [450 (idle 23%) + 225 (ff 12%) + 820 (lab 43%) + 300 (misty 16%) + 133.33 (vow 7%)]
 
 ***** Gear *****
-t3: 7.21 [2.14 (idle 30%) + 1.07 (ff 15%) + 2 (misty 28%) + 2 (guild_store 28%)]
 t1t2_chest: 14.3 [6.68 (idle 47%) + 3.34 (ff 23%) + 4.29 (stage_clear 30%)]
+t3: 7.21 [2.14 (idle 30%) + 1.07 (ff 15%) + 2 (misty 28%) + 2 (guild_store 28%)]
 mythic_gear: 14.41 [6.68 (idle 46%) + 3.34 (ff 23%) + 4.29 (stage_clear 30%) + 0.11 (stargaze 1%)]
 t1_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
 t2_gear: 3 [2 (idle 67%) + 1 (ff 33%)]
@@ -189,7 +189,7 @@ arena_tickets: 61.33 [60 (quests 98%) + 1.33 (stargaze 2%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 2.21 days (13.57 by month) {gold: 1.9 days, xp: 1.47 days, dust: 2.21 days} [monthly remains: 39975.25 gold + 884339.77 xp]
 monthly levels: 12, total_cost: 225382.38 gold + 1626500 xp + 310050 dust, remains: 25185.59 dust + 60664.18 gold + 1023380.43 xp
 
@@ -251,8 +251,8 @@ shards: 240.94 [30 (idle) + 12.5 (ff) + 57.14 (cursed) + 40.67 (lab) + 20 (misty
 cores: 63.03 [15 (idle) + 6.25 (ff) + 10 (cursed) + 27.33 (lab) + 4.44 (vow)]
 
 ***** Gear *****
-t3: 0.17 [0.07 (idle) + 0.03 (ff) + 0.07 (misty)]
 t1t2_chest: 0.46 [0.22 (idle) + 0.09 (ff) + 0.14 (stage_clear)]
+t3: 0.17 [0.07 (idle) + 0.03 (ff) + 0.07 (misty)]
 mythic_gear: 0.46 [0.22 (idle) + 0.09 (ff) + 0.14 (stage_clear)]
 t1_gear: 0.09 [0.07 (idle) + 0.03 (ff)]
 t2_gear: 0.09 [0.07 (idle) + 0.03 (ff)]
@@ -359,8 +359,8 @@ shards: 7228.12 [900 (idle 12%) + 375 (ff 5%) + 1714.29 (cursed 24%) + 1220 (lab
 cores: 1890.83 [450 (idle 24%) + 187.5 (ff 10%) + 300 (cursed 16%) + 820 (lab 43%) + 133.33 (vow 7%)]
 
 ***** Gear *****
-t3: 7.04 [2.14 (idle 30%) + 0.89 (ff 13%) + 2 (misty 28%) + 2 (guild_store 28%)]
 t1t2_chest: 13.74 [6.68 (idle 49%) + 2.78 (ff 20%) + 4.29 (stage_clear 31%)]
+t3: 7.04 [2.14 (idle 30%) + 0.89 (ff 13%) + 2 (misty 28%) + 2 (guild_store 28%)]
 mythic_gear: 13.85 [6.68 (idle 48%) + 2.78 (ff 20%) + 4.29 (stage_clear 31%) + 0.11 (stargaze 1%)]
 t1_gear: 2.83 [2 (idle 71%) + 0.83 (ff 29%)]
 t2_gear: 2.83 [2 (idle 71%) + 0.83 (ff 29%)]
@@ -412,7 +412,7 @@ arena_tickets: 61.33 [60 (quests 98%) + 1.33 (stargaze 2%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 2.14 days (14.04 by month) {gold: 1.08 days, xp: 1.71 days, dust: 2.14 days} [monthly remains: 248758.99 gold + 452674.86 xp]
 monthly levels: 13, total_cost: 248104.64 gold + 1790950 xp + 341392 dust, remains: 5353.12 dust + 255173.94 gold + 487881.22 xp
 
@@ -607,7 +607,7 @@ arena_tickets: 61.33 [60 (quests 98%) + 1.33 (stargaze 2%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 5 levels) ===============
 one level: 1061.86 days (0.03 by month) {gold: 0.35 days, xp: 3.91 days, dust: 1061.86 days} [monthly remains: 92254.43 gold + 11502.46 xp]
 monthly levels: 0, total_cost: 0, remains: 762.81 dust + 92284.89 gold + 11545.01 xp
 
@@ -669,8 +669,8 @@ shards: 154.35 [30 (idle) + 17.5 (ff) + 57.14 (cursed) + 40.67 (lab) + 9.04 (vow
 cores: 118.1 [15 (idle) + 8.75 (ff) + 28.57 (cursed) + 27.33 (lab) + 10 (misty) + 4.44 (vow) + 24 (deluxe_monthly_card)]
 
 ***** Gear *****
-t3: 0.18 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 t1t2_chest: 0.5 [0.22 (idle) + 0.13 (ff) + 0.14 (stage_clear)]
+t3: 0.18 [0.07 (idle) + 0.04 (ff) + 0.07 (misty)]
 mythic_gear: 0.5 [0.22 (idle) + 0.13 (ff) + 0.14 (stage_clear)]
 t1_gear: 0.11 [0.07 (idle) + 0.04 (ff)]
 t2_gear: 0.11 [0.07 (idle) + 0.04 (ff)]
@@ -792,8 +792,8 @@ shards: 6430.4 [900 (idle 14%) + 525 (ff 8%) + 1714.29 (cursed 27%) + 1220 (lab 
 cores: 3942.98 [450 (idle 11%) + 262.5 (ff 7%) + 857.14 (cursed 22%) + 820 (lab 21%) + 300 (misty 8%) + 133.33 (vow 3%) + 720 (deluxe_monthly_card 18%) + 200 (towers_kt 5%) + 200 (towers_god 5%)]
 
 ***** Gear *****
-t3: 7.39 [2.14 (idle 29%) + 1.25 (ff 17%) + 2 (misty 27%) + 2 (guild_store 27%)]
 t1t2_chest: 14.86 [6.68 (idle 45%) + 3.89 (ff 26%) + 4.29 (stage_clear 29%)]
+t3: 7.39 [2.14 (idle 29%) + 1.25 (ff 17%) + 2 (misty 27%) + 2 (guild_store 27%)]
 mythic_gear: 15.35 [6.68 (idle 43%) + 3.89 (ff 25%) + 4.29 (stage_clear 28%) + 0.49 (stargaze 3%)]
 t1_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 t2_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
@@ -844,7 +844,7 @@ arena_tickets: 65.89 [60 (quests 91%) + 5.89 (stargaze 9%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 6.43 days (4.67 by month) {gold: 6.43 days, xp: 1.85 days, dust: 1.72 days} [monthly remains: 3482940.27 xp + 567204.7 dust]
 monthly levels: 4, total_cost: 141557.76 gold + 1211000 xp + 178176 dust, remains: 596912.88 dust + 23602.63 gold + 3680889.47 xp
 
@@ -1016,7 +1016,7 @@ arena_tickets: 61.33 [60 (quests 98%) + 1.33 (stargaze 2%)]
 ***** Extra *****
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 0.01 days (2618.62 by month) {gold: 0 days, xp: 0.01 days, dust: 0 days} [monthly remains: 4637.02 gold + 4255.01 dust]
 monthly levels: 15, total_cost: 1168.2 gold + 722.36 xp + 0 dust, remains: 4255.01 dust + 3769.96 gold + 442.93 xp
 
@@ -1078,8 +1078,8 @@ shards: 78.17 [30 (idle) + 7.5 (ff) + 40.67 (lab)]
 cores: 72.33 [15 (idle) + 3.75 (ff) + 27.33 (lab) + 10 (misty) + 16.25 (coe)]
 
 ***** Gear *****
-t3: 0.16 [0.07 (idle) + 0.02 (ff) + 0.07 (misty)]
 t1t2_chest: 0.42 [0.22 (idle) + 0.06 (ff) + 0.14 (stage_clear)]
+t3: 0.16 [0.07 (idle) + 0.02 (ff) + 0.07 (misty)]
 mythic_gear: 0.42 [0.22 (idle) + 0.06 (ff) + 0.14 (stage_clear)]
 t1_gear: 0.08 [0.07 (idle) + 0.02 (ff)]
 t2_gear: 0.08 [0.07 (idle) + 0.02 (ff)]
@@ -1190,8 +1190,8 @@ shards: 4145 [900 (idle 22%) + 225 (ff 5%) + 1220 (lab 29%) + 1800 (shop 43%)]
 cores: 2170 [450 (idle 21%) + 112.5 (ff 5%) + 820 (lab 38%) + 300 (misty 14%) + 487.5 (coe 22%)]
 
 ***** Gear *****
-t3: 6.68 [2.14 (idle 32%) + 0.54 (ff 8%) + 2 (misty 30%) + 2 (guild_store 30%)]
 t1t2_chest: 12.63 [6.68 (idle 53%) + 1.67 (ff 13%) + 4.29 (stage_clear 34%)]
+t3: 6.68 [2.14 (idle 32%) + 0.54 (ff 8%) + 2 (misty 30%) + 2 (guild_store 30%)]
 mythic_gear: 13.17 [6.68 (idle 51%) + 1.67 (ff 13%) + 4.29 (stage_clear 33%) + 0.53 (stargaze 4%)]
 t1_gear: 2.5 [2 (idle 80%) + 0.5 (ff 20%)]
 t2_gear: 2.5 [2 (idle 80%) + 0.5 (ff 20%)]
@@ -1241,7 +1241,7 @@ arena_tickets: 6.38=66.38-60 [60 (quests 90%) - 60 (selling_items 100%) + 6.38 (
 ***** Extra *****
 lct_tickets: 150 [150 (lct_buy_tickets 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of 0 levels) ===============
 one level: 10.43 days (2.88 by month) {gold: 10.43 days, xp: 3.07 days, dust: 4.36 days} [monthly remains: 1777293.07 xp + 167376.5 dust]
 monthly levels: 2, total_cost: 64758.64 gold + 516900 xp + 83600 dust, remains: 203869.04 dust + 28267.76 gold + 2002180.85 xp
 

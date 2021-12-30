@@ -181,7 +181,7 @@ arena_tickets: 61.33 [60 (quests 98%) + 1.33 (stargaze 2%)]
 arthur: 1 [1 (lab_store 100%)]
 faction_fodder: 0.32 [0.32 (tavern 100%)]
 
-=============== Monthly level up summary ===============
+=============== Monthly level up summary (above the baseline of [10, 0, 0, 0, 0] levels) ===============
 one level: 26.79 days (1.12 by month) {gold: 1.18 days, xp: 0.61 days, dust: 26.79 days} [monthly remains: 61139.12 gold + 360370.55 xp]
 monthly levels: 10, total_cost: 30436.39 gold + 114381 xp + 128938 dust, remains: 5453.89 dust + 33517.41 gold + 254377.84 xp
 
