@@ -211,7 +211,7 @@ module Value
     # 1 common_summon= 5 dust + 160 hero coins
     common_summons=n*0.5169
     { random_fodder: n * 0.4370/9.0,
-      wishlist_atier: n * 0.0461,
+      wishlist_atier: n * 0.0461, #1 out of 21.69
       random_god: n*0.002,
       dust: common_summons*5,
       hero_coins: common_summons*160,
@@ -339,16 +339,24 @@ if __FILE__ == $0
   puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10), summons: false)}"
   # 10 stargaze value: 587.63 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia] 
   #  With adjusted ratio of 0.99489: 10 stargaze value: 584.78 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=41.79 dia + 5.75 dura_fragments=32.85 dia + 49.43 gold_h=98.85 dia + 21.92 xp_h=175.36 dia + 16.48 dust_h=205.94 dia]
+  # Summary: 10 stargaze has real cost of 5000-584.78=4415
+  # A celo costs 4*4415=17660
 
   #puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10))}"
   ## 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
+  # Summary: with 4f summons, 10 stargaze has real cost of 5000-4827+3500=3673
+  # A celo costs 4*3673=14692
 
   puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10), summons: false)}"
   # 10 summons value: 96.14 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=0.0 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
   # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia] {with hero coins included}
+  # Summary: 10 4f summons cost 2700-206.41=2493 dia
+  # So a 4f hero costs 2.169*2493=5407 dia
   
   #puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10))}"
   ## 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
+  # Summary: with fodder summons, 10 4f summons cost
+  # 2700-4217.73+2950.4=1432, so a 4f hero cost 2.169*1432=3106
 
   puts
   puts "*** Values: ***"

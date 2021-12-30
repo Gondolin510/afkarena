@@ -1819,7 +1819,7 @@ class Simulator
           silver_e: 30, gold_e: 20, red_e: 10,
           stargazers: 10,
         },
-        #TODO: latest vow
+        #DONE: latest vow
       }.merge(@Vows||{})
 
       keys=@Vows.values.map {|i| i.keys}.flatten.uniq
