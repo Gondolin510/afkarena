@@ -1,5 +1,6 @@
 ./economy.rb >! economy_result/economy.txt
 ./economy_example.rb >! economy_result/economy_example.txt
+./economy_variables.rb >! economy_result/economy_variables.txt
 ./my_economy.rb >! economy_result/my_economy.txt
 ./my_economy_alt.rb >! economy_result/my_economy_alt.txt
 ./ex_inseason.rb >! economy_result/ex_inseason.txt

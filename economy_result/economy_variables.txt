@@ -1,0 +1,118 @@
+==================== Default settings ====================
+=============== Variables ===============
+@stage: 38-01
+@hero_level: 450
+@player_level: 180
+@vip: 10
+@max_ff_cost: 200
+@tower_kt: 550
+@tower_4f: 280
+@tower_god: 300
+@monthly_stargazing: 0
+@monthly_tavern: 0
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
+@friends_nb: 20
+@friends_mercs: 5
+@gh_wrizz_chests: 23
+@gh_soren_chests: 23
+@gh_wrizz_gold: 2160
+@gh_soren_gold: 2160
+@gh_soren_freq: 0.66
+@tr: {:twisted=>380, :poe=>1290}
+@tr_guild: {:dia=>100, :twisted=>6}
+@cursed_realm: {}
+@arena_daily_dia: 66
+@arena_weekly_dia: 660
+@lct_coins: 380
+@lc_rewards: {:gold=>7668}
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@board_level: 8
+@dura_nb_selling: 0
+@noble_regal: {:blue_stones=>3300}
+@noble_twisted: {:xp_h=>956}
+@noble_coe: {:dust=>7500, :dust_h=>380}
+@hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@labyrinth_mode: auto
+@subscription: false
+@merchant_daily: {}
+@merchant_weekly: {}
+@merchant_monthly: {}
+@monthly_card: {}
+@deluxe_monthly_card: {}
+@shop_refreshes: 2
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@garrison: {}
+@dim_exchange: {}
+@store_hero_items: [nil]
+@store_guild_items: [{:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [nil, :dim_emblems]
+@store_challenger_items: [nil]
+@monthly_levelup: 0
+@tower_kt_progression: 0.0
+@tower_4f_progression: 0.0
+@tower_god_progression: 0.0
+@temporal_rift_level: 0
+@chest_conversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
+@temporal_rift: {}
+@yuexi: {:dia=>20, :purple_stones=>10, :wish=>1}
+@nb_ff: 6
+==================== Automatic generation of default settings ====================
+=============== Variables ===============
+@stage: 38-01
+@hero_level: 450
+@player_level: 180
+@vip: 10
+@max_ff_cost: 200
+@tower_kt: 550
+@tower_4f: 280
+@tower_god: 300
+@monthly_stargazing: 0
+@monthly_tavern: 0
+@monthly_hcp_heroes: 0
+@monthly_hcp: 0.0
+@friends_nb: 20
+@friends_mercs: 5
+@gh_wrizz_chests: 23
+@gh_soren_chests: 23
+@gh_wrizz_gold: 2160
+@gh_soren_gold: 2160
+@gh_soren_freq: 0.66
+@tr: {:twisted=>380, :poe=>1290}
+@tr_guild: {:dia=>100, :twisted=>6}
+@cursed_realm: {}
+@arena_daily_dia: 66
+@arena_weekly_dia: 660
+@lct_coins: 380
+@lc_rewards: {:gold=>7668}
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@board_level: 8
+@dura_nb_selling: 0
+@noble_regal: {:blue_stones=>3300}
+@noble_twisted: {:xp_h=>956}
+@noble_coe: {:dust=>7500, :dust_h=>380}
+@hero_trial_guild_rewards: {:dia=>500, :guild_coins=>1000}
+@labyrinth_mode: auto
+@subscription: false
+@merchant_daily: {}
+@merchant_weekly: {}
+@merchant_monthly: {}
+@monthly_card: {}
+@deluxe_monthly_card: {}
+@shop_refreshes: 2
+@shop_items: [:dust, :purple_stones, :poe, :shards]
+@garrison: {}
+@dim_exchange: {}
+@store_hero_items: [nil]
+@store_guild_items: [{:t3=>:max}, nil, nil, :dim_gear]
+@store_lab_items: [nil, :dim_emblems]
+@store_challenger_items: [nil]
+@monthly_levelup: 0
+@tower_kt_progression: 0.0
+@tower_4f_progression: 0.0
+@tower_god_progression: 0.0
+@temporal_rift_level: 0
+@chest_conversion: {:purple_chests=>{:dust_h=>16.0}, :gold_chests=>{:twisted=>200}}
+@temporal_rift: {}
+@yuexi: {:dia=>20, :purple_stones=>10, :wish=>1}
+@nb_ff: 6

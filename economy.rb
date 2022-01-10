@@ -18,7 +18,7 @@ class Simulator
   end
 
   module UserSetup
-    def setup_vars #assume an f2p vip 10 hero level 450 player at chap 38 with max fos by default and in fabled
+    def setup_vars #assume an f2p vip 10 hero level 450 player at chap 38 with max fos and in fabled by default
 
       # Main settings
       # #############
@@ -31,7 +31,7 @@ class Simulator
       # @hero_level = [240, 220, 200, 201, 205]
       @player_level ||=180 #for fos, 180 is max fos for gold/xp/dust mult
       @vip ||=10 #vip level
-      @max_ff_cost ||= 200 #we automatically set @nb_ff from this (taking into account vip)
+      @max_ff_cost ||= 200 #up to which ff cost we allow to go; we automatically set @nb_ff from this (taking into account vip)
 
       ### Towers
       @tower_kt ||= 550 #max fos at 350 for t1_gear, 550 max fos for T2 chests
@@ -45,7 +45,7 @@ class Simulator
       @monthly_stargazing ||= 0 #number of stargazing done in a month (open at 16-01)
       @monthly_tavern ||= 0 #number of tavern pulls (open at 01-12)
       @monthly_hcp_heroes ||=0 #number of hcp heroes we want to summon monthly
-      @monthly_hcp ||= get_hcp_from_nb_heroes(@monthly_hcp_heroes) #number of hcp pulls
+      @monthly_hcp ||= get_hcp_from_nb_heroes(@monthly_hcp_heroes) #number of hcp pulls, here determined from the number of hcp heroes we can have by month
 
       ### Friends and weekly mercs
       @friends_nb ||= 20
@@ -72,7 +72,7 @@ class Simulator
 
       ### Temporal rift (only if unlocked)
       @temporal_rift_level ||=0
-      @temporal_rift ||= get_temporal_rift #default to level=@temporal_rift_level
+      @temporal_rift ||= get_temporal_rift #use level=@temporal_rift_level
 
       ### arena [only used when arena/lc/lct unlocks]
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
@@ -90,17 +90,16 @@ class Simulator
       @yuexi ||= get_yuexi
       # - by default we use the f2p version; when buying stuff, pass them as parameters:
       #  @yuexi = get_yuexi()
-      # - for wish conversion we use
+      # - for wish conversion we use...
 
       ### misc
       @board_level ||=8 #[only used when board unlocks]
       @dura_nb_selling ||=0 #dura's fragments we have maxed out and are selling
 
       ### Noble societies [only when they unlock]
-      #by default paid is false
 
       @noble_regal ||= get_regal #opens after 10 days of account creation
-      # Paid version: @noble_regal = get_regal(paid: true)
+      # Paid version: @noble_regal = get_regal(paid: true), by default paid is false
 
       @noble_twisted ||= get_twisted_bounties #default to xp
       # Example for the paid version and shard selection:
@@ -112,7 +111,7 @@ class Simulator
 
       ### Hero trials [only used when hero trials unlock]
       @hero_trial_guild_rewards ||={ #average guild hero trial rewards
-        dia: 200+100+200,
+        dia: 200+100+200, #we consistently get all guild quests
         guild_coins: 1000 #assume top 500
       }
 
@@ -124,7 +123,7 @@ class Simulator
       # Spending money
       # ##############
 
-      @subscription ||=false if @subscription.nil?
+      @subscription=false if @subscription.nil? #f2p by default
 
       ### Merchants
       #Paid version, f2p versions are in Merchant_daily, Merchant_weekly, Merchant_monthly
@@ -166,14 +165,20 @@ class Simulator
       #   -> Buy as many dust_h box as shop refreshes, but only max 2 gold emblems
 
       ### Monthly store buys
+
+      @garrison=false if @garrison.nil?
+      @dim_exchange=false if @dim_exchange.nil?
+
       # By default, @garrison and @dim_exchange are false.
       # - Set them to true to enable them:
-      #    @garrison=true # Will set it to the default of @garrison={hero: 34, lab: 66, guild: 66}, see garrison_helper
-      #    @dim_exchange=true # Will set it to the default of @dim_exchange={hero: 0, lab: 50/2, guild: 10/2, challenger: 0}, see dimexchange_helper (we divide by 2 because a dim exchange last 60 days)
+      #    @garrison=true # Will then set it to the default of @garrison={hero: 34, lab: 66, guild: 66}, see garrison_helper
+      #    @dim_exchange=true # Will then set it to the default of @dim_exchange={hero: 0, lab: 50/2, guild: 10/2, challenger: 0}, see dimexchange_helper (we divide by 2 because a dim exchange last 60 days)
       # - Or we can set up the values we want:
       #    @garrison={lab: 66, guild: 33} #we only garrison one hero
       #    @dim_exchange={lab: 50/4.0, guild: 12/4.0} #on average there are 3 dim hero a year, so a dim exchange is active one month out of two
-      #       There is actually a shortcut, if @dim_exchange is a float, it is taken as a frequency: @dim_exchange=0.5 will multiply the default dim exchange value by this amount, so here the frequency is one dim exchange active out of two months, ie we recover the above value
+      #     There is actually a shortcut, if @dim_exchange is a float, it is taken as a frequency: 
+      #       @dim_exchange=0.5
+      #     will multiply the default dim exchange value by this amount, so here the frequency is one dim exchange active out of two months, ie we recover the above value
       # -> These are use by store_guild_item, store_hero_items, store_lab_items, store_challenger_items
 
       #    @store_foo_items=[primary_item1, {primary_item2: qty2}, primary_item3, nil, {secondary_item4: qty4}, secondary_item5, nil, filler_item]
@@ -188,15 +193,14 @@ class Simulator
 
       # Helper functions:
       #   @store_foo_items=get_store_foo_items(primary_item1, {primary_item2: qty2}, secondary: [{secondary_item3: qty3}, secondary_item4], filler: filler_item)
-      # - These handle dim exchange and garrison automatically, see @dim_exchange and @garrison above
-      # - These can be changed with the options `garrison: qty`, `dim_exchange: qty`.
+      # - These handle dim exchange and garrison automatically, see @dim_exchange and @garrison above. The values used can also be changed with the options `garrison: qty`, `dim_exchange: qty`.
       # Example: @store_lab_items = get_store_lab_items({red_e: 2}, {twisted: :max}, dim_exchange: 40)
       # -> buy 2 red emblems and the max number of twisted essence, and do a dim exchange with 40 points
 
       @store_hero_items ||= get_store_hero_items #by default do nothing apart from garrison
 
       @store_guild_items ||= get_store_guild_items
-      #  By default, get_store_guild_items adds t3 as a primary (if they are unlocked), and dim_emblems as fillers (if they are unlocked). This can be tweaked via the options `t3: false`, `dim_gear: false`
+      #  By default, get_store_guild_items adds t3 as a primary (if they are unlocked), and dim_gears as fillers (if they are unlocked). This can be tweaked via the options `t3: false`, `dim_gear: false`
       #  Example: @store_guild_items = get_store_guild_items({t1: :2}, :t2, filler: :random_mythic_gear)
       #  -> buy max (ie 2) t3 as primary, and 2 t1 + 1 t2 , and then spend all the rest on random mythic gears
 
@@ -212,7 +216,10 @@ class Simulator
       # If the rc is less than 240, @monthly_levelup=10 means to add 10
       # levels on each hero. We can be more precise:
       #    @monthly_levelup = [10, 0, 5, 0, 0]
-      # to add 10 levels to the first hero, and 5 to the third;
+      # to add 10 levels to the first hero, and 5 to the third.
+      # In the ressource spent, we will take this amount of level up into
+      # account. So is there are remaining ressources to level up in the
+      # prevision, it is in addition to this value.
 
       # Examples:
       #  @tower_kt_progression=10 #we expect to climb 10 floors
@@ -2677,9 +2684,13 @@ class Simulator
       [:ff, :incomes, :monthly, :level, :ascended, :prevision]
     end
 
-    #exemples: show_summary(daily: true) (cf default_summaries)
-    #show_summary(:all, monthly: false) (cf all_summaries)
-    #show_summary(:monthly)
+    #exemples: 
+    #    show_summary(daily: true)
+    #  -> This show the default summaries (cf default_summaries), and also the full daily summary in addition
+    #    show_summary(:all, monthly: false) 
+    #  -> This shows all summaries (cf all_summaries), except the full monthly summary
+    #    show_summary(:monthly)
+    #  -> only show the monthly summary
     # Options
     #   total: true (by default)
     #          Aggregate gold_h and gold into a total gold
@@ -2775,8 +2786,14 @@ if __FILE__ == $0
       # @monthly_stargazing=50
     end
     s.summary
+    ## Even more details:
+    # s.summary(:all, options: {total: :all, conservative_ff: true})
+
+    ## The used variables:
     # s.show_variables
     # s.show_variables(verbose: true)
+
+    ## Diamond conversion values used:
     #p s.items_value
   end
 end
