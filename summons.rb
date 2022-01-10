@@ -1,5 +1,5 @@
 Ratios=[0.0241, 0.4479, 0.528]
-#Ratio=0.03
+#With pity, the ratios should be [0.0461, 0.4370, 0.5169]
 Pity_Timer=30
 
 def random_from_ratios(ratios)
@@ -53,6 +53,11 @@ def simulate(nb, ratios: Ratios)
   end
   return [nb_elites, nb_rares, nb_commons].map {|i| i*1.0/nb}
 end
+# simulate(100000000)
+# => [0.04643793, 0.43771864, 0.51584343]
+# [6] pry(main)> simulate(1000000000)
+# => [0.046439274, 0.437630455, 0.515930271]
+#With pity, the ratios should be [0.0461, 0.4370, 0.5169]
 
 def simulate_increasing_pity(nb)
   ratio=0.02; pity_timer=70
