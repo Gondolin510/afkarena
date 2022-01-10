@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?, board level<7 + team quests
+#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction)
 
 require './value'
 require 'json'
@@ -84,6 +85,12 @@ class Simulator
       # can specify the required chest using: `chest5: poe` for instance
       # can also specify an ordering: get_misty(%i(cores red_e poe)) to ask for cores in priority if available, then red_e, then poe
       # the default order is: %i(dust_h t3 cores red_e blue_stones purple_stones twisted)
+
+      ### yuexi ship [only when it unlocks] TODO
+      @yuexi ||= get_yuexi
+      # - by default we use the f2p version; when buying stuff, pass them as parameters:
+      #  @yuexi = get_yuexi()
+      # - for wish conversion we use
 
       ### misc
       @board_level ||=8 #[only used when board unlocks]
@@ -358,8 +365,9 @@ class Simulator
       @Dismal_stage_chest_skip_rewards ||= { gold_h: 59, xp_h: 29.5, dust_h: 29.5 } # skipping large camps: 59h gold+29.5h xp+dust
       @Dismal_end_rewards ||= {
         gold_h: 14*6 + 7*2, xp_h: 3.5*2, dust_h: 3.5*2,
-        shards: 61, cores: 41
-      } 
+        shards: 55, cores: 45
+      } # 55:45 shards:core ratio, and the 50:30 ratio is 20:80 or 15:85
+        # -> shards: 0.55*(0.15*50+0.85*30)*3=54.45, 0.45*(0.15*50+0.85*30)*3: 44.55
       #We have less end rewards in standard lab, apart from the 6h gold
       #chest we only have 2 items rather than 3, so multiply the rewards by 2/3
       @Lab_end_rewards ||= { gold_h: 14*6 + 7*2*2.0/3, xp_h: 3.5*2*2.0/3, dust_h: 3.5*2*2.0/3 }
@@ -401,6 +409,8 @@ class Simulator
         celo: 11, hypo: 10, dim: 11
       }
       @Fodders={ lb: 4, mauler: 3, wilder: 3, gb: 3}
+
+      @YuexiDuration=14 #14 days
     end
 
     def setup 
@@ -647,6 +657,16 @@ class Simulator
       add_to_hash(r,get_chest[:chest14, chest14]) if @stage >= "35-01"
       add_to_hash(r,get_chest[:chest15, chest15]) if @stage >= "36-01"
       r
+    end
+
+    def get_yuexi(paid={}, **kw)
+      @Yuexi={dia: 20, purple_stones: 10, wish: 1}.merge(@Yuexi  || {}) #f2p version
+      yuexi=@Yuexi.merge(paid)
+      convert_wish(yuexi, **kw)
+    end
+
+    def convert_wish(yuexi, **kw) #TODO
+      yuexi
     end
 
     def get_cursed_realm(rank=nil)
@@ -898,6 +918,7 @@ class Simulator
       res[:lc]=lc if @_unlock_lc
       res[:lab]=labyrinth
       res[:misty]=misty if @_unlock_misty
+      res[:yuexi]=yuexi if @_unlock_yuexi
       res[:regal]=regal
       res[:tr_bounties]=twisted_bounties
       res[:coe]=coe
@@ -1126,6 +1147,7 @@ class Simulator
       @_unlock_stargazer=true if stage > "15-40"
       @_unlock_abex=true if stage > "15-40"
       @_unlock_own_oak_inn=true if stage > "17-40"
+      @_unlock_yuexi=true if stage > "24-60" or vip>=13
 
       @_unlock_afk_legendary=true if stage > "11-18"
       @_unlock_afk_mythic=true if stage > "16-11"
@@ -1652,7 +1674,7 @@ class Simulator
 
     def misty
       r=sum_hash(@Misty_base, @misty)
-      r.map {|k,v| [k, v/30.0]}.to_h
+      mult_hash(r, 1/30.0)
     end
 
     def regal
@@ -1852,9 +1874,9 @@ class Simulator
       end.to_h
     end
 
-    #TODO: yuexi ship
-    #f2p is 20 dia + 10 purple_stones + 1 wish every 14 days
-    #Chapter 25 or VIP Level 13
+    def yuexi
+      mult_hash(@yuexi, 1.0/@YuexiDuration)
+    end
   end
   include Income
 

@@ -1,10 +1,12 @@
 #!/usr/bin/ruby
-
+# Gives the FF value breakpoints, ie at which stage we have more than
+# 50/80/100/200/300 dia value for ff
+# To run with `ruby -W0 ff_dia_value.rb` to quell the warnings
 require './economy'
 
 def get_ff_value(stage, vip: 1, level: 1, towers: 1, show: false)
   s=Simulator.new do
-    @DiaValues={dust: 300/1167.6}
+    @DiaValues={dust: 300/1167.6} #don't use a dynamic rate
     @stage = stage
     @hero_level= 350
     @player_level=level
@@ -15,17 +17,6 @@ def get_ff_value(stage, vip: 1, level: 1, towers: 1, show: false)
   s.ff_summary if show
   s.ff_value
 end
-
-=begin
-s=Simulator.new do
-  @stage = "18-06"
-  @hero_level= 350
-  @player_level=1
-  @vip=1
-  @tower_kt=@tower_4f=@tower_god=1
-  @nb_ff=0
-end
-=end
 
 stages=[]
 (1..19).each do |i|
@@ -40,10 +31,18 @@ end
 end
 
 breakpoints=[50, 80, 100, 200, 300]
-#breakpoints=[50]
-result=breakpoints.map do |b|
-  stages.find {|s| get_ff_value(s) >= b }
+i=0; b=breakpoints[i]
+stages.each do |s|
+  value=get_ff_value(s)
+  if value >= b
+    puts "Breakpoint for FF dia value #{b}: #{s}"
+    i+=1; b=breakpoints[i]
+  end
+  break if i >= breakpoints.length
 end
 
-puts result
+# result=breakpoints.map do |b|
+#   stages.find {|s| get_ff_value(s) >= b }
+# end
+# puts result
 
