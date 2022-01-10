@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?, board level<7 + team quests
-#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests)
+#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests), timegazers
 
 require './value'
 require 'json'
