@@ -72,7 +72,7 @@ class Simulator
 
       ### Temporal rift (only if unlocked)
       @temporal_rift_level ||=0
-      @temporal_rift ||= get_temporal_rift #default to level=@temporal_rift_level
+      @temporal_rift ||= get_temporal_rift #use level=@temporal_rift_level
 
       ### arena [only used when arena/lc/lct unlocks]
       @arena_daily_dia ||= get_arena(5) #rank 5 in arena
