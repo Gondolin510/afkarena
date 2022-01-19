@@ -13,8 +13,8 @@ class MySimulator < Simulator
       @vip=10
       @subscription=false
 
-      #dia 5 at floor 360
-      @tr= {twisted: 257, poe: 905}
+      #dia 5 at floor 388
+      @tr= {twisted: 266, poe: 943}
       @temporal_rift_level = 150
 
       @gh_wrizz_chests = 22

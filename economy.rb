@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?, board level<7 + team quests
-#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests), timegazers
+#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests), timegazers, solemn vow
 
 require './value'
 require 'json'
@@ -163,6 +163,8 @@ class Simulator
       # - Arguments are added to the list of items:
       #     @shop_items = get_shop_items(:dust_h, {gold_e: 2})
       #   -> Buy as many dust_h box as shop refreshes, but only max 2 gold emblems
+      #     @shop_items = get_shop_items(:timegazers)
+      #   -> buy 1 timegazers (since it is the max)
 
       ### Monthly store buys
 
@@ -289,6 +291,7 @@ class Simulator
         dust: {dust: 500, gold: -2250},
         purple_stones: { purple_stones: 5, dia: -90, proba: 2.0/9 },
         poe: { poe: 250, gold: -1125 },
+        timegazers: {timegazers: 1, dia: -500, max: 1},
         shards: { shards: 20, gold: -2000, max: 3 },
         cores: { cores: 10, dia: -200, max: 3 },
         gold_e: { gold_e: 20, gold: -15600*@_shop_discount, proba: 0.25 },
@@ -789,7 +792,7 @@ class Simulator
       sum_hash({dia: 980.0/30+600}, mult_hash(purple, nb_purple), mult_hash(red, nb_red))
     end
 
-    def get_shop_items(*extra, dust: true, stones: true, poe: :unlocked, shards: :unlocked)
+    def get_shop_items(*extra, dust: true, stones: true, poe: :unlocked, shards: :unlocked, **rest)
       get_progression
       return [] unless @_unlock_shop
       poe=@_unlock_afk_poe if poe == :unlocked
@@ -800,6 +803,7 @@ class Simulator
       r << :poe if poe
       r << :shards if shards
       r += extra
+      r += rest.select {|k,v| v}.map {|k,v| k}
       r
     end
 
@@ -1098,6 +1102,7 @@ class Simulator
       @_shop_discount =1
       @_shop_discount =0.7 if stage >= "33-01" #is that correct?
       #todo adjust depending on stage progression
+      #so at chapter 28 @_shop_discount=0.9
 
       @_unlock_ff=true if stage > "03-36"
       @_unlock_guild=true if stage >"02-20"
