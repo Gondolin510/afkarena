@@ -2573,7 +2573,7 @@ class Simulator
 
       #monthly_remain=remain.select {|k,v| v !=0 and v != 0.0}.map {|k,v| [k, v*duration]}.to_h
       monthly_remain=remain.select {|k,v| non_zero(v)}.map {|k,v| [k, v*duration]}.to_h
-      o_remain += " [monthly remains: #{show_items(monthly_remain)}]" unless monthly_remain == {}
+      o_remain += " [monthly remains: #{show_items(monthly_remain)}]" unless monthly_remain.empty?
 
       return "#{round(1.0/buy)} days (#{round(buy*duration*1.0)} by month)#{o_remain}"
     end
@@ -2582,6 +2582,7 @@ class Simulator
       h1 title
       total=clean_total
       puts "one level: #{cost_summary(current_level_cost, total)}\n"
+      puts "  -> cost: #{show_dia_value(current_level_cost)}"
       levels, rest=get_possible_levelups
       #p levels, rest
       nb_levels=levels.length

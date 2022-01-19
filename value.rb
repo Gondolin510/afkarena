@@ -49,7 +49,9 @@ module Helpers
     return empty if items.respond_to?(:empty?) && items.empty?
     case items
     when Hash
-      items.map {|k,v| "#{round(v)} #{k}"}.join(separator)
+      items.map do |k,v| 
+        "#{rounded_v(v,k)} #{k}"
+      end.join(separator)
     else
       [*items].map {|i| round(i)}.join(separator)
     end
@@ -155,6 +157,12 @@ module Value
     return sum
   end
 
+  def rounded_v(v, k=nil)
+    value="#{round(v)}"
+    value+="K" if k==:gold or k==:xp
+    value
+  end
+
   def detailed_dia_value(items, debug: false, skip_null: false, **kw)
     o=[]; sum=0
     values=items_value(**kw)
@@ -162,7 +170,7 @@ module Value
       p "Missing value for #{k}" unless values.key?(k) if debug
       value=v*(values[k]||0)
       sum+=value
-      o.push("#{round(v)} #{k}=#{round(value)} dia") unless skip_null and (value == 0.0 or value == 0)
+      o.push("#{rounded_v(v, k)} #{k}=#{round(value)} dia") unless skip_null and (value == 0.0 or value == 0)
     end
     return [sum, o]
   end
