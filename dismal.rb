@@ -80,8 +80,8 @@ def process(data, condition=nil)
   (1..3).each do |i|
     puts "Floor #{i}: #{approx(result[:"floor#{i}"][:shards],total)} shards and #{approx(result[:"floor#{i}"][:cores],total)} cores"
   end
-  puts "Shards:Cores ratio = #{approx(nb_shards, nb_cores+nb_shards)}:#{approx(nb_cores, nb_cores+nb_shards)}"
-  puts "30:50 ratio = #{approx(nb_30, nb_30+nb_50)}:#{approx(nb_50, nb_30+nb_50)}"
+  puts "Shards:Cores ratio = #{approx(nb_shards, nb_cores+nb_shards)}:#{approx(nb_cores, nb_cores+nb_shards)} [Shards: #{nb_shards}, Cores: #{nb_cores}]"
+  puts "30:50 ratio = #{approx(nb_30, nb_30+nb_50)}:#{approx(nb_50, nb_30+nb_50)} [30x: #{nb_30}, 50x: #{nb_50}]"
 end
 
 $verbose=true

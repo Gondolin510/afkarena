@@ -57,7 +57,10 @@ end
 # => [0.04643793, 0.43771864, 0.51584343]
 # [6] pry(main)> simulate(1000000000)
 # => [0.046439274, 0.437630455, 0.515930271]
+# simulate(1e10)
+# => [0.0464373477, 0.437645383, 0.5159172693]
 #With pity, the ratios should be [0.0461, 0.4370, 0.5169]
+#but we get [0.04644, 0.4376, 0.5159]
 
 def simulate_increasing_pity(nb)
   ratio=0.02; pity_timer=70
