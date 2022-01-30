@@ -37,7 +37,8 @@ s=Simulator.new do
   #@store_lab_items = get_store_lab_items(:arthur)
 
   #tweaks (I don't know when poe goes from 100 to 250 in shop, so it is not automatic for now)
-  @Shop={ poe: { poe: 100, gold: -500 } }
+  #@Shop={ poe: { poe: 100, gold: -500 } }
+  @Shop={ poe: { poe: 250, gold: -1250 } }
 end
 
 if __FILE__ == $0

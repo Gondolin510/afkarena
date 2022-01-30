@@ -31,6 +31,8 @@ class MySimulator < Simulator
       @garrison=true
       @dim_exchange=0.5 #3 dim by year
 
+      @cursed_realm = get_cursed_realm(50) #not in cursed
+
       #@misty = get_misty(chest2: :guild_coins) #take guild coins
 
       #@monthly_levelup=12
