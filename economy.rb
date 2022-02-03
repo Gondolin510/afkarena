@@ -607,7 +607,7 @@ class Simulator
     #use order=%i(cores shards red_e poe) to priviliege cores then shards then red_e then poe
     #the default is the same as specifying
     #    order=%i(dust_h t3 cores red_e blue_stones purple_stones twisted)
-    def get_misty(order=%i(), chest1: nil, chest2: nil, chest3: nil, chest4: nil, chest5: nil, chest6: nil, chest7: nil, chest8: nil, chest9: nil, chest10: nil, chest11: nil, chest12: nil, chest13: nil, chest14: nil, chest15: nil)
+    def get_misty(order=%i(), chest1: nil, chest2: nil, chest3: nil, chest4: nil, chest5: nil, chest6: nil, chest7: nil, chest8: nil, chest9: nil, chest10: nil, chest11: nil, chest12: nil, chest13: nil, chest14: nil, chest15: nil, chest16: nil, chest17: nil, chest18: nil, chest19: nil, chest20: nil)
       @Misty_chests={
         chest1: [{gold_h: 24*12}, {xp_h: 8*12}, {dust_h: 8*12}],
         chest2: [ {dia: 1000}, {guild_coins: 30000}, {twisted: 400} ],
@@ -623,7 +623,12 @@ class Simulator
         chest12: [ {poe: 2000}, {twisted: 200}, {cores: 100} ],
         chest13: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ],
         chest14: [ {poe: 2000}, {twisted: 200}, {cores: 100} ],
-        chest15: [ {poe: 1000}, {t1: 1}, {t2: 1}, {t3: 1} ]
+        chest15: [ {poe: 1000}, {t1: 1}, {t2: 1}, {t3: 1} ],
+        chest16: [ {silver_e: 80}, {gold_e: 50}, {red_e: 15} ],
+        chest17: [ {shards: 300}, {cores: 150}],
+        chest18: [ {scrolls: 20}, {faction_scrolls: 15}, {stargazers: 10} ],
+        chest19: [ {poe: 3000}, {twisted: 300} ],
+        chest20: [ {poe: 2000}, {t1: 1}, {t2: 1}, {t3: 1} ],
       }.merge(@Misty_chests || {})
       r={}
       misty_chests=@Misty_chests.map do |k,v|
@@ -649,23 +654,28 @@ class Simulator
         return value
       end
 
-      if @stage >= "17-01"
+      if @stage >= "18-01"
         add_to_hash(r,get_chest[:chest1, chest1])
         add_to_hash(r,get_chest[:chest2, chest2])
         add_to_hash(r,get_chest[:chest3, chest3])
-        add_to_hash(r,get_chest[:chest4, chest4])
       end
-      add_to_hash(r,get_chest[:chest5, chest5]) if @stage >= "21-01"
-      add_to_hash(r,get_chest[:chest6, chest6]) if @stage >= "23-01"
-      add_to_hash(r,get_chest[:chest7, chest7]) if @stage >= "25-01"
-      add_to_hash(r,get_chest[:chest8, chest8]) if @stage >= "27-01"
-      add_to_hash(r,get_chest[:chest9, chest9]) if @stage >= "29-01"
-      add_to_hash(r,get_chest[:chest10, chest10]) if @stage >= "31-01"
-      add_to_hash(r,get_chest[:chest11, chest11]) if @stage >= "32-01"
-      add_to_hash(r,get_chest[:chest12, chest12]) if @stage >= "33-01"
-      add_to_hash(r,get_chest[:chest13, chest13]) if @stage >= "34-01"
-      add_to_hash(r,get_chest[:chest14, chest14]) if @stage >= "35-01"
-      add_to_hash(r,get_chest[:chest15, chest15]) if @stage >= "36-01"
+      add_to_hash(r,get_chest[:chest4, chest4]) if @stage >= "20-01"
+      add_to_hash(r,get_chest[:chest5, chest5]) if @stage >= "22-01"
+      add_to_hash(r,get_chest[:chest6, chest6]) if @stage >= "24-01"
+      add_to_hash(r,get_chest[:chest7, chest7]) if @stage >= "26-01"
+      add_to_hash(r,get_chest[:chest8, chest8]) if @stage >= "28-01"
+      add_to_hash(r,get_chest[:chest9, chest9]) if @stage >= "30-01"
+      add_to_hash(r,get_chest[:chest10, chest10]) if @stage >= "32-01"
+      add_to_hash(r,get_chest[:chest11, chest11]) if @stage >= "33-01"
+      add_to_hash(r,get_chest[:chest12, chest12]) if @stage >= "34-01"
+      add_to_hash(r,get_chest[:chest13, chest13]) if @stage >= "35-01"
+      add_to_hash(r,get_chest[:chest14, chest14]) if @stage >= "36-01"
+      add_to_hash(r,get_chest[:chest15, chest15]) if @stage >= "37-01"
+      add_to_hash(r,get_chest[:chest16, chest16]) if @stage >= "38-01"
+      add_to_hash(r,get_chest[:chest17, chest17]) if @stage >= "39-01"
+      add_to_hash(r,get_chest[:chest18, chest18]) if @stage >= "40-01"
+      add_to_hash(r,get_chest[:chest19, chest19]) if @stage >= "41-01"
+      add_to_hash(r,get_chest[:chest20, chest20]) if @stage >= "42-01"
       r
     end
 
