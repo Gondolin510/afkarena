@@ -609,26 +609,26 @@ class Simulator
     #    order=%i(dust_h t3 cores red_e blue_stones purple_stones twisted)
     def get_misty(order=%i(), chest1: nil, chest2: nil, chest3: nil, chest4: nil, chest5: nil, chest6: nil, chest7: nil, chest8: nil, chest9: nil, chest10: nil, chest11: nil, chest12: nil, chest13: nil, chest14: nil, chest15: nil, chest16: nil, chest17: nil, chest18: nil, chest19: nil, chest20: nil)
       @Misty_chests={
-        chest1: [{gold_h: 24*12}, {xp_h: 8*12}, {dust_h: 8*12}],
-        chest2: [ {dia: 1000}, {guild_coins: 30000}, {twisted: 400} ],
-        chest3: [ {purple_stones: 60}, {blue_stones: 720} ],
-        chest4: [ {scrolls: 5}, {poe: 1000}, {purple_stones: 60} ],
-        chest5: [ {poe: 1000}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ],
-        chest6: [ {t1: 1}, {t2: 1}, {t3: 1} ],
-        chest7: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {poe: 1000}, {red_e: 10} ],
-        chest8: [ {scrolls: 5}, {poe: 1000}, {purple_stones: 60} ],
-        chest9: [ {hero_choice_chest: 1} ],
-        chest10: [ {silver_e: 40}, {gold_e: 20}, {poe: 1000}, {red_e: 10}, {cores: 100} ],
-        chest11: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ],
-        chest12: [ {poe: 2000}, {twisted: 200}, {cores: 100} ],
-        chest13: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ],
-        chest14: [ {poe: 2000}, {twisted: 200}, {cores: 100} ],
-        chest15: [ {poe: 1000}, {t1: 1}, {t2: 1}, {t3: 1} ],
-        chest16: [ {silver_e: 80}, {gold_e: 50}, {red_e: 15} ],
-        chest17: [ {shards: 300}, {cores: 150}],
-        chest18: [ {scrolls: 20}, {faction_scrolls: 15}, {stargazers: 10} ],
-        chest19: [ {poe: 3000}, {twisted: 300} ],
-        chest20: [ {poe: 2000}, {t1: 1}, {t2: 1}, {t3: 1} ],
+        chest1: [{gold_h: 24*12}, {xp_h: 8*12}, {dust_h: 8*12}], #17
+        chest2: [ {dia: 1000}, {guild_coins: 30000}, {twisted: 400} ], #17
+        chest3: [ {purple_stones: 60}, {blue_stones: 720} ], #17
+        chest4: [ {scrolls: 5}, {poe: 1000}, {purple_stones: 60} ], #19
+        chest5: [ {poe: 1000}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ], #21
+        chest6: [ {t1: 1}, {t2: 1}, {t3: 1} ], #23
+        chest7: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {poe: 1000}, {red_e: 10} ], #25
+        chest8: [ {scrolls: 5}, {poe: 1000}, {purple_stones: 60} ], #27
+        chest9: [ {hero_choice_chest: 1} ], #29
+        chest10: [ {silver_e: 40}, {gold_e: 20}, {poe: 1000}, {red_e: 10}, {cores: 100} ], #31
+        chest11: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ], #32
+        chest12: [ {poe: 2000}, {twisted: 200}, {cores: 100} ], #33
+        chest13: [ {shards: 200}, {silver_e: 40}, {gold_e: 20}, {red_e: 10} ], #34
+        chest14: [ {poe: 2000}, {twisted: 200}, {cores: 100} ], #35
+        chest15: [ {poe: 1000}, {t1: 1}, {t2: 1}, {t3: 1} ], #36
+        chest16: [ {silver_e: 80}, {gold_e: 50}, {red_e: 15} ], #37
+        chest17: [ {shards: 300}, {cores: 150}], #38
+        chest18: [ {scrolls: 20}, {faction_scrolls: 15}, {stargazers: 10} ], #39
+        chest19: [ {poe: 3000}, {twisted: 300} ], #40
+        chest20: [ {poe: 2000}, {t1: 1}, {t2: 1}, {t3: 1} ], #41
       }.merge(@Misty_chests || {})
       r={}
       misty_chests=@Misty_chests.map do |k,v|
@@ -703,40 +703,44 @@ class Simulator
       when :dia3, :diamond3; r={twisted: 140, shards: 140}
       when :dia2, :diamond2; r={twisted: 160, shards: 160}
       when :dia1, :diamond1; r={twisted: 180, shards: 180}
+      else
+        rank.to_s.match(/^(?:top)?(\d+)%?/) do |m|
+          rank=m[1].to_i
+        end
+        r={twisted: 200, shards: 200}
+        r={twisted: 220, shards: 120} if rank <= 95
+        r={twisted: 240, shards: 240} if rank <= 90
+        r={twisted: 260, shards: 260} if rank <= 85
+        r={twisted: 280, shards: 280} if rank <= 80
+        r={twisted: 300, shards: 300} if rank <= 75
+        r={twisted: 320, shards: 320} if rank <= 70
+        r={twisted: 340, shards: 340} if rank <= 65
+        r={twisted: 360, shards: 360} if rank <= 60
+        r={twisted: 380, shards: 380} if rank <= 55
+        r={twisted: 400, shards: 400, cores: 10} if rank <= 50
+        r={twisted: 420, shards: 400, cores: 20} if rank <= 47
+        r={twisted: 440, shards: 400, cores: 30} if rank <= 44
+        r={twisted: 460, shards: 400, cores: 40} if rank <= 41
+        r={twisted: 480, shards: 400, cores: 50, stargazers: 2} if rank <= 38
+        r={twisted: 500, shards: 400, cores: 60, stargazers: 2} if rank <= 35
+        r={twisted: 520, shards: 400, cores: 70, stargazers: 2} if rank <= 32
+        r={twisted: 540, shards: 400, cores: 80, stargazers: 3} if rank <= 29
+        r={twisted: 560, shards: 400, cores: 90, stargazers: 3} if rank <= 26
+        r={twisted: 580, shards: 400, cores: 100, stargazers: 3} if rank <= 23
+        r={twisted: 600, shards: 400, cores: 110, stargazers: 4} if rank <= 21
+        r={twisted: 620, shards: 400, cores: 120, stargazers: 4} if rank <= 19
+        r={twisted: 640, shards: 400, cores: 130, stargazers: 5} if rank <= 16
+        r={twisted: 660, shards: 400, cores: 140, stargazers: 5} if rank <= 14
+        r={twisted: 680, shards: 400, cores: 150, stargazers: 6} if rank <= 12
+        r={twisted: 700, shards: 400, cores: 160, stargazers: 6, timegazers: 3} if rank <= 10
+        r={twisted: 720, shards: 400, cores: 170, stargazers: 7, timegazers: 4} if rank <= 8
+        r={twisted: 740, shards: 400, cores: 180, stargazers: 7, timegazers: 5} if rank <= 6
+        r={twisted: 770, shards: 400, cores: 200, stargazers: 8, timegazers: 6} if rank <= 5
+        r={twisted: 800, shards: 400, cores: 220, stargazers: 8, timegazers: 7} if rank <= 4
+        r={twisted: 850, shards: 400, cores: 240, stargazers: 9, timegazers: 8} if rank <= 3
+        r={twisted: 900, shards: 400, cores: 260, stargazers: 9, timegazers: 9} if rank <= 2
+        r={twisted: 1000, shards: 400, cores: 300, stargazers: 10, timegazers: 10} if rank <= 1
       end
-      r={twisted: 100, shards: 100}
-      r={twisted: 120, shards: 120} if rank <= 95
-      r={twisted: 140, shards: 140} if rank <= 90
-      r={twisted: 160, shards: 160} if rank <= 85
-      r={twisted: 180, shards: 180} if rank <= 80
-      r={twisted: 200, shards: 200} if rank <= 75
-      r={twisted: 220, shards: 220} if rank <= 70
-      r={twisted: 240, shards: 240} if rank <= 65
-      r={twisted: 260, shards: 260} if rank <= 60
-      r={twisted: 280, shards: 280} if rank <= 55
-      r={twisted: 300, shards: 300, cores: 10} if rank <= 50
-      r={twisted: 320, shards: 320, cores: 20} if rank <= 47
-      r={twisted: 340, shards: 340, cores: 30} if rank <= 44
-      r={twisted: 360, shards: 360, cores: 40} if rank <= 41
-      r={twisted: 380, shards: 380, cores: 50} if rank <= 38
-      r={twisted: 400, shards: 400, cores: 60} if rank <= 35
-      r={twisted: 420, shards: 400, cores: 70} if rank <= 32
-      r={twisted: 440, shards: 400, cores: 80} if rank <= 29
-      r={twisted: 460, shards: 400, cores: 90} if rank <= 26
-      r={twisted: 480, shards: 400, cores: 100} if rank <= 23
-      r={twisted: 500, shards: 400, cores: 110} if rank <= 21
-      r={twisted: 530, shards: 400, cores: 120} if rank <= 19
-      r={twisted: 560, shards: 400, cores: 130} if rank <= 16
-      r={twisted: 590, shards: 400, cores: 140} if rank <= 14
-      r={twisted: 620, shards: 400, cores: 150} if rank <= 12
-      r={twisted: 650, shards: 400, cores: 160, stargazers: 3} if rank <= 10
-      r={twisted: 680, shards: 400, cores: 170, stargazers: 4} if rank <= 8
-      r={twisted: 710, shards: 400, cores: 180, stargazers: 5} if rank <= 6
-      r={twisted: 740, shards: 400, cores: 200, stargazers: 6} if rank <= 5
-      r={twisted: 770, shards: 400, cores: 220, stargazers: 7} if rank <= 4
-      r={twisted: 800, shards: 400, cores: 240, stargazers: 8} if rank <= 3
-      r={twisted: 850, shards: 400, cores: 260, stargazers: 9} if rank <= 2
-      r={twisted: 1000, shards: 400, cores: 300, stargazers: 10} if rank <= 1
       return r
     end
 
