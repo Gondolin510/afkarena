@@ -5,11 +5,11 @@ class MySimulator < Simulator
   def initialize(*args, **kw, &b)
     super do
       @hero_level=389
-      @stage="37-32"
+      @stage="39-08"
       #@afk_xp=13932
       #@afk_gold=888
 
-      @player_level=180
+      @player_level=190
       @vip=10
       @subscription=false
 
@@ -18,7 +18,7 @@ class MySimulator < Simulator
       @temporal_rift_level = 150
 
       @gh_wrizz_chests = 22
-      @gh_wrizz_gold = 2000
+      @gh_wrizz_gold = 2060
       #@gh_soren_gold = 1957
 
       @noble_coe = get_coe(:cores)
@@ -31,7 +31,7 @@ class MySimulator < Simulator
       @garrison=true
       @dim_exchange=0.5 #3 dim by year
 
-      @cursed_realm = get_cursed_realm(50) #not in cursed
+      @cursed_realm = get_cursed_realm(60) #cannot reach top50% yet :-(
 
       #@misty = get_misty(chest2: :guild_coins) #take guild coins
 
