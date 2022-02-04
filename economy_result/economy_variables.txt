@@ -26,7 +26,7 @@
 @arena_weekly_dia: 660
 @lct_coins: 380
 @lc_rewards: {:gold=>7668}
-@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>55, :t3=>2, :hero_choice_chest=>1, :cores=>300}
 @board_level: 8
 @dura_nb_selling: 0
 @noble_regal: {:blue_stones=>3300}
@@ -85,7 +85,7 @@
 @arena_weekly_dia: 660
 @lct_coins: 380
 @lc_rewards: {:gold=>7668}
-@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>40, :t3=>2, :hero_choice_chest=>1, :cores=>300}
+@misty: {:dust_h=>96, :twisted=>400, :blue_stones=>720, :purple_stones=>120, :red_e=>55, :t3=>2, :hero_choice_chest=>1, :cores=>300}
 @board_level: 8
 @dura_nb_selling: 0
 @noble_regal: {:blue_stones=>3300}

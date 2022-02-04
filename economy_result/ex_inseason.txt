@@ -21,10 +21,10 @@ dust_h: 148.98 [2 (quests) + 31 (lab) + 10.67 (misty) + 52.78 (coe) + 0.8 (hero_
 ***** Upgrades *****
 silver_e: 7.42 [2 (idle) + 1.17 (ff) + 2.86 (quests) + 1.4 (vow)]
 gold_e: 4.08 [1 (idle) + 0.58 (ff) + 1.43 (quests) + 1.07 (vow)]
-red_e: 6.51 [0.38 (idle) + 0.22 (ff) + 0.71 (quests) + 0.67 (misty) + 0.53 (vow) + 4 (deluxe_monthly_card)]
+red_e: 7.01 [0.38 (idle) + 0.22 (ff) + 0.71 (quests) + 1.17 (misty) + 0.53 (vow) + 4 (deluxe_monthly_card)]
 poe: 2419.44 [550.32 (idle) + 321.02 (ff) + 860 (tr) + 71.43 (quests) + 500 (misty) + 116.67 (vow)]
 twisted: 413.09 [26.79 (idle) + 15.63 (ff) + 257.33 (tr) + 92.86 (cursed) + 7.14 (quests) + 13.33 (misty)]
-shards: 170.11 [30 (idle) + 17.5 (ff) + 57.14 (cursed) + 36.67 (lab) + 20 (misty) + 8.8 (vow)]
+shards: 180.11 [30 (idle) + 17.5 (ff) + 57.14 (cursed) + 36.67 (lab) + 30 (misty) + 8.8 (vow)]
 cores: 104.94 [15 (idle) + 8.75 (ff) + 22.86 (cursed) + 30 (lab) + 4.33 (vow) + 24 (deluxe_monthly_card)]
 
 ***** Gear *****
@@ -47,7 +47,7 @@ faction_scrolls: 0.2 [0.2 (vow)]
 scrolls: 1.7 [1.43 (quests) + 0.27 (vow)]
 friend_summons: 2.71 [2.71 (friends)]
 hero_choice_chest: 0.03 [0.03 (misty)]
-stargazers: 0.9 [0.43 (cursed) + 0.47 (vow)]
+stargazers: 1.23 [0.43 (cursed) + 0.33 (misty) + 0.47 (vow)]
 
 ***** Misc *****
 dura_fragments: 10.15 [6.41 (idle) + 3.74 (ff)]
@@ -56,7 +56,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 912 [576 (idle) + 336 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 27831.38 dia [2 arena_tickets=5.71 dia + 219.86 blue_stones=571.63 dia + 11798 challenger_coins=786.53 dia + 13.46 class_fragments=204.42 dia + 104.94 cores=1197.76 dia + 2514.68 dia=2514.68 dia + 10.15 dura_fragments=57.93 dia + 0.43 dura_tears=0.24 dia + 8642.64 dust=2220.62 dia + 148.98 dust_h=1862.22 dia + 0.2 faction_scrolls=54 dia + 2.71 friend_summons=732.86 dia + 27493.68K gold=1569.81 dia + 4.08 gold_e=127.19 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14196.56 guild_coins=946.44 dia + 0.03 hero_choice_chest=213.33 dia + 912 invigor=218.88 dia + 8330 lab_coins=876.84 dia + 0.5 mythic_gear=247.6 dia + 2419.44 poe=1633.12 dia + 38 purple_stones=1185.45 dia + 6.51 red_e=878.66 dia + 0.05 reset_scrolls=13.33 dia + 1.7 scrolls=406.86 dia + 170.11 shards=971.28 dia + 7.42 silver_e=142.4 dia + 0.9 stargazers=447.62 dia + 0.11 t1_gear=158.33 dia + 0.5 t1t2_chest=990.39 dia + 0.11 t2_gear=369.44 dia + 0.18 t3=539.29 dia + 413.09 twisted=2788.33 dia + 106670.79K xp=1708.24 dia + 116.87 xp_h=934.98 dia]
+=> Total value: 28122.64 dia [2 arena_tickets=5.71 dia + 219.86 blue_stones=571.63 dia + 11798 challenger_coins=786.53 dia + 13.46 class_fragments=204.42 dia + 104.94 cores=1197.76 dia + 2514.68 dia=2514.68 dia + 10.15 dura_fragments=57.93 dia + 0.43 dura_tears=0.24 dia + 8642.64 dust=2220.62 dia + 148.98 dust_h=1862.22 dia + 0.2 faction_scrolls=54 dia + 2.71 friend_summons=732.86 dia + 27493.68K gold=1569.81 dia + 4.08 gold_e=127.19 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 14196.56 guild_coins=946.44 dia + 0.03 hero_choice_chest=213.33 dia + 912 invigor=218.88 dia + 8330 lab_coins=876.84 dia + 0.5 mythic_gear=247.6 dia + 2419.44 poe=1633.12 dia + 38 purple_stones=1185.45 dia + 7.01 red_e=946.16 dia + 0.05 reset_scrolls=13.33 dia + 1.7 scrolls=406.86 dia + 180.11 shards=1028.37 dia + 7.42 silver_e=142.4 dia + 1.23 stargazers=614.29 dia + 0.11 t1_gear=158.33 dia + 0.5 t1t2_chest=990.39 dia + 0.11 t2_gear=369.44 dia + 0.18 t3=539.29 dia + 413.09 twisted=2788.33 dia + 106670.79K xp=1708.24 dia + 116.87 xp_h=934.98 dia]
 
 =============== Exchange ===============
 dia: -1090 [830 (ff_cost) - 260 (shop)]
@@ -68,15 +68,15 @@ purple_stones: 3.33 [3.33 (shop)]
 dura_fragments: -10.15 [10.15 (dura_fragments_sell)]
 
 =============== Summons (20 sg + 86.76 hcp + 0 wl) ===============
-dia: -1196.25 [867.6 (hcp) - 333.33 (stargazing) + 4.69 (stargaze)]
-gold_h: 7.72 [7.72 (stargaze)] {213.9K gold}
-xp_h: 3.42 [3.42 (stargaze)] {1710.31K xp}
+dia: -1195.25 [867.6 (hcp) - 333.33 (stargazing) + 5.69 (stargaze)]
+gold_h: 9.37 [9.37 (stargaze)] {259.55K gold}
+xp_h: 4.15 [4.15 (stargaze)] {2075.31K xp}
 dust: 19.54 [19.54 (tavern)]
-dust_h: 2.57 [2.57 (stargaze)] {125.19K dust}
+dust_h: 3.12 [3.12 (stargaze)] {151.91K dust}
 silver_e: 2.1 [2.1 (tavern)]
 gold_e: 0.83 [0.83 (tavern)]
 red_e: 0.24 [0.24 (tavern)]
-mythic_gear: 0.01 [0.01 (stargaze)]
+mythic_gear: 0.02 [0.02 (stargaze)]
 hero_coins: 625.23 [625.23 (tavern)]
 hcp: 2.89 [2.89 (hcp)]
 stargazing: 0.67 [0.67 (stargazing)]
@@ -87,11 +87,11 @@ faction_atier: 0.01 [0.01 (tavern)]
 wishlist_atier: 0.14 [0.14 (tavern)]
 random_atier: 0.48 [0.48 (stones)]
 faction_purple_card: 0.05 [0.05 (tavern)]
-purple_card: 0.05 [0.05 (stargaze)]
-choice_god: 0.04 [0.04 (stargaze)]
+purple_card: 0.06 [0.06 (stargaze)]
+choice_god: 0.05 [0.05 (stargaze)]
 random_god: 0.04 [0.03 (stones) + 0.02 (tavern)]
-dura_fragments: 0.9 [0.9 (stargaze)]
-arena_tickets: 0.16 [0.16 (stargaze)]
+dura_fragments: 1.09 [1.09 (stargaze)]
+arena_tickets: 0.19 [0.19 (stargaze)]
 faction_fodder: 0.01 [0.01 (tavern)]
 
 =============== Stores ===============
@@ -128,35 +128,35 @@ wish: 0.07 [0.07 (yuexi)]
 
 =============== Full daily ressources ===============
 ***** Base *****
-dia: 320.53=2611.46-2290.93 [238.42 (board 9%) + 309.26 (guild 12%) + 75 (oak_inn 3%) + 66.67 (tr 3%) + 207.14 (quests 8%) + 24.52 (merchants 1%) + 207.65 (arena 8%) + 200 (lab 8%) + 1.43 (yuexi 0%) + 112.24 (regal 4%) + 125 (tr_bounties 5%) + 152.78 (coe 6%) + 20 (hero_trial 1%) + 33.33 (guild_hero_trial 1%) + 110 (monthly_card 4%) + 632.67 (deluxe_monthly_card 24%) - 830 (ff_cost 36%) - 260 (shop 11%) - 333.33 (stargazing 15%) - 867.6 (hcp 38%) + 4.69 (stargaze 0%) + 90.67 (towers_kt 3%)]
+dia: 321.53=2612.46-2290.93 [238.42 (board 9%) + 309.26 (guild 12%) + 75 (oak_inn 3%) + 66.67 (tr 3%) + 207.14 (quests 8%) + 24.52 (merchants 1%) + 207.65 (arena 8%) + 200 (lab 8%) + 1.43 (yuexi 0%) + 112.24 (regal 4%) + 125 (tr_bounties 5%) + 152.78 (coe 6%) + 20 (hero_trial 1%) + 33.33 (guild_hero_trial 1%) + 110 (monthly_card 4%) + 632.67 (deluxe_monthly_card 24%) - 830 (ff_cost 36%) - 260 (shop 11%) - 333.33 (stargazing 15%) - 867.6 (hcp 38%) + 5.69 (stargaze 0%) + 90.67 (towers_kt 3%)]
 
 gold: 16602.64K=32727.64-16125 [4613.95 (idle 14%) + 2691.47 (ff 8%) + 432.12 (board 1%) + 12549.6 (guild 38%) + 1125 (oak_inn 3%) + 400.95 (arena 1%) + 511.2 (lc 2%) + 4802.72 (lab 15%) + 233.33 (misty 1%) + 133.33 (hero_trial 0%) - 16125 (shop 100%) + 507.3 (dura_fragments_sell 2%) + 3766.67 (towers_kt 12%) + 640 (towers_4f 2%) + 320 (towers_god 1%)] {32727.64K gold=89%}
-gold_h: 133.21 [4.29 (quests 3%) + 118 (lab 89%) + 3.2 (hero_trial 2%) + 7.72 (stargaze 6%)] {3690.86K gold=10%}
+gold_h: 134.85 [4.29 (quests 3%) + 118 (lab 88%) + 3.2 (hero_trial 2%) + 9.37 (stargaze 7%)] {3736.51K gold=10%}
 gold_hg: 2 [2 (quests 100%)] {182.87K gold=0%}
--> Total gold: 20476.38K=36601.38-16125
+-> Total gold: 20522.03K=36647.03-16125
 
 xp: 106670.79K [66108.98 (idle 62%) + 38563.57 (ff 36%) + 1998.24 (lab 2%)] {106670.79K xp=64%}
-xp_h: 120.3 [2 (quests 2%) + 31 (lab 26%) + 4.8 (misty 4%) + 78.27 (tr_bounties 65%) + 0.8 (hero_trial 1%) + 3.42 (stargaze 3%)] {60095.25K xp=36%}
--> Total xp: 166766.03K
+xp_h: 121.03 [2 (quests 2%) + 31 (lab 26%) + 4.8 (misty 4%) + 78.27 (tr_bounties 65%) + 0.8 (hero_trial 1%) + 4.15 (stargaze 3%)] {60460.25K xp=36%}
+-> Total xp: 167131.04K
 
 dust: 11862.18 [3420.76 (idle 29%) + 1995.44 (ff 17%) + 1709 (board 14%) + 75 (oak_inn 1%) + 53.55 (arena 0%) + 1388.89 (coe 12%) + 1500 (shop 13%) + 19.54 (tavern 0%) + 100 (towers_kt 1%) + 1066.67 (towers_4f 9%) + 533.33 (towers_god 4%)] {11862.18K dust=62%}
-dust_h: 151.55 [2 (quests 1%) + 31 (lab 20%) + 10.67 (misty 7%) + 52.78 (coe 35%) + 0.8 (hero_trial 1%) + 3.73 (vow 2%) + 48 (monthly_card 32%) + 2.57 (stargaze 2%)] {7372.96K dust=38%}
--> Total dust: 19235.14
+dust_h: 152.1 [2 (quests 1%) + 31 (lab 20%) + 10.67 (misty 7%) + 52.78 (coe 35%) + 0.8 (hero_trial 1%) + 3.73 (vow 2%) + 48 (monthly_card 32%) + 3.12 (stargaze 2%)] {7399.68K dust=38%}
+-> Total dust: 19261.86
 
 ***** Upgrades *****
 silver_e: 9.52 [2 (idle 21%) + 1.17 (ff 12%) + 2.86 (quests 30%) + 1.4 (vow 15%) + 2.1 (tavern 22%)]
 gold_e: 4.9 [1 (idle 20%) + 0.58 (ff 12%) + 1.43 (quests 29%) + 1.07 (vow 22%) + 0.83 (tavern 17%)]
-red_e: 8.75 [0.38 (idle 4%) + 0.22 (ff 3%) + 0.71 (quests 8%) + 0.67 (misty 8%) + 0.53 (vow 6%) + 4 (deluxe_monthly_card 46%) + 0.24 (tavern 3%) + 1.33 (towers_4f 15%) + 0.67 (towers_god 8%)]
+red_e: 9.25 [0.38 (idle 4%) + 0.22 (ff 2%) + 0.71 (quests 8%) + 1.17 (misty 13%) + 0.53 (vow 6%) + 4 (deluxe_monthly_card 43%) + 0.24 (tavern 3%) + 1.33 (towers_4f 14%) + 0.67 (towers_god 7%)]
 faction_emblems: 2 [1.33 (towers_4f 67%) + 0.67 (towers_god 33%)]
 poe: 3189.44 [550.32 (idle 17%) + 321.02 (ff 10%) + 860 (tr 27%) + 71.43 (quests 2%) + 500 (misty 16%) + 116.67 (vow 4%) + 750 (shop 24%) + 20 (towers_4f 1%)]
 twisted: 506.42 [26.79 (idle 5%) + 15.63 (ff 3%) + 257.33 (tr 51%) + 92.86 (cursed 18%) + 7.14 (quests 1%) + 13.33 (misty 3%) + 53.33 (hero_store 11%) + 40 (lab_store 8%)]
-shards: 230.11 [30 (idle 13%) + 17.5 (ff 8%) + 57.14 (cursed 25%) + 36.67 (lab 16%) + 20 (misty 9%) + 8.8 (vow 4%) + 60 (shop 26%)]
+shards: 240.11 [30 (idle 12%) + 17.5 (ff 7%) + 57.14 (cursed 24%) + 36.67 (lab 15%) + 30 (misty 12%) + 8.8 (vow 4%) + 60 (shop 25%)]
 cores: 124.94 [15 (idle 12%) + 8.75 (ff 7%) + 22.86 (cursed 18%) + 30 (lab 24%) + 4.33 (vow 3%) + 24 (deluxe_monthly_card 19%) + 6.67 (towers_kt 5%) + 13.33 (towers_god 11%)]
 
 ***** Gear *****
 t1t2_chest: 0.5 [0.22 (idle 45%) + 0.13 (ff 26%) + 0.14 (stage_clear 29%)]
 t3: 0.25 [0.07 (idle 29%) + 0.04 (ff 17%) + 0.07 (misty 27%) + 0.07 (guild_store 27%)]
-mythic_gear: 0.51 [0.22 (idle 44%) + 0.13 (ff 26%) + 0.14 (stage_clear 28%) + 0.01 (stargaze 3%)]
+mythic_gear: 0.51 [0.22 (idle 44%) + 0.13 (ff 25%) + 0.14 (stage_clear 28%) + 0.02 (stargaze 3%)]
 t1_gear: 0.11 [0.07 (idle 63%) + 0.04 (ff 37%)]
 t2_gear: 0.11 [0.07 (idle 63%) + 0.04 (ff 37%)]
 reset_scrolls: 0.05 [0.05 (vow 100%)]
@@ -176,21 +176,21 @@ friend_summons: 2.71 [2.71 (friends 100%)]
 hcp: 2.89 [2.89 (hcp 100%)]
 hero_choice_chest: 0.03 [0.03 (misty 100%)]
 stargazing: 0.67 [0.67 (stargazing 100%)]
-stargazers: 2.9 [0.43 (cursed 15%) + 0.47 (vow 16%) + 1.33 (towers_4f 46%) + 0.67 (towers_god 23%)]
+stargazers: 3.23 [0.43 (cursed 13%) + 0.33 (misty 10%) + 0.47 (vow 14%) + 1.33 (towers_4f 41%) + 0.67 (towers_god 21%)]
 
 ***** Hero_summons *****
 -> Fodder: 0.99
 random_fodder: 0.96 [0.6 (stones 63%) + 0.36 (tavern 37%)]
 blue_card: 0.02 [0.02 (stargaze 100%)]
--> Atier: 0.89
+-> Atier: 0.9
 choice_atier: 0.17 [0.03 (hero_chest 20%) + 0.13 (tavern 80%)]
 faction_atier: 0.01 [0.01 (tavern 100%)]
 wishlist_atier: 0.14 [0.14 (tavern 100%)]
 random_atier: 0.48 [0.48 (stones 100%)]
 faction_purple_card: 0.05 [0.05 (tavern 100%)]
-purple_card: 0.05 [0.05 (stargaze 100%)]
--> God: 0.08
-choice_god: 0.04 [0.04 (stargaze 100%)]
+purple_card: 0.06 [0.06 (stargaze 100%)]
+-> God: 0.09
+choice_god: 0.05 [0.05 (stargaze 100%)]
 random_god: 0.04 [0.03 (stones 65%) + 0.02 (tavern 35%)]
 
 ***** Dimensional *****
@@ -198,11 +198,11 @@ dim_gear: 0.19 [0.19 (guild_store 100%)]
 dim_emblems: 1.67 [1.67 (lab_store 100%)]
 
 ***** Misc *****
-dura_fragments: 0.9=11.04-10.15 [6.41 (idle 58%) + 3.74 (ff 34%) - 10.15 (dura_fragments_sell 100%) + 0.9 (stargaze 8%)]
+dura_fragments: 1.09=11.24-10.15 [6.41 (idle 57%) + 3.74 (ff 33%) - 10.15 (dura_fragments_sell 100%) + 1.09 (stargaze 10%)]
 class_fragments: 13.46 [8.5 (idle 63%) + 4.96 (ff 37%)]
 dura_tears: 0.43 [0.43 (quests 100%)]
 invigor: 912 [576 (idle 63%) + 336 (ff 37%)]
-arena_tickets: 2.16 [2 (quests 93%) + 0.16 (stargaze 7%)]
+arena_tickets: 2.19 [2 (quests 91%) + 0.19 (stargaze 9%)]
 
 ***** Extra *****
 faction_fodder: 0.01 [0.01 (tavern 100%)]
@@ -210,35 +210,35 @@ wish: 0.07 [0.07 (yuexi 100%)]
 
 =============== Full monthly ressources ===============
 ***** Base *****
-dia: 9615.87=78343.87-68728 [7152.5 (board 9%) + 9277.74 (guild 12%) + 2250 (oak_inn 3%) + 2000 (tr 3%) + 6214.29 (quests 8%) + 735.71 (merchants 1%) + 6229.52 (arena 8%) + 6000 (lab 8%) + 42.86 (yuexi 0%) + 3367.35 (regal 4%) + 3750 (tr_bounties 5%) + 4583.33 (coe 6%) + 600 (hero_trial 1%) + 1000 (guild_hero_trial 1%) + 3300 (monthly_card 4%) + 18980 (deluxe_monthly_card 24%) - 24900 (ff_cost 36%) - 7800 (shop 11%) - 10000 (stargazing 15%) - 26028 (hcp 38%) + 140.57 (stargaze 0%) + 2720 (towers_kt 3%)]
+dia: 9645.87=78373.87-68728 [7152.5 (board 9%) + 9277.74 (guild 12%) + 2250 (oak_inn 3%) + 2000 (tr 3%) + 6214.29 (quests 8%) + 735.71 (merchants 1%) + 6229.52 (arena 8%) + 6000 (lab 8%) + 42.86 (yuexi 0%) + 3367.35 (regal 4%) + 3750 (tr_bounties 5%) + 4583.33 (coe 6%) + 600 (hero_trial 1%) + 1000 (guild_hero_trial 1%) + 3300 (monthly_card 4%) + 18980 (deluxe_monthly_card 24%) - 24900 (ff_cost 36%) - 7800 (shop 11%) - 10000 (stargazing 15%) - 26028 (hcp 38%) + 170.57 (stargaze 0%) + 2720 (towers_kt 3%)]
 
 gold: 498079.34K=981829.34-483750 [138418.42 (idle 14%) + 80744.08 (ff 8%) + 12963.75 (board 1%) + 376488 (guild 38%) + 33750 (oak_inn 3%) + 12028.5 (arena 1%) + 15336 (lc 2%) + 144081.6 (lab 15%) + 7000 (misty 1%) + 4000 (hero_trial 0%) - 483750 (shop 100%) + 15219 (dura_fragments_sell 2%) + 113000 (towers_kt 12%) + 19200 (towers_4f 2%) + 9600 (towers_god 1%)] {981829.34K gold=89%}
-gold_h: 3996.17 [128.57 (quests 3%) + 3540 (lab 89%) + 96 (hero_trial 2%) + 231.6 (stargaze 6%)] {110725.88K gold=10%}
+gold_h: 4045.6 [128.57 (quests 3%) + 3540 (lab 88%) + 96 (hero_trial 2%) + 281.02 (stargaze 7%)] {112095.39K gold=10%}
 gold_hg: 60 [60 (quests 100%)] {5486.18K gold=0%}
--> Total gold: 614291.4K=1098041.4-483750
+-> Total gold: 615660.91K=1099410.91-483750
 
 xp: 3200123.56K [1983269.28 (idle 62%) + 1156907.08 (ff 36%) + 59947.2 (lab 2%)] {3200123.56K xp=64%}
-xp_h: 3608.89 [60 (quests 2%) + 930 (lab 26%) + 144 (misty 4%) + 2348.18 (tr_bounties 65%) + 24 (hero_trial 1%) + 102.71 (stargaze 3%)] {1802857.44K xp=36%}
--> Total xp: 5002981K
+xp_h: 3630.81 [60 (quests 2%) + 930 (lab 26%) + 144 (misty 4%) + 2348.18 (tr_bounties 65%) + 24 (hero_trial 1%) + 124.63 (stargaze 3%)] {1813807.59K xp=36%}
+-> Total xp: 5013931.15K
 
 dust: 355865.42 [102622.8 (idle 29%) + 59863.3 (ff 17%) + 51270 (board 14%) + 2250 (oak_inn 1%) + 1606.5 (arena 0%) + 41666.67 (coe 12%) + 45000 (shop 13%) + 586.15 (tavern 0%) + 3000 (towers_kt 1%) + 32000 (towers_4f 9%) + 16000 (towers_god 4%)] {355865.42K dust=62%}
-dust_h: 4546.53 [60 (quests 1%) + 930 (lab 20%) + 320 (misty 7%) + 1583.33 (coe 35%) + 24 (hero_trial 1%) + 112 (vow 2%) + 1440 (monthly_card 32%) + 77.2 (stargaze 2%)] {221188.82K dust=38%}
--> Total dust: 577054.24
+dust_h: 4563.01 [60 (quests 1%) + 930 (lab 20%) + 320 (misty 7%) + 1583.33 (coe 35%) + 24 (hero_trial 1%) + 112 (vow 2%) + 1440 (monthly_card 32%) + 93.67 (stargaze 2%)] {221990.36K dust=38%}
+-> Total dust: 577855.77
 
 ***** Upgrades *****
 silver_e: 285.68 [59.98 (idle 21%) + 34.99 (ff 12%) + 85.71 (quests 30%) + 42 (vow 15%) + 63 (tavern 22%)]
 gold_e: 147.15 [30.02 (idle 20%) + 17.51 (ff 12%) + 42.86 (quests 29%) + 32 (vow 22%) + 24.75 (tavern 17%)]
-red_e: 262.44 [11.26 (idle 4%) + 6.57 (ff 3%) + 21.43 (quests 8%) + 20 (misty 8%) + 16 (vow 6%) + 120 (deluxe_monthly_card 46%) + 7.18 (tavern 3%) + 40 (towers_4f 15%) + 20 (towers_god 8%)]
+red_e: 277.44 [11.26 (idle 4%) + 6.57 (ff 2%) + 21.43 (quests 8%) + 35 (misty 13%) + 16 (vow 6%) + 120 (deluxe_monthly_card 43%) + 7.18 (tavern 3%) + 40 (towers_4f 14%) + 20 (towers_god 7%)]
 faction_emblems: 60 [40 (towers_4f 67%) + 20 (towers_god 33%)]
 poe: 95683.06 [16509.6 (idle 17%) + 9630.6 (ff 10%) + 25800 (tr 27%) + 2142.86 (quests 2%) + 15000 (misty 16%) + 3500 (vow 4%) + 22500 (shop 24%) + 600 (towers_4f 1%)]
 twisted: 15192.58 [803.74 (idle 5%) + 468.85 (ff 3%) + 7720 (tr 51%) + 2785.71 (cursed 18%) + 214.29 (quests 1%) + 400 (misty 3%) + 1600 (hero_store 11%) + 1200 (lab_store 8%)]
-shards: 6903.29 [900 (idle 13%) + 525 (ff 8%) + 1714.29 (cursed 25%) + 1100 (lab 16%) + 600 (misty 9%) + 264 (vow 4%) + 1800 (shop 26%)]
+shards: 7203.29 [900 (idle 12%) + 525 (ff 7%) + 1714.29 (cursed 24%) + 1100 (lab 15%) + 900 (misty 12%) + 264 (vow 4%) + 1800 (shop 25%)]
 cores: 3748.21 [450 (idle 12%) + 262.5 (ff 7%) + 685.71 (cursed 18%) + 900 (lab 24%) + 130 (vow 3%) + 720 (deluxe_monthly_card 19%) + 200 (towers_kt 5%) + 400 (towers_god 11%)]
 
 ***** Gear *****
 t1t2_chest: 14.86 [6.68 (idle 45%) + 3.89 (ff 26%) + 4.29 (stage_clear 29%)]
 t3: 7.39 [2.14 (idle 29%) + 1.25 (ff 17%) + 2 (misty 27%) + 2 (guild_store 27%)]
-mythic_gear: 15.25 [6.68 (idle 44%) + 3.89 (ff 26%) + 4.29 (stage_clear 28%) + 0.39 (stargaze 3%)]
+mythic_gear: 15.33 [6.68 (idle 44%) + 3.89 (ff 25%) + 4.29 (stage_clear 28%) + 0.48 (stargaze 3%)]
 t1_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 t2_gear: 3.17 [2 (idle 63%) + 1.17 (ff 37%)]
 reset_scrolls: 1.6 [1.6 (vow 100%)]
@@ -258,21 +258,21 @@ friend_summons: 81.43 [81.43 (friends 100%)]
 hcp: 86.76 [86.76 (hcp 100%)]
 hero_choice_chest: 1 [1 (misty 100%)]
 stargazing: 20 [20 (stargazing 100%)]
-stargazers: 86.86 [12.86 (cursed 15%) + 14 (vow 16%) + 40 (towers_4f 46%) + 20 (towers_god 23%)]
+stargazers: 96.86 [12.86 (cursed 13%) + 10 (misty 10%) + 14 (vow 14%) + 40 (towers_4f 41%) + 20 (towers_god 21%)]
 
 ***** Hero_summons *****
--> Fodder: 29.59
+-> Fodder: 29.69
 random_fodder: 28.83 [18.1 (stones 63%) + 10.73 (tavern 37%)]
-blue_card: 0.47 [0.47 (stargaze 100%)]
--> Atier: 26.64
+blue_card: 0.57 [0.57 (stargaze 100%)]
+-> Atier: 26.96
 choice_atier: 5 [1 (hero_chest 20%) + 4 (tavern 80%)]
 faction_atier: 0.28 [0.28 (tavern 100%)]
 wishlist_atier: 4.14 [4.14 (tavern 100%)]
 random_atier: 14.29 [14.29 (stones 100%)]
 faction_purple_card: 1.44 [1.44 (tavern 100%)]
-purple_card: 1.49 [1.49 (stargaze 100%)]
--> God: 2.46
-choice_god: 1.17 [1.17 (stargaze 100%)]
+purple_card: 1.81 [1.81 (stargaze 100%)]
+-> God: 2.71
+choice_god: 1.42 [1.42 (stargaze 100%)]
 random_god: 1.29 [0.84 (stones 65%) + 0.45 (tavern 35%)]
 
 ***** Dimensional *****
@@ -280,37 +280,37 @@ dim_gear: 5.63 [5.63 (guild_store 100%)]
 dim_emblems: 50 [50 (lab_store 100%)]
 
 ***** Misc *****
-dura_fragments: 26.95=331.33-304.38 [192.24 (idle 58%) + 112.14 (ff 34%) - 304.38 (dura_fragments_sell 100%) + 26.95 (stargaze 8%)]
+dura_fragments: 32.71=337.09-304.38 [192.24 (idle 57%) + 112.14 (ff 33%) - 304.38 (dura_fragments_sell 100%) + 32.71 (stargaze 10%)]
 class_fragments: 403.79 [255.02 (idle 63%) + 148.76 (ff 37%)]
 dura_tears: 12.86 [12.86 (quests 100%)]
 invigor: 27360 [17280 (idle 63%) + 10080 (ff 37%)]
-arena_tickets: 64.67 [60 (quests 93%) + 4.67 (stargaze 7%)]
+arena_tickets: 65.67 [60 (quests 91%) + 5.67 (stargaze 9%)]
 
 ***** Extra *****
 faction_fodder: 0.29 [0.29 (tavern 100%)]
 wish: 2.14 [2.14 (yuexi 100%)]
 
 =============== Monthly level up summary (above the baseline of 0 levels) ===============
-one level: 2.32 days (12.95 by month) {gold: 1.81 days, xp: 2.16 days, dust: 2.32 days} [monthly remains: 132908.8K gold + 328924.58K xp]
+one level: 2.31 days (12.97 by month) {gold: 1.81 days, xp: 2.16 days, dust: 2.31 days} [monthly remains: 133609.67K gold + 333382.42K xp]
   -> cost: 19344.57 dia [37158.91K gold=2121.67 dia + 360800K xp=5777.88 dia + 44544 dust=11445.02 dia]
-monthly levels: 12, total_cost: 450330.62K gold + 4373850K xp + 534528 dust, remains: 42526.24 dust + 163960.78K gold + 629131K xp
+monthly levels: 12, total_cost: 450330.62K gold + 4373850K xp + 534528 dust, remains: 43327.77 dust + 165330.29K gold + 640081.15K xp
 
 =============== 30 days ascension summary ===============
 Challenger celo: 21.19 days (1.42 by month)
 Ascended challenger celo: 296.66 days (0.1 by month)
-Ascended 4F: 10.14 days (2.96 by month) {atier: 9.01 days, fodder: 10.14 days} [monthly remains: 2.97 atier]
-Ascended god: 170.57 days (0.18 by month)
--> Total monthly ascended: 3.24
+Ascended 4F: 10.1 days (2.97 by month) {atier: 8.9 days, fodder: 10.1 days} [monthly remains: 3.21 atier]
+Ascended god: 154.85 days (0.19 by month)
+-> Total monthly ascended: 3.26
 
-Max rc level+1: 1.85 days (16.18 by month)
-Max Dura's tree+1: 7.95 days (3.78 by month)
+Max rc level+1: 1.84 days (16.32 by month)
+Max Dura's tree+1: 7.88 days (3.81 by month)
 
 =============== 30 days previsions summary ===============
 SI+10: 25.2 days (1.19 by month)
 SI+20: 48.93 days (0.61 by month)
-SI+30: 34.29 days (0.87 by month)
+SI+30: 32.44 days (0.92 by month)
 
-e30: 16.3 days (1.84 by month)
+e30: 15.62 days (1.92 by month)
 e30 to e41: 13.21 days (2.27 by month)
 e30 to e60: 36.02 days (0.83 by month)
 e30 to e65: 48.02 days (0.62 by month)

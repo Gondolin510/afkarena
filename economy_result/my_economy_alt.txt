@@ -58,9 +58,9 @@ arena_tickets: 2 [2 (quests)]
 
 =============== Exchange ===============
 dia: -1090 [330 (ff_cost) - 760 (shop)]
-gold: -8250K [8250 (shop)]
+gold: -10500K [10500 (shop)]
 dust: 1500 [1500 (shop)]
-poe: 300 [300 (shop)]
+poe: 750 [750 (shop)]
 purple_stones: 3.33 [3.33 (shop)]
 timegazers: 1 [1 (shop)]
 
@@ -109,10 +109,10 @@ wish: 0.07 [0.07 (yuexi)]
 ***** Base *****
 dia: -2814.15=29885.85-32700 [3250 (board 11%) + 7260.84 (guild 24%) + 2250 (oak_inn 8%) + 6214.29 (quests 21%) + 735.71 (merchants 2%) + 2890.16 (arena 10%) + 6000 (lab 20%) + 42.86 (yuexi 0%) + 600 (hero_trial 2%) + 600 (guild_hero_trial 2%) - 9900 (ff_cost 30%) - 22800 (shop 70%) + 42 (stargaze 0%)]
 
-gold: 201153.88K=448653.88-247500 [56800.22 (idle 13%) + 23666.76 (ff 5%) + 24397.5 (board 5%) + 249732 (guild 56%) + 33750 (oak_inn 8%) + 8019 (arena 2%) + 12600 (lc 3%) + 28688.4 (lab 6%) + 7000 (misty 2%) + 4000 (hero_trial 1%) - 247500 (shop 100%)] {448653.88K gold=84%}
+gold: 133653.88K=448653.88-315000 [56800.22 (idle 13%) + 23666.76 (ff 5%) + 24397.5 (board 5%) + 249732 (guild 56%) + 33750 (oak_inn 8%) + 8019 (arena 2%) + 12600 (lc 3%) + 28688.4 (lab 6%) + 7000 (misty 2%) + 4000 (hero_trial 1%) - 315000 (shop 100%)] {448653.88K gold=84%}
 gold_h: 3833.77 [128.57 (quests 3%) + 3540 (lab 92%) + 96 (hero_trial 3%) + 69.2 (stargaze 2%)] {84603.6K gold=16%}
 gold_hg: 60 [60 (quests 100%)] {2052.32K gold=0%}
--> Total gold: 287809.81K=535309.81-247500
+-> Total gold: 220309.81K=535309.81-315000
 
 xp: 682034.72K [462011.52 (idle 68%) + 192504.8 (ff 28%) + 27518.4 (lab 4%)] {682034.72K xp=62%}
 xp_h: 1840.51 [60 (quests 3%) + 930 (lab 51%) + 144 (misty 8%) + 651.82 (tr_bounties 35%) + 24 (hero_trial 1%) + 30.69 (stargaze 2%)] {422064.74K xp=38%}
@@ -126,7 +126,7 @@ dust_h: 1785.73 [60 (quests 3%) + 930 (lab 52%) + 320 (misty 18%) + 316.67 (coe 
 silver_e: 189.97 [59.98 (idle 32%) + 24.99 (ff 13%) + 42 (vow 22%) + 63 (tavern 33%)]
 gold_e: 99.28 [30.02 (idle 30%) + 12.51 (ff 13%) + 32 (vow 32%) + 24.75 (tavern 25%)]
 red_e: 54.8 [11.26 (idle 21%) + 4.69 (ff 9%) + 20 (misty 36%) + 16 (vow 29%) + 2.84 (tavern 5%)]
-poe: 57153.54 [15000.48 (idle 26%) + 6250.2 (ff 11%) + 12260 (tr 21%) + 2142.86 (quests 4%) + 9000 (misty 16%) + 3500 (vow 6%) + 9000 (shop 16%)]
+poe: 70653.54 [15000.48 (idle 21%) + 6250.2 (ff 9%) + 12260 (tr 17%) + 2142.86 (quests 3%) + 9000 (misty 13%) + 3500 (vow 5%) + 22500 (shop 32%)]
 twisted: 5540.32 [653.67 (idle 12%) + 272.36 (ff 5%) + 4000 (tr 72%) + 214.29 (quests 4%) + 400 (misty 7%)]
 shards: 2639 [900 (idle 34%) + 375 (ff 14%) + 1100 (lab 42%) + 264 (vow 10%)]
 cores: 1667.5 [450 (idle 27%) + 187.5 (ff 11%) + 900 (lab 54%) + 130 (vow 8%)]
@@ -183,9 +183,9 @@ timegazers: 30 [30 (shop 100%)]
 wish: 2.14 [2.14 (yuexi 100%)]
 
 =============== Monthly level up summary (above the baseline of 0 levels) ===============
-one level: 1.08 days (27.78 by month) {gold: 0.79 days, xp: 1.08 days, dust: 0.95 days} [monthly remains: 76428.51K gold + 32051.75 dust]
+one level: 1.08 days (27.78 by month) {gold: 1.04 days, xp: 1.08 days, dust: 0.95 days} [monthly remains: 8928.51K gold + 32051.75 dust]
   -> cost: 4044.39 dia [7610.19K gold=434.52 dia + 39750K xp=1386.71 dia + 8607 dust=2223.16 dia]
-monthly levels: 18, total_cost: 186064.93K gold + 1064400K xp + 214625 dust, remains: 56495.53 dust + 101744.88K gold + 39699.46K xp
+monthly levels: 18, total_cost: 186064.93K gold + 1064400K xp + 214625 dust, remains: 56495.53 dust + 34244.88K gold + 39699.46K xp
 
 =============== 30 days ascension summary ===============
 Challenger celo: 27.37 days (1.1 by month)
@@ -208,9 +208,9 @@ e30 to e60: 80.96 days (0.37 by month)
 e30 to e65: 107.95 days (0.28 by month)
 
 tree level: 4.33 days (6.93 by month)
-mythic furn: 3.87 days (7.75 by month)
-mythic furn (with cards): 3.04 days (9.87 by month)
-9F (with cards): 87.66 days (0.34 by month)
+mythic furn: 3.13 days (9.59 by month)
+mythic furn (with cards): 2.46 days (12.2 by month)
+9F (with cards): 70.91 days (0.42 by month)
 
 RC slot: 6.13 days (4.9 by month)
 
@@ -275,8 +275,8 @@ RC slot: 6.13 days (4.9 by month)
 @nb_ff: 5
 
 --------------- Fixed vars ---------------
-@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>100, :gold=>-500}, :timegazers=>{:timegazers=>1, :dia=>-500}, :shards=>{:shards=>20, :gold=>-2000, :max=>3}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
-@Misty_chests: {:chest1=>[{:gold_h=>288}, {:xp_h=>96}, {:dust_h=>96}], :chest2=>[{:dia=>1000}, {:guild_coins=>30000}, {:twisted=>400}], :chest3=>[{:purple_stones=>60}, {:blue_stones=>720}], :chest4=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest5=>[{:poe=>1000}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest6=>[{:t1=>1}, {:t2=>1}, {:t3=>1}], :chest7=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}], :chest8=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest9=>[{:hero_choice_chest=>1}], :chest10=>[{:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}, {:cores=>100}], :chest11=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest12=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest13=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest14=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest15=>[{:poe=>1000}, {:t1=>1}, {:t2=>1}, {:t3=>1}]}
+@Shop: {:xp_h=>{:xp_h=>24, :dia=>-192, :proba=>0.4444444444444444}, :dust_h=>{:dust_h=>24, :dia=>-300}, :dust=>{:dust=>500, :gold=>-2250}, :purple_stones=>{:purple_stones=>5, :dia=>-90}, :poe=>{:poe=>250, :gold=>-1250}, :timegazers=>{:timegazers=>1, :dia=>-500}, :shards=>{:shards=>20, :gold=>-2000, :max=>3}, :cores=>{:cores=>10, :dia=>-200, :max=>3}, :gold_e=>{:gold_e=>20, :gold=>-15600, :proba=>0.25}, :silver_e=>{:silver_e=>30, :gold=>-14400, :proba=>0.75}, :mythic_gear=>{:mythic_gear=>1, :dia=>-3168}, :reset_scroll=>{:reset_scrolls=>1, :gold=>-6000}, :fodder=>{:random_fodder=>1, :dia=>-2268}}
+@Misty_chests: {:chest1=>[{:gold_h=>288}, {:xp_h=>96}, {:dust_h=>96}], :chest2=>[{:dia=>1000}, {:guild_coins=>30000}, {:twisted=>400}], :chest3=>[{:purple_stones=>60}, {:blue_stones=>720}], :chest4=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest5=>[{:poe=>1000}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest6=>[{:t1=>1}, {:t2=>1}, {:t3=>1}], :chest7=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}], :chest8=>[{:scrolls=>5}, {:poe=>1000}, {:purple_stones=>60}], :chest9=>[{:hero_choice_chest=>1}], :chest10=>[{:silver_e=>40}, {:gold_e=>20}, {:poe=>1000}, {:red_e=>10}, {:cores=>100}], :chest11=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest12=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest13=>[{:shards=>200}, {:silver_e=>40}, {:gold_e=>20}, {:red_e=>10}], :chest14=>[{:poe=>2000}, {:twisted=>200}, {:cores=>100}], :chest15=>[{:poe=>1000}, {:t1=>1}, {:t2=>1}, {:t3=>1}], :chest16=>[{:silver_e=>80}, {:gold_e=>50}, {:red_e=>15}], :chest17=>[{:shards=>300}, {:cores=>150}], :chest18=>[{:scrolls=>20}, {:faction_scrolls=>15}, {:stargazers=>10}], :chest19=>[{:poe=>3000}, {:twisted=>300}], :chest20=>[{:poe=>2000}, {:t1=>1}, {:t2=>1}, {:t3=>1}]}
 @Yuexi: {:dia=>20, :purple_stones=>10, :wish=>1}
 @FF_cost: [0, 50, 80, 100, 100, 200, 300, 400]
 @Cost: {:"SI+10"=>{:silver_e=>240}, :"SI+20"=>{:gold_e=>240}, :"SI+30"=>{:red_e=>300}, :e30=>{:shards=>3750}, :"e30 to e41"=>{:cores=>1650}, :"e30 to e60"=>{:cores=>4500}, :"e30 to e65"=>{:cores=>6000}, :"tree level"=>{:twisted=>800}, :"mythic furn"=>{:poe=>7371.007371007371}, :"mythic furn (with cards)"=>{:poe=>5790.263778683251}, :"9F (with cards)"=>{:poe=>167000}, :"RC slot"=>{:invigor=>5000}}

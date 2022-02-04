@@ -31,6 +31,9 @@ class MySimulator < Simulator
       @garrison=true
       @dim_exchange=0.5 #3 dim by year
 
+      @arena_daily_dia = get_arena(3) #rank 2 or 3 in arena
+      @lct_coins=390 #top 5-10
+
       @cursed_realm = get_cursed_realm(60) #cannot reach top50% yet :-(
 
       #@misty = get_misty(chest2: :guild_coins) #take guild coins

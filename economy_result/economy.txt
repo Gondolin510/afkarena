@@ -21,7 +21,7 @@ dust_h: 58.76 [2 (quests) + 31 (lab) + 10.67 (misty) + 10.56 (coe) + 0.8 (hero_t
 ***** Upgrades *****
 silver_e: 7.26 [2 (idle) + 1 (ff) + 2.86 (quests) + 1.4 (vow)]
 gold_e: 4 [1 (idle) + 0.5 (ff) + 1.43 (quests) + 1.07 (vow)]
-red_e: 3.14 [0.38 (idle) + 0.19 (ff) + 0.71 (quests) + 1.33 (misty) + 0.53 (vow)]
+red_e: 3.64 [0.38 (idle) + 0.19 (ff) + 0.71 (quests) + 1.83 (misty) + 0.53 (vow)]
 poe: 2173.58 [550.32 (idle) + 275.16 (ff) + 860 (tr) + 71.43 (quests) + 300 (misty) + 116.67 (vow)]
 twisted: 318 [26.79 (idle) + 13.4 (ff) + 257.33 (tr) + 7.14 (quests) + 13.33 (misty)]
 shards: 90.47 [30 (idle) + 15 (ff) + 36.67 (lab) + 8.8 (vow)]
@@ -56,7 +56,7 @@ dura_tears: 0.43 [0.43 (quests)]
 invigor: 864 [576 (idle) + 288 (ff)]
 arena_tickets: 2 [2 (quests)]
 
-=> Total value: 20220.85 dia [2 arena_tickets=5.71 dia + 210.21 blue_stones=546.54 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 66.83 cores=762.82 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6771.12 dust=1739.75 dia + 58.76 dust_h=734.44 dia + 0.2 faction_scrolls=54 dia + 2.71 friend_summons=732.86 dia + 22240.18K gold=1269.85 dia + 4 gold_e=124.59 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 13327.96 guild_coins=888.53 dia + 0.03 hero_choice_chest=213.33 dia + 864 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.48 mythic_gear=238.32 dia + 2173.58 poe=1467.16 dia + 19.49 purple_stones=607.97 dia + 3.14 red_e=424.44 dia + 0.05 reset_scrolls=13.33 dia + 1.7 scrolls=457.71 dia + 90.47 shards=516.54 dia + 7.26 silver_e=139.2 dia + 0.47 stargazers=233.33 dia + 0.1 t1_gear=150 dia + 0.48 t1t2_chest=953.3 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 318 twisted=2146.48 dia + 66526.24K xp=1221.63 dia + 60.33 xp_h=482.62 dia]
+=> Total value: 20288.35 dia [2 arena_tickets=5.71 dia + 210.21 blue_stones=546.54 dia + 11342 challenger_coins=756.13 dia + 12.75 class_fragments=193.66 dia + 66.83 cores=762.82 dia + 1259.11 dia=1259.11 dia + 9.61 dura_fragments=54.88 dia + 0.43 dura_tears=0.24 dia + 6771.12 dust=1739.75 dia + 58.76 dust_h=734.44 dia + 0.2 faction_scrolls=54 dia + 2.71 friend_summons=732.86 dia + 22240.18K gold=1269.85 dia + 4 gold_e=124.59 dia + 125.49 gold_h=250.97 dia + 2 gold_hg=4 dia + 13327.96 guild_coins=888.53 dia + 0.03 hero_choice_chest=213.33 dia + 864 invigor=207.36 dia + 4736.67 lab_coins=498.6 dia + 0.48 mythic_gear=238.32 dia + 2173.58 poe=1467.16 dia + 19.49 purple_stones=607.97 dia + 3.64 red_e=491.94 dia + 0.05 reset_scrolls=13.33 dia + 1.7 scrolls=457.71 dia + 90.47 shards=516.54 dia + 7.26 silver_e=139.2 dia + 0.47 stargazers=233.33 dia + 0.1 t1_gear=150 dia + 0.48 t1t2_chest=953.3 dia + 0.1 t2_gear=350 dia + 0.17 t3=521.43 dia + 318 twisted=2146.48 dia + 66526.24K xp=1221.63 dia + 60.33 xp_h=482.62 dia]
 
 =============== Exchange ===============
 dia: -790 [530 (ff_cost) - 260 (shop)]
@@ -129,7 +129,7 @@ dust_h: 1785.73 [60 (quests 3%) + 930 (lab 52%) + 320 (misty 18%) + 316.67 (coe 
 ***** Upgrades *****
 silver_e: 280.68 [59.98 (idle 21%) + 29.99 (ff 11%) + 85.71 (quests 31%) + 42 (vow 15%) + 63 (tavern 22%)]
 gold_e: 144.64 [30.02 (idle 21%) + 15.01 (ff 10%) + 42.86 (quests 30%) + 32 (vow 22%) + 24.75 (tavern 17%)]
-red_e: 97.16 [11.26 (idle 12%) + 5.63 (ff 6%) + 21.43 (quests 22%) + 40 (misty 41%) + 16 (vow 16%) + 2.84 (tavern 3%)]
+red_e: 112.16 [11.26 (idle 10%) + 5.63 (ff 5%) + 21.43 (quests 19%) + 55 (misty 49%) + 16 (vow 14%) + 2.84 (tavern 3%)]
 poe: 87707.26 [16509.6 (idle 19%) + 8254.8 (ff 9%) + 25800 (tr 29%) + 2142.86 (quests 2%) + 9000 (misty 10%) + 3500 (vow 4%) + 22500 (shop 26%)]
 twisted: 9539.89 [803.74 (idle 8%) + 401.87 (ff 4%) + 7720 (tr 81%) + 214.29 (quests 2%) + 400 (misty 4%)]
 shards: 4514 [900 (idle 20%) + 450 (ff 10%) + 1100 (lab 24%) + 264 (vow 6%) + 1800 (shop 40%)]
@@ -206,7 +206,7 @@ Max Dura's tree+1: 12.99 days (2.31 by month)
 =============== 30 days previsions summary ===============
 SI+10: 25.65 days (1.17 by month)
 SI+20: 49.78 days (0.6 by month)
-SI+30: 92.63 days (0.32 by month)
+SI+30: 80.24 days (0.37 by month)
 
 e30: 24.92 days (1.2 by month)
 e30 to e41: 24.69 days (1.22 by month)
