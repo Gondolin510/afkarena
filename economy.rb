@@ -690,7 +690,20 @@ class Simulator
     end
 
     def get_cursed_realm(rank=nil)
-      return {} if rank==nil #not in twisted
+      r={}
+      return r if rank==nil #not in twisted
+      case rank
+      when :gold5; r={twisted: 50, shards: 50}
+      when :gold4; r={twisted: 60, shards: 60}
+      when :gold3; r={twisted: 70, shards: 70}
+      when :gold2; r={twisted: 80, shards: 80}
+      when :gold1; r={twisted: 90, shards: 90}
+      when :dia5, :diamond5; r={twisted: 100, shards: 100}
+      when :dia4, :diamond4; r={twisted: 120, shards: 120}
+      when :dia3, :diamond3; r={twisted: 140, shards: 140}
+      when :dia2, :diamond2; r={twisted: 160, shards: 160}
+      when :dia1, :diamond1; r={twisted: 180, shards: 180}
+      end
       r={twisted: 100, shards: 100}
       r={twisted: 120, shards: 120} if rank <= 95
       r={twisted: 140, shards: 140} if rank <= 90
