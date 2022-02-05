@@ -1886,12 +1886,33 @@ class Simulator
           scrolls: 10,
           faction_scrolls: 10,
         },
-        delectable_delight: { #15/12/2021
+        delectable_delight_icy_garden: { #15/12/2021
           purple_chests: 4,
           blue_stones: 120, purple_stones: 60,
           shards: 100, cores: 50,
           silver_e: 30, gold_e: 20, red_e: 10,
           stargazers: 10,
+        },
+        foreboding_disaster: { #01/01/2022
+          purple_chests: 6,
+          blue_stones: 120,
+          poe: 2000,
+          shards: 100, cores: 50,
+          silver_e: 30, gold_e: 20, red_e: 15,
+          timegazers: 10,
+        },
+        tundra_trouble: { #15/01/2022
+          purple_chests: 4,
+          blue_stones: 120, purple_stones: 60,
+          shards: 100, cores: 50,
+          poe: 3000, dia: 1000,
+          stargazers: 10,
+        },
+        sunken_city: { #01/02/2022
+          purple_chests: 4,
+          shards: 100, cores: 50,
+          silver_e: 30, gold_e: 30, red_e: 15,
+          scrolls: 10, faction_scrolls: 10,
         },
         #DONE: latest vow
       }.merge(@Vows||{})
