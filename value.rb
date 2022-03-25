@@ -193,7 +193,7 @@ module Value
     r=dia_value_h(items,**kw).sort {|a,b| a[1] <=> b[1]}.reverse
     if pretty
       r.each do |k,v|
-        puts "- #{k}: #{round(v)} dia"
+        puts "- #{items[k]} #{k}: #{round(v)} dia"
       end
     end
     r

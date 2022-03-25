@@ -1150,9 +1150,10 @@ class Simulator
       @_unlock_shop_mythic=true if stage > "10-22"
       @_unlock_guild_store_legendary=true if stage > "10-22"
       @_unlock_guild_store_mythic=true if stage > "12-02"
-      @_unlock_t1=true if stage > "21-01" #also for shop
-      @_unlock_t2=true if stage > "26-01"
-      @_unlock_t3=true if stage > "30-01"
+      @_unlock_t1=true if stage >= "21-01" #also for shop
+      @_unlock_t2=true if stage >= "26-01"
+      @_unlock_t3=true if stage >= "30-01"
+      @_unlock_t4=true if stage >= "33-01"
 
       @_unlock_store_hero=true if stage > "01-12"
       @_unlock_store_guild=true if stage > "02-40"
@@ -1422,7 +1423,7 @@ class Simulator
     end
 
     def get_raw_idle_hourly
-      # gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
+      # t_gear_hourly=1.0/(24*4.5*1.9) #1 every 4.5 days at maxed x1.9 fos
       
       # @_Idle_hourly ||={
       #   poe: 22.93, twisted: 1.11630, silver_e: 0.08330,
@@ -1441,6 +1442,9 @@ class Simulator
       end
       @_raw_idle_hourly[:t1]||=0
       @_raw_idle_hourly[:t2]||=0
+      if @_unlock_t4 #t4 rate not yet in the data
+        @_raw_idle_hourly[:t4]||=@_raw_idle_hourly[:t3]
+      end
 
       @_raw_idle_hourly ||= get_idle(@stage)
       t_gear_hourly=1.0/(24*15*3) #1 every 15 days at maxed x3 fos
@@ -1465,8 +1469,10 @@ class Simulator
 
       @_idle_hourly=@_raw_idle_hourly.dup
       @_idle_hourly[:mythic_gear] *= @_mythic_mult
-      @_idle_hourly[:t1] *= @_mythic_mult
-      @_idle_hourly[:t2] *= @_mythic_mult
+      %i(t1 t2 t3 t4).each do |t|
+        @_idle_hourly[t] ||= 0
+        @_idle_hourly[t] *= @_mythic_mult
+      end
 
       @_idle_hourly[:t1_gear] *= @_fos_t1_gear_bonus
       @_idle_hourly[:t2_gear] *= @_fos_t2_gear_bonus
@@ -1671,6 +1677,8 @@ class Simulator
     end
 
     def lct
+      #Plat 1=291, dia 9=292, dia 1=300
+      #So I assume Gold 1=282, Silver 1=273, Bronze 1=264, Bronze 9=256?
       {challenger_coins: @lct_coins*24}
     end
 
