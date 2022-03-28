@@ -77,7 +77,7 @@ module Value
     scroll=270
     value = {
       dia: 1,
-      gold: gold_conversion,
+      gold: gold_conversion, #=0.057, ie 17.514K gold=1 dia
         #Alternative: gold: 2 / raw_idle_hourly[:gold]
       xp: 8 / raw_idle_hourly[:xp], #24h xp=192 dia, 1h xp=8 dia
       dust: 12.5 / raw_idle_hourly[:dust], #24h dust=300 dia, 1h dust=12.5
@@ -88,7 +88,7 @@ module Value
       xp_h: 8,
       dust_h: 12.5,
 
-      poe: 0.675,
+      poe: 0.675, #or 1125/200*gold_conversion ~ 0.3212
       twisted: 6.75,
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
@@ -97,6 +97,7 @@ module Value
       faction_emblems: 135,
       shards: 2000/20 *gold_conversion, #=5.709. Or 6.75=135/20
       cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Or 13.5=135/10
+             # this formula is dust=cores in coe rewards
 
       dura_fragments: 100 * gold_conversion, #=5.709
       class_fragments: 9000 * 0.675 / 400, #=15.1875
@@ -403,4 +404,12 @@ Value.sort_dia_value({cores: 75, stargazers: 3, scrolls: 5, red_e: 8, gold_e: 24
 - silver_e: 767.39 dia
 - gold_e: 748.2 dia
 - gold: 428.23 dia
+Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500})
+- 4500 poe: 3037.5 dia
+- 400 shards: 2283.89 dia
+- 50 gold_e: 1558.75 dia
+Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500}, values: {cores: 13.5, shards: 135/20.0, poe: 1125.0/200.0*Value.gold_conversion})
+- 400 shards: 2700 dia
+- 50 gold_e: 1558.75 dia
+- 4500 poe: 1445.27 dia
 =end
