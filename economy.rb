@@ -2027,10 +2027,10 @@ class Simulator
       t4f_floor
     end
     def tower_4f_quest(level=@tower_4f)
-      # quests: above 220: 40 red_e for every 20 floors x4, above 460: 600 poe
+      # quests: above 220: 40 red_e for every 20 floors x4, above 460: 6000 poe
       t4f_quest={}
       t4f_quest={red_e: 40/20} if level>=220
-      t4f_quest={poe: 600/20} if level >=460
+      t4f_quest={poe: 6000/20} if level >=460
       t4f_quest
     end
     #return the avg ressources from climbing one level in *all* the 4f towers
