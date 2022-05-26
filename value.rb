@@ -88,7 +88,7 @@ module Value
       xp_h: 8,
       dust_h: 12.5,
 
-      poe: 0.675, #or 1125/200*gold_conversion ~ 0.3212
+      poe: 0.675, #or 1125/250*gold_conversion ~ 0.256
       twisted: 6.75,
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
@@ -389,6 +389,7 @@ Value.sort_dia_value({red_e: 2, gold_e: 6, silver_e: 10, poe: 400, blue_stones: 
 - silver_e: 191.85 dia
 - gold_e: 187.05 dia
 - gold: 114.19 dia
+
 Value.sort_dia_value({cores: 75, stargazers: 3, scrolls: 5, red_e: 8, gold_e: 24, silver_e: 40, poe: 1500, blue_stones: 480, shards: 150, twisted: 150, faction_scrolls: 3, xp_h: 120, dust_h: 120, gold: 7500})
 - dust_h: 1500 dia
 - stargazers: 1500 dia
@@ -404,12 +405,19 @@ Value.sort_dia_value({cores: 75, stargazers: 3, scrolls: 5, red_e: 8, gold_e: 24
 - silver_e: 767.39 dia
 - gold_e: 748.2 dia
 - gold: 428.23 dia
+
 Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500})
 - 4500 poe: 3037.5 dia
 - 400 shards: 2283.89 dia
 - 50 gold_e: 1558.75 dia
-Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500}, values: {cores: 13.5, shards: 135/20.0, poe: 1125.0/200.0*Value.gold_conversion})
+Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500}, values: {cores: 13.5, shards: 135/20.0, poe: 1125.0/250.0*Value.gold_conversion})
 - 400 shards: 2700 dia
 - 50 gold_e: 1558.75 dia
-- 4500 poe: 1445.27 dia
+- 4500 poe: 1156.22 dia
+
+Value.sort_dia_value({poe: 2400, gold_e: 32, silver_e: 56}, values: {poe: 1125.0/250.0*Value.gold_conversion })
+- 2400 poe: 1620 dia / 616 dia
+- 56 silver_e: 1074.34 dia
+- 32 gold_e: 997.6 dia
+
 =end

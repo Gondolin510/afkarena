@@ -29,6 +29,8 @@ def simulate_pity(nb, ratio, pity_timer)
   end
   t*1.0/nb
 end
+# stargazing: pity at 70. simulate_pity(100000000, 0.02, 70)
+# -> 0.0264195
 
 def simulate(nb, ratios: Ratios)
   pity=0

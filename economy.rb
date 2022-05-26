@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #TODO: more events?, board level<7 + team quests
-#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests), timegazers, solemn vow?, T4, new temporal rift rewards, new 15 days quests, new misty valleys rewards (T4)
+#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (quests), timegazers, solemn vow?, T4, new temporal rift rewards, new 15 days quests, new misty valleys rewards (T4), new pvp mode (treasure scramble)
 
 require './value'
 require 'json'
@@ -2046,7 +2046,7 @@ class Simulator
     def tower_god_floor(level=@tower_god)
       #every *5: 4000 dust + 5 stargazer
       #every *10: 10 faction_emblem or 15 gold_e
-      #  this become 10 faction_emblem or 10 red_e at??
+      #  this become 10 faction_emblem or 10 red_e at level 200
       god_floor= { dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, gold_e: 15.0/20, gold: 4*600/10 } #start at level 1
       god_floor= { dust: 4000/10, stargazers: 5.0/10, faction_emblems: 10.0/20, red_e: 10.0/20, gold: 4*600/10 } if level >=200
       return god_floor
