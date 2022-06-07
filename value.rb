@@ -73,7 +73,7 @@ module Value
     #i am using values from chap 37, gold and xp are in K
   end
 
-  def items_value(summons: true, values: {}) #values if for user supplied values
+  def items_value(summons: true, values: {}, alternative_values: false) #values if for user supplied values
     scroll=270
     value = {
       dia: 1,
@@ -88,15 +88,15 @@ module Value
       xp_h: 8,
       dust_h: 12.5,
 
-      poe: 0.675, #or 1125/250*gold_conversion ~ 0.256
+      poe: 1125.0/250*gold_conversion, # alternative: twisted/10=0.675
       twisted: 6.75,
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
       red_e: 135,
       dim_emblems: 135,
       faction_emblems: 135,
-      shards: 2000/20 *gold_conversion, #=5.709. Or 6.75=135/20
-      cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Or 13.5=135/10
+      shards: 2000/20 *gold_conversion, #=5.709. Alternative: 6.75=135/20
+      cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Alternative: 13.5=135/10
              # this formula is dust=cores in coe rewards
 
       dura_fragments: 100 * gold_conversion, #=5.709
@@ -132,6 +132,11 @@ module Value
       hero_coins: 1.0/7.5,
       lab_coins: 1.0/9.5,
     }
+    if alternative_values
+      value[:poe]=value[:twisted]/10.0
+      value[:cores]=value[:red_e]/10.0
+      value[:shards]=value[:cores]/2.0
+    end
 
     if summons
       value.merge!({
@@ -419,5 +424,29 @@ Value.sort_dia_value({poe: 2400, gold_e: 32, silver_e: 56}, values: {poe: 1125.0
 - 2400 poe: 1620 dia / 616 dia
 - 56 silver_e: 1074.34 dia
 - 32 gold_e: 997.6 dia
+
+### From now on this is with new gold values, use alternative_values=true to go back to old values
+
+Value.sort_dia_value({gold_e: 40, poe: 3000, twisted: 300, silver_e: 70})
+- 300 twisted: 2025 dia
+- 70 silver_e: 1342.93 dia
+- 40 gold_e: 1247 dia
+- 3000 poe: 770.81 dia
+
+Value.sort_dia_value({gold_e: 40, poe: 3000, twisted: 300, silver_e: 70, cores: 10, shards: 20}) #maybe use `values: {cores: 13.5}` here
+- 300 twisted: 2025 dia
+- 70 silver_e: 1342.93 dia
+- 40 gold_e: 1247 dia
+- 3000 poe: 770.81 dia
+- 20 shards: 114.19 dia
+- 10 cores: 114.14 dia
+Value.sort_dia_value({gold_e: 40, poe: 3000, twisted: 300, silver_e: 70, cores: 10, shards: 20}, alternative_values: true)
+- 3000 poe: 2025 dia
+- 300 twisted: 2025 dia
+- 70 silver_e: 1342.93 dia
+- 40 gold_e: 1247 dia
+- 20 shards: 135 dia
+- 10 cores: 135 dia
+
 
 =end

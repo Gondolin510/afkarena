@@ -2004,6 +2004,8 @@ class Simulator
       tower_kt_avg(level)
     end
 
+    # Todo: timegazers quests
+    # LB starts at 300; Cele, Hypo at 100; 5 timegazers every x20
     def tower_4f_floor(level=@tower_4f)
       # for 4f towers, above 150:
       # between 150-240: *5 4000 dust+5 stargaze, *0 90 purple stones or 15 gold_e
