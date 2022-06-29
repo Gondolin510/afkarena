@@ -2599,8 +2599,12 @@ class Simulator
     def ff_summary(conservative: false)
       h1 "One Fast Forward Value [using #{@nb_ff}'th ff costs #{@nb_ff == 0 ? 0 : @FF_cost[@nb_ff-1]} dia]"
       puts show_dia_value(one_ff, skip_null: true)
-      conservative_r=%i(gold xp dust twisted)
-      puts "-> Conservative estimate: #{show_dia_value(one_ff.slice(*conservative_r), skip_null: true)}" if conservative
+      if conservative
+        puts "-> Without gear: #{show_dia_value(one_ff.reject{|k,v| k.to_s =~ /gear|t[1234]/}, skip_null: true)}" 
+
+        conservative_r=%i(gold xp dust twisted)
+        puts "-> Conservative estimate: #{show_dia_value(one_ff.slice(*conservative_r), skip_null: true)}" 
+      end
       puts
     end
     def ff_value

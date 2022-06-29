@@ -4,12 +4,12 @@ require './economy'
 class MySimulator < Simulator
   def initialize(*args, **kw, &b)
     super do
-      @hero_level=389
-      @stage="39-08"
+      @hero_level=455
+      @stage="41-36"
       #@afk_xp=13932
       #@afk_gold=888
 
-      @player_level=190
+      @player_level=225
       @vip=10
       @subscription=false
 
@@ -17,24 +17,25 @@ class MySimulator < Simulator
       @tr= {twisted: 266, poe: 943}
       @temporal_rift_level = 150
 
-      @gh_wrizz_chests = 22
-      @gh_wrizz_gold = 2060
+      @gh_wrizz_chests = 23
+      #@gh_wrizz_gold = 2060
       #@gh_soren_gold = 1957
 
       @noble_coe = get_coe(:cores)
+      @noble_twisted = get_twisted_bounties(:twisted)
       @dura_nb_selling =2
 
-      @tower_kt = 586
-      @tower_4f = [318, 362, 395, 411] #lb, maulers, wilders, gb
-      @tower_god = [226, 277] #celo, hypo
+      @tower_kt = 667
+      @tower_4f = [451, 451, 451, 458] #lb, maulers, wilders, gb
+      @tower_god = [294, 339] #celo, hypo
 
       @garrison=true
       @dim_exchange=0.5 #3 dim by year
 
-      @arena_daily_dia = get_arena(3) #rank 2 or 3 in arena
+      @arena_daily_dia = get_arena(2) #rank 2 in arena
       @lct_coins=390 #top 5-10
 
-      @cursed_realm = get_cursed_realm(60) #cannot reach top50% yet :-(
+      @cursed_realm = get_cursed_realm(50) #usually above top50%
 
       #@misty = get_misty(chest2: :guild_coins) #take guild coins
 

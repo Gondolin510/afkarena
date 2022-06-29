@@ -74,6 +74,8 @@ module Value
   end
 
   def items_value(summons: true, values: {}, alternative_values: false) #values if for user supplied values
+    #if alternative_values=true, we use the equivalent dia values (from
+    #events) rather than the gold values from shop converted to dia
     scroll=270
     value = {
       dia: 1,
@@ -92,7 +94,7 @@ module Value
       twisted: 6.75,
       silver_e: 10080.0/30 * gold_conversion,
       gold_e: 10920.0 /20 * gold_conversion,
-      red_e: 135,
+      red_e: 135, #or 158.4 from lab
       dim_emblems: 135,
       faction_emblems: 135,
       shards: 2000/20 *gold_conversion, #=5.709. Alternative: 6.75=135/20
@@ -448,5 +450,51 @@ Value.sort_dia_value({gold_e: 40, poe: 3000, twisted: 300, silver_e: 70, cores: 
 - 20 shards: 135 dia
 - 10 cores: 135 dia
 
+Value.sort_dia_value({silver_e: 30, gold_e: 20,  twisted: 150,  shards: 150})
+- 150 twisted: 1012.5 dia
+- 150 shards: 856.46 dia
+- 20 gold_e: 623.5 dia
+- 30 silver_e: 575.54 dia
 
+Value.sort_dia_value({silver_e: 20, gold_e: 12,  twisted: 80,  scrolls: 2, dust_h: 9*8})
+- 72 dust_h: 900 dia
+- 2 scrolls: 540 dia
+- 80 twisted: 540 dia
+- 20 silver_e: 383.69 dia
+- 12 gold_e: 374.1 dia
+
+Value.sort_dia_value({silver_e: 2, gold_e: 1})
+- 2 silver_e: 38.37 dia
+- 1 gold_e: 31.18 dia
+
+# celestial islands:
+Value.sort_dia_value({silver_e: 10, gold_e: 6, red_e: 2, poe: 400, blue_stones: 120, shards: 40, scrolls: 1, xp_h: 32, dust_h: 32, gold: 2000, twisted: 40})
+- 32 dust_h: 400 dia
+- 120 blue_stones: 312 dia
+- 40 twisted: 270 dia
+- 1 scrolls: 270 dia
+- 2 red_e: 270 dia
+- 32 xp_h: 256 dia
+- 40 shards: 228.39 dia
+- 10 silver_e: 191.85 dia
+- 6 gold_e: 187.05 dia
+- 2000 gold: 114.19 dia
+- 400 poe: 102.77 dia
+-> dust, blue?, twisted/scroll/red
+Value.sort_dia_value({silver_e: 40, gold_e: 24, red_e: 8, poe: 1500, blue_stones: 480, shards: 150, scrolls: 5, xp_h: 5*24, dust_h: 5*24, gold: 7500, twisted: 150, cores: 75, stargazers: 5, faction_scrolls: 3})
+- 5 stargazers: 2500 dia
+- 120 dust_h: 1500 dia
+- 5 scrolls: 1350 dia
+- 480 blue_stones: 1248 dia
+- 8 red_e: 1080 dia
+- 150 twisted: 1012.5 dia
+- 120 xp_h: 960 dia
+- 150 shards: 856.46 dia
+- 75 cores: 856.03 dia
+- 3 faction_scrolls: 810 dia
+- 40 silver_e: 767.39 dia
+- 24 gold_e: 748.2 dia
+- 7500 gold: 428.23 dia
+- 1500 poe: 385.41 dia
+-> stargazer, dust, scrolls
 =end
