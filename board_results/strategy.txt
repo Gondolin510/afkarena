@@ -17,10 +17,44 @@ Double events: 111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 8
 Single: gold L:25 M:20 A:15 dia
 Double: gold L:50 M:40 A:35 dia
 
--> Strategy:
+-> Strategy (this is advanced2 in board.rb):
 - Single: 
   Refresh when >=2 goldL or >=3 gold or >=2 gold + 6 DustL/EggL or 10 Gold/DustL/EggL
   Add DustL+EggL when total >=6
 - Double: 
   Refresh when >=1 goldL or >=2 gold or >=1 gold + 3 DustL/EggL or 5 Gold/DustL/EggL
   Add DustL+EggL when total >=3
+-> Advantage of strategy advanced2 with 8 quests: 121.407 (simple: 45.618, double: 272.985)
+
+Simplification (this is advanced in board.rb)
+- Single: J'inclus DustL+EggL dans le total si leur total est >=6.
+  Je refreshe si il y a 2 golds. 
+- Double: J'inclus DustL+EggL dans le refresh si leur total est >=3.
+  Je refreshe si il y a 1 golds ou que le total est >=5.
+-> Advantage of strategy advanced with 8 quests: 121.572 (simple: 45.873, double: 272.97)
+Details: 
+  :average_tries=>2.142,
+  :total_with_refresh=>331.234
+  std: 102.749
+Double:
+  :average_tries=>5.648,
+  :total_with_refresh=>844.623,
+  std: 227.947
+
+Inseason's strat (this is advanced3 in board.rb):
+- Single:
+  Dispatch Dia + M/A egg+dust until you have locked 2 of them (3 at VIP 11, 4 at VIP 14)
+  Dispatch also: L egg+dust until there is a single gold bounty
+- Double:
+  Dispatch Dia + M/A egg+dust until you have locked 6 of them (7 at VIP 11, 8 at VIP 14)
+  Dispatch also: L egg+dust until there is a zero gold bounty
+  [bonus: refresh a single gold bounty only if it is only L]
+-> Advantage of strategy advanced3 with 8 quests: 114.726 (simple: 41.271, double: 261.635)
+Details: 
+ :average_tries=>1.97,
+ :total_with_refresh=>326.756,
+ std: 99.004
+Double:
+ :average_tries=>6.957,
+ :total_with_refresh=>832.053,
+ std: 247.252

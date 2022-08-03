@@ -497,4 +497,17 @@ Value.sort_dia_value({silver_e: 40, gold_e: 24, red_e: 8, poe: 1500, blue_stones
 - 7500 gold: 428.23 dia
 - 1500 poe: 385.41 dia
 -> stargazer, dust, scrolls
+Value.sort_dia_value({silver_e: 30, gold_e: 20, twisted: 150, shards: 150})
+- 150 twisted: 1012.5 dia
+- 150 shards: 856.46 dia
+- 20 gold_e: 623.5 dia
+- 30 silver_e: 575.54 dia
+Value.sort_dia_value({silver_e: 10, gold_e: 7, poe: 500, shards: 50})
+- 50 shards: 285.49 dia
+- 7 gold_e: 218.23 dia
+- 10 silver_e: 191.85 dia
+- 500 poe: 128.47 dia
+Value.sort_dia_value({silver_e: 2, gold_e: 1})
+- 2 silver_e: 38.37 dia
+- 1 gold_e: 31.18 dia
 =end

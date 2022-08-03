@@ -216,7 +216,7 @@ class Board
     end
   end
 
-  def info_from_simulation(total, tries, nb_simulate)
+  def info_from_simulation(total, total_dia_std, tries, nb_simulate)
     r={}
     case tries
     when Array
@@ -248,6 +248,10 @@ class Board
     #r[:average_value]=cur_average_value
     r[:average_quest]=avg_quest
     update_avg_quest_values(r)
+    avg=r[:full_values][:total_with_refresh]
+    # p total_dia_std/nb_simulate, avg**2
+    std=Math.sqrt((total_dia_std/nb_simulate-avg**2*1.0))
+    r[:std]=std
     r
   end
 
@@ -302,15 +306,19 @@ class Board
   def simulate(nb=@nb, nb_simulate: @nb_simulate, verbose: true, &b)
     #avg_quest_info(nb)
     total=init; tries_distribution=[];
+    total_dia_std=0
     (1..nb_simulate).each do |sim_nb|
-      $sim_nb=sim_nb
+      # $sim_nb=sim_nb
       quests,tries=refresh(new_quests(nb), &b)
       result=tally(quests)
+      value=value_tally(result)-tries*@refresh_Cost
+      # p value if value < 0 #the value can be negative!
+      total_dia_std+=value**2
       result.each { |k,v| total[k]+=v }
       tries_distribution[tries] ||= 0
       tries_distribution[tries] += 1
     end
-    result=info_from_simulation(total, tries_distribution, nb_simulate)
+    result=info_from_simulation(total, total_dia_std, tries_distribution, nb_simulate)
     if verbose
       puts "# Average quest value for #{nb} quests using #{nb_simulate} simulations (double=#{@double})"
       pretty_print(result)
@@ -409,16 +417,16 @@ class Board
         next false if gold < gold_threshold
         quests.each_with_index.select do |v,_i|
           if @double && total == gold && total==1
-            if v[0] == :gold && v[1] != :legend
-              $special ||=0
-              $special +=1
-              puts "Special case: #{$special}/#{$sim_nb}"
-            end
+            # if v[0] == :gold && v[1] != :legend
+            #   $special ||=0
+            #   $special +=1
+            #   # puts "Special case: #{$special}/#{$sim_nb}"
+            # end
             v[0] == :gold && v[1] == :legend
           else
             total != gold && (v[0] == :dust && v[1] == :legend or v[0] == :stones && v[1] == :legend) or v[0] == :gold
           end
-        end
+        end #the quests to refresh
       end
     end
 
@@ -441,14 +449,44 @@ class Board
         else
           dorefresh=true if goldL >= 2 or gold >=3 or gold >=2 && eggdust >=6 or eggdust >=10
         end
-        #o=optimal_strat(quests)
-        #binding.pry if dorefresh && o==false or !dorefresh && o.is_a?(Array)
         next false unless dorefresh
         u=quests.each_with_index.select do |v,_i|
           (@double ? (gold+eggdust) >=3 : (gold+eggdust) >=6) && (v[0] == :dust && v[1] == :legend or v[0] == :stones && v[1] == :legend) or v[0] == :gold
         end
-        #binding.pry if u!=o
-        u
+        u #the quests to refresh
+      end
+    end
+
+    def simulate_advanced3(nb=@nb, **kw)
+      puts
+      puts "## Simulation with advanced3 refresh strategy ##"
+      simulate(nb, **kw) do |quests|
+        eggdust=quests.count do |v|
+          (v[0] == :dust or v[0] == :stones) && v[1] == :legend
+        end
+        gold=quests.count do |v|
+          v[0] == :gold
+        end
+        goldL=quests.count do |v|
+          v[0] == :gold && v[1] == :legend
+        end
+        if @double
+          threshold1=2; threshold2=0
+        else
+          threshold1=6; threshold2=1
+        end
+        total=eggdust+gold
+        if total > threshold1 #we refresh medium quests
+          quests.each_with_index.select do |v,_i|
+            (v[0] == :dust && v[1] == :legend or v[0] == :stones && v[1] == :legend) or v[0] == :gold
+          end #the quests to refresh
+        elsif gold > threshold2 #we only refresh gold
+          quests.each_with_index.select do |v,_i|
+            v[0] == :gold
+          end #the quests to refresh
+        else
+          next false #no refesh
+        end
       end
     end
 
@@ -563,15 +601,19 @@ end
 
 if __FILE__ == $0
   Board.nb=10
+  Board.nb=8
   Board.nb_simulate=1000000
+  #Board.nb_simulate=100000
   
   #Board.new(8, double: true, nb_simulate: 1000000).simulate_advanced3
   #Board.new.compare_strats(strats: [:advanced, :advanced2], verbose: true)
   #Board.new.compare_strats(verbose: true)
 
-  board=Board.new(8)
-  board.final_result_no_strat(verbose: :full)
-  board.compare_strats(strats: [:optimal], verbose: true)
+  board=Board.new
+  board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
+  #board.compare_strats(strats: [:optimal], verbose: true)
+  #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
+  Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
