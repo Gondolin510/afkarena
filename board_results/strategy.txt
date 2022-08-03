@@ -58,3 +58,15 @@ Double:
  :average_tries=>6.957,
  :total_with_refresh=>832.053,
  std: 247.252
+
+Pure dia strat:
+ :average_tries=>19.856,
+ :total_v=>519.983,
+ :total_with_refresh=>-472.814,
+ :std=>465.111
+Double:
+ :average_tries=>19.868,
+ :total_v=>1039.596,
+ :total_with_refresh=>46.2,
+ :std=>472.923
+Advantage of strategy pure_dia with 8 quests: -680.637 (simple: -758.435, double: -525.042)

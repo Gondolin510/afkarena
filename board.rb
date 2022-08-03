@@ -490,6 +490,18 @@ class Board
       end
     end
 
+    def simulate_pure_dia(nb=@nb, **kw)
+      puts
+      puts "## Simulation with pure diamonds refresh strategy ##"
+      simulate(nb, **kw) do |quests|
+        u=quests.each_with_index.select do |v,_i|
+            (v[0] != :dia)
+        end #the quests to refresh
+        next false unless u.length > 0
+        u
+      end
+    end
+
     def optimal_strat(quests)
       magic=[44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104].reverse
       magic=[111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 87.08076, 81.40006, 75.58795, 71.4208].reverse if @double
@@ -602,8 +614,8 @@ end
 if __FILE__ == $0
   Board.nb=10
   Board.nb=8
-  Board.nb_simulate=1000000
-  #Board.nb_simulate=100000
+  #Board.nb_simulate=1000000
+  Board.nb_simulate=100000
   
   #Board.new(8, double: true, nb_simulate: 1000000).simulate_advanced3
   #Board.new.compare_strats(strats: [:advanced, :advanced2], verbose: true)
@@ -613,7 +625,8 @@ if __FILE__ == $0
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
   #board.compare_strats(strats: [:optimal], verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
-  Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
+  #Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
+  Board.new.compare_strats(strats: [:pure_dia], verbose: true)
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
