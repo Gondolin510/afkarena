@@ -2,7 +2,8 @@
 require './economy'
 
 Simulator.new do
-  @stage = "40-28"
+  #@stage = "40-28"
+  @stage = "42-00"
   @hero_level = 596
   @player_level=300
   @vip =16

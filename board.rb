@@ -626,7 +626,8 @@ if __FILE__ == $0
   #board.compare_strats(strats: [:optimal], verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
-  Board.new.compare_strats(strats: [:pure_dia], verbose: true)
+  #Board.new.compare_strats(strats: [:pure_dia], verbose: true)
+  Board.new.compare_strats(strats: [:advanced], verbose: true)
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
