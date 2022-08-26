@@ -61,7 +61,7 @@ end
 module Value
   include Helpers
   extend self
-
+5
   def gold_conversion #convert 1K gold into dia
     #2250K gold = 500 dust. 24h dust=300 dia=1167.6 dust
     (500.0/2250) / (1167.6/300)
@@ -90,16 +90,23 @@ module Value
       xp_h: 8,
       dust_h: 12.5,
 
-      poe: 1125.0/250*gold_conversion, # alternative: twisted/10=0.675
+      poe: 1125.0/250*gold_conversion, #=0.257 alternative: twisted/10=0.675
       twisted: 6.75,
-      silver_e: 10080.0/30 * gold_conversion,
-      gold_e: 10920.0 /20 * gold_conversion,
-      red_e: 135, #or 158.4 from lab
+      silver_e: 10080.0/30 * gold_conversion #=19,
+      gold_e: 10920.0 /20 * gold_conversion #=31 ~ 1.6 silver,
+      # red_e: 135, #or 158.4 from lab; this was the old dust=red value in coe
+      #new coe value: (7500 / 48.65 + 380) * 12.5/ 49 = 136.26
+      #paid version: (50000/48.6+1900)*12.5/210=174.33; avg: 155
+      red_e: 150, #~ 5 gold ~8 silver
       dim_emblems: 135,
-      faction_emblems: 135,
+      faction_emblems: 150,
       shards: 2000/20 *gold_conversion, #=5.709. Alternative: 6.75=135/20
-      cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Alternative: 13.5=135/10
-             # this formula is dust=cores in coe rewards
+      # cores: (7500 / 48.65 + 380) * 12.5 / 585, #=11.41. Alternative: 13.5=135/10
+      # this formula is dust=cores in coe rewards; 
+      # paid version of coe: 
+      # (50000/48.6+1900)*12.5/1960=18.67 dia; avg: 15
+      # -> 1 core = 15 dia, is probably better value
+      cores: 15,
 
       dura_fragments: 100 * gold_conversion, #=5.709
       class_fragments: 9000 * 0.675 / 400, #=15.1875
@@ -107,13 +114,14 @@ module Value
       mythic_gear: 500,
       reset_scrolls: 250,
       dim_gear: 500,
-      t1: 1000,
-      t2: 2000,
-      t1t2_chest: 2000,
-      t3: 3000,
-      t1t2t3_chest: 3000,
-      t1_gear: 500 + 1000,
-      t2_gear: 500 + 1000 + 2000,
+      t1: 500,
+      t2: 1000,
+      t1t2_chest: 1000,
+      t3: 1500,
+      t4: 2000,
+      t1t2t3_chest: 1500,
+      t1_gear: 500 + 500,
+      t2_gear: 500 + 500 + 1000,
 
       invigor: 0.24,
       blue_stones: 2.6,
@@ -358,22 +366,23 @@ if __FILE__ == $0
   #  With adjusted ratio of 0.99489: 10 stargaze value: 584.78 dia [0.25 choice_god=0.0 dia + 0.32 random_atier=0.0 dia + 0.1 random_fodder=0.0 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=41.79 dia + 5.75 dura_fragments=32.85 dia + 49.43 gold_h=98.85 dia + 21.92 xp_h=175.36 dia + 16.48 dust_h=205.94 dia]
   # Summary: 10 stargaze has real cost of 5000-584.78=4415
   # A celo costs 4*4415=17660
+  # Updated proba from @Jono: 1 out of 36 -> 3.6*4415=15894 vs 3.6*5000=18000 at full price
 
   #puts "- 10 stargaze value: #{Value.show_dia_value(Value.stargaze(10))}"
-  ## 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
-  # Summary: with 4f summons, 10 stargaze has real cost of 5000-4827+3500=3673
+  ## -> Taking into count the 4f cards: 10 stargaze value: 4827.07 dia [0.25 choice_god=3500.0 dia + 0.32 random_atier=599.04 dia + 0.1 random_fodder=140.4 dia + 30.0 dia=30.0 dia + 0.08 mythic_gear=42.0 dia + 5.78 dura_fragments=33.01 dia + 49.68 gold_h=99.36 dia + 22.03 xp_h=176.26 dia + 16.56 dust_h=207.0 dia]
+  # Summary: with 4f summons, 10 stargaze has real cost of 5000-4827+3500 (the choice god)=3673
   # A celo costs 4*3673=14692
 
   puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10), summons: false)}"
   # 10 summons value: 96.14 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=0.0 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
-  # 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia] {with hero coins included}
+  # With hero coins: 10 summons value: 206.41 dia [0.49 random_fodder=0.0 dia + 0.46 wishlist_atier=0.0 dia + 0.02 random_god=0.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=0.0 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia] {with hero coins included}
   # Summary: 10 4f summons cost 2700-206.41=2493 dia
   # So a 4f hero costs 2.169*2493=5407 dia
   
   #puts "- 10 summons value: #{Value.show_dia_value(Value.tavern_summon(10))}"
   ## 10 summons value: 4217.73 dia [0.49 random_fodder=681.72 dia + 0.46 wishlist_atier=2950.4 dia + 0.02 random_god=192.0 dia + 25.85 dust=6.64 dia + 827.04 hero_coins=110.27 dia + 0.1 random_atier=187.2 dia + 0.5 red_e=67.5 dia + 0.28 gold_e=8.57 dia + 0.7 silver_e=13.43 dia]
   # Summary: with fodder summons, 10 4f summons cost
-  # 2700-4217.73+2950.4=1432, so a 4f hero cost 2.169*1432=3106
+  # 2700-4217.73+2950.4 (the wishlist atier)=1432, so a 4f hero cost 2.169*1432=3106
 
   puts
   puts "*** Values: ***"
