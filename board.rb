@@ -274,7 +274,7 @@ class Board
     avg_quest={}; avg.each do |k,v|
       avg_quest[k]=v/nb
     end
-    r[:result]=avg
+    r[:result]=avg #average total number of quest type we add
     r[:average_tries]=avg_tries
     r[:average_tries_by_quest]=avg_tries/nb
     if tries_distribution
@@ -285,7 +285,7 @@ class Board
       r[:tries_distribution]=tries_proba
     end
     #r[:average_value]=cur_average_value
-    r[:average_quest]=avg_quest
+    r[:average_quest]=avg_quest #average quest, ie r[:result]/nb quests
     update_avg_quest_values(r)
     avg=r[:full_values][:total_with_refresh]
     # p total_dia_std/nb_simulate, avg**2
@@ -434,7 +434,7 @@ class Board
     ## refresh all gold+stone quests
     def simulate_goldstones(nb=@nb, **kw)
       puts
-      puts "## Simulation with gold and stones refresh strategy (gold_threshold=#{gold_threshold}) ##"
+      puts "## Simulation with gold and stones refresh strategy ##"
       simulate(nb, **kw) do |quests|
         u=quests.each_with_index.select do |v,_i|
           v[0]==:gold or v[0]==:stones
@@ -662,9 +662,15 @@ if __FILE__ == $0
 
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
-  #board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
-  #board.double=true
-  #board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
+  
+  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
+  magic = r.values.map do |rnb| rnb[:average_value] end
+  puts magic
+  board.double=true
+  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
+  magic = r.values.map do |rnb| rnb[:average_value] end
+  puts magic
+
   board.compare_strats(strats: [:simple,:goldstones,:optimal], verbose: true)
 
   #Board.new.compare_strats(verbose: true)
