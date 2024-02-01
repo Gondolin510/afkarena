@@ -44,10 +44,35 @@ class Board
     @double=double
 
     # Board level 8
-    @items=[:gold,:dust,:stones,:dia,:juice,:shard]
+    @base_items=[:gold, :dust, :stones, :dia]
+    @items=@base_items+[:juice,:shard]
     @items_Ratio=[3,3,1,1]
     @levels=[:legend,:mythic,:ascended]
     @levels_Ratio=[90,8,2]
+
+    @item_level_ratios={}
+    @base_items.each_with_index do |item, r1|
+      @levels.each_with_index do |level, r2|
+        r=@items_Ratio[r1]*@levels_Ratio[r2]
+        case level
+        when :mythic, :ascended
+          item = :juice if item == :gold
+          item = :shard if item == :stones
+        end
+        @item_level_ratios[[item, level]]=r
+      end
+    end
+    [:gold, :stones].each do |item|
+      [:mythic, :ascended].each do |level|
+        @item_level_ratios[[item, level]]=0
+      end
+    end
+    [:juice, :shard].each do |item|
+      [:legend].each do |level|
+        @item_level_ratios[[item, level]]=0
+      end
+    end
+
     @values={
       gold: [173, 246, 321],
       dust: [150, 500, 800],
@@ -64,7 +89,7 @@ class Board
       dust: 0.2568,
       stones: 2.6,
       dia: 1.0,
-      shard: 5,
+      shard: 5.0,
       juice: 6.75,
     }
 
@@ -72,11 +97,6 @@ class Board
   end
 
   def get_value(item,level)
-    case level
-    when :mythic, :ascended
-      item = :juice if item == :gold
-      item = :shard if item == :stones
-    end
     r=@values[item][@levels.rindex(level)]
     return r*2 if @double
     r
@@ -90,15 +110,20 @@ class Board
     qty*@diamond_Conversion[item]
   end
 
+  # average quest value
   def get_avg_value
     return @avg_value if @avg_value
     t=0.0
-    items_total=@items_Ratio.sum
-    levels_total=@levels_Ratio.sum
-    @items.each_with_index do |item, index|
-      @levels.each_with_index do |level, index2|
-        t += diamond_value(item, level)*@levels_Ratio[index2]/levels_total*@items_Ratio[index]/items_total
-      end
+    #items_total=@items_Ratio.sum
+    #levels_total=@levels_Ratio.sum
+    #@items.each_with_index do |item, index|
+    #  @levels.each_with_index do |level, index2|
+    #    t += diamond_value(item, level)*@levels_Ratio[index2]/levels_total*@items_Ratio[index]/items_total
+    #  end
+    #end
+    item_level_total=@item_level_ratios.values.sum
+    @item_level_ratios.keys.each do |item, level|
+      t += diamond_value(item, level)*@item_level_ratios[[item,level]]/item_level_total
     end
     @avg_value=t
   end
@@ -106,21 +131,27 @@ class Board
   # output an average quest proba
   def get_avg_quest
     return @avg_quest if @avg_quest
-    items_total=@items_Ratio.sum
-    levels_total=@levels_Ratio.sum
+    #items_total=@items_Ratio.sum
+    #levels_total=@levels_Ratio.sum
     avg={}
-    @items.each_with_index do |item, index|
-      @levels.each_with_index do |level, index2|
-        avg[[item,level]]=@items_Ratio[index]*@levels_Ratio[index2]*1.0/(items_total*levels_total)
-      end
+    #@items.each_with_index do |item, index|
+    #  @levels.each_with_index do |level, index2|
+    #    avg[[item,level]]=@items_Ratio[index]*@levels_Ratio[index2]*1.0/(items_total*levels_total)
+    #  end
+    #end
+    item_level_total=@item_level_ratios.values.sum
+    @item_level_ratios.keys.each do |item, level|
+      avg[[item,level]] = @item_level_ratios[[item,level]]*1.0/item_level_total
     end
     @avg_quest=avg
   end
 
   # sample a new quest
   def new_quest
-    item=@items[Board.random_from_ratios(@items_Ratio)]
-    level=@levels[Board.random_from_ratios(@levels_Ratio)]
+    #item=@items[Board.random_from_ratios(@items_Ratio)]
+    #level=@levels[Board.random_from_ratios(@levels_Ratio)]
+    i=Board.random_from_ratios(@item_level_ratios.values)
+    item, level=@item_level_ratios.keys[i]
     return [item, level]
   end
 
@@ -258,7 +289,7 @@ class Board
     update_avg_quest_values(r)
     avg=r[:full_values][:total_with_refresh]
     # p total_dia_std/nb_simulate, avg**2
-    std=Math.sqrt((total_dia_std/nb_simulate-avg**2*1.0))
+    std=Math.sqrt((total_dia_std/nb_simulate-avg**2*1.0)) rescue 0
     r[:std]=std
     r
   end
@@ -343,13 +374,17 @@ class Board
     (1..number).each do |nb|
       memo[nb]={}
       nb_simulates.each do |nb_simulate|
-        total=init; total_tries=0
+        total=init; tries_distribution=[];
+        total_dia_std=0
         (1..nb_simulate).each do |sim_nb|
           result,tries=refresh_dynamic(new_quests(nb), cur_average_value, memo)
           result.each { |k,v| total[k]+=v }
-          total_tries+=tries
+          tries_distribution[tries] ||= 0
+          tries_distribution[tries] += 1
+          value=value_tally(result)-tries*@refresh_Cost
+          total_dia_std+=value**2
         end
-        result=info_from_simulation(total, total_tries, nb_simulate)
+        result=info_from_simulation(total, total_dia_std, tries_distribution, nb_simulate)
         cur_average_value=result[:average_value]
         puts cur_average_value if verbose==:full
       end
@@ -372,12 +407,14 @@ class Board
     end
 
     ## Exemples of simulations
+    ## refresh all quests that are below the ev; if the ev gained is greater than the refresh cost
     def simulate_simple(nb=@nb, **kw)
       puts
       puts "## Simulation with simple refresh strategy ##"
       simulate(nb, **kw) #40.619; double: 88.341
     end
 
+    ## refresh gold quests if they are above the threshold
     def simulate_gold(nb=@nb, gold_threshold: nil, **kw)
       if gold_threshold.nil?
         gold_threshold=3
@@ -390,6 +427,18 @@ class Board
           v[0]==:gold
         end
         next false unless u.length >= gold_threshold
+        u
+      end
+    end
+
+    ## refresh all gold+stone quests
+    def simulate_goldstones(nb=@nb, **kw)
+      puts
+      puts "## Simulation with gold and stones refresh strategy (gold_threshold=#{gold_threshold}) ##"
+      simulate(nb, **kw) do |quests|
+        u=quests.each_with_index.select do |v,_i|
+          v[0]==:gold or v[0]==:stones
+        end
         u
       end
     end
@@ -510,20 +559,6 @@ class Board
       end
     end
 
-    def optimal_strat(quests)
-      magic=[44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104].reverse
-      magic=[111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 87.08076, 81.40006, 75.58795, 71.4208].reverse if @double
-      nbr=quests.length; u=quests; avg_value=0
-      loop do
-        avg_value=magic[nbr-1]
-        u=to_refresh(quests, avg_value)
-        break if u.length == nbr or u.length==0
-        nbr=u.length
-      end
-      return false unless do_refresh?(u, avg_value)
-      u
-    end
-
     def simulate_optimal(nb=@nb, magic: nil, **kw)
       if magic.nil?
         magic=[44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104].reverse
@@ -624,29 +659,28 @@ if __FILE__ == $0
   Board.nb=8
   #Board.nb_simulate=1000000
   Board.nb_simulate=100000
-  
-  #Board.new(8, double: true, nb_simulate: 1000000).simulate_advanced3
-  #Board.new.compare_strats(strats: [:advanced, :advanced2], verbose: true)
-  #Board.new.compare_strats(verbose: true)
 
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
-  board.compare_strats(strats: [:optimal], verbose: true)
+  #board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
+  #board.double=true
+  #board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
+  board.compare_strats(strats: [:simple,:goldstones,:optimal], verbose: true)
+
+  #Board.new.compare_strats(verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
-  #Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
   #Board.new.compare_strats(strats: [:pure_dia], verbose: true)
   #Board.new.compare_strats(strats: [:advanced], verbose: true)
+  #Board.new(8, double: true, nb_simulate: 1000000).simulate_advanced3
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
-
-  #   #board.show_average_quest
-  #   #board.simulate_simple
-  #   #board.simulate_gold
-  #   #board.simulate_advanced
-  #   #board.simulate_optimal
-  #   #simulate_dynamic(10, nb_simulates: [100000,100000,nb_simulate])
-  #   
+  #   board.show_average_quest
+  #   board.simulate_simple
+  #   board.simulate_gold
+  #   board.simulate_advanced
+  #   board.simulate_optimal
+  #   board.simulate_dynamic(10, nb_simulates: [100000,100000,nb_simulate])
   #   board.final_result_no_strat(verbose: :full)
   #   board.compare_strats(strats: [:optimal], verbose: true)
   # end
