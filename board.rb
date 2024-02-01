@@ -44,7 +44,7 @@ class Board
     @double=double
 
     # Board level 8
-    @items=[:gold,:dust,:stones,:dia]
+    @items=[:gold,:dust,:stones,:dia,:juice,:shard]
     @items_Ratio=[3,3,1,1]
     @levels=[:legend,:mythic,:ascended]
     @levels_Ratio=[90,8,2]
@@ -52,7 +52,9 @@ class Board
       gold: [173, 246, 321],
       dust: [150, 500, 800],
       stones: [15, 25, 40],
-      dia: [60, 100, 150]
+      dia: [60, 100, 150],
+      juice: [0, 5, 10],
+      shard: [0, 5, 10],
     }
     @refresh_Cost=50
 
@@ -60,15 +62,21 @@ class Board
       #gold: 0.08481764 or 0.05,
       gold: 1000/17540.0, #=0.057126
       dust: 0.2568,
-      stones: 2.6, #4.0
-      dia: 1.0
+      stones: 2.6,
+      dia: 1.0,
+      shard: 5,
+      juice: 6.75,
     }
 
     @nb_simulate=nb_simulate #default simulation iterations
   end
 
-
   def get_value(item,level)
+    case level
+    when :mythic, :ascended
+      item = :juice if item == :gold
+      item = :shard if item == :stones
+    end
     r=@values[item][@levels.rindex(level)]
     return r*2 if @double
     r
@@ -623,11 +631,11 @@ if __FILE__ == $0
 
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
-  #board.compare_strats(strats: [:optimal], verbose: true)
+  board.compare_strats(strats: [:optimal], verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced3], verbose: true)
   #Board.new.compare_strats(strats: [:pure_dia], verbose: true)
-  Board.new.compare_strats(strats: [:advanced], verbose: true)
+  #Board.new.compare_strats(strats: [:advanced], verbose: true)
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
