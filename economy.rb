@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #TODO: more events?, board level<7 + team quests
-#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (shards/core quests), timegazers + faction tower timegazers rewards, solemn vow?, T4, new temporal rift rewards, new 15 days quests, new misty valleys rewards (T4), new pvp mode (treasure scramble), temporal rift boss
+#TODO: finish yuexi, T1/T2 conversion, refined summonings (ie by faction), campaign progression (shards/core quests), timegazers + faction tower timegazers rewards (5 every x20 from floor 300), solemn vow?, T4, new temporal rift rewards, new 15 days quests, new misty valleys rewards (T4), new pvp mode (treasure scramble), temporal rift boss
+#TODO: super elite soulstones (2% awekened, 4% celo, 94% 4f)
+#      new rate for celo: 1 out of 36
 
 require './value'
 require 'json'
@@ -315,7 +317,7 @@ class Simulator
       @StoreGuild ||={
         t1: 33879, #shortcut for t1: {cost: 33879, t1: 1}
         t2: 40875,
-        t3: {cost: 47000, t3: 1, max: 2},
+        t3: {cost: 46900, t3: 1, max: 2},
         random_mythic_gear: 31350,
         mythic_gear: round(84260*@_shop_discount, prec: 0), #there is also the mythic variety chest (max 1) for 63000 coins at later chapters
         dim_gear: round(84260*@_shop_discount, prec: 0),

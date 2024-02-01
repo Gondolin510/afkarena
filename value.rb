@@ -88,12 +88,12 @@ module Value
       gold_h: 2, #24h gold=48 dia, 1h gold=2 dia
       gold_hg: 2, #Alternative: raw_idle_hourly[:gold]*gold_conversion,
       xp_h: 8,
-      dust_h: 12.5,
+      dust_h: 12.5, #300 for 24h
 
       poe: 1125.0/250*gold_conversion, #=0.257 alternative: twisted/10=0.675
       twisted: 6.75,
-      silver_e: 10080.0/30 * gold_conversion #=19,
-      gold_e: 10920.0 /20 * gold_conversion #=31 ~ 1.6 silver,
+      silver_e: 10080.0/30 * gold_conversion, #=19,
+      gold_e: 10920.0 /20 * gold_conversion, #=31 ~ 1.6 silver,
       # red_e: 135, #or 158.4 from lab; this was the old dust=red value in coe
       #new coe value: (7500 / 48.65 + 380) * 12.5/ 49 = 136.26
       #paid version: (50000/48.6+1900)*12.5/210=174.33; avg: 155
@@ -519,4 +519,14 @@ Value.sort_dia_value({silver_e: 10, gold_e: 7, poe: 500, shards: 50})
 Value.sort_dia_value({silver_e: 2, gold_e: 1})
 - 2 silver_e: 38.37 dia
 - 1 gold_e: 31.18 dia
+Value.sort_dia_value({silver_e: 2, gold_e: 1})
+
+Value.show_dia_value({stargazers: 13, dust_h: 59*6, shards: 700, dia: 2750, scrolls: 20, cores: 275, red_e: 13*2, purple_stones: 40})
+
+Value.sort_dia_value({shards: 400, gold_e: 50, poe: 4500})
+- 400 shards: 2283.89 dia
+- 50 gold_e: 1558.75 dia
+- 4500 poe: 1156.22 dia
 =end
+
+
