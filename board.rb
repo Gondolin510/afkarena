@@ -74,9 +74,9 @@ class Board
     end
 
     @values={
-      gold: [173, 246, 321],
+      gold: [235, 300, 350], #only L value used now
       dust: [150, 500, 800],
-      stones: [15, 25, 40],
+      stones: [15, 25, 40], #only L value used now
       dia: [60, 100, 150],
       juice: [0, 5, 10],
       shard: [0, 5, 10],
@@ -549,6 +549,35 @@ class Board
       end
     end
 
+    def simulate_advanced_new(nb=@nb, **kw)
+      puts "## Simulation with new advanced refresh strategy ##"
+      simulate(nb, **kw) do |quests|
+        dust=quests.count do |v|
+          (v[0] == :dust) && v[1] == :legend
+        end
+        gold=quests.count do |v|
+          v[0] == :gold or v[0] == :stones
+        end
+        if @double
+          threshold1=3; threshold2=1
+        else
+          threshold1=6; threshold2=2
+        end
+        total=dust+gold
+        if total >= threshold1 #we refresh medium quests
+          quests.each_with_index.select do |v,_i|
+            (v[0] == :dust && v[1] == :legend) or v[0] == :stones or v[0] == :gold
+          end #the quests to refresh
+        elsif gold >= threshold2 #we only refresh gold and stones
+          quests.each_with_index.select do |v,_i|
+            v[0] == :gold or v[0] == :stones
+          end #the quests to refresh
+        else
+          next false #no refesh
+        end
+      end
+    end
+
     def simulate_pure_dia(nb=@nb, **kw)
       puts
       puts "## Simulation with pure diamonds refresh strategy ##"
@@ -563,8 +592,10 @@ class Board
 
     def simulate_optimal(nb=@nb, magic: nil, **kw)
       if magic.nil?
-        magic=[44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104].reverse
-        magic=[111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 87.08076, 81.40006, 75.58795, 71.4208].reverse if @double
+        #magic=[44.00601, 42.62974, 41.21228, 39.85913, 38.65864, 37.80118, 37.03364, 36.33974, 35.80604, 35.7104].reverse
+        #magic=[111.87832, 108.88099, 105.49544, 101.62087, 97.28789, 92.36578, 87.08076, 81.40006, 75.58795, 71.4208].reverse if @double
+        magic=[28.588489464920105, 28.532336560708995, 29.575030340632033, 32.34855276385823, 35.68634739435792, 37.14645999699846, 40.628645809123924, 44.509820837182644, 46.2516151948431, 48.03349401943576]
+        magic=[57.254548701999994, 68.01364795295082, 76.70721398727281, 85.12601103362599, 91.42589369902373, 100.03353718713316, 104.5163943620238, 109.23790645306002, 113.75328796966244, 116.37062980143148] if @double
       end
 
       puts
@@ -657,24 +688,19 @@ class Board
 end
 
 if __FILE__ == $0
-  Board.nb=10
+  #Board.nb=10
   Board.nb=8
   #Board.nb_simulate=1000000
   Board.nb_simulate=100000
 
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
-  
-  board.nb_simulate=1000000
-  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
-  magic = r.values.map do |rnb| rnb[:average_value] end
-  puts magic
-  board.double=true
-  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
-  magic = r.values.map do |rnb| rnb[:average_value] end
-  puts magic
 
-  board.compare_strats(strats: [:simple,:optimal], verbose: true)
+  ##board.compare_strats(strats: [:simple,:optimal], verbose: true)
+  #(8..10).each do |nb|
+  #  board.nb=nb
+  #  board.compare_strats(strats: [:simple,:advanced_new,:optimal], verbose: true)
+  #end
 
   #Board.new.compare_strats(verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
@@ -694,4 +720,18 @@ if __FILE__ == $0
   #   board.final_result_no_strat(verbose: :full)
   #   board.compare_strats(strats: [:optimal], verbose: true)
   # end
+
+  ## Get the magic numbers
+#=begin
+  board=Board.new
+  board.nb_simulate=1000000
+  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,board.nb_simulate])
+  magic = r.values.map do |rnb| rnb[:average_value] end
+  #nb: the first value if ':average_quest', then 'nb:1, nb:2, ...'
+  p magic
+  board.double=true
+  r=board.simulate_dynamic(10, nb_simulates: [100000,100000,board.nb_simulate])
+  magic = r.values.map do |rnb| rnb[:average_value] end
+  p magic
+#=end
 end
