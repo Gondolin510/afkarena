@@ -48,7 +48,7 @@ class Board
     @items=@base_items+[:juice,:shard]
     @items_Ratio=[3,3,1,1]
     @levels=[:legend,:mythic,:ascended]
-    @levels_Ratio=[90,8,2]
+    @levels_Ratio=[45,8,2]
 
     @item_level_ratios={}
     @base_items.each_with_index do |item, r1|
@@ -85,11 +85,13 @@ class Board
 
     @diamond_Conversion={
       #gold: 0.08481764 or 0.05,
-      gold: 1000/17540.0, #=0.057126
-      dust: 0.2568,
-      stones: 2.6,
+      #gold: 1000/17540.0, #=0.057126
+      gold: 1000/51867.0,
+      #dust: 0.2568,
+      dust: 0.1735,
+      stones: 0.3889,
       dia: 1.0,
-      shard: 5.0,
+      shard: 6.75,
       juice: 6.75,
     }
 
@@ -663,6 +665,7 @@ if __FILE__ == $0
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
   
+  board.nb_simulate=1000000
   r=board.simulate_dynamic(10, nb_simulates: [100000,100000,Board.nb_simulate])
   magic = r.values.map do |rnb| rnb[:average_value] end
   puts magic
@@ -671,13 +674,14 @@ if __FILE__ == $0
   magic = r.values.map do |rnb| rnb[:average_value] end
   puts magic
 
-  board.compare_strats(strats: [:simple,:goldstones,:optimal], verbose: true)
+  board.compare_strats(strats: [:simple,:optimal], verbose: true)
 
   #Board.new.compare_strats(verbose: true)
   #Board.new.compare_strats(strats: [:advanced, :advanced2, :advanced3], verbose: true)
   #Board.new.compare_strats(strats: [:pure_dia], verbose: true)
   #Board.new.compare_strats(strats: [:advanced], verbose: true)
   #Board.new(8, double: true, nb_simulate: 1000000).simulate_advanced3
+  #board.compare_strats(strats: [:simple,:goldstones,:optimal], verbose: true)
 
   # (8..10).each do |nb|
   #   board=Board.new(nb)
