@@ -64,7 +64,8 @@ module Value
 5
   def gold_conversion #convert 1K gold into dia
     #2250K gold = 500 dust. 24h dust=300 dia=1167.6 dust
-    (500.0/2250) / (1167.6/300)
+    #(500.0/2250) / (1167.6/300) # the .6 does not count in chest
+    (500.0/2250) / (1167/300)
   end
 
   def raw_idle_hourly

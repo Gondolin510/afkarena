@@ -86,7 +86,7 @@ class Board
     @diamond_Conversion={
       #gold: 0.08481764 or 0.05,
       #gold: 1000/17540.0, #=0.057126
-      gold: 1000/51867.0,
+      gold: 1000/25933.0, #add a 0.675 discount
       #dust: 0.2568,
       dust: 0.1735,
       stones: 0.3889,
