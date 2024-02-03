@@ -650,6 +650,36 @@ class Board
       end
     end
 
+    def simulate_ensign_simplified(nb=@nb, **kw)
+      puts "## Simulation with evildave's refresh strategy ##"
+      simulate(nb, **kw) do |quests|
+        candidates=quests.each_with_index.select do |v,_i|
+          not(v[0] == :dia or v[1] == :ascended or v[0] == :dust && v[1] == :mythic)
+        end
+        if @double
+          next candidates if candidates.length >= 3
+          candidates = candidates.select do |v,_i|
+            (v[0]==:gold or v[0]==:stones)
+          end
+          next candidates if candidates.length >= 2
+          next false
+        else
+          next candidates if candidates.length >= 6
+          candidates = candidates.select do |v,_i|
+            (v[0]==:gold or v[0]==:stones or v[0]==:dust)
+          end
+          dust = candidates.select {|v,_i| v[0]==:dust}.length
+          if candidates.length == 5 and dust >=5 or
+             candidates.length == 4 and dust >=3 or
+             candidates.length == 3 and dust >=1
+            next false
+          end
+          next candidates if candidates.length >= 3
+          next false
+        end
+      end
+    end
+
     def simulate_evildave(nb=@nb, **kw)
       puts "## Simulation with evildave's refresh strategy ##"
       simulate(nb, **kw) do |quests|
@@ -661,10 +691,10 @@ class Board
           candidates = candidates.select do |v,_i|
             (v[0]==:gold or v[0]==:stones)
           end
-          next candidates if candidates.length >= 2 #not reached I think
+          next candidates if candidates.length >= 2
           next false
         else
-          next candidates if candidates.length >=7
+          next candidates if candidates.length >= 6
           candidates = candidates.select do |v,_i|
             (v[0]==:gold or v[0]==:stones)
           end
@@ -798,7 +828,7 @@ if __FILE__ == $0
   ##board.compare_strats(strats: [:simple,:optimal], verbose: true)
   (8..10).each do |nb|
     board.nb=nb
-    board.compare_strats(strats: [:simple,:ensign,:evildave,:optimal], verbose: true)
+    board.compare_strats(strats: [:simple,:ensign,:evildave,:ensign_simplified,:optimal], verbose: true)
   end
 
   #Board.new.compare_strats(verbose: true)
