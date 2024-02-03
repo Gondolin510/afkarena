@@ -656,23 +656,19 @@ class Board
         candidates=quests.each_with_index.select do |v,_i|
           not(v[0] == :dia or v[1] == :ascended or v[0] == :dust && v[1] == :mythic)
         end
-        gold = candidates.select do |v,_i|
-          v[0]==:gold or v[0]==:stones
-        end.length
-        #others = candidates.length-gold
         if @double
-          next candidates if candidates.length >=2
+          next candidates if candidates.length >= 3
           candidates = candidates.select do |v,_i|
             (v[0]==:gold or v[0]==:stones)
           end
-          next candidates if candidates.length >= 1
+          next candidates if candidates.length >= 2 #not reached I think
           next false
         else
           next candidates if candidates.length >=7
           candidates = candidates.select do |v,_i|
             (v[0]==:gold or v[0]==:stones)
           end
-          next candidates if candidates.length >= 2
+          next candidates if candidates.length >= 3
           next false
         end
       end
@@ -698,7 +694,7 @@ class Board
         #magic=[57.254548701999994, 68.01364795295082, 76.70721398727281, 85.12601103362599, 91.42589369902373, 100.03353718713316, 104.5163943620238, 109.23790645306002, 113.75328796966244, 116.37062980143148] if @double
         magic=[30.304607438793322, 30.31149102050343, 30.31533070366773, 30.744520801544535, 32.10919381545367, 34.88208826905521, 39.90786246602743, 41.632290547335785, 44.298626927371345, 47.27202902773858, 48.71938728473738]
         magic=[60.609214877586645, 60.52965355176847, 66.7277685942529, 80.44502659321307, 90.46108930810708, 96.33603138141677, 104.26917291201818, 108.21365498032203, 112.46126186320998, 116.61792695052475, 118.96148025919541] if @double
-
+        magic.shift #the 0 value corresponds to the base ev
       end
 
       puts
@@ -783,7 +779,7 @@ class Board
         new_total2=r2[:full_values][:total_with_refresh]
         diff1=new_total1-total_value
         diff2=new_total2-total_value_double
-        puts "Advantage of strategy #{s} with #{nb} quests: #{(diff1*2/3+diff2*1/3).round(3)} (simple: #{diff1.round(3)}, double: #{diff2.round(3)})"
+        puts "Advantage of strategy #{s} with #{nb} quests: #{(diff1*2/3+diff2*1/3).round(3)} (single: #{diff1.round(3)}, double: #{diff2.round(3)})"
       end
     end
   end
@@ -793,8 +789,8 @@ end
 if __FILE__ == $0
   #Board.nb=10
   Board.nb=8
-  #Board.nb_simulate=1000000
-  Board.nb_simulate=100000
+  Board.nb_simulate=1000000
+  #Board.nb_simulate=100000
 
   board=Board.new
   board.final_result_no_strat(verbose: :full) #the values we get without refresh strat
